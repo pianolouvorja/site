@@ -1,0 +1,37 @@
+name: Feature Request
+description: Sugira uma nova funcionalidade ou melhoria
+title: '[FEATURE] '
+labels: ['enhancement', 'triagem']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado pela sugestao! Descreva sua ideia abaixo.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou motivacao
+      description: Que problema esta feature resolve? Ou qual motivacao?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solucao proposta
+      description: Descreva o que voce gostaria que acontecesse.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Voce considerou outras solucoes?
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto adicional
+      description: Mockups, links, referencias, ou qualquer outra informacao.
+    validations:
+      required: false
