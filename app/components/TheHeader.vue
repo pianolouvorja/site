@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, onMounted, onUnmounted } from 'vue'
+  import { ref, computed, onMounted, onUnmounted } from 'vue'
   import { navLinks, siteConfig } from '~/data/site'
 
   const { locale, locales, setLocale } = useI18n()
@@ -7,12 +7,26 @@
   const mobileMenuOpen = ref(false)
   const langMenuOpen = ref(false)
   const isScrolled = ref(false)
+  const localePath = useLocalePath()
 
-  const isHomePage = computed(() => route.path === '/')
+  // Home e qualquer rota raiz de locale: '/', '/en', '/es'
+  const isHomePage = computed(() => {
+    const path = route.path.replace(/\/$/, '')
+    return path === '' || path === '/en' || path === '/es'
+  })
 
   function navHref(href: string): string {
-    if (href.startsWith('/')) return href
-    return isHomePage.value ? href : `/${href}`
+    // Hash puro (ex: '#features') — na mesma pagina, so preservar a hash
+    if (href.startsWith('#')) {
+      return isHomePage.value ? href : `${localePath('/')}${href}`
+    }
+    // Hash com barra (ex: '/#features')
+    if (href.startsWith('/#')) {
+      const hash = href.slice(1) // -> '#features'
+      return isHomePage.value ? hash : `${localePath('/')}${hash}`
+    }
+    // Rotas internas (ex: /docs, /contact, /privacy)
+    return localePath(href)
   }
 
   const availableLocales = computed(() => locales.value.filter((l) => l.code !== locale.value))
@@ -130,7 +144,13 @@
           </Transition>
         </div>
 
-        <a data-testid="header-cta" :href="siteConfig.appUrl" class="header__cta">
+        <a
+          data-testid="header-cta"
+          :href="siteConfig.appUrl"
+          class="header__cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <i class="ti ti-login" />
           <span>{{ $t('nav.openApp') }}</span>
         </a>
@@ -173,7 +193,13 @@
           </button>
         </div>
 
-        <a :href="siteConfig.appUrl" class="header__nav-mobile-cta" @click="closeMobileMenu">
+        <a
+          :href="siteConfig.appUrl"
+          class="header__nav-mobile-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="closeMobileMenu"
+        >
           <i class="ti ti-login" />
           {{ $t('nav.openApp') }}
         </a>
@@ -184,7 +210,7 @@
 
 <style scoped lang="scss">
   .header {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;

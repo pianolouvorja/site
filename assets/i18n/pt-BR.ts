@@ -117,7 +117,8 @@ export default {
       },
       offline: {
         title: 'Funciona Offline',
-        description: 'Tudo disponível sem internet. PWA com armazenamento local completo.',
+        description:
+          'O app desktop funciona 100% offline após o download das mídias. A versão web exige download dos recursos antes de usar offline.',
       },
     },
   },
@@ -330,7 +331,7 @@ export default {
       offline: {
         question: 'Funciona sem internet?',
         answer:
-          'Sim. Após o primeiro carregamento, o aplicativo funciona totalmente offline. Todos os hinos, liturgias e configurações ficam armazenados localmente no seu dispositivo.',
+          'Sim. O aplicativo desktop funciona 100% offline após o download das mídias. A versão web também funciona offline, mas é necessário baixar os recursos offline primeiro. Todos os hinos, liturgias e configurações ficam armazenados localmente no seu dispositivo.',
       },
       devices: {
         question: 'Em quais dispositivos posso usar?',
@@ -473,7 +474,7 @@ export default {
           'Eliminação dos dados pessoais',
           'Informação sobre compartilhamento',
           'Como exercer seus direitos',
-          "Envie um e-mail para contato{'@'}pianolouvorja.com com:",
+          'Envie um e-mail para contato@pianolouvorja.com com:',
           'Nome completo',
           'Descrição do direito que deseja exercer',
           'Endereço de e-mail cadastrado',
@@ -534,7 +535,7 @@ export default {
       dpo: {
         title: '11. Encarregado de Dados (DPO)',
         body: [
-          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato{'@'}pianolouvorja.com.",
+          'Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato@pianolouvorja.com.',
         ],
       },
       anpd: {
@@ -542,7 +543,7 @@ export default {
         body: [
           'Você pode entrar em contato com a ANPD (Autoridade Nacional de Proteção de Dados) para apresentar reclamações:',
           'Site: {link}',
-          "E-mail: ouvidoria{'@'}anpd.gov.br",
+          'E-mail: ouvidoria@anpd.gov.br',
         ],
         link: {
           url: 'https://www.gov.br/anpd',

@@ -16,7 +16,13 @@
           {{ $t('cta.subtitle') }}
         </p>
 
-        <a data-testid="cta-button" :href="siteConfig.appUrl" class="cta__button">
+        <a
+          data-testid="cta-button"
+          :href="siteConfig.appUrl"
+          class="cta__button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <i class="ti ti-login" />
           {{ $t('cta.button') }}
         </a>

@@ -10,6 +10,8 @@ export default [
     ignores: [
       '.nuxt/**',
       '.output/**',
+      '.stryker-tmp/**',
+      'reports/**',
       'dist/**',
       'coverage/**',
       'test-results/**',
@@ -27,6 +29,7 @@ export default [
         // Nuxt auto-imports
         useI18n: 'readonly',
         useLocaleMessages: 'readonly',
+        useLocalePath: 'readonly',
         computed: 'readonly',
         ref: 'readonly',
         reactive: 'readonly',
@@ -34,6 +37,7 @@ export default [
         watchEffect: 'readonly',
         onMounted: 'readonly',
         onUnmounted: 'readonly',
+        onBeforeUnmount: 'readonly',
         definePageMeta: 'readonly',
         defineNuxtConfig: 'readonly',
         useHead: 'readonly',
@@ -57,6 +61,7 @@ export default [
         MouseEvent: 'readonly',
         HTMLElement: 'readonly',
         Event: 'readonly',
+        IntersectionObserver: 'readonly',
         // Browser globals
         document: 'readonly',
         window: 'readonly',

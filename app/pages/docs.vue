@@ -43,11 +43,40 @@
   // Active section for sidebar highlight
   const activeSection = ref('gettingStarted')
 
+  const allSectionIds = ['gettingStarted', ...moduleSections.map((m) => m.id), 'shortcuts', 'faq']
+
   const scrollToSection = (id: string) => {
     activeSection.value = id
     const el = document.getElementById(`doc-${id}`)
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+
+  // Scroll spy: atualiza activeSection quando o usuário rola a página
+  onMounted(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Encontra a seção mais visível
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible.length > 0) {
+          const id = visible[0]!.target.id.replace('doc-', '')
+          activeSection.value = id
+        }
+      },
+      {
+        rootMargin: '-80px 0px -60% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      },
+    )
+
+    allSectionIds.forEach((id) => {
+      const el = document.getElementById(`doc-${id}`)
+      if (el) observer.observe(el)
+    })
+
+    onBeforeUnmount(() => observer.disconnect())
+  })
 
   // SEO
   useAppHead({
@@ -94,7 +123,7 @@
             :data-testid="`docs-nav-${mod.id}`"
             @click="scrollToSection(mod.id)"
           >
-            <i :class="mod.icon" />
+            <i :class="`ti ${mod.icon}`" />
             <span>{{ $t(`docs.sections.${mod.id}.title`) }}</span>
           </button>
           <button
@@ -159,7 +188,7 @@
           :data-testid="`docs-section-${mod.id}`"
         >
           <h2 class="doc-section__title">
-            <i :class="mod.icon" />
+            <i :class="`ti ${mod.icon}`" />
             {{ $t(`docs.sections.${mod.id}.title`) }}
           </h2>
           <p class="doc-section__lead">
@@ -247,7 +276,7 @@
   // ── Hero ──────────────────────────────────────
   .docs-hero {
     background: var(--piano-bg-primary);
-    padding: 5rem 1.5rem 4rem;
+    padding: 0 1.5rem 4rem;
     text-align: center;
 
     &__container {

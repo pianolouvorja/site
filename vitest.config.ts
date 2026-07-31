@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     globals: true,
+    setupFiles: ['./test/setup.ts'],
     environment: 'happy-dom',
     include: ['test/**/*.{test,spec}.{ts,tsx}'],
     coverage: {

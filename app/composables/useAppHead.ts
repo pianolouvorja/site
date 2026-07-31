@@ -6,7 +6,7 @@ interface AppHeadOptions {
   title?: string
   /** Page-specific description. Defaults to the i18n meta.description. */
   description?: string
-  /** Path appended to SITE_URL for canonical/og:url. Defaults to '/'. */
+  /** Path appended to SITE_URL for canonical/og:url (without locale prefix). Defaults to '/'. */
   path?: string
 }
 
@@ -19,6 +19,7 @@ interface AppHeadOptions {
  */
 export function useAppHead(options: AppHeadOptions = {}) {
   const { t, locale, locales } = useI18n()
+  const defaultLocale = 'pt-BR'
 
   const pageTitle = computed(() =>
     options.title ? `${options.title} — ${SITE_NAME}` : t('meta.title'),
@@ -28,7 +29,21 @@ export function useAppHead(options: AppHeadOptions = {}) {
 
   const ogLocale = computed(() => locale.value.replace('-', '_'))
 
-  const canonicalUrl = computed(() => `${SITE_URL}${options.path ?? '/'}`)
+  // A função resolve o caminho dependendo se é o defaultLocale (que não tem prefixo)
+  const getUrlForLocale = (code: string) => {
+    const baseRoute = options.path ?? '/'
+
+    // Default locale não recebe prefixo (devido ao prefix_except_default)
+    if (code === defaultLocale) {
+      return `${SITE_URL}${baseRoute}`
+    }
+
+    // Resolve double slashes (e.g. se a rota for '/', vira '/en', não '/en/')
+    return `${SITE_URL}/${code}${baseRoute === '/' ? '' : baseRoute}`
+  }
+
+  // Canonical URL é a URL do locale atual
+  const canonicalUrl = computed(() => getUrlForLocale(locale.value))
 
   // JSON-LD structured data for a WebApplication
   const jsonLd = computed(() => ({
@@ -48,12 +63,12 @@ export function useAppHead(options: AppHeadOptions = {}) {
     isAccessibleForFree: true,
   }))
 
-  // Build hreflang alternate links for all configured locales
+  // Build hreflang alternate links for all configured locales (e.g. Google crawlers)
   const alternateLinks = computed(() =>
     (locales.value as Array<{ code: string }>).map((l) => ({
       rel: 'alternate' as const,
       hreflang: l.code,
-      href: canonicalUrl.value,
+      href: getUrlForLocale(l.code),
     })),
   )
 

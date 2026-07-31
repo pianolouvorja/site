@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       { code: 'es', language: 'es', name: 'Español', file: 'es.json' },
     ],
     defaultLocale: 'pt-BR',
-    strategy: 'no_prefix',
+    strategy: 'prefix_except_default',
     langDir: 'locales',
     detectBrowserLanguage: {
       useCookie: true,
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/200.html', '/404.html'],
+      routes: ['/', '/en', '/es', '/200.html', '/404.html'],
     },
   },
 

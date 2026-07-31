@@ -5,7 +5,7 @@ import HeroSection from '~/components/HeroSection.vue'
 describe('HeroSection', () => {
   it('renderiza o headline principal', () => {
     const wrapper = mount(HeroSection)
-    expect(wrapper.text()).toContain('Gerenciamento de culto')
+    expect(wrapper.text()).toContain('Gerenciador de Culto')
   })
 
   it('renderiza subheadline com descricao', () => {
@@ -24,6 +24,6 @@ describe('HeroSection', () => {
     const wrapper = mount(HeroSection)
     const secondary = wrapper.find('[data-testid="hero-secondary"]')
     expect(secondary.exists()).toBe(true)
-    expect(secondary.attributes('href')).toBe('#features')
+    expect(secondary.attributes('href')).toBe('#platforms')
   })
 })

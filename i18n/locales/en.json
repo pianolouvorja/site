@@ -110,7 +110,7 @@
       },
       "offline": {
         "title": "Works Offline",
-        "description": "Everything available without internet. PWA with complete local storage."
+        "description": "The desktop app works 100% offline after downloading media. The web version requires downloading offline resources first."
       }
     }
   },
@@ -315,7 +315,7 @@
       },
       "offline": {
         "question": "Does it work without internet?",
-        "answer": "Yes. After the first load, the application works fully offline. All hymns, liturgies, and settings are stored locally on your device."
+        "answer": "Yes. The desktop app works 100% offline after downloading media. The web version also works offline, but you need to download the offline resources first. All hymns, liturgies, and settings are stored locally on your device."
       },
       "devices": {
         "question": "Which devices can I use it on?",

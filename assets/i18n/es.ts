@@ -120,7 +120,8 @@ export default {
       },
       offline: {
         title: 'Funciona Sin Conexión',
-        description: 'Todo disponible sin internet. PWA con almacenamiento local completo.',
+        description:
+          'La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web requiere descargar los recursos primero.',
       },
     },
   },
@@ -333,7 +334,7 @@ export default {
       offline: {
         question: '¿Funciona sin internet?',
         answer:
-          'Sí. Tras la primera carga, la aplicación funciona totalmente sin conexión. Todos los datos se almacenan localmente.',
+          'Sí. La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web también funciona sin conexión, pero necesita descargar los recursos primero. Todos los datos se almacenan localmente.',
       },
       devices: {
         question: '¿En qué dispositivos puedo usarlo?',
@@ -475,7 +476,7 @@ export default {
           'Eliminación de datos personales',
           'Información sobre compartir',
           'Cómo ejercer sus derechos',
-          "Envíe un correo a contato{'@'}pianolouvorja.com con:",
+          'Envíe un correo a contato@pianolouvorja.com con:',
           'Nombre completo',
           'Descripción del derecho que desea ejercer',
           'Correo electrónico registrado',
@@ -536,7 +537,7 @@ export default {
       dpo: {
         title: '11. Encargado de Datos (DPO)',
         body: [
-          "En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato{'@'}pianolouvorja.com.",
+          'En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato@pianolouvorja.com.',
         ],
       },
       anpd: {
@@ -544,7 +545,7 @@ export default {
         body: [
           'Puede contactar a la ANPD (Autoridad Nacional de Protección de Datos) para presentar reclamaciones:',
           'Sitio: {link}',
-          "Correo: ouvidoria{'@'}anpd.gov.br",
+          'Correo: ouvidoria@anpd.gov.br',
         ],
         link: {
           url: 'https://www.gov.br/anpd',

@@ -24,7 +24,13 @@
         </p>
 
         <div class="hero__actions">
-          <a data-testid="hero-cta" :href="siteConfig.appUrl" class="hero__cta hero__cta--primary">
+          <a
+            data-testid="hero-cta"
+            :href="siteConfig.appUrl"
+            class="hero__cta hero__cta--primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i class="ti ti-login" />
             {{ $t('hero.ctaPrimary') }}
           </a>

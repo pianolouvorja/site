@@ -186,5 +186,147 @@
     "sending": "Sending...",
     "success": "Message sent successfully!",
     "error": "Error sending. Please try again."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated",
+    "intro": "This Privacy Policy describes how we collect, use, and share your information.",
+    "tocLabel": "Table of contents",
+    "sections": {
+      "data": {
+        "title": "Data Collected",
+        "body": [
+          "We collect data you provide directly, such as name and email when you contact us."
+        ]
+      },
+      "purpose": {
+        "title": "Purpose",
+        "body": ["We use your information to provide, maintain, and improve our services."]
+      },
+      "sharing": {
+        "title": "Sharing",
+        "body": [
+          "We do not share your personal information with third parties, except when required by law."
+        ]
+      },
+      "international": {
+        "title": "International Transfer",
+        "body": ["Your data may be processed on servers located outside your country of residence."]
+      },
+      "rights": {
+        "title": "Your Rights",
+        "body": [
+          "You have the right to access, correct, or delete your personal information at any time."
+        ]
+      },
+      "security": {
+        "title": "Security",
+        "body": [
+          "We implement security measures to protect your information, although no system is 100% secure."
+        ]
+      },
+      "retention": {
+        "title": "Data Retention",
+        "body": [
+          "We retain your information for as long as necessary to fulfill the purposes described in this policy."
+        ]
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": [
+          "We use cookies and similar technologies to enhance your experience on our platform."
+        ]
+      },
+      "children": {
+        "title": "Children",
+        "body": ["Our services are not directed to children under 13."]
+      },
+      "changes": {
+        "title": "Changes to this Policy",
+        "body": [
+          "We may update this policy periodically. We will notify you of significant changes."
+        ]
+      },
+      "dpo": {
+        "title": "Data Protection Officer (DPO)",
+        "body": ["For matters related to your data, please contact our DPO."]
+      },
+      "anpd": {
+        "title": "ANPD",
+        "body": [
+          "You have the right to file a complaint with the National Data Protection Authority (ANPD). Email: ouvidoria@anpd.gov.br"
+        ]
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "lastUpdated": "Last updated",
+    "intro": "These Terms of Use govern access to and use of PIANO LouvorJA.",
+    "tocLabel": "Table of contents",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptance of Terms",
+        "body": ["By using our services, you agree to these terms in their entirety."]
+      },
+      "service": {
+        "title": "Service Description",
+        "body": ["PIANO LouvorJA is a free web platform for managing Adventist worship services."]
+      },
+      "license": {
+        "title": "License to Use",
+        "body": [
+          "We grant a limited, non-exclusive, non-transferable license for personal, non-commercial use of the platform."
+        ]
+      },
+      "user": {
+        "title": "User Responsibilities",
+        "body": [
+          "You are responsible for all activities performed with your account and must use the platform ethically and legally."
+        ]
+      },
+      "responsibility": {
+        "title": "Limitation of Liability",
+        "body": ["The service is provided 'as is', without express or implied warranties."]
+      },
+      "ip": {
+        "title": "Intellectual Property",
+        "body": [
+          "All rights to the software, trademarks, and original content are owned by PIANO LouvorJA."
+        ]
+      },
+      "donations": {
+        "title": "Donations",
+        "body": [
+          "The project is free and supported by donations. Donations do not confer additional rights to donors."
+        ]
+      },
+      "privacy": {
+        "title": "Privacy",
+        "body": [
+          "The processing of personal data follows our Privacy Policy. Email: ouvidoria@anpd.gov.br"
+        ]
+      },
+      "modifications": {
+        "title": "Changes to Terms",
+        "body": [
+          "We may modify these Terms at any time. Your continued use constitutes acceptance of the changes."
+        ]
+      },
+      "termination": {
+        "title": "Termination",
+        "body": ["We may suspend or terminate your access if you violate these Terms."]
+      },
+      "law": {
+        "title": "Governing Law",
+        "body": ["These Terms are governed by the laws of the Federative Republic of Brazil."]
+      },
+      "misc": {
+        "title": "Miscellaneous",
+        "body": [
+          "If any part of these Terms is found to be invalid, the remaining provisions will remain in effect."
+        ]
+      }
+    }
   }
 }

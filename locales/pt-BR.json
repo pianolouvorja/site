@@ -186,5 +186,153 @@
     "sending": "Enviando...",
     "success": "Mensagem enviada com sucesso!",
     "error": "Erro ao enviar. Tente novamente."
+  },
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização",
+    "intro": "Esta Política de Privacidade descreve como coletamos, usamos e compartilhamos suas informações.",
+    "tocLabel": "Índice",
+    "sections": {
+      "data": {
+        "title": "Dados Coletados",
+        "body": [
+          "Coletamos os dados fornecidos diretamente por você, como nome e e-mail quando entra em contato."
+        ]
+      },
+      "purpose": {
+        "title": "Finalidade",
+        "body": ["Usamos suas informações para fornecer, manter e melhorar nossos serviços."]
+      },
+      "sharing": {
+        "title": "Compartilhamento",
+        "body": [
+          "Não compartilhamos suas informações pessoais com terceiros, exceto quando exigido por lei."
+        ]
+      },
+      "international": {
+        "title": "Transferência Internacional",
+        "body": [
+          "Seus dados podem ser processados em servidores localizados fora do seu país de residência."
+        ]
+      },
+      "rights": {
+        "title": "Seus Direitos",
+        "body": [
+          "Você tem o direito de acessar, corrigir ou excluir suas informações pessoais a qualquer momento."
+        ]
+      },
+      "security": {
+        "title": "Segurança",
+        "body": [
+          "Implementamos medidas de segurança para proteger suas informações, embora nenhum sistema seja 100% seguro."
+        ]
+      },
+      "retention": {
+        "title": "Retenção de Dados",
+        "body": [
+          "Mantemos suas informações pelo tempo necessário para cumprir as finalidades descritas nesta política."
+        ]
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": [
+          "Usamos cookies e tecnologias semelhantes para melhorar sua experiência em nossa plataforma."
+        ]
+      },
+      "children": {
+        "title": "Crianças",
+        "body": ["Nossos serviços não são direcionados a menores de 13 anos."]
+      },
+      "changes": {
+        "title": "Alterações nesta Política",
+        "body": [
+          "Podemos atualizar esta política periodicamente. Notificaremos sobre mudanças significativas."
+        ]
+      },
+      "dpo": {
+        "title": "Encarregado de Dados (DPO)",
+        "body": ["Para assuntos relacionados aos seus dados, entre em contato com nosso DPO."]
+      },
+      "anpd": {
+        "title": "ANPD",
+        "body": [
+          "Você tem o direito de apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD). E-mail: ouvidoria@anpd.gov.br"
+        ]
+      }
+    }
+  },
+  "terms": {
+    "title": "Termos de Uso",
+    "lastUpdated": "Última atualização",
+    "intro": "Estes Termos de Uso regem o acesso e uso do PIANO LouvorJA.",
+    "tocLabel": "Índice",
+    "sections": {
+      "acceptance": {
+        "title": "Aceitação dos Termos",
+        "body": ["Ao utilizar nossos serviços, você concorda com estes termos em sua totalidade."]
+      },
+      "service": {
+        "title": "Descrição do Serviço",
+        "body": [
+          "O PIANO LouvorJA é uma plataforma web gratuita para gerenciamento de cultos adventistas."
+        ]
+      },
+      "license": {
+        "title": "Licença de Uso",
+        "body": [
+          "Concedemos uma licença limitada, não exclusiva e intransferível para o uso pessoal e não comercial da plataforma."
+        ]
+      },
+      "user": {
+        "title": "Responsabilidades do Usuário",
+        "body": [
+          "Você é responsável por todas as atividades realizadas com sua conta e deve usar a plataforma de forma ética e legal."
+        ]
+      },
+      "responsibility": {
+        "title": "Limitação de Responsabilidade",
+        "body": [
+          "O serviço é fornecido 'no estado em que se encontra', sem garantias expressas ou implícitas."
+        ]
+      },
+      "ip": {
+        "title": "Propriedade Intelectual",
+        "body": [
+          "Todos os direitos sobre o software, marcas e conteúdo original são de propriedade do PIANO LouvorJA."
+        ]
+      },
+      "donations": {
+        "title": "Doações",
+        "body": [
+          "O projeto é gratuito e mantido por doações. Doações não conferem direitos adicionais aos doadores."
+        ]
+      },
+      "privacy": {
+        "title": "Privacidade",
+        "body": [
+          "O tratamento de dados pessoais segue nossa Política de Privacidade. E-mail: ouvidoria@anpd.gov.br"
+        ]
+      },
+      "modifications": {
+        "title": "Alterações nos Termos",
+        "body": [
+          "Podemos modificar estes Termos a qualquer momento. Seu uso continuado constitui aceitação das mudanças."
+        ]
+      },
+      "termination": {
+        "title": "Rescisão",
+        "body": ["Podemos suspender ou encerrar seu acesso caso viole estes Termos."]
+      },
+      "law": {
+        "title": "Lei Aplicável",
+        "body": ["Estes Termos são regidos pelas leis da República Federativa do Brasil."]
+      },
+      "misc": {
+        "title": "Disposições Gerais",
+        "body": [
+          "Se qualquer parte destes Termos for considerada inválida, as demais permanecerão em vigor."
+        ]
+      }
+    }
   }
 }

@@ -110,7 +110,7 @@
       },
       "offline": {
         "title": "Funciona Offline",
-        "description": "Tudo disponível sem internet. PWA com armazenamento local completo."
+        "description": "O app desktop funciona 100% offline após o download das mídias. A versão web exige download dos recursos antes de usar offline."
       }
     }
   },
@@ -315,7 +315,7 @@
       },
       "offline": {
         "question": "Funciona sem internet?",
-        "answer": "Sim. Após o primeiro carregamento, o aplicativo funciona totalmente offline. Todos os hinos, liturgias e configurações ficam armazenados localmente no seu dispositivo."
+        "answer": "Sim. O aplicativo desktop funciona 100% offline após o download das mídias. A versão web também funciona offline, mas é necessário baixar os recursos offline primeiro. Todos os hinos, liturgias e configurações ficam armazenados localmente no seu dispositivo."
       },
       "devices": {
         "question": "Em quais dispositivos posso usar?",

@@ -1,0 +1,334 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "features": "Funciones",
+    "platforms": "Plataformas",
+    "howItWorks": "Cómo funciona",
+    "about": "Acerca de",
+    "docs": "Documentación",
+    "contact": "Contacto",
+    "cta": "Acceder a la plataforma"
+  },
+  "hero": {
+    "badge": "Plataforma completa para cultos",
+    "title": "Gestión de culto",
+    "titleHighlight": "en la web",
+    "subtitle": "Sistema completo para gestionar cultos adventistas: himnario, liturgia, Biblia, cronómetro y proyección en una sola plataforma web gratuita.",
+    "ctaPrimary": "Acceder a la plataforma",
+    "ctaSecondary": "Web y Desktop",
+    "meta": {
+      "noInstall": "Sin instalación",
+      "free": "100% Gratis",
+      "openSource": "Código abierto"
+    }
+  },
+  "stats": {
+    "hymns": "Himnos",
+    "verses": "Textos bíblicos",
+    "liturgies": "Liturgias",
+    "churches": "Iglesias"
+  },
+  "features": {
+    "eyebrow": "Funciones",
+    "title": "Todo en un solo lugar",
+    "description": "Reuniendo todas las herramientas que necesitas para coordinar el culto, sin papel, sin aplicaciones sueltas.",
+    "items": {
+      "hymnal": {
+        "title": "Himnario Completo",
+        "description": "Acceso rápido a todos los himnos con búsqueda por número o título"
+      },
+      "bible": {
+        "title": "Biblia Integrada",
+        "description": "Textos bíblicos listos para lectura y proyección durante el culto"
+      },
+      "liturgy": {
+        "title": "Liturgia del Culto",
+        "description": "Estructura completa del programa con orden de los items y participantes"
+      },
+      "timer": {
+        "title": "Cronómetro y Tiempo",
+        "description": "Control de tiempo para sermones, anuncios y cada parte del culto"
+      },
+      "projection": {
+        "title": "Proyección de Letras",
+        "description": "Muestra letras de himnos y textos en pantalla para la congregación"
+      },
+      "offline": {
+        "title": "Modo Offline",
+        "description": "Funciona sin internet con caché local de himnos y biblia"
+      }
+    }
+  },
+  "how": {
+    "eyebrow": "Flujo simple",
+    "title": "Cómo funciona",
+    "description": "Tres pasos para gestionar un culto completo, de principio a fin.",
+    "steps": {
+      "1": {
+        "title": "Arma la liturgia",
+        "desc": "Selecciona himnos, textos bíblicos y el orden del culto"
+      },
+      "2": {
+        "title": "Inicia el cronómetro",
+        "desc": "Controla el tiempo de cada item de la programación"
+      },
+      "3": {
+        "title": "Proyecta en pantalla",
+        "desc": "Muestra himnos y textos para la congregación en tiempo real"
+      }
+    }
+  },
+  "platforms": {
+    "eyebrow": "Plataformas",
+    "title": "Desktop, Web y Mobile",
+    "description": "PIANO LouvorJA funciona en cualquier lugar. App nativa para desktop (Linux, macOS y Windows), versión web en el navegador para acceso rápido, y apps móviles para Android e iOS próximamente.",
+    "desktop": {
+      "name": "Desktop",
+      "badge": "App nativa",
+      "tagline": "Linux, macOS y Windows",
+      "description": "App nativa con todas las funciones: proyección multi-pantalla, medios integrados y modo offline completo.",
+      "cta": "Descargar app",
+      "features": {
+        "windows": "Windows",
+        "macos": "macOS",
+        "linux": "Linux",
+        "multiScreen": "Proyección Multi-pantalla",
+        "offline": "Modo Offline",
+        "shortcuts": "Atajos de Teclado"
+      }
+    },
+    "web": {
+      "name": "Web",
+      "badge": "En el navegador",
+      "tagline": "Directo en el navegador",
+      "description": "Accede desde cualquier PC sin instalación. Funciona como fallback completo cuando la app desktop no esté disponible.",
+      "cta": "Acceder a la versión web",
+      "features": {
+        "anyPc": "Cualquier PC",
+        "noInstall": "Sin instalación",
+        "bible": "Biblia",
+        "hymnal": "Himnario",
+        "liturgy": "Liturgia",
+        "timer": "Cronómetro"
+      }
+    },
+    "mobile": {
+      "name": "Mobile",
+      "badge": "Próximamente",
+      "tagline": "Android e iOS",
+      "description": "Controla el culto en la palma de la mano. Gestiona liturgia, proyecta slides y sigue el cronograma desde el celular.",
+      "cta": "Ser avisado",
+      "features": {
+        "android": "Android",
+        "ios": "iOS",
+        "mobileLiturgy": "Liturgia móvil",
+        "remote": "Control remoto",
+        "notifications": "Notificaciones",
+        "sync": "Sincronización"
+      }
+    }
+  },
+  "about": {
+    "eyebrow": "Sobre el proyecto",
+    "openSource": "Open Source",
+    "title": "Tecnología al servicio de la adoración",
+    "text1": "El {name} nació de la necesidad de tener una herramienta simple y completa para gestionar cultos adventistas. Reuniendo Biblia, liturgia, himnario, cronómetro y proyección en una sola plataforma web, facilitamos el trabajo de quien coordina los cultos y reducimos la dependencia de papel y herramientas fragmentadas.",
+    "text2": "Desarrollado con tecnología moderna, el sistema funciona directamente en el navegador sin necesidad de instalación. Acceso desde cualquier dispositivo, en cualquier lugar.",
+    "stats": {
+      "free": "Gratis",
+      "installs": "Instalaciones",
+      "offline": "Funciona offline"
+    }
+  },
+  "cta": {
+    "title": "¿Listo para modernizar tus cultos?",
+    "subtitle": "Empieza ahora mismo. Sin registro, sin instalación, sin costo. Accede a la plataforma y ve lo simple que es.",
+    "button": "Acceder a la plataforma",
+    "meta": {
+      "free": "Gratis",
+      "noInstall": "Sin instalación",
+      "openSource": "Código abierto"
+    }
+  },
+  "footer": {
+    "description": "Sistema web para gestión de cultos adventistas.",
+    "platform": "Plataforma",
+    "resources": "Recursos",
+    "community": "Comunidad",
+    "accessApp": "Acceder app",
+    "docs": "Documentación",
+    "sourceCode": "Código fuente",
+    "aboutUs": "Sobre nosotros",
+    "reportBug": "Reportar bug",
+    "suggestions": "Sugerencias",
+    "contact": "Contacto",
+    "madeWith": "Hecho con",
+    "forCommunity": "para la comunidad adventista",
+    "rights": "Todos los derechos reservados."
+  },
+  "docs": {
+    "title": "Documentación",
+    "subtitle": "Todo lo que necesitas para usar PIANO LouvorJA",
+    "gettingStarted": "Primeros pasos",
+    "gettingStartedDesc": "Aprende a usar la plataforma en minutos",
+    "guides": "Guías",
+    "guidesDesc": "Tutoriales detallados para cada función",
+    "faq": "Preguntas frecuentes",
+    "faqDesc": "Respuestas a las preguntas más comunes"
+  },
+  "contact": {
+    "title": "Ponte en contacto",
+    "subtitle": "¿Tienes dudas, sugerencias o encontraste un bug? Envía un mensaje.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado con éxito!",
+    "error": "Error al enviar. Inténtalo de nuevo."
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización",
+    "intro": "Esta Política de Privacidad describe cómo recopilamos, usamos y compartimos tu información.",
+    "tocLabel": "Índice",
+    "sections": {
+      "data": {
+        "title": "Datos Recopilados",
+        "body": [
+          "Recopilamos los datos que nos proporcionas directamente, como nombre y correo electrónico cuando te pones en contacto con nosotros."
+        ]
+      },
+      "purpose": {
+        "title": "Propósito",
+        "body": ["Usamos tu información para proporcionar, mantener y mejorar nuestros servicios."]
+      },
+      "sharing": {
+        "title": "Compartir",
+        "body": [
+          "No compartimos tu información personal con terceros, excepto cuando lo exija la ley."
+        ]
+      },
+      "international": {
+        "title": "Transferencia Internacional",
+        "body": [
+          "Tus datos pueden ser procesados en servidores ubicados fuera de tu país de residencia."
+        ]
+      },
+      "rights": {
+        "title": "Tus Derechos",
+        "body": [
+          "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento."
+        ]
+      },
+      "security": {
+        "title": "Seguridad",
+        "body": [
+          "Implementamos medidas de seguridad para proteger tu información, aunque ningún sistema es 100% seguro."
+        ]
+      },
+      "retention": {
+        "title": "Retención de Datos",
+        "body": [
+          "Conservamos tu información durante el tiempo necesario para cumplir los fines descritos en esta política."
+        ]
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": [
+          "Usamos cookies y tecnologías similares para mejorar tu experiencia en nuestra plataforma."
+        ]
+      },
+      "children": {
+        "title": "Niños",
+        "body": ["Nuestros servicios no están dirigidos a menores de 13 años."]
+      },
+      "changes": {
+        "title": "Cambios en esta Política",
+        "body": [
+          "Podemos actualizar esta política periódicamente. Te notificaremos sobre cambios significativos."
+        ]
+      },
+      "dpo": {
+        "title": "Encargado de Datos (DPO)",
+        "body": ["Para asuntos relacionados con tus datos, ponte en contacto con nuestro DPO."]
+      },
+      "anpd": {
+        "title": "ANPD",
+        "body": [
+          "Tienes derecho a presentar una reclamación ante la Autoridad Nacional de Protección de Datos (ANPD). Correo: ouvidoria@anpd.gov.br"
+        ]
+      }
+    }
+  },
+  "terms": {
+    "title": "Términos de Uso",
+    "lastUpdated": "Última actualización",
+    "intro": "Estos Términos de Uso rigen el acceso y uso de PIANO LouvorJA.",
+    "tocLabel": "Índice",
+    "sections": {
+      "acceptance": {
+        "title": "Aceptación de los Términos",
+        "body": ["Al utilizar nuestros servicios, aceptas estos términos en su totalidad."]
+      },
+      "service": {
+        "title": "Descripción del Servicio",
+        "body": ["PIANO LouvorJA es una plataforma web gratuita para gestionar cultos adventistas."]
+      },
+      "license": {
+        "title": "Licencia de Uso",
+        "body": [
+          "Concedemos una licencia limitada, no exclusiva e intransferible para el uso personal y no comercial de la plataforma."
+        ]
+      },
+      "user": {
+        "title": "Responsabilidades del Usuario",
+        "body": [
+          "Eres responsable de todas las actividades realizadas con tu cuenta y debes usar la plataforma de forma ética y legal."
+        ]
+      },
+      "responsibility": {
+        "title": "Limitación de Responsabilidad",
+        "body": ["El servicio se proporciona 'tal cual', sin garantías expresas o implícitas."]
+      },
+      "ip": {
+        "title": "Propiedad Intelectual",
+        "body": [
+          "Todos los derechos sobre el software, marcas y contenido original son propiedad de PIANO LouvorJA."
+        ]
+      },
+      "donations": {
+        "title": "Donaciones",
+        "body": [
+          "El proyecto es gratuito y se mantiene con donaciones. Las donaciones no confieren derechos adicionales a los donantes."
+        ]
+      },
+      "privacy": {
+        "title": "Privacidad",
+        "body": [
+          "El procesamiento de datos personales sigue nuestra Política de Privacidad. Correo: ouvidoria@anpd.gov.br"
+        ]
+      },
+      "modifications": {
+        "title": "Cambios en los Términos",
+        "body": [
+          "Podemos modificar estos Términos en cualquier momento. Tu uso continuado constituye la aceptación de los cambios."
+        ]
+      },
+      "termination": {
+        "title": "Resolución",
+        "body": ["Podemos suspender o terminar tu acceso si violas estos Términos."]
+      },
+      "law": {
+        "title": "Ley Aplicable",
+        "body": ["Estos Términos se rigen por las leyes de la República Federativa de Brasil."]
+      },
+      "misc": {
+        "title": "Disposiciones Generales",
+        "body": [
+          "Si alguna parte de estos Términos se considera inválida, las demás disposiciones permanecerán vigentes."
+        ]
+      }
+    }
+  }
+}

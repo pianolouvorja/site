@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { siteConfig, navLinks, features } from '~/data/site'
+import { siteConfig, navLinks, webFeatures, steps } from '~/data/site'
 
 describe('siteConfig', () => {
   it('tem nome definido', () => {
@@ -18,6 +18,10 @@ describe('siteConfig', () => {
   it('tem URL do app valida', () => {
     expect(siteConfig.appUrl).toMatch(/^https:\/\//)
   })
+
+  it('tem email de contato', () => {
+    expect(siteConfig.contactEmail).toMatch(/@/)
+  })
 })
 
 describe('navLinks', () => {
@@ -25,11 +29,10 @@ describe('navLinks', () => {
     expect(navLinks.length).toBeGreaterThanOrEqual(3)
   })
 
-  it('cada link tem label e href', () => {
+  it('cada link tem i18nKey e href', () => {
     navLinks.forEach((link) => {
-      expect(link.label).toBeTruthy()
+      expect(link.i18nKey).toBeTruthy()
       expect(link.href).toBeTruthy()
-      expect(link.href.startsWith('#')).toBe(true)
     })
   })
 
@@ -39,21 +42,32 @@ describe('navLinks', () => {
   })
 })
 
-describe('features', () => {
+describe('webFeatures', () => {
   it('tem pelo menos 6 funcionalidades', () => {
-    expect(features.length).toBeGreaterThanOrEqual(6)
+    expect(webFeatures.length).toBeGreaterThanOrEqual(6)
   })
 
   it('cada feature tem id unico', () => {
-    const ids = features.map((f) => f.id)
+    const ids = webFeatures.map((f) => f.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  it('cada feature tem titulo, descricao e icone', () => {
-    features.forEach((f) => {
-      expect(f.title.length).toBeGreaterThan(2)
-      expect(f.description.length).toBeGreaterThan(10)
+  it('cada feature tem id e icone', () => {
+    webFeatures.forEach((f) => {
+      expect(f.id.length).toBeGreaterThan(2)
       expect(f.icon).toBeTruthy()
+    })
+  })
+})
+
+describe('steps', () => {
+  it('tem 4 passos', () => {
+    expect(steps.length).toBe(4)
+  })
+
+  it('cada passo tem numero sequencial', () => {
+    steps.forEach((step, i) => {
+      expect(step.num).toBe(i + 1)
     })
   })
 })

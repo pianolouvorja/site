@@ -116,7 +116,8 @@ export default {
       },
       offline: {
         title: 'Works Offline',
-        description: 'Everything available without internet. PWA with complete local storage.',
+        description:
+          'The desktop app works 100% offline after downloading media. The web version requires downloading offline resources first.',
       },
     },
   },
@@ -328,7 +329,7 @@ export default {
       offline: {
         question: 'Does it work without internet?',
         answer:
-          'Yes. After the first load, the application works fully offline. All hymns, liturgies, and settings are stored locally on your device.',
+          'Yes. The desktop app works 100% offline after downloading media. The web version also works offline, but you need to download the offline resources first. All hymns, liturgies, and settings are stored locally on your device.',
       },
       devices: {
         question: 'Which devices can I use it on?',
@@ -472,7 +473,7 @@ export default {
           'Deletion of personal data',
           'Information about sharing',
           'How to exercise your rights',
-          "Send an email to contato{'@'}pianolouvorja.com with:",
+          'Send an email to contato@pianolouvorja.com with:',
           'Full name',
           'Description of the right you want to exercise',
           'Registered email address',
@@ -533,7 +534,7 @@ export default {
       dpo: {
         title: '11. Data Protection Officer (DPO)',
         body: [
-          "In compliance with Art. 41 of LGPD, questions can be sent to contato{'@'}pianolouvorja.com.",
+          'In compliance with Art. 41 of LGPD, questions can be sent to contato@pianolouvorja.com.',
         ],
       },
       anpd: {
@@ -541,7 +542,7 @@ export default {
         body: [
           'You may contact ANPD (National Data Protection Authority) to file complaints:',
           'Website: {link}',
-          "Email: ouvidoria{'@'}anpd.gov.br",
+          'Email: ouvidoria@anpd.gov.br',
         ],
         link: {
           url: 'https://www.gov.br/anpd',

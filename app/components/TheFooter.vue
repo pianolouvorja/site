@@ -2,11 +2,26 @@
   import { siteConfig, navLinks } from '~/data/site'
 
   const route = useRoute()
-  const isHomePage = computed(() => route.path === '/')
+  const localePath = useLocalePath()
+
+  // Home e qualquer rota raiz de locale: '/', '/en', '/es'
+  const isHomePage = computed(() => {
+    const path = route.path.replace(/\/$/, '')
+    return path === '' || path === '/en' || path === '/es'
+  })
 
   function navHref(href: string): string {
-    if (href.startsWith('/')) return href
-    return isHomePage.value ? href : `/${href}`
+    // Hash puro (ex: '#features')
+    if (href.startsWith('#')) {
+      return isHomePage.value ? href : `${localePath('/')}${href}`
+    }
+    // Hash com barra (ex: '/#features')
+    if (href.startsWith('/#')) {
+      const hash = href.slice(1)
+      return isHomePage.value ? hash : `${localePath('/')}${hash}`
+    }
+    // Rotas internas
+    return localePath(href)
   }
 
   const currentYear = new Date().getFullYear()
@@ -73,12 +88,12 @@
           <span class="footer__nav-title">{{ $t('footer.legalNavTitle') }}</span>
           <ul>
             <li>
-              <NuxtLink to="/privacy">
+              <NuxtLink :to="localePath('/privacy')">
                 {{ $t('footer.privacy') }}
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/terms">
+              <NuxtLink :to="localePath('/terms')">
                 {{ $t('footer.terms') }}
               </NuxtLink>
             </li>

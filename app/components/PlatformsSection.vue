@@ -107,6 +107,8 @@
             :href="platform.ctaHref"
             class="platforms__card-cta"
             :class="`platforms__card-cta--${platform.accent}`"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <span>{{ $t(platform.ctaLabel) }}</span>
             <i class="ti ti-arrow-right" />

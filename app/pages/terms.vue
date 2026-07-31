@@ -89,10 +89,6 @@
           </div>
         </section>
       </article>
-
-      <footer class="legal-page__footer">
-        <p>© {{ new Date().getFullYear() }} PIANO LouvorJA. {{ $t('common.allRightsReserved') }}</p>
-      </footer>
     </div>
   </div>
 </template>
@@ -102,7 +98,7 @@
     background: var(--piano-dark);
     color: rgba(255, 255, 255, 0.85);
     min-height: 100vh;
-    padding: 4rem 1.5rem;
+    padding: 0 1.5rem 4rem;
 
     &__container {
       max-width: 800px;
@@ -209,16 +205,8 @@
       }
     }
 
-    &__footer {
-      text-align: center;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
     @media (max-width: 600px) {
-      padding: 2rem 1rem;
+      padding: 0 1rem 2rem;
 
       &__title {
         font-size: 1.75rem;

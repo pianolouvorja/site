@@ -237,7 +237,7 @@
   // ── Hero ─────────────────────────────────────
   .contact-hero {
     background: var(--piano-bg-primary);
-    padding: 5rem 1.5rem 4rem;
+    padding: 0 1.5rem 4rem;
     text-align: center;
 
     &__container {
@@ -503,7 +503,7 @@
 
   @media (max-width: 600px) {
     .contact-hero {
-      padding: 3.5rem 1.5rem 2.5rem;
+      padding: 0 1.5rem 2.5rem;
 
       &__title {
         font-size: 2.2rem;
