@@ -1,0 +1,190 @@
+{
+  "nav": {
+    "home": "Início",
+    "features": "Funcionalidades",
+    "platforms": "Plataformas",
+    "howItWorks": "Como funciona",
+    "about": "Sobre",
+    "docs": "Documentação",
+    "contact": "Contato",
+    "cta": "Acessar plataforma"
+  },
+  "hero": {
+    "badge": "Plataforma completa para cultos",
+    "title": "Gerenciamento de culto",
+    "titleHighlight": "na web",
+    "subtitle": "Sistema completo para gerenciar cultos adventistas: hinário, liturgia, Bíblia, cronômetro e projeção em uma única plataforma web gratuita.",
+    "ctaPrimary": "Acessar plataforma",
+    "ctaSecondary": "Web e Desktop",
+    "meta": {
+      "noInstall": "Sem instalação",
+      "free": "100% Gratuito",
+      "openSource": "Código aberto"
+    }
+  },
+  "stats": {
+    "hymns": "Hinos",
+    "verses": "Textos bíblicos",
+    "liturgies": "Liturgias",
+    "churches": "Igrejas"
+  },
+  "features": {
+    "eyebrow": "Funcionalidades",
+    "title": "Tudo em um só lugar",
+    "description": "Reunindo todas as ferramentas que você precisa para coordenar o culto, sem papel, sem aplicativos soltos.",
+    "items": {
+      "hymnal": {
+        "title": "Hinário Completo",
+        "description": "Acesso rápido a todos os hinos com busca por número ou título"
+      },
+      "bible": {
+        "title": "Bíblia Integrada",
+        "description": "Textos bíblicos prontos para leitura e projeção durante o culto"
+      },
+      "liturgy": {
+        "title": "Liturgia do Culto",
+        "description": "Estrutura completa do programa com ordem dos itens e participantes"
+      },
+      "timer": {
+        "title": "Cronômetro e Tempo",
+        "description": "Controle de tempo para sermões, anúncios e cada parte do culto"
+      },
+      "projection": {
+        "title": "Projeção de Letras",
+        "description": "Exiba letras de hinos e textos em tela para a congregação"
+      },
+      "offline": {
+        "title": "Modo Offline",
+        "description": "Funcione sem internet com cache local de hinos e bíblia"
+      }
+    }
+  },
+  "how": {
+    "eyebrow": "Fluxo simples",
+    "title": "Como funciona",
+    "description": "Três passos para gerenciar um culto completo, do início ao fim.",
+    "steps": {
+      "1": {
+        "title": "Monte a liturgia",
+        "desc": "Selecione hinos, textos bíblicos e a ordem do culto"
+      },
+      "2": {
+        "title": "Inicie o cronômetro",
+        "desc": "Controle o tempo de cada item da programação"
+      },
+      "3": {
+        "title": "Programe na tela",
+        "desc": "Exiba hinos e textos para a congregação em tempo real"
+      }
+    }
+  },
+  "platforms": {
+    "eyebrow": "Plataformas",
+    "title": "Desktop, Web e Mobile",
+    "description": "O PIANO LouvorJA roda em qualquer lugar. App nativo para desktop (Linux, macOS e Windows), versão web no navegador para acesso rápido, e apps móveis para Android e iOS em breve.",
+    "desktop": {
+      "name": "Desktop",
+      "badge": "Aplicativo nativo",
+      "tagline": "Linux, macOS e Windows",
+      "description": "Aplicativo nativo com todos os recursos: projeção multi-tela, mídia integrada e modo offline completo.",
+      "cta": "Baixar aplicativo",
+      "features": {
+        "windows": "Windows",
+        "macos": "macOS",
+        "linux": "Linux",
+        "multiScreen": "Projeção Multi-tela",
+        "offline": "Modo Offline",
+        "shortcuts": "Atalhos de Teclado"
+      }
+    },
+    "web": {
+      "name": "Web",
+      "badge": "No navegador",
+      "tagline": "Direto no navegador",
+      "description": "Acesse de qualquer PC sem instalação. Funciona como fallback completo quando o app desktop não estiver disponível.",
+      "cta": "Acessar versão web",
+      "features": {
+        "anyPc": "Qualquer PC",
+        "noInstall": "Sem instalação",
+        "bible": "Bíblia",
+        "hymnal": "Hinário",
+        "liturgy": "Liturgia",
+        "timer": "Cronômetro"
+      }
+    },
+    "mobile": {
+      "name": "Mobile",
+      "badge": "Em breve",
+      "tagline": "Android e iOS",
+      "description": "Controle o culto na palma da mão. Gerencie liturgia, projete slides e acompanhe o cronograma pelo celular.",
+      "cta": "Ser avisado",
+      "features": {
+        "android": "Android",
+        "ios": "iOS",
+        "mobileLiturgy": "Liturgia móvel",
+        "remote": "Controle remoto",
+        "notifications": "Notificações",
+        "sync": "Sincronização"
+      }
+    }
+  },
+  "about": {
+    "eyebrow": "Sobre o projeto",
+    "openSource": "Open Source",
+    "title": "Tecnologia a serviço da adoração",
+    "text1": "O {name} nasceu da necessidade de ter uma ferramenta simples e completa para gerenciar cultos adventistas. Reunindo Bíblia, liturgia, hinário, cronômetro e projeção em uma única plataforma web, facilitamos o trabalho de quem coordena os cultos e reduzimos a dependência de papel e ferramentas fragmentadas.",
+    "text2": "Desenvolvido com tecnologia moderna, o sistema roda diretamente no navegador sem necessidade de instalação. Acesso de qualquer dispositivo, em qualquer lugar.",
+    "stats": {
+      "free": "Gratuito",
+      "installs": "Instalações",
+      "offline": "Funciona offline"
+    }
+  },
+  "cta": {
+    "title": "Pronto para modernizar seus cultos?",
+    "subtitle": "Comece agora mesmo. Sem cadastro, sem instalação, sem custo. Acesse a plataforma e veja como é simples.",
+    "button": "Acessar plataforma",
+    "meta": {
+      "free": "Gratuito",
+      "noInstall": "Sem instalação",
+      "openSource": "Código aberto"
+    }
+  },
+  "footer": {
+    "description": "Sistema web para gerenciamento de cultos adventistas.",
+    "platform": "Plataforma",
+    "resources": "Recursos",
+    "community": "Comunidade",
+    "accessApp": "Acessar app",
+    "docs": "Documentação",
+    "sourceCode": "Código-fonte",
+    "aboutUs": "Sobre nós",
+    "reportBug": "Reportar bug",
+    "suggestions": "Sugestões",
+    "contact": "Contato",
+    "madeWith": "Feito com",
+    "forCommunity": "para a comunidade adventista",
+    "rights": "Todos os direitos reservados."
+  },
+  "docs": {
+    "title": "Documentação",
+    "subtitle": "Tudo o que você precisa para usar o PIANO LouvorJA",
+    "gettingStarted": "Primeiros passos",
+    "gettingStartedDesc": "Aprenda a usar a plataforma em minutos",
+    "guides": "Guias",
+    "guidesDesc": "Tutoriais detalhados para cada funcionalidade",
+    "faq": "Perguntas frequentes",
+    "faqDesc": "Respostas para as dúvidas mais comuns"
+  },
+  "contact": {
+    "title": "Entre em contato",
+    "subtitle": "Tem dúvidas, sugestões ou encontrou um bug? Envie uma mensagem.",
+    "name": "Nome",
+    "email": "E-mail",
+    "message": "Mensagem",
+    "send": "Enviar mensagem",
+    "sending": "Enviando...",
+    "success": "Mensagem enviada com sucesso!",
+    "error": "Erro ao enviar. Tente novamente."
+  }
+}

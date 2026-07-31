@@ -1,9 +1,12 @@
 <template>
   <div>
     <HeroSection />
+    <StatsSection />
+    <PlatformsSection />
     <FeaturesSection />
     <AboutSection />
     <HowItWorksSection />
+    <CtaSection />
   </div>
 </template>
 

@@ -1,7 +1,19 @@
 {
   "name": "piano-louvorja-site",
+  "version": "1.0.0",
+  "description": "PIANO LouvorJA — Landing page do gerenciador de cultos web",
+  "license": "MIT",
   "type": "module",
   "private": true,
+  "author": "Equipe LouvorJA",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pianolouvorja/site.git"
+  },
+  "homepage": "https://pianolouvorja.com.br",
+  "bugs": {
+    "url": "https://github.com/pianolouvorja/site/issues"
+  },
   "engines": {
     "node": ">=24.18.0",
     "pnpm": ">=11.17.0"
@@ -27,6 +39,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^10.5.0",
     "@tabler/icons-webfont": "^3.46.0",
     "nuxt": "^4.5.1",
     "vue": "^3.5.40",

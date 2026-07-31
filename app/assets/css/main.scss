@@ -1,3 +1,52 @@
+// ============================================
+// PIANO LouvorJA — Brand Design Tokens
+// ============================================
+
+:root {
+  // Brand palette
+  --piano-blue-deep: #10438c;
+  --piano-blue: #04549b;
+  --piano-blue-light: #0a6bc2;
+  --piano-cyan: #00c1e6;
+  --piano-cyan-light: #5dd9f0;
+  --piano-yellow: #fcce02;
+  --piano-yellow-dark: #e0b800;
+
+  // Neutral palette
+  --piano-dark: #0a1733;
+  --piano-slate: #1e2a45;
+  --piano-gray-700: #475569;
+  --piano-gray-500: #64748b;
+  --piano-gray-300: #cbd5e1;
+  --piano-gray-100: #f1f5f9;
+  --piano-white: #ffffff;
+
+  // Semantic tokens
+  --piano-bg-primary: linear-gradient(
+    135deg,
+    var(--piano-blue-deep) 0%,
+    var(--piano-blue) 45%,
+    var(--piano-blue-light) 100%
+  );
+  --piano-bg-accent: linear-gradient(135deg, var(--piano-blue) 0%, var(--piano-cyan) 100%);
+  --piano-text-primary: var(--piano-dark);
+  --piano-text-secondary: var(--piano-gray-700);
+  --piano-text-muted: var(--piano-gray-500);
+  --piano-text-on-dark: #ffffff;
+
+  // Shadows
+  --piano-shadow-sm: 0 1px 3px rgba(16, 67, 140, 0.08);
+  --piano-shadow-md: 0 4px 12px rgba(16, 67, 140, 0.12);
+  --piano-shadow-lg: 0 12px 32px rgba(16, 67, 140, 0.16);
+  --piano-shadow-glow: 0 0 32px rgba(0, 193, 230, 0.3);
+
+  // Radii
+  --piano-radius-sm: 8px;
+  --piano-radius-md: 12px;
+  --piano-radius-lg: 20px;
+  --piano-radius-full: 9999px;
+}
+
 *,
 *::before,
 *::after {
@@ -8,20 +57,43 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family:
+    'Plus Jakarta Sans',
     system-ui,
     -apple-system,
     'Segoe UI',
     Roboto,
     sans-serif;
   line-height: 1.6;
-  color: #1a237e;
+  color: var(--piano-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   color: inherit;
+}
+
+::selection {
+  background: var(--piano-cyan);
+  color: var(--piano-white);
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--piano-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--piano-blue);
+  border-radius: var(--piano-radius-full);
 }
