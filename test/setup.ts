@@ -1,6 +1,6 @@
-import { vi } from 'vitest'
+import { vi, beforeEach } from 'vitest'
 import { config, RouterLinkStub } from '@vue/test-utils'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import ptBR from '../i18n/locales/pt-BR.json'
 
 // Função auxiliar simples para buscar o valor dentro de chaves encadeadas (ex: 'hero.title')
@@ -22,17 +22,25 @@ config.global.mocks = {
 }
 
 // Mock de Composables do Nuxt e Vue i18n
+// Usa uma ref compartilhada para que setLocale possa mutar o estado
+const sharedLocale = ref('pt-BR')
+
+// setLocale como fn estável (mesma referência em todas as chamadas de useI18n)
+const mockSetLocale = vi.fn((code: string) => {
+  sharedLocale.value = code
+})
+
 vi.stubGlobal('useI18n', () => ({
   t: (key: string) => getNestedValue(ptBR, key),
-  locale: { value: 'pt-BR' },
+  locale: sharedLocale,
   locales: {
     value: [
-      { code: 'pt-BR', iso: 'pt-BR' },
-      { code: 'en', iso: 'en' },
-      { code: 'es', iso: 'es' },
+      { code: 'pt-BR', iso: 'pt-BR', name: 'Português' },
+      { code: 'en', iso: 'en', name: 'English' },
+      { code: 'es', iso: 'es', name: 'Español' },
     ],
   },
-  setLocale: vi.fn(),
+  setLocale: mockSetLocale,
 }))
 
 vi.stubGlobal('useRoute', () => ({
@@ -52,3 +60,8 @@ const localStorageMock = {
   removeItem: vi.fn(),
 }
 vi.stubGlobal('localStorage', localStorageMock)
+
+// Reset locale compartilhado entre testes
+beforeEach(() => {
+  sharedLocale.value = 'pt-BR'
+})

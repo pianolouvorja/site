@@ -85,4 +85,12 @@ describe('LegalBodyItem', () => {
     })
     expect(wrapper.find('p').exists()).toBe(true)
   })
+
+  it('renderiza string vazia quando message nao e fornecida', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: {},
+    })
+    expect(wrapper.find('p').exists()).toBe(true)
+    expect(wrapper.text()).toBe('')
+  })
 })

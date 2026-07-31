@@ -1,12 +1,24 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { ref } from 'vue'
+
+const mockLocale = ref('pt-BR')
+
+// Re-stub useI18n with a shared mutable ref so setLocale works reliably
+vi.stubGlobal('useI18n', () => ({
+  locale: mockLocale,
+  locales: {
+    value: [
+      { code: 'pt-BR', iso: 'pt-BR' },
+      { code: 'en', iso: 'en' },
+      { code: 'es', iso: 'es' },
+    ],
+  },
+  setLocale: vi.fn(),
+}))
 
 // Manipulate the mock locale before each test
 function setLocale(code: string) {
-  const mock = (globalThis as any).useI18n
-  // The setup.ts useI18n returns an object with a mutable locale ref.
-  // We call useI18n and set locale.value directly.
-  const { locale } = mock()
-  locale.value = code
+  mockLocale.value = code
 }
 
 import { useLocaleMessages } from '~/composables/useLocaleMessages'
@@ -72,5 +84,11 @@ describe('useLocaleMessages', () => {
     // They should both be defined (different translations of the same key)
     expect(ptResult).toBeDefined()
     expect(enResult).toBeDefined()
+  })
+
+  it('retorna undefined para locale invalido', () => {
+    setLocale('fr')
+    const { raw } = useLocaleMessages()
+    expect(raw('meta.title')).toBeUndefined()
   })
 })

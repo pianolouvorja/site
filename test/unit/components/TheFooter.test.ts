@@ -89,4 +89,17 @@ describe('TheFooter', () => {
     const termsLink = wrapper.find('a[href="/terms"]')
     expect(termsLink.exists()).toBe(true)
   })
+
+  it('navHref processa /#hash quando esta na home', () => {
+    mockRoute.path = '/'
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('/#features')).toBe('#features')
+  })
+
+  it('navHref processa /#hash quando NAO esta na home', () => {
+    mockRoute.path = '/docs'
+    const wrapper = createWrapper()
+    mockLocalePath.mockReturnValue('/pt-BR')
+    expect(wrapper.vm.navHref('/#features')).toBe('/pt-BR#features')
+  })
 })
