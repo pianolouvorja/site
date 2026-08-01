@@ -1,0 +1,93 @@
+name: Homologation
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: homologation-${{ github.event.pull_request.head.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate Staging → Main
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint + Typecheck
+        run: pnpm run lint
+
+      - name: Test + Coverage (100% required)
+        run: pnpm run test:coverage
+
+      - name: SSG Build
+        run: pnpm run build
+
+      - name: Verify source branch is staging
+        run: |
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          if [ "$SOURCE_BRANCH" != "staging" ]; then
+            echo "::error::PRs para main devem vir exclusivamente da branch 'staging'. Branch atual: $SOURCE_BRANCH"
+            exit 1
+          fi
+          echo "::notice::Source branch validada: staging"
+
+      - name: Generate release preview
+        id: preview
+        run: |
+          DRY_RUN=$(npx semantic-release --dry-run 2>&1) || true
+          NEXT_VERSION=$(echo "$DRY_RUN" | grep -oP 'next release version is \K\S+' | head -1)
+          if [ -z "$NEXT_VERSION" ]; then
+            NEXT_VERSION="no-release"
+          fi
+          echo "version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Post validation summary
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = '${{ steps.preview.outputs.version }}';
+            const body = [
+              '## Homologation Report',
+              '',
+              '| Check | Status |',
+              '|-------|--------|',
+              '| Source branch is `staging` | ✅ |',
+              '| Lint + Typecheck | ✅ |',
+              '| Test + Coverage (100%) | ✅ |',
+              '| SSG Build | ✅ |',
+              '',
+              `**Next release version:** \`${version}\``,
+              '',
+              'Este PR está pronto para review e merge para `main` (produção).',
+              '',
+              '> Merge automático não está habilitado. Revise o diff e aprove manualmente.'
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
