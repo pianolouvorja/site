@@ -15,3 +15,4 @@ reports
 .env
 .env.*
 !.env.example
+extract_mutants.py
