@@ -12,6 +12,7 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       reporter: ['text', 'lcov', 'html'],
+      all: true,
       include: ['app/**/*.{ts,vue}'],
       exclude: [
         'app/**/*.d.ts',
