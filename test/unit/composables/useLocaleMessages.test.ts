@@ -21,7 +21,7 @@ function setLocale(code: string) {
   mockLocale.value = code
 }
 
-import { useLocaleMessages } from '~/composables/useLocaleMessages'
+import { useLocaleMessages, deepGet } from '~/composables/useLocaleMessages'
 
 describe('useLocaleMessages', () => {
   beforeEach(() => {
@@ -90,5 +90,52 @@ describe('useLocaleMessages', () => {
     setLocale('fr')
     const { raw } = useLocaleMessages()
     expect(raw('meta.title')).toBeUndefined()
+  })
+
+  it('retorna undefined quando key parcial passa por valor primitivo', () => {
+    // 'meta.title' é string; navegar 'meta.title.foo' tenta descer em primitivo
+    const { raw } = useLocaleMessages()
+    expect(raw('meta.title.foo')).toBeUndefined()
+  })
+
+  it('retorna undefined quando chave intermediaria nao existe', () => {
+    const { raw } = useLocaleMessages()
+    expect(raw('meta.chave_inexistente')).toBeUndefined()
+  })
+
+  it('retorna valor primitivo corretamente para key de profundidade 1', () => {
+    const { raw } = useLocaleMessages()
+    const result = raw('meta.title')
+    expect(typeof result).toBe('string')
+  })
+})
+
+describe('deepGet', () => {
+  it('retorna undefined para obj null', () => {
+    expect(deepGet(null, 'a.b')).toBeUndefined()
+  })
+
+  it('retorna undefined para obj undefined', () => {
+    expect(deepGet(undefined, 'a.b')).toBeUndefined()
+  })
+
+  it('retorna undefined quando caminho desce em primitivo', () => {
+    expect(deepGet({ a: 'str' }, 'a.b')).toBeUndefined()
+  })
+
+  it('retorna undefined quando caminho desce em null', () => {
+    expect(deepGet({ a: null }, 'a.b')).toBeUndefined()
+  })
+
+  it('retorna valor para path valido', () => {
+    expect(deepGet({ a: { b: 42 } }, 'a.b')).toBe(42)
+  })
+
+  it('retorna undefined para chave inexistente', () => {
+    expect(deepGet({ a: 1 }, 'x')).toBeUndefined()
+  })
+
+  it('retorna objeto para path parcial', () => {
+    expect(deepGet({ a: { b: 1 } }, 'a')).toEqual({ b: 1 })
   })
 })

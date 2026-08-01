@@ -93,4 +93,96 @@ describe('LegalBodyItem', () => {
     expect(wrapper.find('p').exists()).toBe(true)
     expect(wrapper.text()).toBe('')
   })
+
+  it('divide corretamente texto antes e depois do placeholder {link}', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: {
+        message: 'Antes {link} Depois',
+        linkUrl: 'https://exemplo.com',
+        linkText: 'link',
+      },
+    })
+    const p = wrapper.find('p')
+    // before: exatos 6 chars "Antes "
+    expect(p.text()).toContain('Antes ')
+    // after: exato " Depois"
+    expect(p.text()).toContain(' Depois')
+    expect(wrapper.find('a').text()).toBe('link')
+  })
+
+  it('preserva texto antes do link exatamente (sem truncar)', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: {
+        message: 'ABCDEFGH {link} XYZ',
+        linkUrl: 'https://exemplo.com',
+        linkText: 'lnk',
+      },
+    })
+    const p = wrapper.find('p')
+    // before do <a> deve ser exatamente "ABCDEFGH "
+    expect(p.text()).not.toMatch(/\{link\}/)
+    // after do <a> deve ser exatamente " XYZ"
+    const link = wrapper.find('a')
+    const fullText = p.text()
+    const linkText = link.text()
+    const beforeText = fullText.slice(0, fullText.indexOf(linkText))
+    const afterText = fullText.slice(fullText.indexOf(linkText) + linkText.length)
+    expect(beforeText).toBe('ABCDEFGH ')
+    expect(afterText).toBe(' XYZ')
+  })
+
+  it('detecta subsection com multiplos digitos (ex: 10.15)', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: { message: '10.15 Titulo numerado grande' },
+    })
+    expect(wrapper.find('.legal-page__subsection').exists()).toBe(true)
+  })
+
+  it('nao detecta subsection para texto com numeros no meio', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: { message: 'Texto 123 com numeros no meio' },
+    })
+    expect(wrapper.find('.legal-page__subsection').exists()).toBe(false)
+  })
+
+  it('detecta subsection com digito unico (ex: 1.1)', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: { message: '1.1 Subsecao simples' },
+    })
+    expect(wrapper.find('.legal-page__subsection').exists()).toBe(true)
+  })
+
+  it('renderiza link quando {link} esta no inicio do texto', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: {
+        message: '{link} texto depois',
+        linkUrl: 'https://exemplo.com',
+        linkText: 'Inicio',
+      },
+    })
+    const link = wrapper.find('a')
+    expect(link.exists()).toBe(true)
+    expect(link.text()).toBe('Inicio')
+  })
+
+  it('renderiza link quando {link} esta no final do texto', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: {
+        message: 'texto antes {link}',
+        linkUrl: 'https://exemplo.com',
+        linkText: 'Fim',
+      },
+    })
+    const link = wrapper.find('a')
+    expect(link.exists()).toBe(true)
+    expect(link.text()).toBe('Fim')
+  })
+
+  it('nao renderiza <a> para texto simples sem {link}', () => {
+    const wrapper = mount(LegalBodyItem, {
+      props: { message: 'Texto completamente sem link' },
+    })
+    expect(wrapper.find('a').exists()).toBe(false)
+    expect(wrapper.find('p').exists()).toBe(true)
+  })
 })

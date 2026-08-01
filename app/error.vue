@@ -13,7 +13,7 @@
   // Stryker restore all
 
   // Se estivermos em dev, vamos expor os detalhes do erro para facilitar o debug
-  const isDev = computed(() => import.meta.dev)
+  const isDev = process.env.NODE_ENV !== 'production'
 
   function handleError() {
     clearError({ redirect: '/' })

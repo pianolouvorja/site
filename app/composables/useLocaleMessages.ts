@@ -19,25 +19,22 @@ const localeData: Record<string, Record<string, unknown>> = {
   es,
 }
 
-type LocaleData = Record<string, unknown>
+export function deepGet(obj: unknown, path: string): unknown {
+  if (obj === null || obj === undefined) return undefined
+  const parts = path.split('.')
+  let cur: unknown = obj
+  for (const p of parts) {
+    if (cur === null || typeof cur !== 'object') return undefined
+    cur = (cur as Record<string, unknown>)[p]
+  }
+  return cur
+}
 
 export function useLocaleMessages() {
   const { locale } = useI18n()
 
   function raw<T = unknown>(key: string): T | undefined {
-    const data: LocaleData | undefined = localeData[locale.value]
-    if (!data) return undefined
-
-    const parts = key.split('.')
-    let current: unknown = data
-    for (const part of parts) {
-      if (current && typeof current === 'object' && part in (current as Record<string, unknown>)) {
-        current = (current as Record<string, unknown>)[part]
-      } else {
-        return undefined
-      }
-    }
-    return current as T
+    return deepGet(localeData[locale.value], key) as T | undefined
   }
 
   function has(key: string): boolean {

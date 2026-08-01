@@ -57,8 +57,36 @@ describe('TheFooter', () => {
   it('navHref usa localePath para rotas internas', () => {
     const wrapper = createWrapper()
     // /privacy passa pelo localePath
-    wrapper.vm.navHref('/privacy')
+    const result = wrapper.vm.navHref('/privacy')
+    expect(result).toBe('/privacy')
     expect(mockLocalePath).toHaveBeenCalledWith('/privacy')
+  })
+
+  it('navHref remove trailing slash do path para verificar isHomePage', () => {
+    mockRoute.path = '/en/'
+    const wrapper = createWrapper()
+    // path '/en/' deve ser tratado como home após remover trailing slash
+    expect(wrapper.vm.navHref('#features')).toBe('#features')
+  })
+
+  it('navHref reconhece /en como home', () => {
+    mockRoute.path = '/en'
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('#features')).toBe('#features')
+  })
+
+  it('navHref reconhece /es como home', () => {
+    mockRoute.path = '/es'
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('#features')).toBe('#features')
+  })
+
+  it('navHref chama localePath com / ao prefixar hash fora da home', () => {
+    mockRoute.path = '/docs'
+    mockLocalePath.mockReturnValue('/pt-BR')
+    const wrapper = createWrapper()
+    wrapper.vm.navHref('#features')
+    expect(mockLocalePath).toHaveBeenCalledWith('/')
   })
 
   it('testa icone do github', () => {
@@ -101,5 +129,15 @@ describe('TheFooter', () => {
     const wrapper = createWrapper()
     mockLocalePath.mockReturnValue('/pt-BR')
     expect(wrapper.vm.navHref('/#features')).toBe('/pt-BR#features')
+  })
+
+  it('navHref passa exatamente / para localePath ao prefixar /#hash fora da home', () => {
+    mockRoute.path = '/docs'
+    const wrapper = createWrapper()
+    // Sem mockReturnValue override — mock identity retorna o argumento recebido.
+    // localePath("/") retorna "/", distinguindo de localePath("") que retornaria "".
+    const result = wrapper.vm.navHref('/#features')
+    expect(result).toBe('/#features')
+    expect(mockLocalePath).toHaveBeenLastCalledWith('/')
   })
 })

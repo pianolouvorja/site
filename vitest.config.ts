@@ -10,7 +10,7 @@ export default defineConfig({
     environment: 'happy-dom',
     include: ['test/**/*.{test,spec}.{ts,tsx}'],
     coverage: {
-      provider: 'v8',
+      provider: 'istanbul',
       reporter: ['text', 'lcov', 'html'],
       include: ['app/**/*.{ts,vue}'],
       exclude: [

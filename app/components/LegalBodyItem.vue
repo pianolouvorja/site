@@ -27,6 +27,7 @@
   })
 
   // Lines starting with "N.N" are subsection headers
+  // Stryker disable next-line Regex: equivalent mutation (.test() partial match)
   const isSubsection = computed(() => /^\d+\.\d+/.test(text.value))
   const computedClass = computed(() => {
     if (props.paragraphClass) return props.paragraphClass

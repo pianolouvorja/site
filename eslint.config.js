@@ -42,6 +42,8 @@ export default [
         defineNuxtConfig: 'readonly',
         useHead: 'readonly',
         useSeoMeta: 'readonly',
+        // Node.js
+        process: 'readonly',
         useAppHead: 'readonly',
         useRoute: 'readonly',
         useRouter: 'readonly',

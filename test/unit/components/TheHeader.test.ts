@@ -179,6 +179,28 @@ describe('TheHeader', () => {
     docSpy.mockRestore()
   })
 
+  it('nao fecha o menu de idiomas ao clicar dentro de .header__lang', async () => {
+    const docSpy = vi.spyOn(document, 'addEventListener')
+    const wrapper = createWrapper()
+    const clickListener = docSpy.mock.calls.find(([event]) => event === 'click')?.[1] as
+      EventListener | undefined
+    expect(clickListener).toBeDefined()
+
+    // Abre o menu de idiomas
+    const langToggle = wrapper.find('[data-testid="header-lang-toggle"]')
+    await langToggle.trigger('click')
+    expect(wrapper.find('[data-testid="header-lang-menu"]').exists()).toBe(true)
+
+    // Simula click inside — target dentro de .header__lang
+    const insideEl = document.createElement('div')
+    insideEl.className = 'header__lang'
+    const fakeEvent = { target: insideEl } as unknown as MouseEvent
+    clickListener!(fakeEvent)
+    await nextTick()
+    expect(wrapper.find('[data-testid="header-lang-menu"]').exists()).toBe(true)
+    docSpy.mockRestore()
+  })
+
   it('detecta scroll da pagina para aplicar estilo header--scrolled', async () => {
     const wrapper = createWrapper()
     expect(wrapper.find('.header').classes()).not.toContain('header--scrolled')
@@ -227,5 +249,61 @@ describe('TheHeader', () => {
     const wrapper = createWrapper()
     expect(wrapper.vm.navHref('#features')).toBe('/#features')
     vi.stubGlobal('useRoute', () => ({ path: '/' }))
+  })
+
+  it('navHref reconhece path com trailing slash como home', () => {
+    vi.stubGlobal('useRoute', () => ({ path: '/en/' }))
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('#features')).toBe('#features')
+    vi.stubGlobal('useRoute', () => ({ path: '/' }))
+  })
+
+  it('navHref reconhece /en como home', () => {
+    vi.stubGlobal('useRoute', () => ({ path: '/en' }))
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('#features')).toBe('#features')
+    vi.stubGlobal('useRoute', () => ({ path: '/' }))
+  })
+
+  it('navHref reconhece /es como home', () => {
+    vi.stubGlobal('useRoute', () => ({ path: '/es' }))
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('#features')).toBe('#features')
+    vi.stubGlobal('useRoute', () => ({ path: '/' }))
+  })
+
+  it('navHref processa rota interna via localePath', () => {
+    const wrapper = createWrapper()
+    expect(wrapper.vm.navHref('/privacy')).toBe('/privacy')
+  })
+
+  it('availableLocales exclui o locale atual', () => {
+    const wrapper = createWrapper()
+    const available = (wrapper.vm as any).availableLocales
+    expect(available.length).toBe(2)
+    expect(available.every((l: any) => l.code !== 'pt-BR')).toBe(true)
+  })
+
+  it('detecta scroll no limite exato (20px nao ativa, 21px ativa)', async () => {
+    const wrapper = createWrapper()
+    // scrollY = 20 NAO deve ativar (condicao e > 20, nao >= 20)
+    Object.defineProperty(window, 'scrollY', { value: 20, writable: true })
+    window.dispatchEvent(new Event('scroll'))
+    await nextTick()
+    expect(wrapper.find('.header').classes()).not.toContain('header--scrolled')
+    // scrollY = 21 DEVE ativar
+    Object.defineProperty(window, 'scrollY', { value: 21, writable: true })
+    window.dispatchEvent(new Event('scroll'))
+    await nextTick()
+    expect(wrapper.find('.header').classes()).toContain('header--scrolled')
+  })
+
+  it('registra scroll listener com opcao passive true', () => {
+    const winSpy = vi.spyOn(window, 'addEventListener')
+    createWrapper()
+    const scrollCall = winSpy.mock.calls.find(([event]) => event === 'scroll')
+    expect(scrollCall).toBeDefined()
+    expect(scrollCall![2]).toEqual({ passive: true })
+    winSpy.mockRestore()
   })
 })
