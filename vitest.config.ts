@@ -16,6 +16,7 @@ export default defineConfig({
       include: ['app/**/*.{ts,vue}'],
       exclude: [
         'app/**/*.d.ts',
+        'app/**/*.stories.ts',
         'app/app.vue',
         'app/layouts/*.vue',
         'app/pages/*.vue',
