@@ -157,6 +157,15 @@ describe('useNewsletter', () => {
 
       expect(errorMessage.value).toBe('Invalid email format.')
     })
+
+    it('define errorMessage como unknown-error quando erro nao tem detail nem message', async () => {
+      mockFetch.mockRejectedValueOnce({})
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('unknown-error')
+    })
   })
 
   describe('reset', () => {
