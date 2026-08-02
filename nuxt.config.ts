@@ -53,4 +53,10 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
+
+  runtimeConfig: {
+    public: {
+      web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
+    },
+  },
 })

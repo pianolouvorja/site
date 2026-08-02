@@ -473,7 +473,7 @@ export default {
           'Deletion of personal data',
           'Information about sharing',
           'How to exercise your rights',
-          'Send an email to contato@pianolouvorja.com with:',
+          'Send an email to contato@pianolouvorja.com.br with:',
           'Full name',
           'Description of the right you want to exercise',
           'Registered email address',
@@ -534,7 +534,7 @@ export default {
       dpo: {
         title: '11. Data Protection Officer (DPO)',
         body: [
-          'In compliance with Art. 41 of LGPD, questions can be sent to contato@pianolouvorja.com.',
+          'In compliance with Art. 41 of LGPD, questions can be sent to contato@pianolouvorja.com.br.',
         ],
       },
       anpd: {

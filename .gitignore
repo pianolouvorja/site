@@ -16,3 +16,6 @@ reports
 .env.*
 !.env.example
 extract_mutants.py
+
+# Internal planning (SDD)
+.planning/

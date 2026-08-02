@@ -476,7 +476,7 @@ export default {
           'Eliminación de datos personales',
           'Información sobre compartir',
           'Cómo ejercer sus derechos',
-          'Envíe un correo a contato@pianolouvorja.com con:',
+          'Envíe un correo a contato@pianolouvorja.com.br con:',
           'Nombre completo',
           'Descripción del derecho que desea ejercer',
           'Correo electrónico registrado',
@@ -537,7 +537,7 @@ export default {
       dpo: {
         title: '11. Encargado de Datos (DPO)',
         body: [
-          'En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato@pianolouvorja.com.',
+          'En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato@pianolouvorja.com.br.',
         ],
       },
       anpd: {

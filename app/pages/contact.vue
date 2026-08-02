@@ -1,8 +1,8 @@
 <script setup lang="ts">
   const { t } = useI18n()
 
-  // Web3Forms config
-  const WEB3FORMS_ACCESS_KEY = 'b18f9c1c-f2c4-4f2a-9c3e-7d6b5a4c3e2f'
+  // Web3Forms config — from runtimeConfig (env variable WEB3FORMS_ACCESS_KEY)
+  const { web3formsKey: WEB3FORMS_ACCESS_KEY } = useRuntimeConfig().public
 
   // Form state
   const form = reactive({

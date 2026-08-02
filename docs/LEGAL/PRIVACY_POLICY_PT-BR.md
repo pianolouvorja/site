@@ -79,7 +79,7 @@ Você possui os seguintes direitos sobre seus dados pessoais:
 
 ### Como exercer seus direitos
 
-Envie um e-mail para **contato@pianolouvorja.com** (ou utilize o formulário de contato) com:
+Envie um e-mail para **contato@pianolouvorja.com.br** (ou utilize o formulário de contato) com:
 
 - Nome completo
 - Descrição do direito que deseja exercer
@@ -123,7 +123,7 @@ Podemos atualizar esta Política de Privacidade a qualquer tempo. A versão mais
 
 Em conformidade com o Art. 41 da LGPD, poderemos designar um encarregado de proteção de dados. Até então, dúvidas podem ser direcionadas para:
 
-- **E-mail:** contato@pianolouvorja.com
+- **E-mail:** contato@pianolouvorja.com.br
 
 ## 12. Autoridade de Proteção de Dados
 

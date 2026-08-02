@@ -85,7 +85,7 @@ Web3Forms processa dados em servidores EUA. Política de Privacidade precisa men
 - [ ] Adicionar checkbox de consentimento no `contact.vue`
 - [ ] Adicionar links legais no footer (`TheFooter.vue`)
 - [ ] Adicionar links legais na página de contato
-- [ ] Definir email DPO funcional (ex: `privacidade@louvorja.app`)
+- [ ] Definir email DPO funcional (ex: `privacidade@pianolouvorja.com.br`)
 
 ### Antes de monetizar o PIANO (software)
 

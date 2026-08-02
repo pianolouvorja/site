@@ -571,12 +571,12 @@ Map<String, String> saccentralFilenames = {
 
 ### Uso Permitido (sem necessidade de licença)
 
-| Fonte                            | Licença                    | Uso Comercial                        |
-| -------------------------------- | -------------------------- | ------------------------------------ |
-| API Louvor JA (PT/ES)            | Própria (Ezequias Fonseca) | ✅ Autorizado                        |
-| NPM `sda-hymnal` (letras EN)     | MIT                        | ✅ Permitido                         |
-| `frazras/SDA-Hymnal` (MIDI EN)   | GPL                        | ✅ Permitido (com source disclosure) |
-| `GospelSounders/all-sda-hymnals` | GPL                        | ✅ Permitido (com source disclosure) |
+| Fonte                            | Licença              | Uso Comercial                        |
+| -------------------------------- | -------------------- | ------------------------------------ |
+| API Louvor JA (PT/ES)            | Própria (mantenedor) | ✅ Autorizado                        |
+| NPM `sda-hymnal` (letras EN)     | MIT                  | ✅ Permitido                         |
+| `frazras/SDA-Hymnal` (MIDI EN)   | GPL                  | ✅ Permitido (com source disclosure) |
+| `GospelSounders/all-sda-hymnals` | GPL                  | ✅ Permitido (com source disclosure) |
 
 ### Uso Condicionado
 
@@ -587,7 +587,7 @@ Map<String, String> saccentralFilenames = {
 
 ### Recomendação
 
-1. **PT/ES:** Sem questões — API Louvor JA é do Ezequias
+1. **PT/ES:** Sem questões — API Louvor JA é interna
 2. **EN letras:** MIT — sem problema
 3. **EN MIDI:** GPL — incluir attribution no app
 4. **EN MP3 SacCentral:** Contactar SacCentral SDA Church pedindo permissão de uso
@@ -601,7 +601,7 @@ Map<String, String> saccentralFilenames = {
 - [ ] **Contactar SacCentral** — pedir permissão formal de uso dos MP3s
 - [ ] **YouTube grabber batch** — script para baixar os 212 hinos faltantes
 - [ ] **Converter MIDI → MP3** (opcional) — usar FluidSynth + SoundFont para gerar MP3 instrumental de qualidade
-- [ ] **Atualizar API Louvor JA** — se Ezequias adicionar EN no futuro, remover cascata complexa
+- [ ] **Atualizar API Louvor JA** — se o mantenedor adicionar EN no futuro, remover cascata complexa
 - [ ] **Testar CORS** no Web PWA — confirmar que `bjaarmy.com` envia `Access-Control-Allow-Origin`
 
 ---
