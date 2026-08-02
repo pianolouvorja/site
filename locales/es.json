@@ -140,6 +140,19 @@
       "offline": "Funciona offline"
     }
   },
+  "newsletter": {
+    "title": "Recibe novedades del proyecto",
+    "subtitle": "Sé avisado sobre nuevas versiones, funciones y actualizaciones. Sin spam.",
+    "placeholder": "Tu mejor correo electrónico",
+    "button": "Suscribir",
+    "loading": "Suscribiendo...",
+    "success": "¡Suscripción confirmada! Gracias.",
+    "errors": {
+      "invalidEmail": "Correo electrónico inválido. Verifica e inténtalo de nuevo.",
+      "alreadySubscribed": "Este correo electrónico ya está suscrito.",
+      "generic": "Error al suscribir. Inténtalo de nuevo."
+    }
+  },
   "cta": {
     "title": "¿Listo para modernizar tus cultos?",
     "subtitle": "Empieza ahora mismo. Sin registro, sin instalación, sin costo. Accede a la plataforma y ve lo simple que es.",

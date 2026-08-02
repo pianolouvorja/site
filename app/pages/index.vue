@@ -6,6 +6,7 @@
     <FeaturesSection />
     <AboutSection />
     <HowItWorksSection />
+    <NewsletterForm variant="section" />
     <CtaSection />
   </div>
 </template>

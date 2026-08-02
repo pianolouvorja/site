@@ -140,6 +140,19 @@
       "offline": "Works offline"
     }
   },
+  "newsletter": {
+    "title": "Get project updates",
+    "subtitle": "Be notified about new releases, features and updates. No spam.",
+    "placeholder": "Your best email",
+    "button": "Subscribe",
+    "loading": "Subscribing...",
+    "success": "Subscription confirmed! Thank you.",
+    "errors": {
+      "invalidEmail": "Invalid email. Please check and try again.",
+      "alreadySubscribed": "This email is already subscribed.",
+      "generic": "Subscription failed. Please try again."
+    }
+  },
   "cta": {
     "title": "Ready to modernize your services?",
     "subtitle": "Start right now. No sign-up, no installation, no cost. Access the platform and see how simple it is.",
