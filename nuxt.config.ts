@@ -17,6 +17,8 @@ export default defineNuxtConfig({
       useCookie: true,
       cookieKey: 'piano_lang',
       redirectOn: 'root',
+      alwaysRedirect: true,
+      fallbackLocale: 'pt-BR',
     },
   },
 
