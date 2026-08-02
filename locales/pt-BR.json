@@ -7,7 +7,9 @@
     "about": "Sobre",
     "docs": "Documentação",
     "contact": "Contato",
-    "cta": "Acessar plataforma"
+    "cta": "Acessar plataforma",
+    "language": "Idioma",
+    "openApp": "Abrir aplicativo"
   },
   "hero": {
     "badge": "Plataforma completa para cultos",
@@ -19,7 +21,8 @@
     "meta": {
       "noInstall": "Sem instalação",
       "free": "100% Gratuito",
-      "openSource": "Código aberto"
+      "openSource": "Código aberto",
+      "anyDevice": "Qualquer dispositivo"
     }
   },
   "stats": {
@@ -177,7 +180,14 @@
     "contact": "Contato",
     "madeWith": "Feito com",
     "forCommunity": "para a comunidade adventista",
-    "rights": "Todos os direitos reservados."
+    "rights": "Todos os direitos reservados.",
+    "tagline": "Sistema web para gerenciamento de cultos adventistas.",
+    "navLabel": "Navegação do rodapé",
+    "navTitle": "Navegação",
+    "legalNavLabel": "Links legais",
+    "legalNavTitle": "Legal",
+    "privacy": "Privacidade",
+    "terms": "Termos"
   },
   "docs": {
     "title": "Documentação",
@@ -187,7 +197,32 @@
     "guides": "Guias",
     "guidesDesc": "Tutoriais detalhados para cada funcionalidade",
     "faq": "Perguntas frequentes",
-    "faqDesc": "Respostas para as dúvidas mais comuns"
+    "faqDesc": "Respostas para as dúvidas mais comuns",
+    "sidebarLabel": "Conteúdo",
+    "sections": {
+      "gettingStarted": {
+        "title": "Primeiros passos"
+      },
+      "shortcuts": {
+        "title": "Atalhos de teclado",
+        "description": "Acelere seu fluxo de trabalho com estes atalhos."
+      },
+      "faq": {
+        "title": "Perguntas frequentes"
+      }
+    },
+    "content": {
+      "gettingStarted": {
+        "intro": "Bem-vindo ao PIANO LouvorJA. Veja como começar em poucos minutos.",
+        "tip": "Dica: use o modo offline para cultos sem conexão à internet."
+      },
+      "shortcuts": {
+        "table": {
+          "action": "Ação",
+          "shortcut": "Atalho"
+        }
+      }
+    }
   },
   "contact": {
     "title": "Entre em contato",
@@ -198,7 +233,25 @@
     "send": "Enviar mensagem",
     "sending": "Enviando...",
     "success": "Mensagem enviada com sucesso!",
-    "error": "Erro ao enviar. Tente novamente."
+    "error": "Erro ao enviar. Tente novamente.",
+    "eyebrow": "Fale conosco",
+    "description": "Tem dúvidas, sugestões ou encontrou um bug? Envie uma mensagem para nossa equipe.",
+    "direct": "Contato direto",
+    "responseTime": "Resposta em até 48 horas",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Seu nome",
+      "email": "E-mail",
+      "emailPlaceholder": "seu@email.com",
+      "subject": "Assunto",
+      "subjectPlaceholder": "Sobre o que deseja falar?",
+      "message": "Mensagem",
+      "messagePlaceholder": "Escreva sua mensagem...",
+      "submit": "Enviar mensagem",
+      "sending": "Enviando...",
+      "success": "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+      "error": "Erro ao enviar mensagem. Tente novamente."
+    }
   },
   "privacy": {
     "title": "Política de Privacidade",
@@ -347,5 +400,15 @@
         ]
       }
     }
+  },
+  "common": {
+    "skipToContent": "Pular para o conteúdo"
+  },
+  "error": {
+    "title404": "Página não encontrada",
+    "title500": "Erro no servidor",
+    "defaultMessage": "Algo deu errado. Tente novamente.",
+    "backHome": "Voltar ao início",
+    "reportIssue": "Reportar problema"
   }
 }

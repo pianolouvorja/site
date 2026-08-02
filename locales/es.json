@@ -7,7 +7,9 @@
     "about": "Acerca de",
     "docs": "Documentación",
     "contact": "Contacto",
-    "cta": "Acceder a la plataforma"
+    "cta": "Acceder a la plataforma",
+    "language": "Idioma",
+    "openApp": "Abrir aplicación"
   },
   "hero": {
     "badge": "Plataforma completa para cultos",
@@ -19,7 +21,8 @@
     "meta": {
       "noInstall": "Sin instalación",
       "free": "100% Gratis",
-      "openSource": "Código abierto"
+      "openSource": "Código abierto",
+      "anyDevice": "Cualquier dispositivo"
     }
   },
   "stats": {
@@ -177,7 +180,14 @@
     "contact": "Contacto",
     "madeWith": "Hecho con",
     "forCommunity": "para la comunidad adventista",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "tagline": "Plataforma web para la gestión de cultos adventistas.",
+    "navLabel": "Navegación del pie de página",
+    "navTitle": "Navegación",
+    "legalNavLabel": "Enlaces legales",
+    "legalNavTitle": "Legal",
+    "privacy": "Privacidad",
+    "terms": "Términos"
   },
   "docs": {
     "title": "Documentación",
@@ -187,7 +197,32 @@
     "guides": "Guías",
     "guidesDesc": "Tutoriales detallados para cada función",
     "faq": "Preguntas frecuentes",
-    "faqDesc": "Respuestas a las preguntas más comunes"
+    "faqDesc": "Respuestas a las preguntas más comunes",
+    "sidebarLabel": "Contenido",
+    "sections": {
+      "gettingStarted": {
+        "title": "Primeros pasos"
+      },
+      "shortcuts": {
+        "title": "Atajos de teclado",
+        "description": "Acelera tu flujo de trabajo con estos atajos."
+      },
+      "faq": {
+        "title": "Preguntas frecuentes"
+      }
+    },
+    "content": {
+      "gettingStarted": {
+        "intro": "Bienvenido a PIANO LouvorJA. Así es como empezar en minutos.",
+        "tip": "Consejo: usa el modo sin conexión para cultos sin internet."
+      },
+      "shortcuts": {
+        "table": {
+          "action": "Acción",
+          "shortcut": "Atajo"
+        }
+      }
+    }
   },
   "contact": {
     "title": "Ponte en contacto",
@@ -198,7 +233,25 @@
     "send": "Enviar mensaje",
     "sending": "Enviando...",
     "success": "¡Mensaje enviado con éxito!",
-    "error": "Error al enviar. Inténtalo de nuevo."
+    "error": "Error al enviar. Inténtalo de nuevo.",
+    "eyebrow": "Contáctanos",
+    "description": "¿Tienes dudas, sugerencias o encontraste un error? Envía un mensaje a nuestro equipo.",
+    "direct": "Contacto directo",
+    "responseTime": "Respuesta en 48 horas",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "tu@correo.com",
+      "subject": "Asunto",
+      "subjectPlaceholder": "¿Sobre qué quieres hablar?",
+      "message": "Mensaje",
+      "messagePlaceholder": "Escribe tu mensaje...",
+      "submit": "Enviar mensaje",
+      "sending": "Enviando...",
+      "success": "¡Mensaje enviado con éxito! Te contactaremos pronto.",
+      "error": "Error al enviar el mensaje. Inténtalo de nuevo."
+    }
   },
   "privacy": {
     "title": "Política de Privacidad",
@@ -343,5 +396,15 @@
         ]
       }
     }
+  },
+  "common": {
+    "skipToContent": "Saltar al contenido"
+  },
+  "error": {
+    "title404": "Página no encontrada",
+    "title500": "Error del servidor",
+    "defaultMessage": "Algo salió mal. Inténtalo de nuevo.",
+    "backHome": "Volver al inicio",
+    "reportIssue": "Reportar problema"
   }
 }
