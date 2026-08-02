@@ -4,15 +4,10 @@ import PlatformsSection from './PlatformsSection.vue'
 const meta = {
   title: 'Sections/PlatformsSection',
   component: PlatformsSection,
+  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
-    docs: {
-      description: {
-        component: 'Platform comparison: Desktop (Electron) and Web (PWA) with feature lists.',
-      },
-    },
   },
-  tags: ['autodocs'],
 } satisfies Meta<typeof PlatformsSection>
 
 export default meta

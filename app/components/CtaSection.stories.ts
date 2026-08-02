@@ -4,16 +4,10 @@ import CtaSection from './CtaSection.vue'
 const meta = {
   title: 'Sections/CtaSection',
   component: CtaSection,
+  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
-    docs: {
-      description: {
-        component:
-          'Call-to-action section with rocket icon, gradient button linking to app, and meta badges.',
-      },
-    },
   },
-  tags: ['autodocs'],
 } satisfies Meta<typeof CtaSection>
 
 export default meta

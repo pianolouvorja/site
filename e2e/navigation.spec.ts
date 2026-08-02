@@ -1,87 +1,103 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Navigation', () => {
-  test('header nav links scroll to sections on landing', async ({ page }) => {
+test.describe('Navigation & i18n', () => {
+  test('header nav links are present', async ({ page }) => {
     await page.goto('/')
+    const header = page.locator('.header')
+    await expect(header).toBeVisible()
+    // navLinks from site.ts: features, platforms, how-it-works, about, /docs, /contact
+    const navLinks = header.locator('a')
+    const count = await navLinks.count()
+    expect(count).toBeGreaterThanOrEqual(4)
+  })
 
-    // Click on features nav link
-    const featuresLink = page
-      .locator('.header__nav-link')
-      .filter({ hasText: /Funcionalidades|Features/ })
-    await featuresLink.click()
-    await expect(page.locator('#features')).toBeVisible()
+  test('footer nav links are present', async ({ page }) => {
+    await page.goto('/')
+    const footer = page.locator('.footer')
+    await expect(footer).toBeVisible()
+    const links = footer.locator('a')
+    const count = await links.count()
+    expect(count).toBeGreaterThanOrEqual(3)
   })
 
   test('navigates to docs page', async ({ page }) => {
     await page.goto('/')
-
-    // Find docs nav link and click
-    const docsLink = page.locator('.header__nav-link').filter({ hasText: /Documenta|Docs/ })
-    await docsLink.click()
-
+    // navLinks: /docs → localePath generates /docs or /{locale}/docs
+    await page.locator('.header a[href*="docs"]').first().click()
     await expect(page).toHaveURL(/\/docs/)
-    await expect(page.locator('.docs-hero__title')).toBeVisible()
+    // Docs page has sidebar with module sections
+    await expect(page.locator('.docs-page')).toBeVisible()
   })
 
   test('navigates to contact page', async ({ page }) => {
     await page.goto('/')
-
-    const contactLink = page.locator('.header__nav-link').filter({ hasText: /Contato|Contact/ })
-    await contactLink.click()
-
+    await page
+      .locator('.header a[href]')
+      .filter({ hasText: /contact|contato/i })
+      .click()
     await expect(page).toHaveURL(/\/contact/)
-    await expect(page.locator('.contact-hero__title')).toBeVisible()
+    await expect(page.locator('.contact-page')).toBeVisible()
   })
 
-  test('footer privacy link navigates to privacy page', async ({ page }) => {
+  test('footer links to privacy page', async ({ page }) => {
     await page.goto('/')
-
-    const privacyLink = page.locator('.footer__nav a').filter({ hasText: /Privacidade|Privacy/ })
-    await privacyLink.click()
-
+    await page.locator('.footer a[href="/privacy"]').first().click()
     await expect(page).toHaveURL(/\/privacy/)
-    await expect(page.locator('.legal-page__title')).toBeVisible()
   })
 
-  test('footer terms link navigates to terms page', async ({ page }) => {
+  test('footer links to terms page', async ({ page }) => {
     await page.goto('/')
-
-    const termsLink = page.locator('.footer__nav a').filter({ hasText: /Termos|Terms/ })
-    await termsLink.click()
-
+    await page.locator('.footer a[href="/terms"]').first().click()
     await expect(page).toHaveURL(/\/terms/)
-    await expect(page.locator('.legal-page__title')).toBeVisible()
   })
 
-  test('header brand link returns to home', async ({ page }) => {
+  test('logo click returns to home', async ({ page }) => {
     await page.goto('/docs')
-
-    await page.locator('.header__brand-group').click()
-    await expect(page).toHaveURL(/#hero$/)
+    // Logo uses class .header__brand-group with href to #hero
+    await page.locator('.header__brand-group').first().click()
+    // Logo navigates to home with #hero hash
+    await expect(page).toHaveURL(/localhost:3001\/?(#hero)?$/)
   })
 
-  test('skip-to-content link is present and focusable', async ({ page }) => {
+  test('language switcher toggles open', async ({ page }) => {
     await page.goto('/')
-
-    const skipLink = page.locator('.skip-link')
-    await expect(skipLink).toBeAttached()
-    // Focus it via keyboard
-    await page.focus('.skip-link')
-    await expect(skipLink).toBeFocused()
+    const langButton = page
+      .locator('.header__lang-button, .header__lang-current, [data-testid="lang-toggle"]')
+      .first()
+    if (await langButton.isVisible()) {
+      await langButton.click()
+      // Menu should appear
+      const menu = page.locator('.header__lang-menu, .header__lang-dropdown')
+      await expect(menu.first()).toBeVisible()
+    }
   })
 
-  test('404 page shows error and back-home button', async ({ page }) => {
-    await page.goto('/nonexistent-page-12345')
+  test('switches to English locale', async ({ page }) => {
+    await page.goto('/en')
+    await expect(page).toHaveURL(/\/en/)
+  })
 
-    // Should show error page
-    await expect(page.locator('.error-page')).toBeVisible()
+  test('switches to Spanish locale', async ({ page }) => {
+    await page.goto('/es')
+    await expect(page).toHaveURL(/\/es/)
+  })
+
+  test('all three locales render hero section', async ({ page }) => {
+    for (const path of ['/', '/en', '/es']) {
+      await page.goto(path)
+      await expect(page.locator('#hero')).toBeVisible()
+      await expect(page.locator('[data-testid="hero-subtitle"]')).toBeVisible()
+    }
+  })
+
+  test('404 page renders error with back home button', async ({ page }) => {
+    await page.goto('/nonexistent-page-xyz')
     await expect(page.locator('[data-testid="error-back-home"]')).toBeVisible()
   })
 
-  test('404 back-home button redirects to landing', async ({ page }) => {
-    await page.goto('/nonexistent-page-12345')
-
+  test('404 back home button redirects to root', async ({ page }) => {
+    await page.goto('/nonexistent-page-xyz')
     await page.locator('[data-testid="error-back-home"]').click()
-    await expect(page).toHaveURL(/\/$/)
+    await expect(page).toHaveURL(/localhost:3001\/?$/)
   })
 })

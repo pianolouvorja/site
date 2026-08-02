@@ -17,6 +17,7 @@ export default [
       'test-results/**',
       'playwright-report/**',
       'node_modules/**',
+      'storybook-static/**',
     ],
   },
   {
