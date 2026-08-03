@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const { t: $t } = useI18n()
+  const { t } = useI18n()
 
   withDefaults(
     defineProps<{
@@ -13,12 +13,11 @@
   // PayPal link
   const paypalLink = 'https://paypal.me/ezequiasfonseca'
   // Pix (can be a copy-paste key or link, using a placeholder for now)
-  const pixKey = 'contato@pianolouvorja.com.br'
+  const pixKey = "contato{'@'}pianolouvorja.com.br"
 
   function copyPix() {
     if (typeof window !== 'undefined') {
       window.navigator.clipboard.writeText(pixKey)
-
       window.alert('Chave PIX copiada!')
     }
   }
@@ -28,10 +27,10 @@
   <div class="donate-button" :class="[`donate-button--${variant}`]">
     <template v-if="variant === 'card'">
       <h4 class="donate-button__title">
-        {{ $t('donate.title') }}
+        {{ t('donate.title') }}
       </h4>
       <p class="donate-button__desc">
-        {{ $t('donate.description') }}
+        {{ t('donate.description') }}
       </p>
     </template>
 
@@ -44,7 +43,7 @@
         class="donate-button__btn donate-button__btn--paypal"
       >
         <i class="ti ti-brand-paypal" />
-        {{ $t('donate.paypal') }}
+        {{ t('donate.paypal') }}
       </a>
 
       <button
@@ -53,7 +52,7 @@
         @click="copyPix"
       >
         <i class="ti ti-currency-real" />
-        {{ $t('donate.pix') }}
+        {{ t('donate.pix') }}
       </button>
     </div>
   </div>

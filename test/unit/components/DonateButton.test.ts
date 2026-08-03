@@ -19,7 +19,7 @@ describe('DonateButton.vue', () => {
 
   it('renderiza o título', () => {
     const wrapper = createWrapper()
-    expect(wrapper.text()).toContain('donate.title')
+    expect(wrapper.text()).toContain('Apoie o Projeto')
   })
 
   it('renderiza botões de paypal e pix', () => {
@@ -30,8 +30,8 @@ describe('DonateButton.vue', () => {
     expect(paypalBtn.exists()).toBe(true)
     expect(pixBtn.exists()).toBe(true)
 
-    expect(paypalBtn.text()).toContain('donate.paypal')
-    expect(pixBtn.text()).toContain('donate.pix')
+    expect(paypalBtn.text()).toContain('PayPal')
+    expect(pixBtn.text()).toContain('PIX')
   })
 
   it('aplica classe de variante corretamente', () => {
