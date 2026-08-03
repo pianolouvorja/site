@@ -62,7 +62,7 @@ describe('NewsletterForm', () => {
 
     it('renderiza o subtítulo da newsletter', () => {
       const wrapper = mountNewsletter()
-      expect(wrapper.text()).toContain('Inscreva-se para atualizações')
+      expect(wrapper.text()).toContain('Seja avisado sobre')
     })
 
     it('tem um campo de input de email', () => {
@@ -81,7 +81,7 @@ describe('NewsletterForm', () => {
     it('renderiza o placeholder no input', () => {
       const wrapper = mountNewsletter()
       const input = wrapper.find('[data-testid="newsletter-email"]')
-      expect(input.attributes('placeholder')).toBe('Seu e-mail')
+      expect(input.attributes('placeholder')).toBe('Seu melhor e-mail')
     })
   })
 
@@ -97,7 +97,7 @@ describe('NewsletterForm', () => {
       const wrapper = mountNewsletter()
       await flushPromises()
       const btn = wrapper.find('[data-testid="newsletter-submit"]')
-      expect(btn.text()).toContain('Enviando...')
+      expect(btn.text()).toContain('Inscrevendo...')
     })
 
     it('mostra mensagem de sucesso quando status é success', async () => {

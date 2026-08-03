@@ -672,5 +672,16 @@
       "alreadySubscribed": "This email is already subscribed.",
       "generic": "Subscription failed. Please try again."
     }
+  },
+  "welcomePopup": {
+    "title": "Welcome to PianoLouvorJA",
+    "description": "The perfect hymnal accompaniment for Seventh-day Adventist hymns on your desktop and mobile.",
+    "close": "Close",
+    "action": "Contact Us"
+  },
+  "cookieBanner": {
+    "message": "We use cookies to improve your experience. By continuing to browse, you agree to our Privacy Policy.",
+    "accept": "I Understand and Accept",
+    "privacyLink": "Read Privacy Policy"
   }
 }

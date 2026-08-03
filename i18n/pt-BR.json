@@ -672,5 +672,16 @@
       "alreadySubscribed": "Este e-mail já está inscrito.",
       "generic": "Erro ao inscrever. Tente novamente."
     }
+  },
+  "welcomePopup": {
+    "title": "Bem-vindo ao PianoLouvorJA",
+    "description": "O acompanhamento perfeito de hinários da Igreja Adventista em seu desktop e celular.",
+    "close": "Fechar",
+    "action": "Falar Conosco"
+  },
+  "cookieBanner": {
+    "message": "Nós utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa Política de Privacidade.",
+    "accept": "Entendi e Aceito",
+    "privacyLink": "Ler Política de Privacidade"
   }
 }

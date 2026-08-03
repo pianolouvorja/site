@@ -8,6 +8,7 @@
     <HowItWorksSection />
     <NewsletterForm variant="section" />
     <CtaSection />
+    <WelcomePopup />
   </div>
 </template>
 
