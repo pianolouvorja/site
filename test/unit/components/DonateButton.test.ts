@@ -7,9 +7,6 @@ describe('DonateButton.vue', () => {
     return mount(DonateButton, {
       props,
       global: {
-        mocks: {
-          $t: (key: string) => key,
-        },
         stubs: {
           transition: false,
         },
@@ -30,8 +27,8 @@ describe('DonateButton.vue', () => {
     expect(paypalBtn.exists()).toBe(true)
     expect(pixBtn.exists()).toBe(true)
 
-    expect(paypalBtn.text()).toContain('PayPal')
-    expect(pixBtn.text()).toContain('PIX')
+    expect(paypalBtn.text()).toContain('Doar via PayPal')
+    expect(pixBtn.text()).toContain('Doar via PIX')
   })
 
   it('aplica classe de variante corretamente', () => {
