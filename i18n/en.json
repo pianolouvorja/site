@@ -683,5 +683,12 @@
     "message": "We use cookies to improve your experience. By continuing to browse, you agree to our Privacy Policy.",
     "accept": "I Understand and Accept",
     "privacyLink": "Read Privacy Policy"
+  },
+  "donate": {
+    "title": "Support the Project",
+    "pix": "Donate via PIX",
+    "paypal": "Donate via PayPal",
+    "crypto": "Cryptocurrencies",
+    "description": "PIANO LouvorJA is maintained by volunteers and needs support to pay for servers and costs."
   }
 }

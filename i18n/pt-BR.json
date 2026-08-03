@@ -683,5 +683,12 @@
     "message": "Nós utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa Política de Privacidade.",
     "accept": "Entendi e Aceito",
     "privacyLink": "Ler Política de Privacidade"
+  },
+  "donate": {
+    "title": "Apoie o Projeto",
+    "pix": "Doar via PIX",
+    "paypal": "Doar via PayPal",
+    "crypto": "Criptomoedas",
+    "description": "PIANO LouvorJA é mantido por voluntários e precisa de apoio para pagar servidores e custos."
   }
 }

@@ -71,6 +71,10 @@
               <i :class="`ti ${social.icon}`" />
             </a>
           </div>
+
+          <div style="margin-top: 1.5rem; width: 100%">
+            <DonateButton variant="inline" />
+          </div>
         </div>
 
         <nav class="footer__nav" :aria-label="$t('footer.navLabel')">
