@@ -685,4 +685,17 @@ export default {
     metaDesc404: 'Page not found — PIANO LouvorJA',
     metaDesc500: 'Server error — PIANO LouvorJA',
   },
+  newsletter: {
+    title: 'Get project updates',
+    subtitle: 'Be notified about new versions, features and updates. No spam.',
+    placeholder: 'Your best email',
+    button: 'Subscribe',
+    loading: 'Subscribing...',
+    success: 'Subscription confirmed! Thank you.',
+    errors: {
+      invalidEmail: 'Invalid email. Please check and try again.',
+      alreadySubscribed: 'This email is already subscribed.',
+      generic: 'Subscription failed. Please try again.',
+    },
+  },
 } as const

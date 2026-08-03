@@ -2,6 +2,7 @@
   import { ref, computed } from 'vue'
   import { useNewsletter } from '~/composables/useNewsletter'
 
+  const { t } = useI18n()
   const { status, errorMessage, validateEmail, subscribe } = useNewsletter()
 
   const email = ref('')
@@ -28,10 +29,10 @@
     <div class="newsletter__container">
       <i class="ti ti-mail newsletter__icon" />
       <h3 class="newsletter__title">
-        {{ $t('newsletter.title') }}
+        {{ t('newsletter.title') }}
       </h3>
       <p class="newsletter__subtitle">
-        {{ $t('newsletter.subtitle') }}
+        {{ t('newsletter.subtitle') }}
       </p>
 
       <form v-if="!isSuccess" class="newsletter__form" @submit.prevent="handleSubmit">
@@ -40,7 +41,7 @@
           data-testid="newsletter-email"
           type="email"
           class="newsletter__input"
-          :placeholder="$t('newsletter.placeholder')"
+          :placeholder="t('newsletter.placeholder')"
           :disabled="isLoading"
           required
         />
@@ -51,7 +52,7 @@
           :disabled="isDisabled"
         >
           <i v-if="isLoading" class="ti ti-loader ti-spin" />
-          {{ isLoading ? $t('newsletter.loading') : $t('newsletter.button') }}
+          {{ isLoading ? t('newsletter.loading') : t('newsletter.button') }}
         </button>
       </form>
 
@@ -73,7 +74,7 @@
           class="newsletter__message newsletter__message--success"
         >
           <i class="ti ti-check" />
-          {{ $t('newsletter.success') }}
+          {{ t('newsletter.success') }}
         </p>
       </transition>
     </div>

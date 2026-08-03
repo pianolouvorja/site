@@ -450,7 +450,7 @@
           "Eliminação dos dados pessoais",
           "Informação sobre compartilhamento",
           "Como exercer seus direitos",
-          "Envie um e-mail para contato{'@'}pianolouvorja.com com:",
+          "Envie um e-mail para contato{'@'}pianolouvorja.com.br com:",
           "Nome completo",
           "Descrição do direito que deseja exercer",
           "Endereço de e-mail cadastrado",
@@ -511,7 +511,7 @@
       "dpo": {
         "title": "11. Encarregado de Dados (DPO)",
         "body": [
-          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato{'@'}pianolouvorja.com."
+          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato{'@'}pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -659,5 +659,18 @@
     "reportIssue": "Reportar problema",
     "metaDesc404": "Página não encontrada — PIANO LouvorJA",
     "metaDesc500": "Erro no servidor — PIANO LouvorJA"
+  },
+  "newsletter": {
+    "title": "Receba novidades do projeto",
+    "subtitle": "Seja avisado sobre novas versões, recursos e atualizações. Sem spam.",
+    "placeholder": "Seu melhor e-mail",
+    "button": "Inscrever",
+    "loading": "Inscrevendo...",
+    "success": "Inscrição confirmada! Obrigado.",
+    "errors": {
+      "invalidEmail": "E-mail inválido. Verifique e tente novamente.",
+      "alreadySubscribed": "Este e-mail já está inscrito.",
+      "generic": "Erro ao inscrever. Tente novamente."
+    }
   }
 }

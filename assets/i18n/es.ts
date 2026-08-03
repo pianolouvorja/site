@@ -688,4 +688,17 @@ export default {
     metaDesc404: 'Página no encontrada — PIANO LouvorJA',
     metaDesc500: 'Error del servidor — PIANO LouvorJA',
   },
+  newsletter: {
+    title: 'Recibe novedades del proyecto',
+    subtitle: 'Sé avisado sobre nuevas versiones, funciones y actualizaciones. Sin spam.',
+    placeholder: 'Tu mejor correo electrónico',
+    button: 'Suscribir',
+    loading: 'Suscribiendo...',
+    success: '¡Suscripción confirmada! Gracias.',
+    errors: {
+      invalidEmail: 'Correo electrónico inválido. Verifica e inténtalo de nuevo.',
+      alreadySubscribed: 'Este correo electrónico ya está suscrito.',
+      generic: 'Error al suscribir. Inténtalo de nuevo.',
+    },
+  },
 } as const

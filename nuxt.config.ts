@@ -6,13 +6,17 @@ export default defineNuxtConfig({
 
   i18n: {
     locales: [
-      { code: 'pt-BR', language: 'pt-BR', name: 'Português', file: 'pt-BR.json' },
+      { code: 'pt-BR', language: 'pt-BR', name: 'Portugues', file: 'pt-BR.json' },
       { code: 'en', language: 'en', name: 'English', file: 'en.json' },
-      { code: 'es', language: 'es', name: 'Español', file: 'es.json' },
+      { code: 'es', language: 'es', name: 'Espanol', file: 'es.json' },
     ],
     defaultLocale: 'pt-BR',
     strategy: 'prefix_except_default',
-    langDir: 'locales',
+    langDir: '',
+    lazy: true,
+    bundle: {
+      compositionOnly: false,
+    },
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'piano_lang',
@@ -22,11 +26,10 @@ export default defineNuxtConfig({
     },
   },
 
-  // Static Site Generation
   ssr: true,
 
-  // Global CSS
   css: ['@tabler/icons-webfont/dist/tabler-icons.min.css', '~/assets/css/main.scss'],
+
   nitro: {
     prerender: {
       crawlLinks: true,
@@ -34,14 +37,12 @@ export default defineNuxtConfig({
     },
   },
 
-  // Allow tunnel hosts (cloudflare quick tunnels)
   vite: {
     server: {
       allowedHosts: true,
     },
   },
 
-  // Favicon and icons only — SEO meta handled by useAppHead composable
   app: {
     head: {
       link: [
