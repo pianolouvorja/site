@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  const { t: $t } = useI18n()
+
   withDefaults(
     defineProps<{
       variant?: 'inline' | 'card'

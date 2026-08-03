@@ -103,9 +103,9 @@ describe('TheFooter', () => {
 
   it('links de privacy e terms usam localePath', () => {
     const wrapper = createWrapper()
-    const privacyLink = wrapper.find('a[href="/privacy"]')
+    const privacyLink = wrapper.find('[to="/privacy"]')
     expect(privacyLink.exists()).toBe(true)
-    const termsLink = wrapper.find('a[href="/terms"]')
+    const termsLink = wrapper.find('[to="/terms"]')
     expect(termsLink.exists()).toBe(true)
   })
 
