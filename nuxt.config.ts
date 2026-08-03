@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     defaultLocale: 'pt-BR',
     strategy: 'prefix_except_default',
     langDir: '',
-    lazy: true,
+
     bundle: {
       compositionOnly: false,
     },
