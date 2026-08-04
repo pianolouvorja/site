@@ -57,8 +57,8 @@ describe('DonateButton.vue', () => {
 
     // Modal aparece
     expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(true)
-    expect(wrapper.find('[data-testid="pix-key"]').exists()).toBe(true)
-    expect(wrapper.find('[data-testid="pix-key"]').text()).toBe('contato@pianolouvorja.com.br')
+    const donateInput = wrapper.find('#donate-amount')
+    expect(donateInput.exists()).toBe(true)
   })
 
   it('fecha modal ao clicar no botão de fechar', async () => {

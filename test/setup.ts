@@ -56,6 +56,7 @@ vi.stubGlobal('useRoute', () => ({
 
 vi.stubGlobal('useHead', vi.fn())
 vi.stubGlobal('computed', computed)
+vi.stubGlobal('ref', ref)
 
 // Mock de useLocalePath (Nuxt i18n auto-import)
 vi.stubGlobal('useLocalePath', () => (path: string) => path)
