@@ -141,7 +141,7 @@ export default {
     text1:
       'O {name} é um projeto colaborativo de código aberto, criado para facilitar o gerenciamento de cultos e programações eclesiásticas.',
     text2:
-      'Desenvolvido pela equipe LouvorJA, a plataforma evolui continuamente com contribuições da comunidade. Gratuito, sem anúncios, sem coleta de dados.',
+      'Desenvolvido pela equipe Piano, a plataforma evolui continuamente com contribuições da comunidade. Gratuito, sem anúncios, sem coleta de dados.',
     openSource: 'Open Source',
     stats: {
       free: 'Gratuito',
@@ -399,9 +399,9 @@ export default {
       github: 'GitHub',
       app: 'Abrir App',
     },
-    copyright: 'Feito pela equipe LouvorJA com fé e dedicação.',
+    copyright: 'Feito pela equipe Piano com fé e dedicação.',
     developedBy: 'Desenvolvido por',
-    team: 'Equipe LouvorJA',
+    team: 'Equipe Piano',
     rights: 'Todos os direitos reservados.',
     legalNavLabel: 'Links legais',
     legalNavTitle: 'Legal',

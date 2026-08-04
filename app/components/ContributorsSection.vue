@@ -91,7 +91,7 @@
       <!-- View all link -->
       <div v-if="!loading && !fetchError && contributors.length > 0" class="contributors__view-all">
         <a
-          href="https://github.com/pianolouvorja/app/graphs/contributors"
+          href="https://github.com/pianolouvorja"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -117,7 +117,7 @@
         </ul>
 
         <a
-          href="https://github.com/pianolouvorja/app"
+          href="https://github.com/pianolouvorja"
           class="contributors__cta-btn"
           target="_blank"
           rel="noopener noreferrer"

@@ -131,7 +131,7 @@
     "eyebrow": "Acerca del Proyecto",
     "title": "Hecho por y para la comunidad",
     "text1": "El {name} es un proyecto colaborativo de código abierto, creado para facilitar la gestión del culto.",
-    "text2": "Desarrollado por el equipo LouvorJA, la plataforma evoluciona continuamente con contribuciones de la comunidad.",
+    "text2": "Desarrollado por el equipo Piano, la plataforma evoluciona continuamente con contribuciones de la comunidad. Gratuito, sin anuncios, sin recopilación de datos.",
     "openSource": "Código Abierto",
     "stats": {
       "free": "Gratis",
@@ -377,9 +377,9 @@
       "github": "GitHub",
       "app": "Abrir App"
     },
-    "copyright": "Hecho por el equipo LouvorJA con fe y dedicación.",
+    "copyright": "Hecho por el equipo Piano con fe y dedicación.",
     "developedBy": "Desarrollado por",
-    "team": "Equipo LouvorJA",
+    "team": "Equipo Piano",
     "rights": "Todos los derechos reservados.",
     "legalNavLabel": "Enlaces legales",
     "legalNavTitle": "Legal",
