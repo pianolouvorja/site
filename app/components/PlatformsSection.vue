@@ -1,5 +1,12 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
   import { siteConfig } from '~/data/site'
+
+  const showNotifyModal = ref(false)
+
+  function handleNotify() {
+    showNotifyModal.value = true
+  }
 
   const platforms = [
     {
@@ -47,7 +54,6 @@
         { icon: 'ti-cloud', key: 'feature3' },
       ],
       accent: 'blue',
-      ctaHref: '#contact',
       ctaLabel: 'platforms.mobile.cta',
     },
   ] as const
@@ -104,6 +110,18 @@
           </ul>
 
           <a
+            v-if="platform.id === 'mobile'"
+            href="#"
+            class="platforms__card-cta"
+            :class="`platforms__card-cta--${platform.accent}`"
+            data-testid="mobile-notify-trigger"
+            @click.prevent="handleNotify"
+          >
+            <span>{{ $t(platform.ctaLabel) }}</span>
+            <i class="ti ti-arrow-right" />
+          </a>
+          <a
+            v-else
             :href="platform.ctaHref"
             class="platforms__card-cta"
             :class="`platforms__card-cta--${platform.accent}`"
@@ -116,6 +134,10 @@
         </div>
       </div>
     </div>
+
+    <ClientOnly>
+      <NotifyModal v-model="showNotifyModal" />
+    </ClientOnly>
   </section>
 </template>
 

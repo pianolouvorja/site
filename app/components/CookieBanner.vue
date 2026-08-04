@@ -1,27 +1,19 @@
 <template>
-  <div
-    v-if="!hasConsented"
-    class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg"
-  >
-    <div
-      class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4"
-    >
-      <div class="text-sm text-gray-700 dark:text-gray-300">
+  <div v-if="!hasConsented" class="cookie-banner">
+    <div class="cookie-banner__container">
+      <div class="cookie-banner__text">
         <p>
           {{ $t('cookieBanner.message') }}
-          <NuxtLink
-            to="/privacy"
-            class="whitespace-nowrap text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 font-medium underline"
-          >
+          <NuxtLink :to="localePath('/privacy')" class="cookie-banner__link">
             {{ $t('cookieBanner.privacyLink') }}
           </NuxtLink>
         </p>
       </div>
 
-      <div class="flex-shrink-0 flex gap-3 w-full sm:w-auto">
+      <div class="cookie-banner__actions">
         <button
           data-testid="accept-cookie-btn"
-          class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors"
+          class="cookie-banner__button"
           @click="acceptCookies"
         >
           {{ $t('cookieBanner.accept') }}
@@ -34,6 +26,7 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
 
+  const localePath = useLocalePath()
   const hasConsented = ref(false)
   const consentCookie = useCookie('piano_cookie_consent', { maxAge: 31536000 })
 
@@ -48,3 +41,82 @@
     hasConsented.value = true
   }
 </script>
+
+<style scoped lang="scss">
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: var(--piano-dark);
+    border-top: 1px solid var(--piano-cyan);
+
+    &__container {
+      max-width: 75rem;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      @media (min-width: 640px) {
+        flex-direction: row;
+      }
+    }
+
+    &__text {
+      font-size: 0.875rem;
+      color: var(--piano-white);
+
+      p {
+        margin: 0;
+      }
+    }
+
+    &__link {
+      white-space: nowrap;
+      color: var(--piano-cyan);
+      font-weight: 500;
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--piano-cyan-light);
+      }
+    }
+
+    &__actions {
+      flex-shrink: 0;
+      display: flex;
+      gap: 0.75rem;
+      width: 100%;
+
+      @media (min-width: 640px) {
+        width: auto;
+      }
+    }
+
+    &__button {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--piano-radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--piano-white);
+      background: var(--piano-blue);
+      cursor: pointer;
+      transition: background 0.2s;
+
+      @media (min-width: 640px) {
+        width: auto;
+      }
+
+      &:hover {
+        background: var(--piano-blue-deep);
+      }
+    }
+  }
+</style>

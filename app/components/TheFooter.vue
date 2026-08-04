@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { siteConfig, navLinks } from '~/data/site'
+  import { siteConfig, navLinks, secondaryNavLinks } from '~/data/site'
 
   const route = useRoute()
   const localePath = useLocalePath()
@@ -81,6 +81,17 @@
           <span class="footer__nav-title">{{ $t('footer.navTitle') }}</span>
           <ul>
             <li v-for="link in navLinks" :key="link.href">
+              <NuxtLink :to="navHref(link.href)">
+                {{ $t(link.i18nKey) }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
+
+        <nav class="footer__nav" :aria-label="$t('footer.moreNavLabel')">
+          <span class="footer__nav-title">{{ $t('footer.moreNavTitle') }}</span>
+          <ul>
+            <li v-for="link in secondaryNavLinks" :key="link.href">
               <NuxtLink :to="navHref(link.href)">
                 {{ $t(link.i18nKey) }}
               </NuxtLink>

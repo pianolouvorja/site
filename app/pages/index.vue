@@ -6,6 +6,7 @@
     <FeaturesSection />
     <AboutSection />
     <HowItWorksSection />
+    <ContributorsSection />
     <NewsletterForm variant="section" />
     <CtaSection />
     <WelcomePopup />

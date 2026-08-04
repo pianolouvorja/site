@@ -11,7 +11,9 @@
     "docs": "Documentación",
     "contact": "Contacto",
     "openApp": "Abrir App",
-    "language": "Idioma"
+    "language": "Idioma",
+    "download": "Descargar",
+    "releases": "Versiones"
   },
   "hero": {
     "badge": "Nuevo: Versión Web Disponible",
@@ -73,6 +75,19 @@
       "feature2": "iOS nativo",
       "feature3": "Sincronización en la nube",
       "cta": "Avisar al lanzar"
+    }
+  },
+  "notifyModal": {
+    "title": "Sé el primero en saber",
+    "subtitle": "Registra tu correo y te avisaremos en cuanto la app móvil esté disponible.",
+    "placeholder": "tu{'@'}correo.com",
+    "button": "Avisar al lanzar",
+    "loading": "Enviando...",
+    "success": "¡Todo listo! Te avisaremos en cuanto lancemos.",
+    "errors": {
+      "invalidEmail": "Por favor, ingresa un correo válido.",
+      "alreadySubscribed": "Este correo ya está registrado.",
+      "generic": "Algo salió mal. Inténtalo de nuevo en unos momentos."
     }
   },
   "features": {
@@ -358,6 +373,8 @@
     "links": {
       "features": "Funciones",
       "platforms": "Plataformas",
+      "download": "Descargar",
+      "releases": "Versiones",
       "howItWorks": "Cómo Funciona",
       "docs": "Documentación",
       "contact": "Contacto",
@@ -370,6 +387,8 @@
     "rights": "Todos los derechos reservados.",
     "legalNavLabel": "Enlaces legales",
     "legalNavTitle": "Legal",
+    "moreNavLabel": "Más enlaces",
+    "moreNavTitle": "Saber más",
     "privacy": "Política de Privacidad",
     "terms": "Términos de Uso"
   },
@@ -674,10 +693,11 @@
     }
   },
   "welcomePopup": {
-    "title": "Bienvenido a PianoLouvorJA",
-    "description": "El acompañamiento perfecto de himnarios de la Iglesia Adventista en tu escritorio y celular.",
+    "title": "Descarga PianoLouvorJA gratis",
+    "description": "Acompaña himnarios de la Iglesia Adventista en escritorio y celular. AppImage, Web App y más — elige tu plataforma.",
     "close": "Cerrar",
-    "action": "Contáctenos"
+    "cta": "Ver opciones de descarga",
+    "secondaryCta": "Continuar navegando"
   },
   "cookieBanner": {
     "message": "Utilizamos cookies para mejorar su experiencia. Al continuar navegando, acepta nuestra Política de Privacidad.",
@@ -687,8 +707,125 @@
   "donate": {
     "title": "Apoya el Proyecto",
     "pix": "Donar vía PIX",
-    "paypal": "Donar vía PayPal",
-    "crypto": "Criptomonedas",
-    "description": "PIANO LouvorJA es mantenido por voluntarios y necesita apoyo para pagar servidores y costos."
+    "description": "PIANO LouvorJA es mantenido por voluntarios y necesita apoyo para pagar servidores y costos.",
+    "pixTitle": "Donación vía PIX",
+    "pixSubtitle": "Copia la clave PIX de abajo y pégala en la app de tu banco",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "close": "Cerrar",
+    "pixHint": "Abre la app de tu banco, elige PIX → Copiar y Pegar, y pega la clave."
+  },
+  "download": {
+    "metaTitle": "Descargar — PIANO LouvorJA",
+    "metaDescription": "Descarga PIANO LouvorJA para escritorio (Linux, Windows, macOS), usa la web app en el navegador, o sigue el roadmap móvil.",
+    "heroEyebrow": "Descargas",
+    "heroTitle": "Obtén PIANO LouvorJA",
+    "heroSubtitle": "Elige la mejor opción para ti. Escritorio nativo con funciones completas, web app instantánea, o móvil próximamente.",
+    "heroWebCta": "Usar Web App",
+    "heroGithubCta": "Ver en GitHub",
+    "platformsTitle": "Elige tu plataforma",
+    "platformsSubtitle": "Cada plataforma con sus propias ventajas",
+    "desktop": {
+      "badge": "Recomendado",
+      "title": "Escritorio Nativo",
+      "description": "App Electron con funciones completas: proyección multi-pantalla independiente, modo offline total y atajos de teclado.",
+      "linux": {
+        "name": "Linux",
+        "format": "AppImage",
+        "arch": "x64",
+        "downloadLabel": "Descargar AppImage",
+        "hint": "Después de descargar, dé permiso de ejecución (chmod +x) y ejecute. Requiere FUSE instalado. Alternativa: conviértalo a Flatpak con flatpak install."
+      },
+      "windows": {
+        "name": "Windows",
+        "format": "Instalador NSIS (.exe)",
+        "arch": "x64",
+        "downloadLabel": "Descargar para Windows",
+        "hint": "Ejecuta el instalador y sigue los pasos."
+      },
+      "macos": {
+        "name": "macOS",
+        "format": "Imagen de Disco (.dmg)",
+        "arch": "x64 / arm64 (Apple Silicon)",
+        "downloadLabel": "Descargar para macOS",
+        "hint": "Abre el .dmg y arrastra la app a Aplicaciones."
+      },
+      "features": {
+        "multiScreen": "Proyección multi-pantalla independiente",
+        "offline": "Funciona 100% offline",
+        "shortcuts": "Atajos de teclado dedicados",
+        "autoUpdate": "Actualizaciones automáticas"
+      },
+      "buildFromSource": "¿Prefieres compilar desde el código fuente?",
+      "buildFromSourceLink": "Ver instrucciones en GitHub"
+    },
+    "web": {
+      "badge": "Instantáneo",
+      "title": "Web App",
+      "description": "Úsala directamente en el navegador. Sin instalación, funciona en cualquier sistema operativo. Ideal para uso rápido o cuando no tienes la app instalada.",
+      "cta": "Abrir Web App",
+      "features": {
+        "noInstall": "Sin instalación",
+        "anyOs": "Cualquier sistema operativo",
+        "autoUpdate": "Actualizaciones automáticas",
+        "pwa": "Instalable como PWA"
+      }
+    },
+    "mobile": {
+      "badge": "Próximamente",
+      "title": "Móvil",
+      "description": "Las apps nativas para Android e iOS están en nuestro roadmap. Mientras tanto, puedes usar la web app en tu teléfono.",
+      "platforms": "Android e iOS",
+      "features": {
+        "nativeAndroid": "Android nativo (planificado)",
+        "nativeIos": "iOS nativo (planificado)",
+        "cloudSync": "Sincronización en la nube (planificado)"
+      },
+      "useWebInstead": "Usar web app en el teléfono por ahora"
+    },
+    "systemRequirements": {
+      "title": "Requisitos del Sistema",
+      "desktop": "Escritorio: 4GB RAM, 500MB espacio en disco, GPU con soporte WebGL",
+      "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexión a internet para primer acceso"
+    }
+  },
+  "contributors": {
+    "title": "Quienes hacen posible PIANO",
+    "subtitle": "PIANO LouvorJA existe gracias a estas personas que dedican su tiempo y conocimiento al proyecto.",
+    "contributions": "contribuciones",
+    "viewAll": "Ver todos en GitHub",
+    "ctaTitle": "Contribuye al proyecto",
+    "ctaText": "PIANO es open-source y crece con la comunidad. Puedes contribuir con código, reportar bugs, sugerir funciones, ayudar con traducciones o compartir el proyecto.",
+    "ctaWays": {
+      "code": "Enviar pull requests en GitHub",
+      "bugs": "Reportar bugs y sugerir mejoras",
+      "translate": "Ayudar con traducciones",
+      "share": "Compartir con tu comunidad"
+    },
+    "ctaButton": "Empezar a contribuir",
+    "loading": "Cargando colaboradores...",
+    "error": "No se pudieron cargar los colaboradores en este momento."
+  },
+  "releases": {
+    "metaTitle": "Notas de Versión — PIANO LouvorJA",
+    "metaDescription": "Historial de versiones y cambios de PIANO LouvorJA. Sigue nuevas funciones, mejoras y correcciones.",
+    "title": "Notas de Versión",
+    "subtitle": "Sigue cada actualización de PIANO LouvorJA. Nuevas funciones, mejoras y correcciones.",
+    "latest": "Más reciente",
+    "version": "Versión",
+    "released": "Lanzada",
+    "highlights": "Destacados",
+    "pullRequests": "PRs",
+    "changelog": "Changelog",
+    "viewOnGithub": "Ver en GitHub",
+    "allVersions": "Todas las versiones",
+    "loading": "Cargando versiones...",
+    "error": "No se pudieron cargar las versiones en este momento.",
+    "noReleases": "Aún no hay versiones publicadas.",
+    "products": {
+      "web": "Web",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    }
   }
 }

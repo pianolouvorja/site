@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import DonateButton from '~/components/DonateButton.vue'
 
 describe('DonateButton.vue', () => {
@@ -8,7 +9,10 @@ describe('DonateButton.vue', () => {
       props,
       global: {
         stubs: {
-          transition: false,
+          teleport: true,
+          Transition: {
+            template: '<slot />',
+          },
         },
       },
     })
@@ -19,16 +23,19 @@ describe('DonateButton.vue', () => {
     expect(wrapper.text()).toContain('Apoie o Projeto')
   })
 
-  it('renderiza botões de paypal e pix', () => {
+  it('renderiza botão PIX', () => {
     const wrapper = createWrapper()
-    const paypalBtn = wrapper.find('[data-testid="donate-paypal"]')
     const pixBtn = wrapper.find('[data-testid="donate-pix"]')
 
-    expect(paypalBtn.exists()).toBe(true)
     expect(pixBtn.exists()).toBe(true)
-
-    expect(paypalBtn.text()).toContain('Doar via PayPal')
     expect(pixBtn.text()).toContain('Doar via PIX')
+  })
+
+  it('não renderiza PayPal', () => {
+    const wrapper = createWrapper()
+    const paypalBtn = wrapper.find('[data-testid="donate-paypal"]')
+
+    expect(paypalBtn.exists()).toBe(false)
   })
 
   it('aplica classe de variante corretamente', () => {
@@ -37,5 +44,35 @@ describe('DonateButton.vue', () => {
 
     expect(wrapperInline.classes()).toContain('donate-button--inline')
     expect(wrapperCard.classes()).toContain('donate-button--card')
+  })
+
+  it('abre modal ao clicar no botão PIX', async () => {
+    const wrapper = createWrapper()
+
+    // Modal não existe antes do clique
+    expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(false)
+
+    // Clica no botão PIX
+    await wrapper.find('[data-testid="donate-pix"]').trigger('click')
+
+    // Modal aparece
+    expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="pix-key"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="pix-key"]').text()).toBe('contato@pianolouvorja.com.br')
+  })
+
+  it('fecha modal ao clicar no botão de fechar', async () => {
+    const wrapper = createWrapper()
+
+    // Abre o modal
+    await wrapper.find('[data-testid="donate-pix"]').trigger('click')
+    expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(true)
+
+    // Clica no X
+    await wrapper.find('[data-testid="pix-close"]').trigger('click')
+    await nextTick()
+
+    // Modal some
+    expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(false)
   })
 })

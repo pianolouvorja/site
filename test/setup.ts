@@ -57,6 +57,9 @@ vi.stubGlobal('useRoute', () => ({
 vi.stubGlobal('useHead', vi.fn())
 vi.stubGlobal('computed', computed)
 
+// Mock de useLocalePath (Nuxt i18n auto-import)
+vi.stubGlobal('useLocalePath', () => (path: string) => path)
+
 // Mock local storage se precisar
 const localStorageMock = {
   getItem: vi.fn(),

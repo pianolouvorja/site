@@ -25,6 +25,9 @@ vi.stubGlobal('useCookie', () => {
   return mockCookieRef
 })
 
+// Mock useLocalePath — returns the path as-is (default locale has no prefix)
+vi.stubGlobal('useLocalePath', () => (path: string) => path)
+
 describe('CookieBanner.vue', () => {
   beforeEach(() => {
     mockCookieRef = { value: undefined }

@@ -84,8 +84,8 @@
 <style scoped lang="scss">
   .newsletter {
     padding: 3.5rem 1.5rem;
-    background: var(--piano-bg-secondary);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--piano-dark);
+    border-top: 1px solid var(--piano-slate);
 
     &__container {
       max-width: 540px;
@@ -103,13 +103,13 @@
     &__title {
       font-size: 1.6rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--piano-text-on-dark);
       margin-bottom: 0.5rem;
     }
 
     &__subtitle {
       font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--piano-text-on-dark-muted);
       margin-bottom: 1.5rem;
     }
 
@@ -124,14 +124,14 @@
       flex: 1;
       min-width: 200px;
       padding: 0.75rem 1rem;
-      border-radius: var(--piano-radius-md, 8px);
-      background: var(--piano-bg-primary);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #fff;
+      border-radius: var(--piano-radius-md);
+      background: var(--piano-slate);
+      border: 1px solid var(--piano-border);
+      color: var(--piano-text-on-dark);
       font-size: 0.95rem;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.4);
+        color: var(--piano-text-on-dark-muted);
       }
 
       &:focus {
@@ -142,11 +142,11 @@
 
     &__button {
       padding: 0.75rem 1.5rem;
-      border-radius: var(--piano-radius-md, 8px);
+      border-radius: var(--piano-radius-md);
       font-weight: 600;
       font-size: 0.95rem;
       background: linear-gradient(135deg, var(--piano-cyan) 0%, var(--piano-blue) 100%);
-      color: #fff;
+      color: var(--piano-text-on-dark);
       border: none;
       cursor: pointer;
       transition:
@@ -176,11 +176,11 @@
       gap: 0.375rem;
 
       &--error {
-        color: #ff6b6b;
+        color: var(--piano-error);
       }
 
       &--success {
-        color: #51cf66;
+        color: var(--piano-cyan-light);
         font-weight: 600;
         font-size: 1.05rem;
       }

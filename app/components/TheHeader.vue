@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref, computed, onMounted, onUnmounted } from 'vue'
-  import { navLinks, siteConfig } from '~/data/site'
+  import { navLinks, secondaryNavLinks, siteConfig } from '~/data/site'
 
   const { locale, locales, setLocale } = useI18n()
   const route = useRoute()
@@ -86,8 +86,8 @@
           src="/brand/logo-louvor-ja.svg"
           alt="Louvor JA"
           class="header__logo"
-          width="36"
-          height="36"
+          width="28"
+          height="28"
         />
         <span class="header__brand">
           <span class="header__brand-louvor">Louvor</span>
@@ -180,6 +180,17 @@
           {{ $t(link.i18nKey) }}
         </NuxtLink>
 
+        <!-- Secondary links (hidden on desktop header, shown on mobile) -->
+        <NuxtLink
+          v-for="link in secondaryNavLinks"
+          :key="link.href"
+          :to="navHref(link.href)"
+          class="header__nav-mobile-link header__nav-mobile-link--secondary"
+          @click="closeMobileMenu"
+        >
+          {{ $t(link.i18nKey) }}
+        </NuxtLink>
+
         <!-- Language switcher mobile -->
         <div class="header__lang-mobile">
           <button
@@ -229,7 +240,7 @@
     }
 
     &__container {
-      max-width: 1236px;
+      max-width: 976px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -248,8 +259,8 @@
     }
 
     &__logo {
-      width: 36px;
-      height: 36px;
+      width: 28px;
+      height: 28px;
       flex-shrink: 0;
       border-radius: 50%;
     }
@@ -257,7 +268,7 @@
     &__brand {
       display: flex;
       gap: 0.25rem;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: -0.01em;
     }
@@ -280,7 +291,7 @@
     }
 
     &__codename {
-      height: 21px;
+      height: 16px;
       width: auto;
       filter: brightness(0) invert(1);
     }
@@ -392,16 +403,21 @@
     &__nav-desktop {
       display: flex;
       gap: 0.25rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     &__nav-link {
       color: rgba(255, 255, 255, 0.85);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      padding: 0.5rem 0.875rem;
+      padding: 0.5rem 0.7rem;
       border-radius: var(--piano-radius-sm);
       transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
 
       &:hover,
       &:focus-visible {
@@ -495,6 +511,12 @@
         background: rgba(0, 193, 230, 0.12);
         color: var(--piano-cyan-light);
       }
+
+      &--secondary {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 400;
+      }
     }
 
     &__nav-mobile-cta {
@@ -516,6 +538,12 @@
       }
     }
 
+    @media (max-width: 1280px) {
+      &__codename {
+        display: none;
+      }
+    }
+
     @media (max-width: 960px) {
       &__nav-desktop {
         display: none;
@@ -523,10 +551,6 @@
     }
 
     @media (max-width: 768px) {
-      &__codename {
-        display: none;
-      }
-
       &__cta {
         display: none;
       }

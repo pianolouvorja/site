@@ -75,6 +75,19 @@
       "cta": "Avisar al lanzar"
     }
   },
+  "notifyModal": {
+    "title": "Sé el primero en saber",
+    "subtitle": "Registra tu correo y te avisaremos en cuanto la app móvil esté disponible.",
+    "placeholder": "tu@correo.com",
+    "button": "Avisar al lanzar",
+    "loading": "Enviando...",
+    "success": "¡Todo listo! Te avisaremos en cuanto lancemos.",
+    "errors": {
+      "invalidEmail": "Por favor, ingresa un correo válido.",
+      "alreadySubscribed": "Este correo ya está registrado.",
+      "generic": "Algo salió mal. Inténtalo de nuevo en unos momentos."
+    }
+  },
   "features": {
     "eyebrow": "Funciones",
     "title": "Todo lo que necesita para el culto",
@@ -167,7 +180,7 @@
       "name": "Nombre",
       "namePlaceholder": "Su nombre",
       "email": "Correo electrónico",
-      "emailPlaceholder": "su{'@'}email.com",
+      "emailPlaceholder": "su@email.com",
       "subject": "Asunto",
       "subjectPlaceholder": "¿Sobre qué es?",
       "message": "Mensaje",
@@ -175,7 +188,7 @@
       "submit": "Enviar Mensaje",
       "sending": "Enviando...",
       "success": "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
-      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com."
+      "error": "Error al enviar. Intente nuevamente o escriba directamente a app@pianolouvorja.com."
     },
     "direct": "O envíe un correo directamente a",
     "responseTime": "Tiempo medio de respuesta: 24-48h"
@@ -450,7 +463,7 @@
           "Eliminación de datos personales",
           "Información sobre compartir",
           "Cómo ejercer sus derechos",
-          "Envíe un correo a contato{'@'}pianolouvorja.com.br con:",
+          "Envíe un correo a contato@pianolouvorja.com.br con:",
           "Nombre completo",
           "Descripción del derecho que desea ejercer",
           "Correo electrónico registrado",
@@ -511,7 +524,7 @@
       "dpo": {
         "title": "11. Encargado de Datos (DPO)",
         "body": [
-          "En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato{'@'}pianolouvorja.com.br."
+          "En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato@pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -519,7 +532,7 @@
         "body": [
           "Puede contactar a la ANPD (Autoridad Nacional de Protección de Datos) para presentar reclamaciones:",
           "Sitio: {link}",
-          "Correo: ouvidoria{'@'}anpd.gov.br"
+          "Correo: ouvidoria@anpd.gov.br"
         ],
         "link": {
           "url": "https://www.gov.br/anpd",
@@ -671,6 +684,26 @@
       "invalidEmail": "Correo electrónico inválido. Verifica e inténtalo de nuevo.",
       "alreadySubscribed": "Este correo electrónico ya está suscrito.",
       "generic": "Error al suscribir. Inténtalo de nuevo."
+    }
+  },
+  "releases": {
+    "metaTitle": "Notas de Versión - PIANO Louvor JA",
+    "metaDescription": "Sigue las últimas actualizaciones, mejoras y correcciones de PIANO Louvor JA.",
+    "title": "Notas de Versión",
+    "subtitle": "Sigue las últimas actualizaciones y mejoras de PIANO.",
+    "loading": "Cargando versiones...",
+    "error": "No se pudieron cargar las versiones. Inténtalo de nuevo más tarde.",
+    "noReleases": "Aún no hay versiones publicadas.",
+    "latest": "Más reciente",
+    "highlights": "Destacados",
+    "pullRequests": "Pull Requests",
+    "changelog": "Cambios",
+    "viewOnGithub": "Ver en GitHub",
+    "allVersions": "Ver todas las versiones",
+    "products": {
+      "web": "Web",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
     }
   }
 }

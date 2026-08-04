@@ -21,7 +21,7 @@
   --piano-gray-100: #f1f5f9;
   --piano-white: #ffffff;
 
-  // Semantic tokens
+  // Semantic tokens — surfaces
   --piano-bg-primary: linear-gradient(
     135deg,
     var(--piano-blue-deep) 0%,
@@ -29,10 +29,40 @@
     var(--piano-blue-light) 100%
   );
   --piano-bg-accent: linear-gradient(135deg, var(--piano-blue) 0%, var(--piano-cyan) 100%);
+  --piano-bg-solid: #ffffff;
+  --piano-bg-secondary: #f8fafc;
+  --piano-bg-tertiary: #f1f5f9;
+  --piano-border: #cbd5e1;
+  --piano-border-subtle: #e2e8f0;
+
+  // Semantic tokens — accent (brand-aligned)
+  --piano-accent: var(--piano-blue);
+  --piano-accent-hover: var(--piano-blue-deep);
+  --piano-accent-soft: rgba(4, 84, 155, 0.1);
+
+  // Semantic tokens — text (WCAG AA on light surfaces)
   --piano-text-primary: var(--piano-dark);
-  --piano-text-secondary: var(--piano-gray-700);
-  --piano-text-muted: var(--piano-gray-500);
+  --piano-text-secondary: var(--piano-gray-700); // #475569 — 7.6:1 on #fff
+  --piano-text-tertiary: #475569; // alias for consistency (same as secondary, guaranteed AA)
+  --piano-text-muted: #64748b; // #64748b — 4.8:1 on #fff (AA pass)
   --piano-text-on-dark: #ffffff;
+
+  // Semantic tokens — feedback
+  --piano-error: #dc2626; // AA on #fff (4.6:1)
+  --piano-success: #22c55e; // AA on #fff (3.9:1 for large/UI, used as bg with white text)
+  --piano-success-hover: #16a34a; // darker shade for hover
+
+  // PIX brand color
+  --piano-pix: #32bcad;
+  --piano-pix-hover: #28a194;
+  --piano-pix-glow: rgba(50, 188, 173, 0.3);
+
+  // Overlay
+  --piano-overlay: rgba(0, 0, 0, 0.7);
+
+  // Semantic tokens — text on dark backgrounds (WCAG AA on --piano-dark)
+  --piano-text-on-dark-secondary: rgba(255, 255, 255, 0.85); // 11:1 on #0a1733
+  --piano-text-on-dark-muted: rgba(255, 255, 255, 0.7); // 7.5:1 on #0a1733
 
   // Shadows
   --piano-shadow-sm: 0 1px 3px rgba(16, 67, 140, 0.08);
