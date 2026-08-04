@@ -1,0 +1,9 @@
+# Funding sources for the PIANO LouvorJA project
+# GitHub Sponsors é nativo. Para doações via PIX (Brasil), usamos custom link.
+# AbacatePay processa PIX e boleto com checkout seguro.
+
+# Doações via PIX usando AbacatePay (Brasil)
+custom: ["https://pianolouvorja.com.br#donate", "https://abacatepay.com"]
+
+# Para usuários que querem sponsorizar via GitHub
+github: [pianolouvorja, rafaumeu]
