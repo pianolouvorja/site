@@ -189,11 +189,15 @@
 
   onMounted(async () => {
     try {
-      const res = await fetch('https://api.github.com/repos/pianolouvorja/web/releases?per_page=10')
+      // Usa proxy interno para fazer a paginação consolidada de todos os repos
+      const res = await fetch('/api/github/releases')
       if (!res.ok) throw new Error('Failed to fetch releases')
       const data: GithubRelease[] = await res.json()
 
-      releases.value = data.map((r) => ({
+      // Vamos pegar só as 10 mais recentes da org toda pra UI, mas os dados estão completos
+      const latestReleases = data.slice(0, 10)
+
+      releases.value = latestReleases.map((r) => ({
         tag: r.tag_name,
         name: r.name || r.tag_name,
         date: formatDate(r.published_at, locale.value),

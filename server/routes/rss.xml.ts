@@ -3,7 +3,7 @@
  * Busca os últimos 20 releases do GitHub (pianolouvorja/web) e retorna XML.
  * Cache de 1h no Cloudflare/Vercel edge.
  */
-const GITHUB_API = 'https://api.github.com/repos/pianolouvorja/web/releases?per_page=20'
+// Removido GITHUB_API pois chamamos via proxy $fetch interno
 
 interface GithubRelease {
   tag_name: string
@@ -32,16 +32,10 @@ export default defineEventHandler(async (event) => {
   let releases: GithubRelease[] = []
 
   try {
-    const res = await fetch(GITHUB_API, {
-      headers: {
-        Accept: 'application/vnd.github+json',
-        'User-Agent': 'piano-site-rss',
-      },
-    })
-
-    if (res.ok) {
-      releases = (await res.json()) as GithubRelease[]
-    }
+    // Usando proxy interno do Nitro ($fetch em vez de fetch absoluto para o próprio servidor)
+    releases = await $fetch<GithubRelease[]>('/api/github/releases')
+    // Pega as 20 mais recentes da org inteira
+    releases = releases.slice(0, 20)
   } catch {
     // Se GitHub falhar, retorna feed vazio (não quebra o site)
   }

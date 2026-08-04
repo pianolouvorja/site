@@ -14,16 +14,14 @@
 
   onMounted(async () => {
     try {
-      const res = await fetch(
-        'https://api.github.com/repos/pianolouvorja/app/contributors?per_page=12',
-      )
+      // Usa a nova API proxy interna que pagina todos os repos da org
+      const res = await fetch('/api/github/contributors')
       if (!res.ok) throw new Error('Failed to fetch contributors')
       const data: Contributor[] = await res.json()
 
-      // Filter out bots from display (keep real people first)
-      contributors.value = data.filter(
-        (c) => !c.login.includes('[bot]') && !c.login.endsWith('-bot'),
-      )
+      // O backend já filtrou bots e consolidou os repositórios
+      // Limitando a 12 na UI para manter o grid bonito, mas agora puxou todos
+      contributors.value = data.slice(0, 12)
     } catch {
       fetchError.value = true
     } finally {

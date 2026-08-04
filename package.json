@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@nuxtjs/i18n": "^10.5.0",
+    "@octokit/rest": "^22.0.1",
     "@tabler/icons-webfont": "^3.46.0",
     "firebase": "^12.17.0",
     "firebase-admin": "^14.2.0",
