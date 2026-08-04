@@ -63,7 +63,8 @@ export default defineEventHandler(async (event) => {
     .join('\n')
 
   const now = new Date().toUTCString()
-  const lastBuild = releases.length > 0 ? new Date(releases[0].published_at).toUTCString() : now
+  const latest = releases[0]
+  const lastBuild = latest ? new Date(latest!.published_at).toUTCString() : now
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
