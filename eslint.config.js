@@ -45,6 +45,11 @@ export default [
         useSeoMeta: 'readonly',
         // Node.js
         process: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
         useAppHead: 'readonly',
         useRoute: 'readonly',
         useRouter: 'readonly',
