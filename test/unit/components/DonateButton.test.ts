@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import DonateButton from '~/components/DonateButton.vue'
 
@@ -99,6 +99,39 @@ describe('DonateButton.vue', () => {
     })
   })
 
+  it('mostra erro quando criação de PIX falha via fetch (exceção)', async () => {
+    const wrapper = createWrapper()
+
+    // Simulate error throw
+    global.$fetch = vi.fn().mockRejectedValue(new Error('Network error'))
+
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
+    await wrapper.find('#donate-amount').setValue('10,00')
+    await wrapper.find('.card-form__button').trigger('click')
+
+    // Wait for internal promises to resolve
+    await flushPromises()
+
+    // Check if error state was set (or simply coverage has increased)
+    expect(wrapper.find('.card-form__error').exists()).toBe(true)
+  })
+
+  it('mostra erro quando criação de PIX falha via status da API (sem url)', async () => {
+    const wrapper = createWrapper()
+
+    // Simulate API return without URL
+    global.$fetch = vi.fn().mockResolvedValue({})
+
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
+    await wrapper.find('#donate-amount').setValue('10,00')
+    await wrapper.find('.card-form__button').trigger('click')
+
+    // Wait for internal promises to resolve
+    await flushPromises()
+
+    expect(wrapper.find('.card-form__error').exists()).toBe(true)
+  })
+
   it('falha na doação se não tiver valor', async () => {
     const wrapper = createWrapper()
 
@@ -108,5 +141,23 @@ describe('DonateButton.vue', () => {
     const submitBtn = wrapper.find('.card-form__button')
     // Botão é disabled quando não tem valor (pixAmount vazio/null)
     expect(submitBtn.attributes('disabled')).toBeDefined()
+  })
+
+  it('não processa pagamento se o valor for menor que 1', async () => {
+    // Clear mock just in case previous tests left it
+    vi.clearAllMocks()
+
+    const wrapper = createWrapper()
+
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
+
+    // Simulate removing disabled programmatically (to test internal func) or call function directly
+    // For coverage of line 36: `if (!amountFloat || amountFloat < 1) return`
+    const vm = wrapper.vm as any
+    vm.pixAmount = '0,50' // set directly on instance to bypass input parsing state issues
+    await vm.processPixPayment()
+
+    expect(global.$fetch).not.toHaveBeenCalled()
+    expect(vm.pixStatus).toBe('idle')
   })
 })
