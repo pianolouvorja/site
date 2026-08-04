@@ -702,6 +702,7 @@
   "cookieBanner": {
     "message": "We use cookies to improve your experience. By continuing to browse, you agree to our Privacy Policy.",
     "accept": "I Understand and Accept",
+    "reject": "Decline",
     "privacyLink": "Read Privacy Policy"
   },
   "donate": {
@@ -709,11 +710,40 @@
     "pix": "Donate via PIX",
     "description": "PIANO LouvorJA is maintained by volunteers and needs support to pay for servers and costs.",
     "pixTitle": "PIX Donation",
-    "pixSubtitle": "Copy the PIX key below and paste it in your bank app",
+    "pixSubtitle": "Enter the donation amount and you will be redirected to a secure checkout",
     "copy": "Copy",
     "copied": "Copied!",
     "close": "Close",
-    "pixHint": "Open your bank app, choose PIX → Copy and Paste, and paste the key."
+    "pixHint": "Open your bank app, choose PIX → Copy and Paste, and paste the key.",
+    "card": "Donate with Card",
+    "cardTitle": "Card Donation",
+    "cardSubtitle": "Donate securely using AbacatePay",
+    "cardButton": "Pay with Card",
+    "cardProcessing": "Processing...",
+    "cardSuccess": "Donation completed! Thank you.",
+    "cardError": "Error processing payment. Please try again.",
+    "amountLabel": "Amount (R$)",
+    "amountPlaceholder": "Ex: 10.00",
+    "cardUnavailable": "Card payment currently unavailable",
+    "pixButton": "Donate with PIX",
+    "pixRedirectHint": "You will be redirected to AbacatePay checkout, where you can scan the QR Code or copy the PIX code."
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "loginTitle": "Restricted Access",
+    "loginSubtitle": "Sign in to access the panel",
+    "email": "Email",
+    "emailPlaceholder": "admin{'@'}pianolouvorja.com.br",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "loginButton": "Sign In",
+    "loginError": "Invalid email or password",
+    "loggingIn": "Signing in...",
+    "logout": "Sign Out",
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "stats": "Statistics",
+    "backToSite": "Back to site"
   },
   "download": {
     "metaTitle": "Download — PIANO LouvorJA",

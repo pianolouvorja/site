@@ -70,18 +70,21 @@
       icon: '', // Tux renderizado via SVG inline no template
       i18nPrefix: 'download.desktop.linux',
       recommended: detectedOs.value === 'linux',
+      requiresDiskSpace: true,
     },
     {
       os: 'windows' as const,
       icon: 'ti-brand-windows',
       i18nPrefix: 'download.desktop.windows',
       recommended: detectedOs.value === 'windows',
+      requiresDiskSpace: true,
     },
     {
       os: 'macos' as const,
       icon: 'ti-brand-apple',
       i18nPrefix: 'download.desktop.macos',
       recommended: detectedOs.value === 'macos',
+      requiresDiskSpace: true,
     },
   ])
 </script>
@@ -196,7 +199,6 @@
           </div>
         </div>
 
-        <!-- Desktop features -->
         <ul class="download-features">
           <li>
             <i class="ti ti-check" aria-hidden="true" />
@@ -213,6 +215,11 @@
           <li>
             <i class="ti ti-check" aria-hidden="true" />
             {{ $t('download.desktop.features.autoUpdate') }}
+          </li>
+          <!-- TODO: add localization for disk space requirement, using hardcoded string for now -->
+          <li class="download-features__disk-space">
+            <i class="ti ti-database" aria-hidden="true" />
+            Requer 15GB de espaço livre para funcionar offline
           </li>
         </ul>
 
@@ -622,28 +629,36 @@
     padding: 0;
     margin: 0 0 2rem;
     display: grid;
+    gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.75rem;
 
     li {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       font-size: 0.9375rem;
       color: var(--piano-text-secondary);
 
       i {
-        color: #16a34a;
-        font-size: 1.125rem;
+        color: var(--piano-accent);
+        font-size: 1.25rem;
       }
     }
 
-    &--muted li i {
-      color: #b45309;
+    &__disk-space {
+      color: #b45309 !important; /* Warning color */
+
+      i {
+        color: #b45309 !important;
+      }
+    }
+
+    &--muted {
+      li i {
+        color: var(--piano-text-tertiary);
+      }
     }
   }
-
-  /* Build from source */
   .download-source {
     display: flex;
     align-items: center;

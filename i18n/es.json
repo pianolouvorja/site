@@ -702,6 +702,7 @@
   "cookieBanner": {
     "message": "Utilizamos cookies para mejorar su experiencia. Al continuar navegando, acepta nuestra Política de Privacidad.",
     "accept": "Entiendo y Acepto",
+    "reject": "Rechazar",
     "privacyLink": "Leer Política de Privacidad"
   },
   "donate": {
@@ -709,11 +710,40 @@
     "pix": "Donar vía PIX",
     "description": "PIANO LouvorJA es mantenido por voluntarios y necesita apoyo para pagar servidores y costos.",
     "pixTitle": "Donación vía PIX",
-    "pixSubtitle": "Copia la clave PIX de abajo y pégala en la app de tu banco",
+    "pixSubtitle": "Ingrese el monto de la donación y será redirigido a un pago seguro",
     "copy": "Copiar",
     "copied": "¡Copiado!",
     "close": "Cerrar",
-    "pixHint": "Abre la app de tu banco, elige PIX → Copiar y Pegar, y pega la clave."
+    "pixHint": "Abre la app de tu banco, elige PIX → Copiar y Pegar, y pega la clave.",
+    "card": "Donar con Tarjeta",
+    "cardTitle": "Donación con Tarjeta",
+    "cardSubtitle": "Dona de forma segura con AbacatePay",
+    "cardButton": "Pagar con Tarjeta",
+    "cardProcessing": "Procesando...",
+    "cardSuccess": "¡Donación realizada! Gracias.",
+    "cardError": "Error al procesar el pago. Inténtalo de nuevo.",
+    "amountLabel": "Monto (R$)",
+    "amountPlaceholder": "Ej: 10,00",
+    "cardUnavailable": "Pago con tarjeta no disponible actualmente",
+    "pixButton": "Donar con PIX",
+    "pixRedirectHint": "Serás redirigido al checkout de AbacatePay, donde podrás escanear el código QR o copiar el código PIX."
+  },
+  "admin": {
+    "title": "Panel Administrativo",
+    "loginTitle": "Acceso Restringido",
+    "loginSubtitle": "Inicia sesión para acceder al panel",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "admin{'@'}pianolouvorja.com.br",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "loginButton": "Iniciar Sesión",
+    "loginError": "Correo o contraseña inválidos",
+    "loggingIn": "Iniciando sesión...",
+    "logout": "Cerrar Sesión",
+    "welcome": "Bienvenido",
+    "dashboard": "Panel",
+    "stats": "Estadísticas",
+    "backToSite": "Volver al sitio"
   },
   "download": {
     "metaTitle": "Descargar — PIANO LouvorJA",

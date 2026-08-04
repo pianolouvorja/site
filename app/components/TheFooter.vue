@@ -138,8 +138,8 @@
 
     &__top {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 3rem;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
       padding-bottom: 2.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -293,9 +293,10 @@
       }
     }
 
-    @media (min-width: 601px) and (max-width: 960px) {
+    @media (min-width: 601px) and (max-width: 1024px) {
       &__top {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem;
       }
 
       &__brand {

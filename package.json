@@ -42,7 +42,10 @@
   "dependencies": {
     "@nuxtjs/i18n": "^10.5.0",
     "@tabler/icons-webfont": "^3.46.0",
+    "firebase": "^12.17.0",
+    "firebase-admin": "^14.2.0",
     "nuxt": "^4.5.1",
+    "nuxt-gtag": "^4.1.0",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0"
   },

@@ -12,6 +12,13 @@
 
       <div class="cookie-banner__actions">
         <button
+          data-testid="reject-cookie-btn"
+          class="cookie-banner__button cookie-banner__button--reject"
+          @click="rejectCookies"
+        >
+          {{ $t('cookieBanner.reject') }}
+        </button>
+        <button
           data-testid="accept-cookie-btn"
           class="cookie-banner__button"
           @click="acceptCookies"
@@ -28,17 +35,49 @@
 
   const localePath = useLocalePath()
   const hasConsented = ref(false)
-  const consentCookie = useCookie('piano_cookie_consent', { maxAge: 31536000 })
+  const consentCookie = useCookie<'true' | 'false' | undefined>('piano_cookie_consent', {
+    maxAge: 31536000,
+  })
+
+  /**
+   * Updates Google Consent Mode v2 signals.
+   * Called on mount (with stored value) and on user action.
+   */
+  function updateConsent(granted: boolean) {
+    if (import.meta.client) {
+      const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+      if (typeof w.gtag === 'function') {
+        w.gtag('consent', 'update', {
+          analytics_storage: granted ? 'granted' : 'denied',
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+        })
+      }
+    }
+  }
 
   onMounted(() => {
     if (consentCookie.value === 'true') {
       hasConsented.value = true
+      updateConsent(true)
+    } else if (consentCookie.value === 'false') {
+      hasConsented.value = true
+      updateConsent(false)
     }
+    // If no cookie, banner shows — default consent "denied" is set by nuxt-gtag initialConsent: false
   })
 
   const acceptCookies = () => {
     consentCookie.value = 'true'
     hasConsented.value = true
+    updateConsent(true)
+  }
+
+  const rejectCookies = () => {
+    consentCookie.value = 'false'
+    hasConsented.value = true
+    updateConsent(false)
   }
 </script>
 
@@ -116,6 +155,17 @@
 
       &:hover {
         background: var(--piano-blue-deep);
+      }
+
+      &--reject {
+        background: transparent;
+        border: 1px solid var(--piano-border-subtle);
+        color: var(--piano-text-on-dark-secondary);
+
+        &:hover {
+          background: var(--piano-slate);
+          color: var(--piano-text-on-dark);
+        }
       }
     }
   }

@@ -66,6 +66,10 @@ export default [
         defineNuxtRouteMiddleware: 'readonly',
         useAppConfig: 'readonly',
         useRequestHeaders: 'readonly',
+        // Custom composables (Nuxt auto-imports from ~/composables)
+        useFirebaseAuth: 'readonly',
+        useAuthState: 'readonly',
+        useNewsletter: 'readonly',
         // Browser DOM types
         MouseEvent: 'readonly',
         KeyboardEvent: 'readonly',

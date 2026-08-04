@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-
   const { t } = useI18n()
 
   withDefaults(
@@ -12,33 +10,51 @@
     },
   )
 
-  // PIX key for copy-paste
-  const pixKey = 'contato@pianolouvorja.com.br'
-
-  // Modal state
-  const showModal = ref(false)
-  const copied = ref(false)
+  // PIX checkout state (via AbacatePay hosted checkout)
+  const showPixModal = ref(false)
+  const pixStatus = ref<'idle' | 'processing' | 'success' | 'error'>('idle')
+  const pixAmount = ref('')
+  const checkoutUrl = ref<string | null>(null)
 
   function openPixModal() {
-    showModal.value = true
-    copied.value = false
+    showPixModal.value = true
+    pixStatus.value = 'idle'
+    pixAmount.value = ''
+    checkoutUrl.value = null
   }
 
-  function closeModal() {
-    showModal.value = false
-    copied.value = false
+  function closePixModal() {
+    showPixModal.value = false
+    pixStatus.value = 'idle'
+    pixAmount.value = ''
+    checkoutUrl.value = null
   }
 
-  async function copyPix() {
+  async function processPixPayment() {
+    const cleaned = pixAmount.value.replace(',', '.')
+    const amountFloat = parseFloat(cleaned)
+    if (!amountFloat || amountFloat < 1) return
+
+    const amountCents = Math.round(amountFloat * 100)
+
+    pixStatus.value = 'processing'
+
     try {
-      await navigator.clipboard.writeText(pixKey)
-      copied.value = true
-      setTimeout(() => {
-        copied.value = false
-      }, 3000)
+      const { checkoutUrl: url } = await $fetch<{ checkoutUrl: string }>('/api/donate/create', {
+        method: 'POST',
+        body: { amount: amountCents },
+      })
+
+      if (url) {
+        checkoutUrl.value = url
+        pixStatus.value = 'success'
+        // Redirect to AbacatePay hosted checkout (PIX QR + copia-cola)
+        window.location.href = url
+      } else {
+        pixStatus.value = 'error'
+      }
     } catch {
-      // Fallback: select text manually
-      copied.value = false
+      pixStatus.value = 'error'
     }
   }
 </script>
@@ -63,23 +79,32 @@
         <i class="ti ti-currency-real" />
         {{ t('donate.pix') }}
       </button>
+      <button
+        data-testid="donate-card"
+        class="donate-button__btn donate-button__btn--card donate-button__btn--disabled"
+        disabled
+        :title="t('donate.cardUnavailable')"
+      >
+        <i class="ti ti-credit-card" />
+        {{ t('donate.card') }}
+      </button>
     </div>
 
-    <!-- Custom PIX Modal -->
+    <!-- PIX Donation Modal → AbacatePay hosted checkout -->
     <Teleport to="body">
       <Transition name="pix-modal">
         <div
-          v-if="showModal"
+          v-if="showPixModal"
           class="pix-overlay"
           data-testid="pix-overlay"
-          @click.self="closeModal"
+          @click.self="closePixModal"
         >
           <div class="pix-modal" role="dialog" aria-modal="true" :aria-label="t('donate.pixTitle')">
             <button
               class="pix-modal__close"
               data-testid="pix-close"
               :aria-label="t('donate.close')"
-              @click="closeModal"
+              @click="closePixModal"
             >
               <i class="ti ti-x" />
             </button>
@@ -95,22 +120,38 @@
               {{ t('donate.pixSubtitle') }}
             </p>
 
-            <div class="pix-modal__key-box">
-              <code data-testid="pix-key">{{ pixKey }}</code>
-              <button
-                data-testid="pix-copy"
-                class="pix-modal__copy-btn"
-                :class="{ 'pix-modal__copy-btn--copied': copied }"
-                @click="copyPix"
-              >
-                <i :class="copied ? 'ti ti-check' : 'ti ti-copy'" />
-                {{ copied ? t('donate.copied') : t('donate.copy') }}
-              </button>
-            </div>
+            <div class="card-form">
+              <label for="donate-amount" class="card-form__label">
+                {{ t('donate.amountLabel') }}
+              </label>
+              <input
+                id="donate-amount"
+                v-model="pixAmount"
+                type="text"
+                inputmode="decimal"
+                class="card-form__input"
+                :placeholder="t('donate.amountPlaceholder')"
+                :disabled="pixStatus === 'processing'"
+                @keyup.enter="processPixPayment"
+              />
 
-            <p class="pix-modal__hint">
-              {{ t('donate.pixHint') }}
-            </p>
+              <p v-if="pixStatus === 'error'" class="card-form__error">
+                {{ t('donate.cardError') }}
+              </p>
+
+              <button
+                class="card-form__button"
+                :disabled="pixStatus === 'processing' || !pixAmount"
+                @click="processPixPayment"
+              >
+                {{
+                  pixStatus === 'processing' ? t('donate.cardProcessing') : t('donate.pixButton')
+                }}
+              </button>
+              <p class="pix-modal__hint">
+                {{ t('donate.pixRedirectHint') }}
+              </p>
+            </div>
           </div>
         </div>
       </Transition>
@@ -176,6 +217,91 @@
       &--pix {
         background: var(--piano-pix);
         color: var(--piano-text-on-dark);
+      }
+
+      &--card {
+        background: var(--piano-blue);
+        color: var(--piano-white);
+
+        &:hover {
+          background: var(--piano-blue-deep);
+        }
+      }
+
+      &--disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+
+        &:hover {
+          transform: none;
+          background: var(--piano-blue);
+        }
+      }
+    }
+  }
+
+  /* Card Donation Form */
+  .card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    &__label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--piano-text-on-dark-secondary);
+      text-align: left;
+    }
+
+    &__input {
+      width: 100%;
+      padding: 0.625rem 0.75rem;
+      background: var(--piano-slate);
+      border: 1px solid var(--piano-border-subtle);
+      border-radius: var(--piano-radius-sm);
+      color: var(--piano-white);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: var(--piano-cyan);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+
+    &__error {
+      padding: 0.5rem 0.75rem;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--piano-radius-sm);
+      font-size: 0.8125rem;
+      color: #fca5a5;
+      margin: 0;
+    }
+
+    &__button {
+      width: 100%;
+      padding: 0.625rem 1.25rem;
+      background: var(--piano-blue);
+      color: var(--piano-white);
+      border: none;
+      border-radius: var(--piano-radius-sm);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover:not(:disabled) {
+        background: var(--piano-blue-deep);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
   }
