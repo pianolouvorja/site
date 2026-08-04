@@ -21,7 +21,7 @@ export default [
     ],
   },
   {
-    files: ['**/*.vue', '**/*.ts'],
+    files: ['**/*.vue', '**/*.ts', '**/*.js', '**/*.cjs'],
     languageOptions: {
       parserOptions: {
         parser: tseslint.parser,
