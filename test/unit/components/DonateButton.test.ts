@@ -20,15 +20,17 @@ describe('DonateButton.vue', () => {
 
   it('renderiza o título', () => {
     const wrapper = createWrapper()
-    expect(wrapper.text()).toContain('Apoie o Projeto')
+    const title = wrapper.find('.donate-button__title')
+    expect(title.exists()).toBe(true)
+    expect(title.text()).toBe('Apoie o Projeto')
   })
 
-  it('renderiza botão PIX', () => {
+  it('renderiza botão único', () => {
     const wrapper = createWrapper()
-    const pixBtn = wrapper.find('[data-testid="donate-pix"]')
+    const pixBtn = wrapper.find('[data-testid="donate-button"]')
 
     expect(pixBtn.exists()).toBe(true)
-    expect(pixBtn.text()).toContain('Doar via PIX')
+    expect(pixBtn.text()).toContain('Doar (PIX / Boleto)')
   })
 
   it('não renderiza PayPal', () => {
@@ -46,14 +48,14 @@ describe('DonateButton.vue', () => {
     expect(wrapperCard.classes()).toContain('donate-button--card')
   })
 
-  it('abre modal ao clicar no botão PIX', async () => {
+  it('abre modal ao clicar no botão único', async () => {
     const wrapper = createWrapper()
 
     // Modal não existe antes do clique
     expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(false)
 
     // Clica no botão PIX
-    await wrapper.find('[data-testid="donate-pix"]').trigger('click')
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
 
     // Modal aparece
     expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(true)
@@ -65,7 +67,7 @@ describe('DonateButton.vue', () => {
     const wrapper = createWrapper()
 
     // Abre o modal
-    await wrapper.find('[data-testid="donate-pix"]').trigger('click')
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
     expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(true)
 
     // Clica no X
@@ -74,5 +76,37 @@ describe('DonateButton.vue', () => {
 
     // Modal some
     expect(wrapper.find('[data-testid="pix-overlay"]').exists()).toBe(false)
+  })
+
+  it('processa doação', async () => {
+    const wrapper = createWrapper()
+
+    // global mock fetch for checkouturl
+    global.$fetch = vi.fn().mockResolvedValue({ checkoutUrl: 'https://pay.abacate.com/123' })
+
+    // open modal
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
+
+    const input = wrapper.find('#donate-amount')
+    await input.setValue('10,00')
+
+    const submitBtn = wrapper.find('.card-form__button')
+    await submitBtn.trigger('click')
+
+    expect(global.$fetch).toHaveBeenCalledWith('/api/donate/create', {
+      method: 'POST',
+      body: { amount: 1000 },
+    })
+  })
+
+  it('falha na doação se não tiver valor', async () => {
+    const wrapper = createWrapper()
+
+    // open modal
+    await wrapper.find('[data-testid="donate-button"]').trigger('click')
+
+    const submitBtn = wrapper.find('.card-form__button')
+    // Botão é disabled quando não tem valor (pixAmount vazio/null)
+    expect(submitBtn.attributes('disabled')).toBeDefined()
   })
 })

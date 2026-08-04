@@ -72,25 +72,16 @@
 
     <div class="donate-button__actions">
       <button
-        data-testid="donate-pix"
+        data-testid="donate-button"
         class="donate-button__btn donate-button__btn--pix"
         @click="openPixModal"
       >
-        <i class="ti ti-currency-real" />
-        {{ t('donate.pix') }}
-      </button>
-      <button
-        data-testid="donate-card"
-        class="donate-button__btn donate-button__btn--card donate-button__btn--disabled"
-        disabled
-        :title="t('donate.cardUnavailable')"
-      >
-        <i class="ti ti-credit-card" />
-        {{ t('donate.card') }}
+        <i class="ti ti-heart" />
+        {{ t('donate.button') }}
       </button>
     </div>
 
-    <!-- PIX Donation Modal → AbacatePay hosted checkout -->
+    <!-- PIX / Boleto Donation Modal → AbacatePay hosted checkout -->
     <Teleport to="body">
       <Transition name="pix-modal">
         <div
@@ -136,7 +127,7 @@
               />
 
               <p v-if="pixStatus === 'error'" class="card-form__error">
-                {{ t('donate.cardError') }}
+                {{ t('donate.error') }}
               </p>
 
               <button
@@ -144,12 +135,10 @@
                 :disabled="pixStatus === 'processing' || !pixAmount"
                 @click="processPixPayment"
               >
-                {{
-                  pixStatus === 'processing' ? t('donate.cardProcessing') : t('donate.pixButton')
-                }}
+                {{ pixStatus === 'processing' ? t('donate.processing') : t('donate.submitButton') }}
               </button>
               <p class="pix-modal__hint">
-                {{ t('donate.pixRedirectHint') }}
+                {{ t('donate.redirectHint') }}
               </p>
             </div>
           </div>
