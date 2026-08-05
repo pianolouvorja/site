@@ -25,7 +25,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "node scripts/strip-sass-embedded.mjs && nuxt prepare",
+    "postinstall": "node scripts/postinstall-host.mjs && nuxt prepare",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
