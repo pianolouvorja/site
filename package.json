@@ -16,7 +16,7 @@
     "url": "https://github.com/pianolouvorja/site/issues"
   },
   "engines": {
-    "node": ">=24.18.0",
+    "node": ">=24.6.0",
     "pnpm": ">=11.20.0"
   },
   "scripts": {
