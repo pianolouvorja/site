@@ -4,3 +4,5 @@ allowBuilds:
   esbuild: false
   protobufjs: true
   ttf2woff2: false
+overrides:
+  rollup: 4.62.4
