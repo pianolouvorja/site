@@ -82,4 +82,9 @@ describe('PlatformsSection', () => {
     wrapper.vm.openNotifyModal()
     expect(wrapper.vm.showNotifyModal).toBe(true)
   })
+
+  it('showNotifyModal inicia como false', () => {
+    const wrapper = mountPlatform()
+    expect(wrapper.vm.showNotifyModal).toBe(false)
+  })
 })

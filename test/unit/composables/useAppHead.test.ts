@@ -289,4 +289,50 @@ describe('useAppHead', () => {
     const canonical = arg.link.find((l: any) => l.rel === 'canonical')
     expect(canonical.href).toBe('https://pianolouvorja.com/')
   })
+
+  it('inclui link alternate RSS com rel correto', () => {
+    useHeadMock.mockClear()
+    useAppHead()
+    const arg = useHeadMock.mock.calls[0][0]
+    const rss = arg.link.find((l: any) => l.type === 'application/rss+xml')
+    expect(rss).toBeDefined()
+    expect(rss.rel).toBe('alternate')
+  })
+
+  it('inclui link alternate RSS com type application/rss+xml', () => {
+    useHeadMock.mockClear()
+    useAppHead()
+    const arg = useHeadMock.mock.calls[0][0]
+    const rss = arg.link.find((l: any) => l.title === 'PIANO LouvorJA — Releases')
+    expect(rss.type).toBe('application/rss+xml')
+  })
+
+  it('inclui link alternate RSS com title PIANO LouvorJA — Releases', () => {
+    useHeadMock.mockClear()
+    useAppHead()
+    const arg = useHeadMock.mock.calls[0][0]
+    const rss = arg.link.find((l: any) => l.href?.includes('rss.xml'))
+    expect(rss.title).toBe('PIANO LouvorJA — Releases')
+  })
+
+  it('inclui link alternate RSS com href apontando para rss.xml', () => {
+    useHeadMock.mockClear()
+    useAppHead()
+    const arg = useHeadMock.mock.calls[0][0]
+    const rss = arg.link.find((l: any) => l.type === 'application/rss+xml')
+    expect(rss.href).toBe('https://pianolouvorja.com/rss.xml')
+  })
+
+  it('inclui link alternate RSS com objeto completo e nao vazio', () => {
+    useHeadMock.mockClear()
+    useAppHead()
+    const arg = useHeadMock.mock.calls[0][0]
+    const rss = arg.link.find((l: any) => l.rel === 'alternate' && l.type === 'application/rss+xml')
+    expect(rss).toBeDefined()
+    expect(Object.keys(rss).length).toBe(4)
+    expect(rss.rel).toBe('alternate')
+    expect(rss.type).toBe('application/rss+xml')
+    expect(rss.title).toBe('PIANO LouvorJA — Releases')
+    expect(rss.href).toContain('rss.xml')
+  })
 })

@@ -1,0 +1,4 @@
+# Force JSON content-type for prerendered API routes (no file extension)
+<FilesMatch "^(contributors|releases)$">
+  ForceType application/json
+</FilesMatch>

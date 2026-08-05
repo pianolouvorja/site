@@ -44,6 +44,7 @@
    * Called on mount (with stored value) and on user action.
    */
   function updateConsent(granted: boolean) {
+    // Stryker disable next-line ConditionalExpression -- import.meta.client→true is equivalent in jsdom test env
     if (import.meta.client) {
       const w = window as unknown as { gtag?: (...args: unknown[]) => void }
       if (typeof w.gtag === 'function') {

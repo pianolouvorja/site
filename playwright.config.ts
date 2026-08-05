@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm run preview --port 3001',
+    command: 'npx nuxi preview --port 3001',
     url: 'http://localhost:3001',
     timeout: 120_000,
     reuseExistingServer: !process.env.CI,

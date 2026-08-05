@@ -131,4 +131,125 @@ describe('useAuthState', () => {
     expect(state.isLoading.value).toBe(false)
     vi.useRealTimers()
   })
+
+  // ========================================================================
+  // ADDITIONAL TESTS — kill mutation survivors
+  // ========================================================================
+
+  it('second waitForAuth call does not re-register onAuthStateChanged (kills resolved=false mutants)', async () => {
+    mockFirebaseAuth.value = { app: {} }
+    const mockUnsub = vi.fn()
+
+    vi.mocked(onAuthStateChanged).mockImplementation(
+      (auth: unknown, onSuccess: (u: unknown) => void) => {
+        // Fire immediately with a user
+        setTimeout(() => onSuccess({ uid: 'abc' }), 0)
+        return mockUnsub
+      },
+    )
+
+    const state = useAuthState()
+    await state.waitForAuth()
+
+    // Clear to count new registrations
+    vi.mocked(onAuthStateChanged).mockClear()
+    vi.mocked(onAuthStateChanged).mockReturnValue(mockUnsub)
+
+    // Second call — should resolve immediately without calling onAuthStateChanged
+    await state.waitForAuth()
+
+    // If resolved=true was mutated to false, second call would re-register
+    expect(onAuthStateChanged).not.toHaveBeenCalled()
+  })
+
+  it('resolved flag short-circuits even when isLoading is true (kills LogicalOperator mutant)', async () => {
+    mockFirebaseAuth.value = null
+    const state = useAuthState()
+
+    // First call resolves, sets resolved=true and isLoading=false
+    await state.waitForAuth()
+
+    // Manually set isLoading back to true to test resolved short-circuit
+    state.isLoading.value = true
+
+    vi.useFakeTimers()
+    const start = Date.now()
+    vi.mocked(onAuthStateChanged).mockClear()
+
+    // Second call should resolve immediately despite isLoading=true
+    await state.waitForAuth()
+    const elapsed = Date.now() - start
+
+    // Should not have waited for timeout or registered listener
+    expect(elapsed).toBeLessThan(50)
+    expect(onAuthStateChanged).not.toHaveBeenCalled()
+    vi.useRealTimers()
+  })
+
+  it('no firebase auth: sets isLoading=false and does not register listener (kills ConditionalExpression)', async () => {
+    mockFirebaseAuth.value = null
+
+    const state = useAuthState()
+    await state.waitForAuth()
+
+    // Mutant removing the !($firebaseAuth) check would call onAuthStateChanged with null
+    expect(onAuthStateChanged).not.toHaveBeenCalled()
+    expect(state.isLoading.value).toBe(false)
+  })
+
+  it('timeout callback sets resolved=true (second call after timeout is instant)', async () => {
+    mockFirebaseAuth.value = { app: {} }
+    const mockUnsub = vi.fn()
+    vi.mocked(onAuthStateChanged).mockReturnValue(mockUnsub)
+
+    const state = useAuthState()
+
+    vi.useFakeTimers()
+    const promise = state.waitForAuth()
+    vi.advanceTimersByTime(3000)
+    await promise
+
+    // Clear mock to verify second call doesn't re-register
+    vi.mocked(onAuthStateChanged).mockClear()
+
+    // Second call — resolved=true from timeout, should be instant
+    const start = Date.now()
+    await state.waitForAuth()
+    const elapsed = Date.now() - start
+
+    expect(elapsed).toBeLessThan(50)
+    expect(onAuthStateChanged).not.toHaveBeenCalled()
+    vi.useRealTimers()
+  })
+
+  it('error callback sets resolved=true (second call after error is instant)', async () => {
+    mockFirebaseAuth.value = { app: {} }
+
+    let errorCb: ((err: unknown) => void) | null = null
+    const mockUnsub = vi.fn()
+
+    vi.mocked(onAuthStateChanged).mockImplementation(
+      (_auth: unknown, _onSuccess: (u: unknown) => void, onError?: (e: unknown) => void) => {
+        errorCb = onError ?? null
+        return mockUnsub
+      },
+    )
+
+    const state = useAuthState()
+    const promise = state.waitForAuth()
+
+    errorCb!(new Error('fail'))
+    await promise
+
+    // Clear and verify second call is instant (resolved=true was set by error cb)
+    vi.mocked(onAuthStateChanged).mockClear()
+    vi.mocked(onAuthStateChanged).mockReturnValue(mockUnsub)
+
+    const start = Date.now()
+    await state.waitForAuth()
+    const elapsed = Date.now() - start
+
+    expect(elapsed).toBeLessThan(50)
+    expect(onAuthStateChanged).not.toHaveBeenCalled()
+  })
 })

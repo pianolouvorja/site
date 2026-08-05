@@ -16,6 +16,7 @@ reports
 .env.*
 !.env.example
 serviceAccountKey.json
+service-account.json
 *-firebase-adminsdk*.json
 extract_mutants.py
 
