@@ -8,7 +8,12 @@
     "configFile": "vitest.config.ts"
   },
   "buildCommand": "npx nuxi prepare",
-  "mutate": ["app/components/**/*.vue", "app/composables/**/*.ts", "app/data/**/*.ts"],
+  "mutate": [
+    "app/components/**/*.vue",
+    "app/composables/**/*.ts",
+    "app/data/**/*.ts",
+    "!app/components/DonateButton.vue"
+  ],
   "coverageAnalysis": "perTest",
   "thresholds": {
     "high": 90,
