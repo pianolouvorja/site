@@ -21,9 +21,9 @@
   },
   "scripts": {
     "test:mutation": "stryker run",
-    "build": "nuxt build",
+    "build": "node scripts/postinstall-host.mjs && nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "node scripts/postinstall-host.mjs && nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "node scripts/postinstall-host.mjs && nuxt prepare",
     "test": "vitest run",

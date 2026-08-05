@@ -1,6 +1,9 @@
 /**
- * Ajustes pós-install para ambientes que removem o bit de execução
+ * Ajustes pós-install/pre-build para ambientes que removem o bit de execução
  * dos binários nativos (ex.: Hostinger) e que quebram com sass-embedded.
+ *
+ * Importante: allowBuilds.esbuild deve ficar `false` — o postinstall do esbuild
+ * tenta EXECUTAR o binário ainda sem +x e falha com EACCES na instalação.
  */
 import { chmodSync, existsSync, readdirSync, rmSync, statSync } from 'node:fs'
 import { join } from 'node:path'
@@ -50,7 +53,6 @@ function chmodEsbuildBins() {
     if (!entry.startsWith('@esbuild+') && !entry.startsWith('esbuild@')) continue
     const base = join(pnpmDir, entry, 'node_modules')
     if (!existsSync(base)) continue
-    // @esbuild/linux-x64/bin/esbuild (e variantes de plataforma)
     for (const pkg of readdirSync(base)) {
       const pkgDir = join(base, pkg)
       if (pkg === '@esbuild') {
