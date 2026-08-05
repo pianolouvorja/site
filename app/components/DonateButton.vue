@@ -53,7 +53,7 @@
       } else {
         pixStatus.value = 'error'
       }
-    } catch (e) {
+    } catch {
       pixStatus.value = 'error'
     }
   }
