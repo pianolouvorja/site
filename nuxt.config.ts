@@ -2,44 +2,56 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n', 'nuxt-gtag'],
+
+  gtag: {
+    id: process.env.GOOGLE_ANALYTICS_ID || '',
+    loadingStrategy: 'async',
+  },
 
   i18n: {
     locales: [
-      { code: 'pt-BR', language: 'pt-BR', name: 'Português', file: 'pt-BR.json' },
+      { code: 'pt-BR', language: 'pt-BR', name: 'Portugues', file: 'pt-BR.json' },
       { code: 'en', language: 'en', name: 'English', file: 'en.json' },
-      { code: 'es', language: 'es', name: 'Español', file: 'es.json' },
+      { code: 'es', language: 'es', name: 'Espanol', file: 'es.json' },
     ],
     defaultLocale: 'pt-BR',
     strategy: 'prefix_except_default',
-    langDir: 'locales',
+    langDir: '../i18n',
+
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'piano_lang',
       redirectOn: 'root',
+      alwaysRedirect: false,
+      fallbackLocale: 'pt-BR',
     },
   },
 
-  // Static Site Generation
   ssr: true,
 
-  // Global CSS
   css: ['@tabler/icons-webfont/dist/tabler-icons.min.css', '~/assets/css/main.scss'],
+
+  routeRules: {
+    // Admin pages are client-only (Firebase Auth)
+    '/admin/**': { ssr: false },
+  },
+
   nitro: {
     prerender: {
-      crawlLinks: true,
+      // Ignore admin routes — they're client-only (Firebase Auth)
+      ignore: ['/admin', '/admin/**'],
+      crawlLinks: false,
       routes: ['/', '/en', '/es', '/200.html', '/404.html'],
     },
   },
 
-  // Allow tunnel hosts (cloudflare quick tunnels)
   vite: {
     server: {
       allowedHosts: true,
     },
   },
 
-  // Favicon and icons only — SEO meta handled by useAppHead composable
   app: {
     head: {
       link: [
@@ -52,5 +64,28 @@ export default defineNuxtConfig({
 
   typescript: {
     strict: true,
+  },
+
+  runtimeConfig: {
+    // Server-only secrets
+    abacatePayApiKey: process.env.ABACATEPAY_API_KEY || '',
+    firebaseServiceAccountPath: process.env.FIREBASE_SERVICE_ACCOUNT_PATH || '',
+
+    public: {
+      web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
+      buttondownApiKey: process.env.BUTTONDOWN_API_KEY || '',
+      buttondownEndpoint: 'https://api.buttondown.com/api/v1/subscribers',
+
+      // GA4
+      googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || '',
+
+      // Firebase public config (client-side)
+      firebaseApiKey: process.env.FIREBASE_API_KEY || '',
+      firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN || '',
+      firebaseProjectId: process.env.FIREBASE_PROJECT_ID || '',
+      firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET || '',
+      firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '',
+      firebaseAppId: process.env.FIREBASE_APP_ID || '',
+    },
   },
 })

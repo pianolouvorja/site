@@ -1,16 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { defineComponent, h } from 'vue'
 import TheFooter from '~/components/TheFooter.vue'
-
-// Stub NuxtLink
-const NuxtLink = defineComponent({
-  name: 'NuxtLink',
-  props: { to: { type: String, default: '' } },
-  setup(props, { slots }) {
-    return () => h('a', { href: props.to }, slots.default?.())
-  },
-})
 
 describe('TheFooter', () => {
   let mockRoute: any
@@ -26,11 +16,12 @@ describe('TheFooter', () => {
   const createWrapper = () => {
     return mount(TheFooter, {
       global: {
+        stubs: {
+          NuxtLink: true,
+          DonateButton: true,
+        },
         mocks: {
           $t: (key: string) => key,
-        },
-        stubs: {
-          NuxtLink,
         },
       },
     })
@@ -112,9 +103,9 @@ describe('TheFooter', () => {
 
   it('links de privacy e terms usam localePath', () => {
     const wrapper = createWrapper()
-    const privacyLink = wrapper.find('a[href="/privacy"]')
+    const privacyLink = wrapper.find('[to="/privacy"]')
     expect(privacyLink.exists()).toBe(true)
-    const termsLink = wrapper.find('a[href="/terms"]')
+    const termsLink = wrapper.find('[to="/terms"]')
     expect(termsLink.exists()).toBe(true)
   })
 

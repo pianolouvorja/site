@@ -75,6 +75,19 @@
       "cta": "Notify on launch"
     }
   },
+  "notifyModal": {
+    "title": "Be the first to know",
+    "subtitle": "Enter your email and we'll let you know as soon as the mobile app is available.",
+    "placeholder": "your@email.com",
+    "button": "Notify on launch",
+    "loading": "Sending...",
+    "success": "All set! You'll be notified as soon as we launch.",
+    "errors": {
+      "invalidEmail": "Please enter a valid email address.",
+      "alreadySubscribed": "This email is already subscribed.",
+      "generic": "Something went wrong. Please try again shortly."
+    }
+  },
   "features": {
     "eyebrow": "Features",
     "title": "Everything you need for worship",
@@ -118,7 +131,7 @@
     "eyebrow": "About the Project",
     "title": "Made by and for the community",
     "text1": "{name} is a collaborative open-source project created to make worship service management easier.",
-    "text2": "Developed by the LouvorJA team, the platform continuously evolves with community contributions. Free, no ads, no data collection.",
+    "text2": "Developed by the Piano team, the platform continuously evolves with community contributions. Free, no ads, no data collection.",
     "openSource": "Open Source",
     "stats": {
       "free": "Free",
@@ -167,7 +180,7 @@
       "name": "Name",
       "namePlaceholder": "Your name",
       "email": "Email",
-      "emailPlaceholder": "your{'@'}email.com",
+      "emailPlaceholder": "your@email.com",
       "subject": "Subject",
       "subjectPlaceholder": "What is it about?",
       "message": "Message",
@@ -175,7 +188,7 @@
       "submit": "Send Message",
       "sending": "Sending...",
       "success": "Message sent successfully! We'll get back to you soon.",
-      "error": "Error sending. Try again or email directly to app{'@'}pianolouvorja.com.br"
+      "error": "Error sending. Try again or email directly to app@pianolouvorja.com.br"
     },
     "direct": "Or send an email directly to",
     "responseTime": "Average response time: 24-48h"
@@ -364,9 +377,9 @@
       "github": "GitHub",
       "app": "Open App"
     },
-    "copyright": "Made by the LouvorJA team with faith and dedication.",
+    "copyright": "Made by the Piano team with faith and dedication.",
     "developedBy": "Developed by",
-    "team": "LouvorJA Team",
+    "team": "Piano Team",
     "rights": "All rights reserved.",
     "legalNavLabel": "Legal links",
     "legalNavTitle": "Legal",
@@ -450,7 +463,7 @@
           "Deletion of personal data",
           "Information about sharing",
           "How to exercise your rights",
-          "Send an email to contato@pianolouvorja.com with:",
+          "Send an email to contato@pianolouvorja.com.br with:",
           "Full name",
           "Description of the right you want to exercise",
           "Registered email address",
@@ -511,7 +524,7 @@
       "dpo": {
         "title": "11. Data Protection Officer (DPO)",
         "body": [
-          "In compliance with Art. 41 of LGPD, questions can be sent to contato@pianolouvorja.com."
+          "In compliance with Art. 41 of LGPD, questions can be sent to contato@pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -659,5 +672,38 @@
     "reportIssue": "Report issue",
     "metaDesc404": "Page not found — PIANO LouvorJA",
     "metaDesc500": "Server error — PIANO LouvorJA"
+  },
+  "newsletter": {
+    "title": "Get project updates",
+    "subtitle": "Be notified about new versions, features and updates. No spam.",
+    "placeholder": "Your best email",
+    "button": "Subscribe",
+    "loading": "Subscribing...",
+    "success": "Subscription confirmed! Thank you.",
+    "errors": {
+      "invalidEmail": "Invalid email. Please check and try again.",
+      "alreadySubscribed": "This email is already subscribed.",
+      "generic": "Subscription failed. Please try again."
+    }
+  },
+  "releases": {
+    "metaTitle": "Release Notes - PIANO Louvor JA",
+    "metaDescription": "Track the latest updates, improvements, and fixes for PIANO Louvor JA.",
+    "title": "Release Notes",
+    "subtitle": "Track the latest updates and improvements of PIANO.",
+    "loading": "Loading releases...",
+    "error": "Could not load releases. Please try again later.",
+    "noReleases": "No releases published yet.",
+    "latest": "Latest",
+    "highlights": "Highlights",
+    "pullRequests": "Pull Requests",
+    "changelog": "Changes",
+    "viewOnGithub": "View on GitHub",
+    "allVersions": "View all versions",
+    "products": {
+      "web": "Web",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    }
   }
 }

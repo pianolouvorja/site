@@ -11,7 +11,9 @@
     "docs": "Documentation",
     "contact": "Contact",
     "openApp": "Open App",
-    "language": "Language"
+    "language": "Language",
+    "download": "Download",
+    "releases": "Releases"
   },
   "hero": {
     "badge": "New: Web Version Available",
@@ -73,6 +75,19 @@
       "feature2": "Native iOS",
       "feature3": "Cloud sync",
       "cta": "Notify on launch"
+    }
+  },
+  "notifyModal": {
+    "title": "Be the first to know",
+    "subtitle": "Enter your email and we'll let you know as soon as the mobile app is available.",
+    "placeholder": "your{'@'}email.com",
+    "button": "Notify on launch",
+    "loading": "Sending...",
+    "success": "All set! You'll be notified as soon as we launch.",
+    "errors": {
+      "invalidEmail": "Please enter a valid email address.",
+      "alreadySubscribed": "This email is already subscribed.",
+      "generic": "Something went wrong. Please try again shortly."
     }
   },
   "features": {
@@ -358,6 +373,8 @@
     "links": {
       "features": "Features",
       "platforms": "Platforms",
+      "download": "Download",
+      "releases": "Releases",
       "howItWorks": "How It Works",
       "docs": "Documentation",
       "contact": "Contact",
@@ -370,6 +387,8 @@
     "rights": "All rights reserved.",
     "legalNavLabel": "Legal links",
     "legalNavTitle": "Legal",
+    "moreNavLabel": "More links",
+    "moreNavTitle": "More",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use"
   },
@@ -450,7 +469,7 @@
           "Deletion of personal data",
           "Information about sharing",
           "How to exercise your rights",
-          "Send an email to contato{'@'}pianolouvorja.com with:",
+          "Send an email to contato{'@'}pianolouvorja.com.br with:",
           "Full name",
           "Description of the right you want to exercise",
           "Registered email address",
@@ -511,7 +530,7 @@
       "dpo": {
         "title": "11. Data Protection Officer (DPO)",
         "body": [
-          "In compliance with Art. 41 of LGPD, questions can be sent to contato{'@'}pianolouvorja.com."
+          "In compliance with Art. 41 of LGPD, questions can be sent to contato{'@'}pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -659,5 +678,175 @@
     "reportIssue": "Report issue",
     "metaDesc404": "Page not found — PIANO LouvorJA",
     "metaDesc500": "Server error — PIANO LouvorJA"
+  },
+  "newsletter": {
+    "title": "Get project updates",
+    "subtitle": "Be notified about new versions, features and updates. No spam.",
+    "placeholder": "Your best email",
+    "button": "Subscribe",
+    "loading": "Subscribing...",
+    "success": "Subscription confirmed! Thank you.",
+    "errors": {
+      "invalidEmail": "Invalid email. Please check and try again.",
+      "alreadySubscribed": "This email is already subscribed.",
+      "generic": "Subscription failed. Please try again."
+    }
+  },
+  "welcomePopup": {
+    "title": "Download PianoLouvorJA for free",
+    "description": "Play Adventist hymnals on desktop and mobile. AppImage, Web App and more — choose your platform.",
+    "close": "Close",
+    "cta": "See download options",
+    "secondaryCta": "Continue browsing"
+  },
+  "cookieBanner": {
+    "message": "We use cookies to improve your experience. By continuing to browse, you agree to our Privacy Policy.",
+    "accept": "I Understand and Accept",
+    "reject": "Decline",
+    "privacyLink": "Read Privacy Policy"
+  },
+  "donate": {
+    "title": "Support the Project",
+    "button": "Donate (PIX / Boleto)",
+    "description": "PIANO LouvorJA is maintained by volunteers and needs support to pay for servers and costs.",
+    "pixTitle": "Support with any amount",
+    "pixSubtitle": "Enter the amount and you will be redirected to AbacatePay's secure checkout",
+    "close": "Close",
+    "amountLabel": "Donation Amount",
+    "amountPlaceholder": "Ex: 20.00",
+    "submitButton": "Go to Payment",
+    "processing": "Processing...",
+    "error": "Error generating donation.",
+    "redirectHint": "You can choose PIX or Boleto on the next screen."
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "loginTitle": "Restricted Access",
+    "loginSubtitle": "Sign in to access the panel",
+    "email": "Email",
+    "emailPlaceholder": "admin{'@'}pianolouvorja.com.br",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "loginButton": "Sign In",
+    "loginError": "Invalid email or password",
+    "loggingIn": "Signing in...",
+    "logout": "Sign Out",
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "stats": "Statistics",
+    "backToSite": "Back to site"
+  },
+  "download": {
+    "metaTitle": "Download — PIANO LouvorJA",
+    "metaDescription": "Download PIANO LouvorJA for desktop (Linux, Windows, macOS), use the web app in your browser, or follow the mobile roadmap.",
+    "heroEyebrow": "Downloads",
+    "heroTitle": "Get PIANO LouvorJA",
+    "heroSubtitle": "Choose the best option for you. Native desktop with full features, instant web app, or mobile coming soon.",
+    "heroWebCta": "Use Web App",
+    "heroGithubCta": "View on GitHub",
+    "platformsTitle": "Choose your platform",
+    "platformsSubtitle": "Each platform with its own strengths",
+    "desktop": {
+      "badge": "Recommended",
+      "title": "Native Desktop",
+      "description": "Electron app with full features: independent multi-screen projection, full offline mode, and keyboard shortcuts.",
+      "linux": {
+        "name": "Linux",
+        "format": "AppImage",
+        "arch": "x64",
+        "downloadLabel": "Download AppImage",
+        "hint": "After downloading, grant execution permission (chmod +x) and run. Requires FUSE installed. Alternative: convert to Flatpak with flatpak install."
+      },
+      "windows": {
+        "name": "Windows",
+        "format": "NSIS Installer (.exe)",
+        "arch": "x64",
+        "downloadLabel": "Download for Windows",
+        "hint": "Run the installer and follow the steps."
+      },
+      "macos": {
+        "name": "macOS",
+        "format": "Disk Image (.dmg)",
+        "arch": "x64 / arm64 (Apple Silicon)",
+        "downloadLabel": "Download for macOS",
+        "hint": "Open the .dmg and drag the app to Applications."
+      },
+      "features": {
+        "multiScreen": "Independent multi-screen projection",
+        "offline": "Works 100% offline",
+        "shortcuts": "Dedicated keyboard shortcuts",
+        "autoUpdate": "Automatic updates"
+      },
+      "buildFromSource": "Prefer to build from source?",
+      "buildFromSourceLink": "See instructions on GitHub"
+    },
+    "web": {
+      "badge": "Instant",
+      "title": "Web App",
+      "description": "Use it right in your browser. No installation, works on any operating system. Ideal for quick use or when you don't have the app installed.",
+      "cta": "Open Web App",
+      "features": {
+        "noInstall": "No installation",
+        "anyOs": "Any operating system",
+        "autoUpdate": "Automatic updates",
+        "pwa": "Installable as PWA"
+      }
+    },
+    "mobile": {
+      "badge": "Coming soon",
+      "title": "Mobile",
+      "description": "Native apps for Android and iOS are on our roadmap. In the meantime, you can use the web app on your phone.",
+      "platforms": "Android and iOS",
+      "features": {
+        "nativeAndroid": "Native Android (planned)",
+        "nativeIos": "Native iOS (planned)",
+        "cloudSync": "Cloud sync (planned)"
+      },
+      "useWebInstead": "Use web app on phone for now"
+    },
+    "systemRequirements": {
+      "title": "System Requirements",
+      "desktop": "Desktop: 4GB RAM, 500MB disk space, GPU with WebGL support",
+      "web": "Web: Modern browser (Chrome, Firefox, Edge, Safari), internet connection for first access"
+    }
+  },
+  "contributors": {
+    "title": "Who makes PIANO happen",
+    "subtitle": "PIANO LouvorJA exists thanks to these people who dedicate their time and knowledge to the project.",
+    "contributions": "contributions",
+    "viewAll": "View all on GitHub",
+    "ctaTitle": "Contribute to the project",
+    "ctaText": "PIANO is open-source and grows with the community. You can contribute code, report bugs, suggest features, help with translations, or share the project.",
+    "ctaWays": {
+      "code": "Send pull requests on GitHub",
+      "bugs": "Report bugs and suggest improvements",
+      "translate": "Help with translations",
+      "share": "Share with your community"
+    },
+    "ctaButton": "Start contributing",
+    "loading": "Loading contributors...",
+    "error": "Could not load contributors at this time."
+  },
+  "releases": {
+    "metaTitle": "Release Notes — PIANO LouvorJA",
+    "metaDescription": "Version history and changes for PIANO LouvorJA. Track new features, improvements, and fixes.",
+    "title": "Release Notes",
+    "subtitle": "Follow every update to PIANO LouvorJA. New features, improvements, and fixes.",
+    "latest": "Latest",
+    "version": "Version",
+    "released": "Released",
+    "highlights": "Highlights",
+    "pullRequests": "PRs",
+    "changelog": "Changelog",
+    "viewOnGithub": "View on GitHub",
+    "allVersions": "All versions",
+    "loading": "Loading versions...",
+    "error": "Could not load versions at this time.",
+    "noReleases": "No versions published yet.",
+    "products": {
+      "web": "Web",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    }
   }
 }

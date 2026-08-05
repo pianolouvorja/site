@@ -95,7 +95,16 @@ export function useAppHead(options: AppHeadOptions = {}) {
       // Theme color for browser chrome
       { name: 'theme-color', content: '#0d1b2a' },
     ],
-    link: [{ rel: 'canonical', href: canonicalUrl.value }, ...alternateLinks.value],
+    link: [
+      { rel: 'canonical', href: canonicalUrl.value },
+      {
+        rel: 'alternate',
+        type: 'application/rss+xml',
+        title: 'PIANO LouvorJA — Releases',
+        href: `${SITE_URL}/rss.xml`,
+      },
+      ...alternateLinks.value,
+    ],
     script: [
       {
         type: 'application/ld+json',

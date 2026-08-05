@@ -113,13 +113,12 @@ Sem sistema de login, os direitos do titular são exercidos via canal DPO (email
 **Encarregado de Tratamento de Dados Pessoais (DPO):**
 
 ```
-Nome: [A DEFINIR — Rafael Zendron ou designado]
+Nome: [Encarregado designado]
 Cargo: Encarregado de Proteção de Dados — PIANO LouvorJA
-Email: privacidade@louvorja.app (TODO: configurar ao registrar domínio)
-       Email temporário: rafael.zendron22@gmail.com
+Email: privacidade@pianolouvorja.com.br
 ```
 
-**Pitfall crítico:** O email DPO DEVE ser funcional. Se o domínio `louvorja.app` ainda não está registrado, usar Gmail temporário e migrar ao registrar. Verificar com `dig louvorja.app NS` antes de publicar.
+**Pitfall crítico:** O email DPO DEVE ser funcional. Verificar com `dig pianolouvorja.com NS` antes de publicar.
 
 **Funções do DPO:**
 

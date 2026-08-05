@@ -11,7 +11,9 @@
     "docs": "Documentação",
     "contact": "Contato",
     "openApp": "Abrir App",
-    "language": "Idioma"
+    "language": "Idioma",
+    "download": "Baixar",
+    "releases": "Versões"
   },
   "hero": {
     "badge": "Novo: Versão Web Disponível",
@@ -73,6 +75,19 @@
       "feature2": "iOS nativo",
       "feature3": "Sincronização na nuvem",
       "cta": "Avisar quando lançar"
+    }
+  },
+  "notifyModal": {
+    "title": "Seja o primeiro a saber",
+    "subtitle": "Cadastre seu e-mail e avisamos assim que o app mobile estiver disponível.",
+    "placeholder": "seu{'@'}email.com",
+    "button": "Avisar quando lançar",
+    "loading": "Enviando...",
+    "success": "Tudo certo! Você será avisado assim que lançarmos.",
+    "errors": {
+      "invalidEmail": "Por favor, informe um e-mail válido.",
+      "alreadySubscribed": "Este e-mail já está cadastrado.",
+      "generic": "Algo deu errado. Tente novamente em instantes."
     }
   },
   "features": {
@@ -358,6 +373,8 @@
     "links": {
       "features": "Funcionalidades",
       "platforms": "Plataformas",
+      "download": "Baixar",
+      "releases": "Versões",
       "howItWorks": "Como Funciona",
       "docs": "Documentação",
       "contact": "Contato",
@@ -370,6 +387,8 @@
     "rights": "Todos os direitos reservados.",
     "legalNavLabel": "Links legais",
     "legalNavTitle": "Legal",
+    "moreNavLabel": "Mais links",
+    "moreNavTitle": "Saiba mais",
     "privacy": "Política de Privacidade",
     "terms": "Termos de Uso"
   },
@@ -450,7 +469,7 @@
           "Eliminação dos dados pessoais",
           "Informação sobre compartilhamento",
           "Como exercer seus direitos",
-          "Envie um e-mail para contato{'@'}pianolouvorja.com com:",
+          "Envie um e-mail para contato{'@'}pianolouvorja.com.br com:",
           "Nome completo",
           "Descrição do direito que deseja exercer",
           "Endereço de e-mail cadastrado",
@@ -511,7 +530,7 @@
       "dpo": {
         "title": "11. Encarregado de Dados (DPO)",
         "body": [
-          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato{'@'}pianolouvorja.com."
+          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato{'@'}pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -659,5 +678,175 @@
     "reportIssue": "Reportar problema",
     "metaDesc404": "Página não encontrada — PIANO LouvorJA",
     "metaDesc500": "Erro no servidor — PIANO LouvorJA"
+  },
+  "newsletter": {
+    "title": "Receba novidades do projeto",
+    "subtitle": "Seja avisado sobre novas versões, recursos e atualizações. Sem spam.",
+    "placeholder": "Seu melhor e-mail",
+    "button": "Inscrever",
+    "loading": "Inscrevendo...",
+    "success": "Inscrição confirmada! Obrigado.",
+    "errors": {
+      "invalidEmail": "E-mail inválido. Verifique e tente novamente.",
+      "alreadySubscribed": "Este e-mail já está inscrito.",
+      "generic": "Erro ao inscrever. Tente novamente."
+    }
+  },
+  "welcomePopup": {
+    "title": "Baixe o PianoLouvorJA grátis",
+    "description": "Acompanhe hinários da Igreja Adventista no desktop e celular. AppImage, Web App e mais — escolha sua plataforma.",
+    "close": "Fechar",
+    "cta": "Ver opções de download",
+    "secondaryCta": "Continuar navegando"
+  },
+  "cookieBanner": {
+    "message": "Nós utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa Política de Privacidade.",
+    "accept": "Entendi e Aceito",
+    "reject": "Recusar",
+    "privacyLink": "Ler Política de Privacidade"
+  },
+  "donate": {
+    "title": "Apoie o Projeto",
+    "button": "Doar (PIX / Boleto)",
+    "description": "PIANO LouvorJA é mantido por voluntários e precisa de apoio para pagar servidores e custos.",
+    "pixTitle": "Apoie com qualquer valor",
+    "pixSubtitle": "Digite o valor e seja redirecionado para o checkout seguro da AbacatePay",
+    "close": "Fechar",
+    "amountLabel": "Valor da Doação",
+    "amountPlaceholder": "Ex: 20,00",
+    "submitButton": "Ir para Pagamento",
+    "processing": "Processando...",
+    "error": "Erro ao gerar doação.",
+    "redirectHint": "Você poderá escolher PIX ou Boleto na próxima tela."
+  },
+  "admin": {
+    "title": "Painel Administrativo",
+    "loginTitle": "Acesso Restrito",
+    "loginSubtitle": "Faça login para acessar o painel",
+    "email": "E-mail",
+    "emailPlaceholder": "admin{'@'}pianolouvorja.com.br",
+    "password": "Senha",
+    "passwordPlaceholder": "Sua senha",
+    "loginButton": "Entrar",
+    "loginError": "E-mail ou senha inválidos",
+    "loggingIn": "Entrando...",
+    "logout": "Sair",
+    "welcome": "Bem-vindo",
+    "dashboard": "Dashboard",
+    "stats": "Estatísticas",
+    "backToSite": "Voltar ao site"
+  },
+  "download": {
+    "metaTitle": "Baixar — PIANO LouvorJA",
+    "metaDescription": "Baixe o PIANO LouvorJA para desktop (Linux, Windows, macOS), use o web app no navegador, ou acompanhe o roadmap mobile.",
+    "heroEyebrow": "Downloads",
+    "heroTitle": "Baixe o PIANO LouvorJA",
+    "heroSubtitle": "Escolha a melhor opção para você. Desktop nativo com recursos completos, web app instantâneo, ou mobile em breve.",
+    "heroWebCta": "Usar Web App",
+    "heroGithubCta": "Ver no GitHub",
+    "platformsTitle": "Escolha sua plataforma",
+    "platformsSubtitle": "Cada plataforma com seus diferenciais",
+    "desktop": {
+      "badge": "Recomendado",
+      "title": "Desktop Nativo",
+      "description": "Aplicativo Electron com recursos completos: projeção multi-tela, modo offline total e atalhos de teclado.",
+      "linux": {
+        "name": "Linux",
+        "format": "AppImage",
+        "arch": "x64",
+        "downloadLabel": "Baixar AppImage",
+        "hint": "Após baixar, dê permissão de execução (chmod +x) e execute. Requer FUSE instalado. Alternativa: converta para Flatpak com flatpak install."
+      },
+      "windows": {
+        "name": "Windows",
+        "format": "Instalador NSIS (.exe)",
+        "arch": "x64",
+        "downloadLabel": "Baixar para Windows",
+        "hint": "Execute o instalador e siga os passos."
+      },
+      "macos": {
+        "name": "macOS",
+        "format": "Imagem Disco (.dmg)",
+        "arch": "x64 / arm64 (Apple Silicon)",
+        "downloadLabel": "Baixar para macOS",
+        "hint": "Abra o .dmg e arraste o app para Aplicações."
+      },
+      "features": {
+        "multiScreen": "Projeção multi-tela independente",
+        "offline": "Funciona 100% offline",
+        "shortcuts": "Atalhos de teclado dedicados",
+        "autoUpdate": "Atualizações automáticas"
+      },
+      "buildFromSource": "Preferir compilar do código-fonte?",
+      "buildFromSourceLink": "Ver instruções no GitHub"
+    },
+    "web": {
+      "badge": "Instantâneo",
+      "title": "Web App",
+      "description": "Use direto no navegador. Sem instalação, funciona em qualquer sistema operacional. Ideal para uso rápido ou quando você não tem o app instalado.",
+      "cta": "Abrir Web App",
+      "features": {
+        "noInstall": "Sem instalação",
+        "anyOs": "Qualquer sistema operacional",
+        "autoUpdate": "Atualizações automáticas",
+        "pwa": "Instalável como PWA"
+      }
+    },
+    "mobile": {
+      "badge": "Em breve",
+      "title": "Mobile",
+      "description": "Apps nativos para Android e iOS estão no nosso roadmap. Enquanto isso, você pode usar o web app no celular.",
+      "platforms": "Android e iOS",
+      "features": {
+        "nativeAndroid": "Android nativo (planejado)",
+        "nativeIos": "iOS nativo (planejado)",
+        "cloudSync": "Sincronização na nuvem (planejado)"
+      },
+      "useWebInstead": "Usar web app no celular por enquanto"
+    },
+    "systemRequirements": {
+      "title": "Requisitos do Sistema",
+      "desktop": "Desktop: 4GB RAM, 500MB espaço em disco, GPU com suporte a WebGL",
+      "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexão de internet para primeiro acesso"
+    }
+  },
+  "contributors": {
+    "title": "Quem faz o PIANO acontecer",
+    "subtitle": "O PIANO LouvorJA existe graças a estas pessoas que dedicam seu tempo e conhecimento ao projeto.",
+    "contributions": "contribuições",
+    "viewAll": "Ver todos no GitHub",
+    "ctaTitle": "Contribua com o projeto",
+    "ctaText": "O PIANO é open-source e cresce com a comunidade. Você pode contribuir com código, reportar bugs, sugerir funcionalidades, ajudar com traduções ou compartilhar o projeto.",
+    "ctaWays": {
+      "code": "Enviar pull requests no GitHub",
+      "bugs": "Reportar bugs e sugerir melhorias",
+      "translate": "Ajudar com traduções",
+      "share": "Compartilhar com sua comunidade"
+    },
+    "ctaButton": "Começar a contribuir",
+    "loading": "Carregando contribuidores...",
+    "error": "Não foi possível carregar os contribuidores no momento."
+  },
+  "releases": {
+    "metaTitle": "Release Notes — PIANO LouvorJA",
+    "metaDescription": "Histórico de versões e mudanças do PIANO LouvorJA. Acompanhe novidades, melhorias e correções.",
+    "title": "Release Notes",
+    "subtitle": "Acompanhe cada atualização do PIANO LouvorJA. Novas funcionalidades, melhorias e correções.",
+    "latest": "Mais recente",
+    "version": "Versão",
+    "released": "Lançada em",
+    "highlights": "Destaques",
+    "pullRequests": "PRs",
+    "changelog": "Changelog",
+    "viewOnGithub": "Ver no GitHub",
+    "allVersions": "Todas as versões",
+    "loading": "Carregando versões...",
+    "error": "Não foi possível carregar as versões no momento.",
+    "noReleases": "Nenhuma versão publicada ainda.",
+    "products": {
+      "web": "Web",
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    }
   }
 }

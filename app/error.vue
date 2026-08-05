@@ -53,7 +53,7 @@
 
         <a
           v-if="error?.statusCode !== 404"
-          href="mailto:contato@pianolouvorja.com"
+          href="mailto:contato@pianolouvorja.com.br"
           class="error-page__btn error-page__btn--secondary"
         >
           <i class="ti ti-mail" />

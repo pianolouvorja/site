@@ -44,11 +44,28 @@ describe('PlatformsSection', () => {
     expect(cta.attributes('href')).toMatch(/^https:\/\//)
   })
 
-  it('card mobile aponta para #contact', () => {
-    const wrapper = mount(PlatformsSection)
+  it('card mobile abre modal de notificacao', async () => {
+    // NotifyModal e ClientOnly sao auto-imports do Nuxt — stub necessario
+    const NotifyModalStub = {
+      name: 'NotifyModal',
+      props: ['modelValue'],
+      template: '<div v-if="modelValue" data-testid="notify-modal" />',
+    }
+    const wrapper = mount(PlatformsSection, {
+      global: {
+        stubs: {
+          ClientOnly: { name: 'ClientOnly', template: '<slot />' },
+          NotifyModal: NotifyModalStub,
+        },
+      },
+    })
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     const mobileCard = cards[2]
-    const cta = mobileCard.find('a')
-    expect(cta.attributes('href')).toBe('#contact')
+    const cta = mobileCard.find('[data-testid="mobile-notify-trigger"]')
+    // Mobile CTA existe e abre o modal de notificacao (click.prevent)
+    expect(cta.exists()).toBe(true)
+    await cta.trigger('click')
+    // NotifyModal recebe modelValue=true quando handleNotify e chamado
+    expect(wrapper.find('[data-testid="notify-modal"]').exists()).toBe(true)
   })
 })

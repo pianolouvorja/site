@@ -82,7 +82,7 @@ describe('useAppHead', () => {
     useHeadMock.mockClear()
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
-    const alternates = arg.link.filter((l: any) => l.rel === 'alternate')
+    const alternates = arg.link.filter((l: any) => l.rel === 'alternate' && l.hreflang)
     expect(alternates.length).toBe(3)
     const hreflangs = alternates.map((a: any) => a.hreflang)
     expect(hreflangs).toContain('pt-BR')
@@ -268,7 +268,7 @@ describe('useAppHead', () => {
     useHeadMock.mockClear()
     useAppHead({ path: '/sobre' })
     const arg = useHeadMock.mock.calls[0][0]
-    const alternates = arg.link.filter((l: any) => l.rel === 'alternate')
+    const alternates = arg.link.filter((l: any) => l.rel === 'alternate' && l.hreflang)
     const enLink = alternates.find((a: any) => a.hreflang === 'en')
     expect(enLink.href).toBe('https://pianolouvorja.com/en/sobre')
   })
@@ -277,7 +277,7 @@ describe('useAppHead', () => {
     useHeadMock.mockClear()
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
-    const alternates = arg.link.filter((l: any) => l.rel === 'alternate')
+    const alternates = arg.link.filter((l: any) => l.rel === 'alternate' && l.hreflang)
     const enLink = alternates.find((a: any) => a.hreflang === 'en')
     expect(enLink.href).toBe('https://pianolouvorja.com/en')
   })

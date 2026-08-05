@@ -15,4 +15,9 @@ reports
 .env
 .env.*
 !.env.example
+serviceAccountKey.json
+*-firebase-adminsdk*.json
 extract_mutants.py
+
+# Internal planning (SDD)
+.planning/

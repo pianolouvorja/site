@@ -80,6 +80,19 @@ export default {
       cta: 'Avisar quando lançar',
     },
   },
+  notifyModal: {
+    title: 'Seja o primeiro a saber',
+    subtitle: 'Cadastre seu e-mail e avisamos assim que o app mobile estiver disponível.',
+    placeholder: 'seu@email.com',
+    button: 'Avisar quando lançar',
+    loading: 'Enviando...',
+    success: 'Tudo certo! Você será avisado assim que lançarmos.',
+    errors: {
+      invalidEmail: 'Por favor, informe um e-mail válido.',
+      alreadySubscribed: 'Este e-mail já está cadastrado.',
+      generic: 'Algo deu errado. Tente novamente em instantes.',
+    },
+  },
   features: {
     eyebrow: 'Funcionalidades',
     title: 'Tudo que você precisa para o culto',
@@ -128,7 +141,7 @@ export default {
     text1:
       'O {name} é um projeto colaborativo de código aberto, criado para facilitar o gerenciamento de cultos e programações eclesiásticas.',
     text2:
-      'Desenvolvido pela equipe LouvorJA, a plataforma evolui continuamente com contribuições da comunidade. Gratuito, sem anúncios, sem coleta de dados.',
+      'Desenvolvido pela equipe Piano, a plataforma evolui continuamente com contribuições da comunidade. Gratuito, sem anúncios, sem coleta de dados.',
     openSource: 'Open Source',
     stats: {
       free: 'Gratuito',
@@ -179,7 +192,7 @@ export default {
       name: 'Nome',
       namePlaceholder: 'Seu nome',
       email: 'E-mail',
-      emailPlaceholder: "seu{'@'}email.com",
+      emailPlaceholder: 'seu@email.com',
       subject: 'Assunto',
       subjectPlaceholder: 'Sobre o que é?',
       message: 'Mensagem',
@@ -187,8 +200,7 @@ export default {
       submit: 'Enviar Mensagem',
       sending: 'Enviando...',
       success: 'Mensagem enviada com sucesso! Entraremos em contato em breve.',
-      error:
-        "Erro ao enviar. Tente novamente ou envie diretamente para app{'@'}pianolouvorja.com.br",
+      error: 'Erro ao enviar. Tente novamente ou envie diretamente para app@pianolouvorja.com.br',
     },
     direct: 'Ou envie um e-mail diretamente para',
     responseTime: 'Tempo médio de resposta: 24-48h',
@@ -387,9 +399,9 @@ export default {
       github: 'GitHub',
       app: 'Abrir App',
     },
-    copyright: 'Feito pela equipe LouvorJA com fé e dedicação.',
+    copyright: 'Feito pela equipe Piano com fé e dedicação.',
     developedBy: 'Desenvolvido por',
-    team: 'Equipe LouvorJA',
+    team: 'Equipe Piano',
     rights: 'Todos os direitos reservados.',
     legalNavLabel: 'Links legais',
     legalNavTitle: 'Legal',
@@ -474,7 +486,7 @@ export default {
           'Eliminação dos dados pessoais',
           'Informação sobre compartilhamento',
           'Como exercer seus direitos',
-          'Envie um e-mail para contato@pianolouvorja.com com:',
+          'Envie um e-mail para contato@pianolouvorja.com.br com:',
           'Nome completo',
           'Descrição do direito que deseja exercer',
           'Endereço de e-mail cadastrado',
@@ -535,7 +547,7 @@ export default {
       dpo: {
         title: '11. Encarregado de Dados (DPO)',
         body: [
-          'Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato@pianolouvorja.com.',
+          'Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato@pianolouvorja.com.br.',
         ],
       },
       anpd: {
@@ -685,5 +697,38 @@ export default {
     reportIssue: 'Reportar problema',
     metaDesc404: 'Página não encontrada — PIANO LouvorJA',
     metaDesc500: 'Erro no servidor — PIANO LouvorJA',
+  },
+  newsletter: {
+    title: 'Receba novidades do projeto',
+    subtitle: 'Seja avisado sobre novas versões, recursos e atualizações. Sem spam.',
+    placeholder: 'Seu melhor e-mail',
+    button: 'Inscrever',
+    loading: 'Inscrevendo...',
+    success: 'Inscrição confirmada! Obrigado.',
+    errors: {
+      invalidEmail: 'E-mail inválido. Verifique e tente novamente.',
+      alreadySubscribed: 'Este e-mail já está inscrito.',
+      generic: 'Erro ao inscrever. Tente novamente.',
+    },
+  },
+  releases: {
+    metaTitle: 'Notas de Atualização — PIANO LouvorJA',
+    metaDescription: 'Acompanhe as últimas versões, melhorias e correções do PIANO LouvorJA.',
+    title: 'Notas de Atualização',
+    subtitle: 'Acompanhe as últimas versões, melhorias e correções do projeto.',
+    loading: 'Carregando notas de atualização...',
+    error: 'Não foi possível carregar as notas de atualização. Tente novamente mais tarde.',
+    noReleases: 'Nenhuma versão encontrada.',
+    latest: 'Mais recente',
+    highlights: 'Destaques',
+    pullRequests: 'Mudanças',
+    changelog: 'Histórico de alterações',
+    viewOnGithub: 'Ver no GitHub',
+    allVersions: 'Ver todas as versões no GitHub',
+    products: {
+      web: 'Web',
+      desktop: 'Desktop',
+      mobile: 'Mobile',
+    },
   },
 } as const

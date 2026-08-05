@@ -65,7 +65,7 @@ O PIANO LouvorJA facilita o acesso a hinários e coletâneas já disponíveis pu
 
 Caso você seja detentor de direitos autorais e identifique conteúdo que viole seus direitos:
 
-1. Envie notificação para **contato@pianolouvorja.com**
+1. Envie notificação para **contato@pianolouvorja.com.br**
 2. Inclua:
    - Identificação da obra protegida
    - Descrição do conteúdo infrator

@@ -59,7 +59,7 @@ describe('error.vue', () => {
       props: { error: { statusCode: 500, message: 'Internal Server Error' } },
       global: globalMountOptions,
     })
-    const reportLink = wrapper.find('a[href^="mailto:contato@pianolouvorja.com"]')
+    const reportLink = wrapper.find('a[href^="mailto:contato@pianolouvorja.com.br"]')
     expect(reportLink.exists()).toBe(true)
   })
 
@@ -68,7 +68,7 @@ describe('error.vue', () => {
       props: { error: { statusCode: 404, message: 'Not Found' } },
       global: globalMountOptions,
     })
-    const reportLink = wrapper.find('a[href^="mailto:contato@pianolouvorja.com"]')
+    const reportLink = wrapper.find('a[href^="mailto:contato@pianolouvorja.com.br"]')
     expect(reportLink.exists()).toBe(false)
   })
 

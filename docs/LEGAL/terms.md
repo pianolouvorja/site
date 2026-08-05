@@ -135,10 +135,9 @@ Resumo dos direitos do titular (LGPD Art. 18): acesso, correção, eliminação,
 ### 10.1 Encarregado de Proteção de Dados (Art. 41, LGPD)
 
 ```
-Nome: Rafael Zendron
+Nome: [Encarregado designado]
 Cargo: Encarregado de Proteção de Dados — PIANO LouvorJA
-Email: privacidade@louvorja.app (TODO: configurar ao registrar domínio)
-       Temporário: rafael.zendron22@gmail.com
+Email: privacidade@pianolouvorja.com.br
 ```
 
 O encarregado é o ponto de contato oficial entre o controlador, os titulares de dados e a ANPD.

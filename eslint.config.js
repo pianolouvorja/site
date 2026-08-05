@@ -21,7 +21,7 @@ export default [
     ],
   },
   {
-    files: ['**/*.vue', '**/*.ts'],
+    files: ['**/*.vue', '**/*.ts', '**/*.js', '**/*.cjs'],
     languageOptions: {
       parserOptions: {
         parser: tseslint.parser,
@@ -45,6 +45,11 @@ export default [
         useSeoMeta: 'readonly',
         // Node.js
         process: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
         useAppHead: 'readonly',
         useRoute: 'readonly',
         useRouter: 'readonly',
@@ -60,8 +65,14 @@ export default [
         useNuxtApp: 'readonly',
         defineNuxtRouteMiddleware: 'readonly',
         useAppConfig: 'readonly',
+        useRequestHeaders: 'readonly',
+        // Custom composables (Nuxt auto-imports from ~/composables)
+        useFirebaseAuth: 'readonly',
+        useAuthState: 'readonly',
+        useNewsletter: 'readonly',
         // Browser DOM types
         MouseEvent: 'readonly',
+        KeyboardEvent: 'readonly',
         HTMLElement: 'readonly',
         Event: 'readonly',
         IntersectionObserver: 'readonly',
@@ -71,6 +82,12 @@ export default [
         localStorage: 'readonly',
         sessionStorage: 'readonly',
         console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        fetch: 'readonly',
+        navigator: 'readonly',
       },
     },
   },

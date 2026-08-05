@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { siteConfig, navLinks } from '~/data/site'
+  import { siteConfig, navLinks, secondaryNavLinks } from '~/data/site'
 
   const route = useRoute()
   const localePath = useLocalePath()
@@ -71,12 +71,27 @@
               <i :class="`ti ${social.icon}`" />
             </a>
           </div>
+
+          <div style="margin-top: 1.5rem; width: 100%">
+            <DonateButton variant="inline" />
+          </div>
         </div>
 
         <nav class="footer__nav" :aria-label="$t('footer.navLabel')">
           <span class="footer__nav-title">{{ $t('footer.navTitle') }}</span>
           <ul>
             <li v-for="link in navLinks" :key="link.href">
+              <NuxtLink :to="navHref(link.href)">
+                {{ $t(link.i18nKey) }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </nav>
+
+        <nav class="footer__nav" :aria-label="$t('footer.moreNavLabel')">
+          <span class="footer__nav-title">{{ $t('footer.moreNavTitle') }}</span>
+          <ul>
+            <li v-for="link in secondaryNavLinks" :key="link.href">
               <NuxtLink :to="navHref(link.href)">
                 {{ $t(link.i18nKey) }}
               </NuxtLink>
@@ -123,8 +138,8 @@
 
     &__top {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 3rem;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
       padding-bottom: 2.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -278,9 +293,10 @@
       }
     }
 
-    @media (min-width: 601px) and (max-width: 960px) {
+    @media (min-width: 601px) and (max-width: 1024px) {
       &__top {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem;
       }
 
       &__brand {

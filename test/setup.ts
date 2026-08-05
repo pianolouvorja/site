@@ -1,11 +1,16 @@
 import { vi, beforeEach } from 'vitest'
 import { config, RouterLinkStub } from '@vue/test-utils'
 import { computed, ref } from 'vue'
-import ptBR from '../i18n/locales/pt-BR.json'
+import ptBR from '../i18n/pt-BR.json'
 
 // Função auxiliar simples para buscar o valor dentro de chaves encadeadas (ex: 'hero.title')
-function getNestedValue(obj: any, path: string): string {
-  const value = path.split('.').reduce((acc, part) => acc && acc[part], obj)
+function getNestedValue(obj: Record<string, unknown>, path: string): string {
+  const value = path.split('.').reduce<unknown>((acc, part) => {
+    if (acc && typeof acc === 'object' && part in (acc as Record<string, unknown>)) {
+      return (acc as Record<string, unknown>)[part]
+    }
+    return undefined
+  }, obj)
   return typeof value === 'string' ? value : path // Fallback para a própria chave
 }
 
@@ -51,6 +56,10 @@ vi.stubGlobal('useRoute', () => ({
 
 vi.stubGlobal('useHead', vi.fn())
 vi.stubGlobal('computed', computed)
+vi.stubGlobal('ref', ref)
+
+// Mock de useLocalePath (Nuxt i18n auto-import)
+vi.stubGlobal('useLocalePath', () => (path: string) => path)
 
 // Mock local storage se precisar
 const localStorageMock = {
