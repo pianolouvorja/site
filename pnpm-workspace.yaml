@@ -6,3 +6,5 @@ allowBuilds:
   ttf2woff2: false
 overrides:
   rollup: 4.62.4
+  sass-embedded-linux-x64: '-'
+  sass-embedded-linux-musl-x64: '-'
