@@ -1,6 +1,12 @@
 allowBuilds:
   '@firebase/util': true
   '@parcel/watcher': true
+  # false: o postinstall do esbuild tenta EXECUTAR o binário (falha com EACCES na Hostinger).
+  # O chmod em scripts/postinstall-host.mjs restaura +x antes do build.
   esbuild: false
   protobufjs: true
   ttf2woff2: false
+overrides:
+  rollup: 4.62.4
+  sass-embedded-linux-x64: '-'
+  sass-embedded-linux-musl-x64: '-'
