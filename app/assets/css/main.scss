@@ -1,0 +1,129 @@
+// ============================================
+// PIANO LouvorJA — Brand Design Tokens
+// ============================================
+
+:root {
+  // Brand palette
+  --piano-blue-deep: #10438c;
+  --piano-blue: #04549b;
+  --piano-blue-light: #0a6bc2;
+  --piano-cyan: #00c1e6;
+  --piano-cyan-light: #5dd9f0;
+  --piano-yellow: #fcce02;
+  --piano-yellow-dark: #e0b800;
+
+  // Neutral palette
+  --piano-dark: #0a1733;
+  --piano-slate: #1e2a45;
+  --piano-gray-700: #475569;
+  --piano-gray-500: #64748b;
+  --piano-gray-300: #cbd5e1;
+  --piano-gray-100: #f1f5f9;
+  --piano-white: #ffffff;
+
+  // Semantic tokens — surfaces
+  --piano-bg-primary: linear-gradient(
+    135deg,
+    var(--piano-blue-deep) 0%,
+    var(--piano-blue) 45%,
+    var(--piano-blue-light) 100%
+  );
+  --piano-bg-accent: linear-gradient(135deg, var(--piano-blue) 0%, var(--piano-cyan) 100%);
+  --piano-bg-solid: #ffffff;
+  --piano-bg-secondary: #f8fafc;
+  --piano-bg-tertiary: #f1f5f9;
+  --piano-border: #cbd5e1;
+  --piano-border-subtle: #e2e8f0;
+
+  // Semantic tokens — accent (brand-aligned)
+  --piano-accent: var(--piano-blue);
+  --piano-accent-hover: var(--piano-blue-deep);
+  --piano-accent-soft: rgba(4, 84, 155, 0.1);
+
+  // Semantic tokens — text (WCAG AA on light surfaces)
+  --piano-text-primary: var(--piano-dark);
+  --piano-text-secondary: var(--piano-gray-700); // #475569 — 7.6:1 on #fff
+  --piano-text-tertiary: #475569; // alias for consistency (same as secondary, guaranteed AA)
+  --piano-text-muted: #64748b; // #64748b — 4.8:1 on #fff (AA pass)
+  --piano-text-on-dark: #ffffff;
+
+  // Semantic tokens — feedback
+  --piano-error: #dc2626; // AA on #fff (4.6:1)
+  --piano-success: #22c55e; // AA on #fff (3.9:1 for large/UI, used as bg with white text)
+  --piano-success-hover: #16a34a; // darker shade for hover
+
+  // PIX brand color
+  --piano-pix: #32bcad;
+  --piano-pix-hover: #28a194;
+  --piano-pix-glow: rgba(50, 188, 173, 0.3);
+
+  // Overlay
+  --piano-overlay: rgba(0, 0, 0, 0.7);
+
+  // Semantic tokens — text on dark backgrounds (WCAG AA on --piano-dark)
+  --piano-text-on-dark-secondary: rgba(255, 255, 255, 0.85); // 11:1 on #0a1733
+  --piano-text-on-dark-muted: rgba(255, 255, 255, 0.7); // 7.5:1 on #0a1733
+
+  // Shadows
+  --piano-shadow-sm: 0 1px 3px rgba(16, 67, 140, 0.08);
+  --piano-shadow-md: 0 4px 12px rgba(16, 67, 140, 0.12);
+  --piano-shadow-lg: 0 12px 32px rgba(16, 67, 140, 0.16);
+  --piano-shadow-glow: 0 0 32px rgba(0, 193, 230, 0.3);
+
+  // Radii
+  --piano-radius-sm: 8px;
+  --piano-radius-md: 12px;
+  --piano-radius-lg: 20px;
+  --piano-radius-full: 9999px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    'Plus Jakarta Sans',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  line-height: 1.6;
+  color: var(--piano-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--piano-cyan);
+  color: var(--piano-white);
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--piano-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--piano-blue);
+  border-radius: var(--piano-radius-full);
+}
