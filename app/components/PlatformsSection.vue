@@ -135,9 +135,7 @@
       </div>
     </div>
 
-    <ClientOnly>
-      <NotifyModal v-model="showNotifyModal" />
-    </ClientOnly>
+    <NotifyModal v-model="showNotifyModal" />
   </section>
 </template>
 

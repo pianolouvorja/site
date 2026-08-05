@@ -87,4 +87,27 @@ describe('PlatformsSection', () => {
     const wrapper = mountPlatform()
     expect(wrapper.vm.showNotifyModal).toBe(false)
   })
+
+  it('v-model update:modelValue fecha o modal', async () => {
+    const NotifyModalStub = {
+      name: 'NotifyModal',
+      props: ['modelValue'],
+      emits: ['update:modelValue'],
+      template: '<div data-testid="notify-stub" />',
+    }
+    const wrapper = mount(PlatformsSection, {
+      global: {
+        stubs: {
+          ClientOnly: { name: 'ClientOnly', template: '<slot />' },
+          NotifyModal: NotifyModalStub,
+        },
+      },
+    })
+    wrapper.vm.openNotifyModal()
+    expect(wrapper.vm.showNotifyModal).toBe(true)
+    // Simula NotifyModal emitindo update:modelValue=false (fechar)
+    wrapper.findComponent({ name: 'NotifyModal' }).vm.$emit('update:modelValue', false)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.showNotifyModal).toBe(false)
+  })
 })
