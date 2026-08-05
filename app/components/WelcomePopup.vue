@@ -173,6 +173,25 @@
     }
   }
 
+  // Mobile scroll listener — extracted for coverage
+  let mobileScrolled = false
+  const onMobileScroll = () => {
+    const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+    if (scrollPercent > 40) {
+      mobileScrolled = true
+      window.removeEventListener('scroll', onMobileScroll)
+    }
+  }
+
+  // Desktop exit trigger — extracted for coverage
+  const onExitIntent = (e: MouseEvent) => {
+    if (e.clientY <= 0) {
+      show()
+      document.removeEventListener('mouseleave', onExitIntent)
+      exitTrigger = null
+    }
+  }
+
   onMounted(() => {
     if (welcomeCookie.value || dismissSession()) return
 
@@ -180,41 +199,22 @@
     const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024
 
     if (isMobile) {
-      // Mobile: 7s initial + scroll >40% + 20s total
-      let scrolled = false
-      const scrollListener = () => {
-        const scrollPercent =
-          (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
-        if (scrollPercent > 40) {
-          scrolled = true
-          window.removeEventListener('scroll', scrollListener)
-        }
-      }
-      window.addEventListener('scroll', scrollListener, { passive: true })
+      mobileScrolled = false
+      window.addEventListener('scroll', onMobileScroll, { passive: true })
 
       mobileTimer = setTimeout(() => {
-        if (scrolled) show()
+        if (mobileScrolled) show()
       }, 7000)
 
       mobileTimer2 = setTimeout(() => {
         show()
-        window.removeEventListener('scroll', scrollListener)
+        window.removeEventListener('scroll', onMobileScroll)
       }, 20000)
     } else if (isTablet) {
-      // Tablet: 10s
       mobileTimer = setTimeout(() => show(), 10000)
     } else {
-      // Desktop: exit intent — mouse leaves top of viewport
-      exitTrigger = (e: MouseEvent) => {
-        if (e.clientY <= 0) {
-          show()
-          if (exitTrigger) {
-            document.removeEventListener('mouseleave', exitTrigger)
-            exitTrigger = null
-          }
-        }
-      }
-      document.addEventListener('mouseleave', exitTrigger)
+      exitTrigger = onExitIntent
+      document.addEventListener('mouseleave', onExitIntent)
     }
   })
 

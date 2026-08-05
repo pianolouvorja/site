@@ -2,25 +2,35 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PlatformsSection from '~/components/PlatformsSection.vue'
 
+const mountPlatform = () =>
+  mount(PlatformsSection, {
+    global: {
+      stubs: {
+        ClientOnly: { template: '<slot />' },
+        NotifyModal: { template: '<div class="stub-notify" />' },
+      },
+    },
+  })
+
 describe('PlatformsSection', () => {
   it('renderiza o titulo da secao', () => {
-    const wrapper = mount(PlatformsSection)
+    const wrapper = mountPlatform()
     expect(wrapper.text()).toContain('Disponível onde você precisa')
   })
 
   it('renderiza o eyebrow da secao', () => {
-    const wrapper = mount(PlatformsSection)
+    const wrapper = mountPlatform()
     expect(wrapper.text()).toContain('Multiplataforma')
   })
 
   it('renderiza 3 cards de plataforma', () => {
-    const wrapper = mount(PlatformsSection)
+    const wrapper = mountPlatform()
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     expect(cards.length).toBe(3)
   })
 
   it('cada card tem titulo, descricao e CTA', () => {
-    const wrapper = mount(PlatformsSection)
+    const wrapper = mountPlatform()
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     cards.forEach((card) => {
       expect(card.text().length).toBeGreaterThan(0)
@@ -29,7 +39,7 @@ describe('PlatformsSection', () => {
   })
 
   it('card desktop aponta para #download', () => {
-    const wrapper = mount(PlatformsSection)
+    const wrapper = mountPlatform()
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     const desktopCard = cards[0]
     const cta = desktopCard.find('a')
@@ -37,7 +47,7 @@ describe('PlatformsSection', () => {
   })
 
   it('card web aponta para a URL do app', () => {
-    const wrapper = mount(PlatformsSection)
+    const wrapper = mountPlatform()
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     const webCard = cards[1]
     const cta = webCard.find('a')
@@ -45,7 +55,6 @@ describe('PlatformsSection', () => {
   })
 
   it('card mobile abre modal de notificacao', async () => {
-    // NotifyModal e ClientOnly sao auto-imports do Nuxt — stub necessario
     const NotifyModalStub = {
       name: 'NotifyModal',
       props: ['modelValue'],
@@ -62,10 +71,15 @@ describe('PlatformsSection', () => {
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     const mobileCard = cards[2]
     const cta = mobileCard.find('[data-testid="mobile-notify-trigger"]')
-    // Mobile CTA existe e abre o modal de notificacao (click.prevent)
     expect(cta.exists()).toBe(true)
     await cta.trigger('click')
-    // NotifyModal recebe modelValue=true quando handleNotify e chamado
     expect(wrapper.find('[data-testid="notify-modal"]').exists()).toBe(true)
+  })
+
+  it('openNotifyModal define showNotifyModal como true', () => {
+    const wrapper = mountPlatform()
+    // Chama a funcao diretamente para garantir coverage da funcao
+    wrapper.vm.openNotifyModal()
+    expect(wrapper.vm.showNotifyModal).toBe(true)
   })
 })

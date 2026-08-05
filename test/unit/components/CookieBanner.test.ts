@@ -65,4 +65,62 @@ describe('CookieBanner.vue', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.html()).toBe('<!--v-if-->')
   })
+
+  it('hides banner when reject button is clicked and sets cookie to false', async () => {
+    const wrapper = mount(CookieBanner)
+
+    const rejectBtn = wrapper.find('button[data-testid="reject-cookie-btn"]')
+    expect(rejectBtn.exists()).toBe(true)
+
+    await rejectBtn.trigger('click')
+
+    expect(mockCookieRef.value).toBe('false')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.html()).toBe('<!--v-if-->')
+  })
+
+  it('hides banner on mount when cookie is "false" (user rejected before)', async () => {
+    mockCookieRef.value = 'false'
+    const wrapper = mount(CookieBanner)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.html()).toBe('<!--v-if-->')
+  })
+
+  it('calls gtag when accepting if window.gtag exists', async () => {
+    const gtagSpy = vi.fn()
+    ;(window as Record<string, unknown>).gtag = gtagSpy
+
+    const wrapper = mount(CookieBanner)
+    const acceptBtn = wrapper.find('button[data-testid="accept-cookie-btn"]')
+    await acceptBtn.trigger('click')
+
+    expect(gtagSpy).toHaveBeenCalledWith(
+      'consent',
+      'update',
+      expect.objectContaining({
+        analytics_storage: 'granted',
+      }),
+    )
+
+    delete (window as Record<string, unknown>).gtag
+  })
+
+  it('calls gtag with denied when rejecting if window.gtag exists', async () => {
+    const gtagSpy = vi.fn()
+    ;(window as Record<string, unknown>).gtag = gtagSpy
+
+    const wrapper = mount(CookieBanner)
+    const rejectBtn = wrapper.find('button[data-testid="reject-cookie-btn"]')
+    await rejectBtn.trigger('click')
+
+    expect(gtagSpy).toHaveBeenCalledWith(
+      'consent',
+      'update',
+      expect.objectContaining({
+        analytics_storage: 'denied',
+      }),
+    )
+
+    delete (window as Record<string, unknown>).gtag
+  })
 })
