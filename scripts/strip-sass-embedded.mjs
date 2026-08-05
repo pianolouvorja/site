@@ -1,4 +1,3 @@
-/* eslint-env node */
 /**
  * Remove sass-embedded do grafo resolvível pelo Vite.
  * Sem o binário nativo (bloqueado no Hostinger), o embedded trava/falha;
@@ -6,6 +5,7 @@
  */
 import { existsSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
+import process from 'node:process'
 
 const pnpmDir = join(process.cwd(), 'node_modules', '.pnpm')
 if (!existsSync(pnpmDir)) process.exit(0)
@@ -30,5 +30,5 @@ for (const entry of readdirSync(pnpmDir)) {
 }
 
 if (removed > 0) {
-  console.log(`[strip-sass-embedded] removed ${removed} path(s)`)
+  process.stdout.write(`[strip-sass-embedded] removed ${removed} path(s)\n`)
 }
