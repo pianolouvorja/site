@@ -5,6 +5,20 @@ const octokit = new Octokit({
 })
 
 export default defineEventHandler(async (event) => {
+  // During CI/test prerender, return stub data to avoid GitHub API rate limits
+  if (process.env.CI === 'true' || process.env.NODE_ENV === 'test') {
+    return [
+      {
+        tag_name: 'v1.0.0',
+        name: 'Test Release',
+        published_at: '2025-01-01T00:00:00Z',
+        _repo: 'web',
+        html_url: '',
+        body: '',
+      },
+    ]
+  }
+
   // Atualmente o site busca de pianolouvorja/web
   // Mas vamos buscar dos 3 e consolidar.
   const repos = ['web', 'app', 'site']
