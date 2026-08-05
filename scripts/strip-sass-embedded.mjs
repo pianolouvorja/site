@@ -1,3 +1,4 @@
+/* eslint-env node */
 /**
  * Remove sass-embedded do grafo resolvível pelo Vite.
  * Sem o binário nativo (bloqueado no Hostinger), o embedded trava/falha;
