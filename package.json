@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@11.20.0",
   "author": "Equipe LouvorJA",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "engines": {
     "node": ">=24.18.0",
-    "pnpm": ">=11.17.0"
+    "pnpm": ">=11.20.0"
   },
   "scripts": {
     "test:mutation": "stryker run",
