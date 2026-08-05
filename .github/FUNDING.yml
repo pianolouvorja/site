@@ -3,7 +3,7 @@
 # AbacatePay processa PIX e boleto com checkout seguro.
 
 # Doações via PIX usando AbacatePay (Brasil)
-custom: ["https://pianolouvorja.com.br#donate", "https://abacatepay.com"]
+custom: ['https://pianolouvorja.com.br#donate', 'https://abacatepay.com']
 
 # Para usuários que querem sponsorizar via GitHub
 github: [pianolouvorja, rafaumeu]

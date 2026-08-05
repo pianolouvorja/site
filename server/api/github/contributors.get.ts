@@ -50,12 +50,12 @@ export default defineEventHandler(async (event) => {
 
     // Convert Map back to array and sort by contributions
     const sortedContributors = Array.from(allContributors.values()).sort(
-      (a, b) => b.contributions - a.contributions
+      (a, b) => b.contributions - a.contributions,
     )
 
     // Seta cache
     setHeader(event, 'cache-control', 'public, max-age=3600, s-maxage=3600')
-    
+
     return sortedContributors
   } catch (error) {
     console.error('Error fetching contributors:', error)

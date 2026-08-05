@@ -27,9 +27,9 @@ export default defineEventHandler(async (event) => {
           hasMore = false
         } else {
           // Marca o repo em cada release caso precisemos na UI
-          const repoReleases = response.data.map(r => ({
+          const repoReleases = response.data.map((r) => ({
             ...r,
-            _repo: repo
+            _repo: repo,
           }))
           allReleases.push(...repoReleases)
           page++
@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     })
 
     setHeader(event, 'cache-control', 'public, max-age=3600, s-maxage=3600')
-    
+
     // Retorna todos os releases combinados
     return allReleases
   } catch (error) {

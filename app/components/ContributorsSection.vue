@@ -90,11 +90,7 @@
 
       <!-- View all link -->
       <div v-if="!loading && !fetchError && contributors.length > 0" class="contributors__view-all">
-        <a
-          href="https://github.com/pianolouvorja"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://github.com/pianolouvorja" target="_blank" rel="noopener noreferrer">
           {{ $t('contributors.viewAll') }}
           <i class="ti ti-arrow-right" aria-hidden="true" />
         </a>
