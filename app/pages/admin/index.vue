@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import { updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
 
   definePageMeta({
     layout: 'admin',
@@ -10,7 +11,69 @@
     title: 'Dashboard · Piano Louvor JA',
   })
 
-  const { user, logout } = useFirebaseAuth()
+  const { user, logout, getToken } = useFirebaseAuth()
+
+  // --- Forçar troca de senha provisória ---
+  const TEMP_PASSWORD = 'Piano@2026'
+  const mustChangePassword = ref(false)
+  const newPassword = ref('')
+  const confirmPassword = ref('')
+  const changePasswordError = ref('')
+  const changingPassword = ref(false)
+
+  async function checkTempPassword() {
+    if (!user.value?.email) return
+    try {
+      // Tenta re-login com a senha provisória
+      const { getAuth } = await import('firebase/auth')
+      const auth = getAuth()
+      await signInWithEmailAndPassword(auth, user.value.email, TEMP_PASSWORD)
+      // Se chegou aqui, a senha ainda é a provisória
+      mustChangePassword.value = true
+    } catch {
+      // Senha já foi trocada (login falhou) -- tudo certo
+    }
+  }
+
+  async function handleChangePassword() {
+    changePasswordError.value = ''
+
+    if (newPassword.value.length < 8) {
+      changePasswordError.value = 'A senha deve ter no mínimo 8 caracteres'
+      return
+    }
+    if (newPassword.value === TEMP_PASSWORD) {
+      changePasswordError.value = 'A nova senha não pode ser igual à provisória'
+      return
+    }
+    if (newPassword.value !== confirmPassword.value) {
+      changePasswordError.value = 'As senhas não coincidem'
+      return
+    }
+
+    if (!user.value) {
+      changePasswordError.value = 'Usuário não autenticado'
+      return
+    }
+    changingPassword.value = true
+    try {
+      await updatePassword(user.value, newPassword.value)
+      // Força refresh do token para refletir a nova senha
+      await getToken()
+      mustChangePassword.value = false
+      newPassword.value = ''
+      confirmPassword.value = ''
+    } catch (e) {
+      changePasswordError.value = (e as Error).message || 'Erro ao trocar senha'
+    } finally {
+      changingPassword.value = false
+    }
+  }
+
+  // Verifica ao montar
+  onMounted(() => {
+    checkTempPassword()
+  })
 
   // Stats placeholders — wire to real data later
   const stats = ref([
@@ -22,7 +85,49 @@
 </script>
 
 <template>
-  <div class="dashboard">
+  <!-- Modal: forçar troca de senha -->
+  <div v-if="mustChangePassword" class="change-password-overlay">
+    <div class="change-password-card">
+      <h2>Troque sua senha</h2>
+      <p class="change-password-desc">
+        Você está usando a senha provisória. Por segurança, defina uma nova senha antes de
+        continuar.
+      </p>
+      <form class="change-password-form" @submit.prevent="handleChangePassword">
+        <div class="field">
+          <label for="newPassword">Nova senha</label>
+          <input
+            id="newPassword"
+            v-model="newPassword"
+            type="password"
+            required
+            minlength="8"
+            placeholder="Mínimo 8 caracteres"
+            :disabled="changingPassword"
+          />
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirmar senha</label>
+          <input
+            id="confirmPassword"
+            v-model="confirmPassword"
+            type="password"
+            required
+            placeholder="Repita a nova senha"
+            :disabled="changingPassword"
+          />
+        </div>
+        <p v-if="changePasswordError" class="error">
+          {{ changePasswordError }}
+        </p>
+        <button type="submit" class="login-btn" :disabled="changingPassword">
+          {{ changingPassword ? 'Salvando...' : 'Trocar senha' }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div v-else class="dashboard">
     <header class="dash-header">
       <div>
         <h1>Dashboard</h1>
@@ -38,8 +143,12 @@
       <div v-for="stat in stats" :key="stat.label" class="stat-card">
         <i :class="stat.icon" class="stat-icon" />
         <div>
-          <div class="stat-value">{{ stat.value }}</div>
-          <div class="stat-label">{{ stat.label }}</div>
+          <div class="stat-value">
+            {{ stat.value }}
+          </div>
+          <div class="stat-label">
+            {{ stat.label }}
+          </div>
         </div>
       </div>
     </section>
@@ -52,9 +161,9 @@
       <div class="panel">
         <h2>Links Rápidos</h2>
         <nav class="quick-links">
-          <NuxtLink to="/" target="_blank">Ver site</NuxtLink>
-          <NuxtLink to="/releases">Releases</NuxtLink>
-          <NuxtLink to="/download">Download</NuxtLink>
+          <NuxtLink to="/" target="_blank"> Ver site </NuxtLink>
+          <NuxtLink to="/releases"> Releases </NuxtLink>
+          <NuxtLink to="/download"> Download </NuxtLink>
         </nav>
       </div>
     </section>
@@ -62,6 +171,44 @@
 </template>
 
 <style scoped>
+  .change-password-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: #0a0e1a;
+  }
+
+  .change-password-card {
+    width: 100%;
+    max-width: 420px;
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 2.5rem;
+  }
+
+  .change-password-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: #22d3ee;
+  }
+
+  .change-password-desc {
+    font-size: 0.8125rem;
+    color: #94a3b8;
+    margin: 0 0 1.5rem;
+    line-height: 1.5;
+  }
+
+  .change-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
   .dashboard {
     max-width: 1100px;
     margin: 0 auto;

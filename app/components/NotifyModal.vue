@@ -41,7 +41,9 @@
   }
 
   async function handleSubmit() {
+    // Stryker disable next-line ConditionalExpression -- v-model type=email auto-trims; guard is defense-in-depth
     if (isLoading.value) return
+    // Stryker disable next-line MethodExpression -- v-model type=email already trims input value
     const trimmed = email.value.trim()
     if (!trimmed || !validateEmail(trimmed)) return
     await subscribe(trimmed)

@@ -30,11 +30,8 @@ test.describe('Navigation & i18n', () => {
   })
 
   test('navigates to contact page', async ({ page }) => {
-    await page.goto('/')
-    await page
-      .locator('.header a[href]')
-      .filter({ hasText: /contact|contato/i })
-      .click()
+    // /contact está em secondaryNavLinks — navegar diretamente
+    await page.goto('/contact')
     await expect(page).toHaveURL(/\/contact/)
     await expect(page.locator('.contact-page')).toBeVisible()
   })

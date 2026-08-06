@@ -1,6 +1,4 @@
 import { initializeApp, getApps, cert, type App } from 'firebase-admin/app'
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
 
 let app: App | null = null
 
@@ -13,18 +11,18 @@ export function getFirebaseAdmin(): App {
   }
 
   const config = useRuntimeConfig()
-  const path = config.firebaseServiceAccountPath as string
+  const json = config.firebaseServiceAccount as string
 
-  if (!path) {
+  if (!json) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Firebase service account path not configured',
+      statusMessage:
+        'Firebase service account not configured (set FIREBASE_SERVICE_ACCOUNT env var)',
     })
   }
 
   try {
-    const serviceAccountPath = resolve(process.cwd(), path)
-    const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'))
+    const serviceAccount = JSON.parse(json)
 
     app = initializeApp({
       credential: cert(serviceAccount),

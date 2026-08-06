@@ -1,5 +1,12 @@
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, type User } from 'firebase/auth'
 
+// Extracted for testability — can be overridden in tests via __setIsClientForTesting
+let _isClient = true
+
+export function __setIsClientForTesting(val: boolean) {
+  _isClient = val
+}
+
 export function useFirebaseAuth() {
   const user = useState<User | null>('firebase_user', () => null)
   const loading = useState<boolean>('firebase_loading', () => true)
@@ -8,7 +15,7 @@ export function useFirebaseAuth() {
   // Client-only initialization
   let auth: ReturnType<typeof useFirebaseClient> | null = null
 
-  if (import.meta.client) {
+  if (_isClient) {
     try {
       auth = useFirebaseClient()
       onMounted(() => {

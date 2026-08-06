@@ -3,7 +3,7 @@ import { config, RouterLinkStub } from '@vue/test-utils'
 import { computed, ref } from 'vue'
 import ptBR from '../i18n/pt-BR.json'
 
-// Função auxiliar simples para buscar o valor dentro de chaves encadeadas (ex: 'hero.title')
+// Função auxiliar simples para buscar o valor dentro de chaves encadeadas
 function getNestedValue(obj: Record<string, unknown>, path: string): string {
   const value = path.split('.').reduce<unknown>((acc, part) => {
     if (acc && typeof acc === 'object' && part in (acc as Record<string, unknown>)) {
@@ -11,7 +11,7 @@ function getNestedValue(obj: Record<string, unknown>, path: string): string {
     }
     return undefined
   }, obj)
-  return typeof value === 'string' ? value : path // Fallback para a própria chave
+  return typeof value === 'string' ? value : path
 }
 
 // Mock de NuxtLink via Vue Test Utils
@@ -27,10 +27,7 @@ config.global.mocks = {
 }
 
 // Mock de Composables do Nuxt e Vue i18n
-// Usa uma ref compartilhada para que setLocale possa mutar o estado
 const sharedLocale = ref('pt-BR')
-
-// setLocale como fn estável (mesma referência em todas as chamadas de useI18n)
 const mockSetLocale = vi.fn((code: string) => {
   sharedLocale.value = code
 })
@@ -58,10 +55,64 @@ vi.stubGlobal('useHead', vi.fn())
 vi.stubGlobal('computed', computed)
 vi.stubGlobal('ref', ref)
 
-// Mock de useLocalePath (Nuxt i18n auto-import)
 vi.stubGlobal('useLocalePath', () => (path: string) => path)
 
-// Mock local storage se precisar
+// Mock de useRuntimeConfig
+vi.stubGlobal('useRuntimeConfig', () => ({
+  public: {
+    firebaseApiKey: 'test-api-key',
+    firebaseAuthDomain: 'test.firebaseapp.com',
+    firebaseProjectId: 'test-project',
+    firebaseStorageBucket: 'test.appspot.com',
+    firebaseMessagingSenderId: '123456',
+    firebaseAppId: '1:123:web:abc',
+  },
+}))
+
+// Mock de useState do Nuxt
+const stateMap = new Map<string, ReturnType<typeof ref>>()
+vi.stubGlobal('useState', <T>(key: string, init: () => T) => {
+  if (!stateMap.has(key)) {
+    stateMap.set(key, ref(init()))
+  }
+  return stateMap.get(key)!
+})
+
+// Mock de onMounted — auto-executa o callback
+vi.stubGlobal(
+  'onMounted',
+  vi.fn((fn: () => unknown) => fn()),
+)
+
+// Mock de useFirebaseClient
+vi.stubGlobal(
+  'useFirebaseClient',
+  vi.fn(() => ({ name: 'mock-auth' })),
+)
+
+// Mock de useFirebaseAuth
+vi.stubGlobal('useFirebaseAuth', () => ({
+  user: ref(null),
+  loading: ref(false),
+  error: ref(null),
+  login: vi.fn(),
+  logout: vi.fn(),
+  getToken: vi.fn(),
+}))
+
+// Mock de navigateTo
+vi.stubGlobal(
+  'navigateTo',
+  vi.fn((path: string) => ({ path })),
+)
+
+// Mock de defineNuxtRouteMiddleware
+vi.stubGlobal('defineNuxtRouteMiddleware', (fn: (...args: unknown[]) => unknown) => fn)
+
+// Mock de defineNuxtPlugin
+vi.stubGlobal('defineNuxtPlugin', (fn: (...args: unknown[]) => unknown) => fn)
+
+// Mock local storage
 const localStorageMock = {
   getItem: vi.fn(),
   setItem: vi.fn(),
@@ -70,7 +121,7 @@ const localStorageMock = {
 }
 vi.stubGlobal('localStorage', localStorageMock)
 
-// Reset locale compartilhado entre testes
 beforeEach(() => {
   sharedLocale.value = 'pt-BR'
+  stateMap.clear()
 })

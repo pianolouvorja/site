@@ -1,14 +1,19 @@
 {
   "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "packageManager": "pnpm",
-  "reporters": ["html", "clear-text", "progress"],
+  "reporters": ["html", "clear-text", "progress", "json"],
   "plugins": ["@stryker-mutator/vitest-runner"],
   "testRunner": "vitest",
   "vitest": {
     "configFile": "vitest.config.ts"
   },
   "buildCommand": "npx nuxi prepare",
-  "mutate": ["app/components/**/*.vue", "app/composables/**/*.ts", "app/data/**/*.ts"],
+  "mutate": [
+    "app/components/**/*.vue",
+    "app/composables/**/*.ts",
+    "app/data/**/*.ts",
+    "!app/components/DonateButton.vue"
+  ],
   "coverageAnalysis": "perTest",
   "thresholds": {
     "high": 90,

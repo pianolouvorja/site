@@ -16,7 +16,9 @@
     try {
       // Usa a nova API proxy interna que pagina todos os repos da org
       const res = await fetch('/api/github/contributors')
-      if (!res.ok) throw new Error('Failed to fetch contributors')
+      if (!res.ok)
+        // Stryker disable next-line StringLiteral -- error message unobservable, catch sets fetchError=true
+        throw new Error('Failed to fetch contributors')
       const data: Contributor[] = await res.json()
 
       // O backend já filtrou bots e consolidou os repositórios

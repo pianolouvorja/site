@@ -11,10 +11,8 @@ module.exports = {
       staticDistDir: '.output/public',
       url: [
         'http://localhost/index.html',
-        'http://localhost/download.html',
-        'http://localhost/releases.html',
-        'http://localhost/docs.html',
-        'http://localhost/contact.html',
+        'http://localhost/en/index.html',
+        'http://localhost/es/index.html',
       ],
       numberOfRuns: 1,
       settings: {

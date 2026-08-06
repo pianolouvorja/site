@@ -21,7 +21,7 @@ function setLocale(code: string) {
   mockLocale.value = code
 }
 
-import { useLocaleMessages, deepGet } from '~/composables/useLocaleMessages'
+import { useLocaleMessages, deepGet, isNullish } from '~/composables/useLocaleMessages'
 
 describe('useLocaleMessages', () => {
   beforeEach(() => {
@@ -137,5 +137,42 @@ describe('deepGet', () => {
 
   it('retorna objeto para path parcial', () => {
     expect(deepGet({ a: { b: 1 } }, 'a')).toEqual({ b: 1 })
+  })
+
+  it('retorna undefined para null com path de profundidade 1', () => {
+    expect(deepGet(null, 'a')).toBeUndefined()
+  })
+
+  it('retorna undefined para undefined com path de profundidade 1', () => {
+    expect(deepGet(undefined, 'a')).toBeUndefined()
+  })
+
+  it('retorna undefined para null com path vazio', () => {
+    expect(deepGet(null, '')).toBeUndefined()
+  })
+
+  it('retorna undefined para undefined com path vazio', () => {
+    expect(deepGet(undefined, '')).toBeUndefined()
+  })
+})
+
+describe('isNullish', () => {
+  it('retorna true para null', () => {
+    expect(isNullish(null)).toBe(true)
+  })
+  it('retorna true para undefined', () => {
+    expect(isNullish(undefined)).toBe(true)
+  })
+  it('retorna false para string vazia', () => {
+    expect(isNullish('')).toBe(false)
+  })
+  it('retorna false para 0', () => {
+    expect(isNullish(0)).toBe(false)
+  })
+  it('retorna false para objeto', () => {
+    expect(isNullish({})).toBe(false)
+  })
+  it('retorna false para array', () => {
+    expect(isNullish([])).toBe(false)
   })
 })

@@ -4,9 +4,16 @@ import { getAuth, type Auth } from 'firebase/auth'
 let app: FirebaseApp | null = null
 let authInstance: Auth | null = null
 
+// Extracted for testability — can be overridden in tests via __setIsServerForTesting
+let _isServer = false
+
+export function __setIsServerForTesting(val: boolean) {
+  _isServer = val
+}
+
 export function useFirebaseClient(): Auth {
   // Client-only — never run on server
-  if (import.meta.server) {
+  if (_isServer) {
     throw new Error('useFirebaseClient can only be used on the client')
   }
 
