@@ -720,7 +720,7 @@
     "redirectHint": "You can choose PIX or Boleto on the next screen."
   },
   "admin": {
-    "title": "Admin Panel",
+    "title": "Dashboard",
     "loginTitle": "Restricted Access",
     "loginSubtitle": "Sign in to access the panel",
     "email": "Email",
@@ -730,11 +730,24 @@
     "loginButton": "Sign In",
     "loginError": "Invalid email or password",
     "loggingIn": "Signing in...",
-    "logout": "Sign Out",
-    "welcome": "Welcome",
+    "logout": "Logout",
+    "welcome": "Welcome, {email}",
     "dashboard": "Dashboard",
     "stats": "Statistics",
-    "backToSite": "Back to site"
+    "backToSite": "Back to site",
+    "refresh": "Refresh",
+    "updatedAgo": "Updated {min} min ago",
+    "updatedAt": "Just now",
+    "downloads": "Downloads",
+    "stars": "Stars",
+    "forks": "Forks",
+    "subscribers": "Subscribers",
+    "donations": "Donations",
+    "visits": "Visits (30d)",
+    "recentActivity": "Recent Activity",
+    "quickLinks": "Quick Links",
+    "noData": "Data unavailable",
+    "loading": "Loading..."
   },
   "download": {
     "metaTitle": "Download — PIANO LouvorJA",

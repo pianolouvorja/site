@@ -720,7 +720,7 @@
     "redirectHint": "Você poderá escolher PIX ou Boleto na próxima tela."
   },
   "admin": {
-    "title": "Painel Administrativo",
+    "title": "Dashboard",
     "loginTitle": "Acesso Restrito",
     "loginSubtitle": "Faça login para acessar o painel",
     "email": "E-mail",
@@ -731,10 +731,23 @@
     "loginError": "E-mail ou senha inválidos",
     "loggingIn": "Entrando...",
     "logout": "Sair",
-    "welcome": "Bem-vindo",
+    "welcome": "Bem-vindo, {email}",
     "dashboard": "Dashboard",
     "stats": "Estatísticas",
-    "backToSite": "Voltar ao site"
+    "backToSite": "Voltar ao site",
+    "refresh": "Atualizar",
+    "updatedAgo": "Atualizado ha {min} min",
+    "updatedAt": "Agora",
+    "downloads": "Downloads",
+    "stars": "Estrelas",
+    "forks": "Forks",
+    "subscribers": "Assinantes",
+    "donations": "Doacoes",
+    "visits": "Visitas (30d)",
+    "recentActivity": "Atividade Recente",
+    "quickLinks": "Links Rapidos",
+    "noData": "Dados indisponiveis",
+    "loading": "Carregando..."
   },
   "download": {
     "metaTitle": "Baixar — PIANO LouvorJA",
