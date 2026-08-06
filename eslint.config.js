@@ -71,6 +71,7 @@ export default [
         useFirebaseAuth: 'readonly',
         useAuthState: 'readonly',
         useNewsletter: 'readonly',
+        useDashboardStats: 'readonly',
         // Browser DOM types
         MouseEvent: 'readonly',
         KeyboardEvent: 'readonly',
