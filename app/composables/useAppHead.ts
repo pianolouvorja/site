@@ -1,4 +1,4 @@
-const SITE_URL = 'https://pianolouvorja.com'
+const SITE_URL = 'https://pianolouvorja.com.br'
 const SITE_NAME = 'PIANO LouvorJA'
 
 interface AppHeadOptions {
@@ -94,6 +94,8 @@ export function useAppHead(options: AppHeadOptions = {}) {
       { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
       // Theme color for browser chrome
       { name: 'theme-color', content: '#0d1b2a' },
+      // Google Search Console verification (substituir pelo codigo real apos verificar)
+      // { name: 'google-site-verification', content: 'SEU_CODIGO_AQUI' },
     ],
     link: [
       { rel: 'canonical', href: canonicalUrl.value },

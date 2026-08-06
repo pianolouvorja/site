@@ -133,7 +133,7 @@
     "eyebrow": "About the Project",
     "title": "Made by and for the community",
     "text1": "{name} is a collaborative open-source project created to make worship service management easier.",
-    "text2": "Developed by the LouvorJA team, the platform continuously evolves with community contributions. Free, no ads, no data collection.",
+    "text2": "Developed by the Piano team, the platform evolves continuously with community contributions. Free, no ads, no data collection.",
     "openSource": "Open Source",
     "stats": {
       "free": "Free",
@@ -381,9 +381,9 @@
       "github": "GitHub",
       "app": "Open App"
     },
-    "copyright": "Made by the LouvorJA team with faith and dedication.",
+    "copyright": "Made by the Piano team with faith and dedication.",
     "developedBy": "Developed by",
-    "team": "LouvorJA Team",
+    "team": "Piano Team",
     "rights": "All rights reserved.",
     "legalNavLabel": "Legal links",
     "legalNavTitle": "Legal",
@@ -469,7 +469,7 @@
           "Deletion of personal data",
           "Information about sharing",
           "How to exercise your rights",
-          "Send an email to contato{'@'}pianolouvorja.com.br with:",
+          "Send an email to privacidade{'@'}pianolouvorja.com.br with:",
           "Full name",
           "Description of the right you want to exercise",
           "Registered email address",
@@ -530,7 +530,7 @@
       "dpo": {
         "title": "11. Data Protection Officer (DPO)",
         "body": [
-          "In compliance with Art. 41 of LGPD, questions can be sent to contato{'@'}pianolouvorja.com.br."
+          "In compliance with Art. 41 of LGPD, questions can be sent to privacidade{'@'}pianolouvorja.com.br."
         ]
       },
       "anpd": {

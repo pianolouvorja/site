@@ -47,7 +47,7 @@ describe('useAppHead', () => {
     // og:url should contain the path
     const ogUrl = arg.meta.find((m: any) => m.property === 'og:url')
     expect(ogUrl.content.value).toContain('/sobre')
-    expect(ogUrl.content.value).toContain('pianolouvorja.com')
+    expect(ogUrl.content.value).toContain('pianolouvorja.com.br')
   })
 
   it('usa descricao default do i18n quando sem options.description', () => {
@@ -66,7 +66,7 @@ describe('useAppHead', () => {
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
     const ogUrl = arg.meta.find((m: any) => m.property === 'og:url')
-    expect(ogUrl.content.value).toBe('https://pianolouvorja.com/')
+    expect(ogUrl.content.value).toBe('https://pianolouvorja.com.br/')
   })
 
   it('inclui link canonical na tag link', () => {
@@ -140,7 +140,7 @@ describe('useAppHead', () => {
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
     const m = arg.meta.find((m: any) => m.property === 'og:image')
-    expect(m.content).toBe('https://pianolouvorja.com/og-image.png')
+    expect(m.content).toBe('https://pianolouvorja.com.br/og-image.png')
   })
 
   it('inclui twitter:card summary_large_image', () => {
@@ -172,7 +172,7 @@ describe('useAppHead', () => {
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
     const m = arg.meta.find((m: any) => m.name === 'twitter:image')
-    expect(m.content).toBe('https://pianolouvorja.com/og-image.png')
+    expect(m.content).toBe('https://pianolouvorja.com.br/og-image.png')
   })
 
   it('inclui theme-color com valor correto', () => {
@@ -243,7 +243,7 @@ describe('useAppHead', () => {
     const arg = useHeadMock.mock.calls[0][0]
     const script = arg.script.find((s: any) => s.type === 'application/ld+json')
     const parsed = JSON.parse(script.innerHTML)
-    expect(parsed.url).toBe('https://pianolouvorja.com')
+    expect(parsed.url).toBe('https://pianolouvorja.com.br')
   })
 
   it('JSON-LD contem inLanguage com locale atual', () => {
@@ -261,7 +261,7 @@ describe('useAppHead', () => {
     const arg = useHeadMock.mock.calls[0][0]
     const canonical = arg.link.find((l: any) => l.rel === 'canonical')
     // pt-BR é defaultLocale, então não tem /pt-BR na URL
-    expect(canonical.href).toBe('https://pianolouvorja.com/sobre')
+    expect(canonical.href).toBe('https://pianolouvorja.com.br/sobre')
   })
 
   it('inclui prefixo de locale na URL para locale nao-padrao', () => {
@@ -270,7 +270,7 @@ describe('useAppHead', () => {
     const arg = useHeadMock.mock.calls[0][0]
     const alternates = arg.link.filter((l: any) => l.rel === 'alternate' && l.hreflang)
     const enLink = alternates.find((a: any) => a.hreflang === 'en')
-    expect(enLink.href).toBe('https://pianolouvorja.com/en/sobre')
+    expect(enLink.href).toBe('https://pianolouvorja.com.br/en/sobre')
   })
 
   it('resolve double slashes quando path e / para locale nao-padrao', () => {
@@ -279,7 +279,7 @@ describe('useAppHead', () => {
     const arg = useHeadMock.mock.calls[0][0]
     const alternates = arg.link.filter((l: any) => l.rel === 'alternate' && l.hreflang)
     const enLink = alternates.find((a: any) => a.hreflang === 'en')
-    expect(enLink.href).toBe('https://pianolouvorja.com/en')
+    expect(enLink.href).toBe('https://pianolouvorja.com.br/en')
   })
 
   it('canonical do defaultLocale sem path e exatamente a raiz', () => {
@@ -287,7 +287,7 @@ describe('useAppHead', () => {
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
     const canonical = arg.link.find((l: any) => l.rel === 'canonical')
-    expect(canonical.href).toBe('https://pianolouvorja.com/')
+    expect(canonical.href).toBe('https://pianolouvorja.com.br/')
   })
 
   it('inclui link alternate RSS com rel correto', () => {
@@ -320,7 +320,7 @@ describe('useAppHead', () => {
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
     const rss = arg.link.find((l: any) => l.type === 'application/rss+xml')
-    expect(rss.href).toBe('https://pianolouvorja.com/rss.xml')
+    expect(rss.href).toBe('https://pianolouvorja.com.br/rss.xml')
   })
 
   it('inclui link alternate RSS com objeto completo e nao vazio', () => {
