@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { RouterLinkStub } from '@vue/test-utils'
 import TheFooter from '~/components/TheFooter.vue'
 
 describe('TheFooter', () => {
@@ -17,7 +18,7 @@ describe('TheFooter', () => {
     return mount(TheFooter, {
       global: {
         stubs: {
-          NuxtLink: true,
+          NuxtLink: RouterLinkStub,
           DonateButton: true,
         },
         mocks: {
@@ -101,12 +102,18 @@ describe('TheFooter', () => {
     expect(result).toBe('/en#features')
   })
 
-  it('links de privacy e terms usam localePath', () => {
+  it('renderiza links de navegacao primaria', () => {
     const wrapper = createWrapper()
-    const privacyLink = wrapper.find('[to="/privacy"]')
-    expect(privacyLink.exists()).toBe(true)
-    const termsLink = wrapper.find('[to="/terms"]')
-    expect(termsLink.exists()).toBe(true)
+    const links = wrapper.findAllComponents(RouterLinkStub)
+    expect(links.length).toBeGreaterThan(0)
+  })
+
+  it('renderiza links de privacy e terms com localePath', () => {
+    const wrapper = createWrapper()
+    const links = wrapper.findAllComponents(RouterLinkStub)
+    const hrefs = links.map((l) => l.props('to'))
+    expect(hrefs).toContain('/privacy')
+    expect(hrefs).toContain('/terms')
   })
 
   it('navHref processa /#hash quando esta na home', () => {

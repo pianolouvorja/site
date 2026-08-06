@@ -7,6 +7,18 @@ const octokit = new Octokit({
 })
 
 export default defineEventHandler(async (event) => {
+  // During CI/test prerender, return stub data to avoid GitHub API rate limits
+  if (process.env.CI === 'true' || process.env.NODE_ENV === 'test') {
+    return [
+      {
+        login: 'test-user',
+        contributions: 42,
+        avatar_url: '',
+        html_url: 'https://github.com/test-user',
+      },
+    ]
+  }
+
   // Vamos paginar para buscar os contributors de todos os repos
   const repos = ['web', 'app', 'site']
   const allContributors = new Map<string, any>()

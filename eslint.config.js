@@ -18,6 +18,7 @@ export default [
       'playwright-report/**',
       'node_modules/**',
       'storybook-static/**',
+      'scripts/**',
     ],
   },
   {

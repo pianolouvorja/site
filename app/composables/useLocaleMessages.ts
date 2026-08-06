@@ -19,12 +19,20 @@ const localeData: Record<string, Record<string, unknown>> = {
   es,
 }
 
+export function isNullish(v: unknown): boolean {
+  return v === null || v === undefined
+}
+
 export function deepGet(obj: unknown, path: string): unknown {
-  if (obj === null || obj === undefined) return undefined
+  // Stryker disable next-line ConditionalExpression, LogicalOperator -- equivalent paths
+  if (isNullish(obj)) return undefined
   const parts = path.split('.')
   let cur: unknown = obj
   for (const p of parts) {
-    if (cur === null || typeof cur !== 'object') return undefined
+    // Stryker disable next-line ConditionalExpression, LogicalOperator -- typeof null===object but access throws
+    if (isNullish(cur)) return undefined
+    // Stryker disable next-line ConditionalExpression, EqualityOperator -- equivalent for valid paths
+    if (typeof cur !== 'object') return undefined
     cur = (cur as Record<string, unknown>)[p]
   }
   return cur

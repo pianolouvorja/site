@@ -4,7 +4,7 @@
 
   const showNotifyModal = ref(false)
 
-  function handleNotify() {
+  function openNotifyModal() {
     showNotifyModal.value = true
   }
 
@@ -115,7 +115,7 @@
             class="platforms__card-cta"
             :class="`platforms__card-cta--${platform.accent}`"
             data-testid="mobile-notify-trigger"
-            @click.prevent="handleNotify"
+            @click.prevent="openNotifyModal"
           >
             <span>{{ $t(platform.ctaLabel) }}</span>
             <i class="ti ti-arrow-right" />
@@ -135,9 +135,7 @@
       </div>
     </div>
 
-    <ClientOnly>
-      <NotifyModal v-model="showNotifyModal" />
-    </ClientOnly>
+    <NotifyModal v-model="showNotifyModal" />
   </section>
 </template>
 

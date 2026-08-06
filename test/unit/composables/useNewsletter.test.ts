@@ -92,7 +92,7 @@ describe('useNewsletter', () => {
 
       expect(mockFetch).not.toHaveBeenCalled()
       expect(status.value).toBe('error')
-      expect(errorMessage.value).toBeTruthy()
+      expect(errorMessage.value).toBe('invalid-email')
     })
 
     it('define status error e errorMessage quando API retorna erro', async () => {
@@ -114,7 +114,25 @@ describe('useNewsletter', () => {
       await subscribe('user@example.com')
 
       expect(status.value).toBe('error')
-      expect(errorMessage.value).toBeTruthy()
+      expect(errorMessage.value).toBe('Network error')
+    })
+
+    it('define errorMessage como unknown-error quando erro e null', async () => {
+      mockFetch.mockRejectedValueOnce(null)
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('unknown-error')
+    })
+
+    it('define errorMessage como unknown-error quando erro e undefined', async () => {
+      mockFetch.mockRejectedValueOnce(undefined)
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('unknown-error')
     })
 
     it('define status como loading durante a requisicao', async () => {
@@ -133,6 +151,19 @@ describe('useNewsletter', () => {
       await promise
 
       expect(status.value).toBe('success')
+    })
+
+    it('reseta errorMessage para string vazia ao iniciar nova inscricao valida', async () => {
+      const { subscribe, errorMessage } = useNewsletter()
+      // Forca um erro primeiro
+      mockFetch.mockRejectedValueOnce({ data: { detail: 'Some error' } })
+      await subscribe('user@example.com')
+      expect(errorMessage.value).toBe('Some error')
+
+      // Agora sucesso: errorMessage deve ser resetado para '' no inicio
+      mockFetch.mockResolvedValueOnce({ id: '123' })
+      await subscribe('user@example.com')
+      expect(errorMessage.value).toBe('')
     })
 
     it('reseta status para idle antes de nova tentativa', async () => {
@@ -165,6 +196,62 @@ describe('useNewsletter', () => {
       await subscribe('user@example.com')
 
       expect(errorMessage.value).toBe('unknown-error')
+    })
+
+    it('usa e.message quando erro tem message mas nao data.detail', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('Custom network error'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('Custom network error')
+    })
+
+    it('usa e.data.detail quando erro tem data.detail', async () => {
+      mockFetch.mockRejectedValueOnce({
+        data: { detail: 'Already subscribed' },
+      })
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('Already subscribed')
+    })
+  })
+
+  describe('validateEmail regex', () => {
+    it('rejeita email sem extensao de dominio (sem ponto apos @)', () => {
+      const { validateEmail } = useNewsletter()
+      // "user@domain" sem ponto - se o regex perde o \. este passa
+      expect(validateEmail('user@domain')).toBe(false)
+    })
+
+    it('rejeita email com ponto mas sem extensao valida', () => {
+      const { validateEmail } = useNewsletter()
+      // "a@b." - sem chars apos o ponto
+      expect(validateEmail('a@b.')).toBe(false)
+    })
+
+    it('rejeita email que precisa da ancora final $', () => {
+      const { validateEmail } = useNewsletter()
+      // "a@b.com trailing" - sem $ o regex encontraria match parcial
+      expect(validateEmail('a@b.com trailing')).toBe(false)
+    })
+
+    it('rejeita email com espaco apos dominio valido', () => {
+      const { validateEmail } = useNewsletter()
+      expect(validateEmail('a@b.com ')).toBe(false)
+    })
+
+    it('rejeita email com texto antes do email valido (sem ancora inicial ^)', () => {
+      const { validateEmail } = useNewsletter()
+      // Sem ^, o regex daria match parcial em "xyz a@b.com"
+      expect(validateEmail('xyz a@b.com')).toBe(false)
+    })
+
+    it('aceita email com subdominios multiplos', () => {
+      const { validateEmail } = useNewsletter()
+      expect(validateEmail('user@mail.example.co.uk')).toBe(true)
     })
   })
 

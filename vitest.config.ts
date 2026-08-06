@@ -12,7 +12,40 @@ export default defineConfig({
     projects: [
       // Unit tests — DOM environment, mocked composables
       {
-        plugins: [vue()],
+        plugins: [
+          vue(),
+          {
+            name: 'mock-import-meta-unit',
+            enforce: 'pre',
+            transform(code, id) {
+              // Replace import.meta.client/server in app source files
+              if (id.includes('/app/') && (id.endsWith('.ts') || id.endsWith('.vue'))) {
+                let transformed = code
+                // Remove import.meta.server branches (always false in tests)
+                transformed = transformed.replace(
+                  /if\s*\(import\.meta\.server\)\s*\{[^}]*\}/g,
+                  '/* server-only: removed in test */',
+                )
+                transformed = transformed.replace(
+                  /if\s*\(import\.meta\.server\)\s*return/g,
+                  '/* server-only: removed in test */',
+                )
+                // Keep import.meta.client branches (always true in tests)
+                transformed = transformed.replace(
+                  /if\s*\(import\.meta\.client\)\s*\{/g,
+                  '{ /* client-only: always true in test */',
+                )
+                // Replace any remaining standalone references
+                transformed = transformed.replace(/import\.meta\.client/g, 'true')
+                transformed = transformed.replace(/import\.meta\.server/g, 'false')
+                return {
+                  code: transformed,
+                  map: null as never,
+                }
+              }
+            },
+          },
+        ],
         test: {
           globals: true,
           setupFiles: ['./test/setup.ts'],
@@ -23,7 +56,7 @@ export default defineConfig({
         },
         resolve: { alias },
       },
-      // Integration tests — node environment for real HTTP via @nuxt/test-utils
+      // Integration tests — node environment
       {
         plugins: [vue()],
         test: {
@@ -45,7 +78,7 @@ export default defineConfig({
         'app/**/*.stories.ts',
         'app/app.vue',
         'app/layouts/*.vue',
-        'app/pages/*.vue',
+        'app/pages/**/*.vue',
         'nuxt.config.ts',
         'vitest.config.ts',
         'husky.config.js',

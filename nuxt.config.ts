@@ -42,7 +42,16 @@ export default defineNuxtConfig({
       // Ignore admin routes — they're client-only (Firebase Auth)
       ignore: ['/admin', '/admin/**'],
       crawlLinks: false,
-      routes: ['/', '/en', '/es', '/200.html', '/404.html'],
+      routes: [
+        '/',
+        '/en',
+        '/es',
+        '/200.html',
+        '/404.html',
+        // GitHub API — pré-renderizado como JSON estático (sem servidor Node em produção)
+        '/api/github/contributors',
+        '/api/github/releases',
+      ],
     },
   },
 
@@ -69,7 +78,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Server-only secrets
     abacatePayApiKey: process.env.ABACATEPAY_API_KEY || '',
-    firebaseServiceAccountPath: process.env.FIREBASE_SERVICE_ACCOUNT_PATH || '',
+    firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
 
     public: {
       web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
@@ -86,6 +95,9 @@ export default defineNuxtConfig({
       firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET || '',
       firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '',
       firebaseAppId: process.env.FIREBASE_APP_ID || '',
+
+      // Admin authorization (comma-separated emails)
+      adminEmails: process.env.ADMIN_EMAILS || '',
     },
   },
 })

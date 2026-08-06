@@ -5,6 +5,7 @@
  */
 export default defineNuxtRouteMiddleware(async (to) => {
   // Skip on server — Firebase auth is client-only
+  // Skip on server — Firebase auth is client-only
   if (import.meta.server) return
 
   // Skip login page itself
