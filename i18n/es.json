@@ -133,7 +133,7 @@
     "eyebrow": "Acerca del Proyecto",
     "title": "Hecho por y para la comunidad",
     "text1": "El {name} es un proyecto colaborativo de código abierto, creado para facilitar la gestión del culto.",
-    "text2": "Desarrollado por el equipo LouvorJA, la plataforma evoluciona continuamente con contribuciones de la comunidad.",
+    "text2": "Desarrollado por el equipo Piano, la plataforma evoluciona continuamente con contribuciones de la comunidad. Gratuito, sin anuncios, sin recopilación de datos.",
     "openSource": "Código Abierto",
     "stats": {
       "free": "Gratis",
@@ -190,7 +190,7 @@
       "submit": "Enviar Mensaje",
       "sending": "Enviando...",
       "success": "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
-      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com."
+      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com.br."
     },
     "direct": "O envíe un correo directamente a",
     "responseTime": "Tiempo medio de respuesta: 24-48h"
@@ -381,9 +381,9 @@
       "github": "GitHub",
       "app": "Abrir App"
     },
-    "copyright": "Hecho por el equipo LouvorJA con fe y dedicación.",
+    "copyright": "Hecho por el equipo Piano con fe y dedicación.",
     "developedBy": "Desarrollado por",
-    "team": "Equipo LouvorJA",
+    "team": "Equipo Piano",
     "rights": "Todos los derechos reservados.",
     "legalNavLabel": "Enlaces legales",
     "legalNavTitle": "Legal",
@@ -441,7 +441,7 @@
           "El formulario de contacto utiliza Web3Forms (EE.UU.) para procesar envíos. Los datos se transmiten a Web3Forms para su reenvío a nuestro correo.",
           "Subprocesador: Web3Forms",
           "País: Estados Unidos",
-          "Finalidad: Renvío de mensajes",
+          "Finalidad: Reenvío de mensajes",
           "3.2 Proveedor de hosting",
           "El sitio está alojado en un proveedor de infraestructura en la nube que puede registrar logs de acceso técnicos (IP, timestamp, user-agent).",
           "3.3 NO compartimos datos con",
@@ -469,7 +469,7 @@
           "Eliminación de datos personales",
           "Información sobre compartir",
           "Cómo ejercer sus derechos",
-          "Envíe un correo a contato{'@'}pianolouvorja.com.br con:",
+          "Envíe un correo a privacidade{'@'}pianolouvorja.com.br con:",
           "Nombre completo",
           "Descripción del derecho que desea ejercer",
           "Correo electrónico registrado",
@@ -530,7 +530,7 @@
       "dpo": {
         "title": "11. Encargado de Datos (DPO)",
         "body": [
-          "En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a contato{'@'}pianolouvorja.com.br."
+          "En cumplimiento del Art. 41 de la LGPD, las dudas pueden dirigirse a privacidade{'@'}pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -720,7 +720,7 @@
     "redirectHint": "Podrás elegir PIX o Boleto en la siguiente pantalla."
   },
   "admin": {
-    "title": "Panel Administrativo",
+    "title": "Panel",
     "loginTitle": "Acceso Restringido",
     "loginSubtitle": "Inicia sesión para acceder al panel",
     "email": "Correo electrónico",
@@ -730,11 +730,24 @@
     "loginButton": "Iniciar Sesión",
     "loginError": "Correo o contraseña inválidos",
     "loggingIn": "Iniciando sesión...",
-    "logout": "Cerrar Sesión",
-    "welcome": "Bienvenido",
+    "logout": "Salir",
+    "welcome": "Bienvenido, {email}",
     "dashboard": "Panel",
     "stats": "Estadísticas",
-    "backToSite": "Volver al sitio"
+    "backToSite": "Volver al sitio",
+    "refresh": "Actualizar",
+    "updatedAgo": "Actualizado hace {min} min",
+    "updatedAt": "Ahora",
+    "downloads": "Descargas",
+    "stars": "Estrellas",
+    "forks": "Forks",
+    "subscribers": "Suscriptores",
+    "donations": "Donaciones",
+    "visits": "Visitas (30d)",
+    "recentActivity": "Actividad Reciente",
+    "quickLinks": "Enlaces Rápidos",
+    "noData": "Datos no disponibles",
+    "loading": "Cargando..."
   },
   "download": {
     "metaTitle": "Descargar — PIANO LouvorJA",

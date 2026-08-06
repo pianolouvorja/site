@@ -1,6 +1,7 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import { updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
+  import type { ActivityItem } from '~/types/dashboard'
 
   definePageMeta({
     layout: 'admin',
@@ -12,8 +13,28 @@
   })
 
   const { user, logout, getToken } = useFirebaseAuth()
+  const { stats, loading, refresh } = useDashboardStats()
 
-  // --- Forçar troca de senha provisória ---
+  // --- Atividade recente ---
+  const recentActivity = ref<ActivityItem[]>([])
+  const activityLoading = ref(true)
+
+  async function fetchActivity() {
+    activityLoading.value = true
+    try {
+      const token = await getToken()
+      const data = await $fetch<{ items: ActivityItem[] }>('/api/admin/activity', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+      recentActivity.value = data.items
+    } catch {
+      recentActivity.value = []
+    } finally {
+      activityLoading.value = false
+    }
+  }
+
+  // --- Forcar troca de senha provisoria ---
   const TEMP_PASSWORD = 'Piano@2026'
   const mustChangePassword = ref(false)
   const newPassword = ref('')
@@ -24,14 +45,12 @@
   async function checkTempPassword() {
     if (!user.value?.email) return
     try {
-      // Tenta re-login com a senha provisória
       const { getAuth } = await import('firebase/auth')
       const auth = getAuth()
       await signInWithEmailAndPassword(auth, user.value.email, TEMP_PASSWORD)
-      // Se chegou aqui, a senha ainda é a provisória
       mustChangePassword.value = true
     } catch {
-      // Senha já foi trocada (login falhou) -- tudo certo
+      // Senha ja foi trocada
     }
   }
 
@@ -39,26 +58,25 @@
     changePasswordError.value = ''
 
     if (newPassword.value.length < 8) {
-      changePasswordError.value = 'A senha deve ter no mínimo 8 caracteres'
+      changePasswordError.value = 'A senha deve ter no minimo 8 caracteres'
       return
     }
     if (newPassword.value === TEMP_PASSWORD) {
-      changePasswordError.value = 'A nova senha não pode ser igual à provisória'
+      changePasswordError.value = 'A nova senha nao pode ser igual a provisoria'
       return
     }
     if (newPassword.value !== confirmPassword.value) {
-      changePasswordError.value = 'As senhas não coincidem'
+      changePasswordError.value = 'As senhas nao coincidem'
       return
     }
 
     if (!user.value) {
-      changePasswordError.value = 'Usuário não autenticado'
+      changePasswordError.value = 'Usuario nao autenticado'
       return
     }
     changingPassword.value = true
     try {
       await updatePassword(user.value, newPassword.value)
-      // Força refresh do token para refletir a nova senha
       await getToken()
       mustChangePassword.value = false
       newPassword.value = ''
@@ -70,27 +88,97 @@
     }
   }
 
-  // Verifica ao montar
-  onMounted(() => {
-    checkTempPassword()
+  // --- Helpers de formatacao ---
+  function formatValue(value: number | null): string {
+    if (value === null) return '—'
+    return value.toLocaleString('pt-BR')
+  }
+
+  function formatDonations(donations: { count: number; totalBRL: number } | null): string {
+    if (!donations) return '—'
+    return donations.totalBRL.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    })
+  }
+
+  function formatRelativeTime(dateString: string): string {
+    const date = new Date(dateString)
+    const diffMs = Date.now() - date.getTime()
+    const diffMin = Math.floor(diffMs / 60000)
+    const diffHour = Math.floor(diffMin / 60)
+    const diffDay = Math.floor(diffHour / 24)
+
+    if (diffMin < 1) return 'agora'
+    if (diffMin < 60) return `ha ${diffMin} min`
+    if (diffHour < 24) return `ha ${diffHour}h`
+    return `ha ${diffDay}d`
+  }
+
+  const activityIcon = (type: string): string => {
+    if (type === 'release') return 'ti ti-tag'
+    if (type === 'pr') return 'ti ti-git-pull-request'
+    if (type === 'issue') return 'ti ti-alert-circle'
+    return 'ti ti-activity'
+  }
+
+  const lastUpdatedText = computed(() => {
+    if (!stats.value) return ''
+    const diff = Date.now() - new Date(stats.value.updatedAt).getTime()
+    const min = Math.floor(diff / 60000)
+    if (min < 1) return 'Agora'
+    return `Atualizado ha ${min} min`
   })
 
-  // Stats placeholders — wire to real data later
-  const stats = ref([
-    { label: 'Downloads', value: '—', icon: 'ti ti-download' },
-    { label: 'Visitas', value: '—', icon: 'ti ti-eye' },
-    { label: 'Newsletter', value: '—', icon: 'ti ti-mail' },
-    { label: 'Doações', value: '—', icon: 'ti ti-heart' },
-  ])
+  // Stats cards reativos
+  const statCards = computed(() => {
+    const s = stats.value
+    return [
+      {
+        label: 'Downloads',
+        value: s ? formatValue(s.downloads) : '—',
+        icon: 'ti ti-download',
+        loading: loading.value,
+      },
+      {
+        label: 'Newsletter',
+        value: s ? formatValue(s.subscribers) : '—',
+        icon: 'ti ti-mail',
+        loading: loading.value,
+      },
+      {
+        label: 'Doacoes',
+        value: s ? formatDonations(s.donations) : '—',
+        icon: 'ti ti-heart',
+        loading: loading.value,
+      },
+      {
+        label: 'Visitas (30d)',
+        value: s ? formatValue(s.visits) : '—',
+        icon: 'ti ti-eye',
+        loading: loading.value,
+      },
+    ]
+  })
+
+  // --- Lifecycle ---
+  onMounted(() => {
+    checkTempPassword()
+    fetchActivity()
+  })
+
+  async function handleRefresh() {
+    await Promise.all([refresh(), fetchActivity()])
+  }
 </script>
 
 <template>
-  <!-- Modal: forçar troca de senha -->
+  <!-- Modal: forcar troca de senha -->
   <div v-if="mustChangePassword" class="change-password-overlay">
     <div class="change-password-card">
       <h2>Troque sua senha</h2>
       <p class="change-password-desc">
-        Você está usando a senha provisória. Por segurança, defina uma nova senha antes de
+        Voce esta usando a senha provisoria. Por seguranca, defina uma nova senha antes de
         continuar.
       </p>
       <form class="change-password-form" @submit.prevent="handleChangePassword">
@@ -102,7 +190,7 @@
             type="password"
             required
             minlength="8"
-            placeholder="Mínimo 8 caracteres"
+            placeholder="Minimo 8 caracteres"
             :disabled="changingPassword"
           />
         </div>
@@ -132,22 +220,32 @@
       <div>
         <h1>Dashboard</h1>
         <p class="welcome">Bem-vindo, {{ user?.email || 'admin' }}</p>
+        <p v-if="lastUpdatedText" class="updated-info">
+          {{ lastUpdatedText }}
+        </p>
       </div>
-      <button class="logout-btn" @click="logout">
-        <i class="ti ti-logout" />
-        Sair
-      </button>
+      <div class="header-actions">
+        <button class="refresh-btn" :disabled="loading" @click="handleRefresh">
+          <i class="ti ti-refresh" :class="{ spinning: loading }" />
+          <span>{{ loading ? 'Carregando...' : 'Atualizar' }}</span>
+        </button>
+        <button class="logout-btn" @click="logout">
+          <i class="ti ti-logout" />
+          Sair
+        </button>
+      </div>
     </header>
 
     <section class="stats-grid">
-      <div v-for="stat in stats" :key="stat.label" class="stat-card">
-        <i :class="stat.icon" class="stat-icon" />
+      <div v-for="card in statCards" :key="card.label" class="stat-card">
+        <i :class="card.icon" class="stat-icon" />
         <div>
           <div class="stat-value">
-            {{ stat.value }}
+            <span v-if="card.loading" class="skeleton">———</span>
+            <span v-else>{{ card.value }}</span>
           </div>
           <div class="stat-label">
-            {{ stat.label }}
+            {{ card.label }}
           </div>
         </div>
       </div>
@@ -156,10 +254,24 @@
     <section class="content-area">
       <div class="panel">
         <h2>Atividade Recente</h2>
-        <p class="placeholder">Dados em breve.</p>
+        <div v-if="activityLoading" class="placeholder">Carregando...</div>
+        <div v-else-if="recentActivity.length === 0" class="placeholder">Dados indisponiveis.</div>
+        <ul v-else class="activity-list">
+          <li v-for="(item, i) in recentActivity" :key="i" class="activity-item">
+            <a :href="item.url" target="_blank" rel="noopener" class="activity-link">
+              <i :class="activityIcon(item.type)" class="activity-icon" />
+              <div class="activity-content">
+                <span class="activity-title">{{ item.title }}</span>
+                <span class="activity-meta">
+                  por {{ item.author }} · {{ formatRelativeTime(item.createdAt) }}
+                </span>
+              </div>
+            </a>
+          </li>
+        </ul>
       </div>
       <div class="panel">
-        <h2>Links Rápidos</h2>
+        <h2>Links Rapidos</h2>
         <nav class="quick-links">
           <NuxtLink to="/" target="_blank"> Ver site </NuxtLink>
           <NuxtLink to="/releases"> Releases </NuxtLink>
@@ -217,9 +329,11 @@
 
   .dash-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .dash-header h1 {
@@ -233,6 +347,54 @@
     font-size: 0.875rem;
     color: #94a3b8;
     margin: 0.25rem 0 0;
+  }
+
+  .updated-info {
+    font-size: 0.75rem;
+    color: #475569;
+    margin: 0.125rem 0 0;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #22d3ee;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .refresh-btn:hover:not(:disabled) {
+    border-color: #22d3ee;
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .refresh-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .spinning {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .logout-btn {
@@ -282,6 +444,11 @@
     color: #e2e8f0;
   }
 
+  .skeleton {
+    color: #334155;
+    letter-spacing: 2px;
+  }
+
   .stat-label {
     font-size: 0.75rem;
     color: #64748b;
@@ -291,7 +458,7 @@
 
   .content-area {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 1.5rem;
   }
 
@@ -318,6 +485,61 @@
   .placeholder {
     color: #475569;
     font-size: 0.875rem;
+  }
+
+  .activity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .activity-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .activity-item:last-child {
+    border-bottom: none;
+  }
+
+  .activity-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+  }
+
+  .activity-link:hover {
+    color: #22d3ee;
+  }
+
+  .activity-icon {
+    font-size: 1.125rem;
+    color: #22d3ee;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .activity-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .activity-title {
+    font-size: 0.875rem;
+    color: #e2e8f0;
+    line-height: 1.4;
+  }
+
+  .activity-meta {
+    font-size: 0.75rem;
+    color: #64748b;
   }
 
   .quick-links {

@@ -22,3 +22,6 @@ extract_mutants.py
 
 # Internal planning (SDD)
 .planning/
+
+# Firebase service account (nunca commitar)
+service-account.json

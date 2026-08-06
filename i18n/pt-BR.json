@@ -133,7 +133,7 @@
     "eyebrow": "Sobre o Projeto",
     "title": "Feito por e para a comunidade",
     "text1": "O {name} é um projeto colaborativo de código aberto, criado para facilitar o gerenciamento de cultos e programações eclesiásticas.",
-    "text2": "Desenvolvido pela equipe LouvorJA, a plataforma evolui continuamente com contribuições da comunidade. Gratuito, sem anúncios, sem coleta de dados.",
+    "text2": "Desenvolvido pela equipe Piano, a plataforma evolui continuamente com contribuições da comunidade. Gratuito, sem anúncios, sem coleta de dados.",
     "openSource": "Open Source",
     "stats": {
       "free": "Gratuito",
@@ -159,7 +159,7 @@
         "desc": "Arraste itens para criar a ordem do culto com contagem de tempo."
       },
       "4": {
-        "title": "Projte e conduza",
+        "title": "Projete e conduza",
         "desc": "Use a projeção multi-tela para exibir hinos, versículos e slides."
       }
     }
@@ -381,9 +381,9 @@
       "github": "GitHub",
       "app": "Abrir App"
     },
-    "copyright": "Feito pela equipe LouvorJA com fé e dedicação.",
+    "copyright": "Feito pela equipe Piano com fé e dedicação.",
     "developedBy": "Desenvolvido por",
-    "team": "Equipe LouvorJA",
+    "team": "Equipe Piano",
     "rights": "Todos os direitos reservados.",
     "legalNavLabel": "Links legais",
     "legalNavTitle": "Legal",
@@ -469,7 +469,7 @@
           "Eliminação dos dados pessoais",
           "Informação sobre compartilhamento",
           "Como exercer seus direitos",
-          "Envie um e-mail para contato{'@'}pianolouvorja.com.br com:",
+          "Envie um e-mail para privacidade{'@'}pianolouvorja.com.br com:",
           "Nome completo",
           "Descrição do direito que deseja exercer",
           "Endereço de e-mail cadastrado",
@@ -530,7 +530,7 @@
       "dpo": {
         "title": "11. Encarregado de Dados (DPO)",
         "body": [
-          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para contato{'@'}pianolouvorja.com.br."
+          "Em conformidade com o Art. 41 da LGPD, dúvidas podem ser direcionadas para privacidade{'@'}pianolouvorja.com.br."
         ]
       },
       "anpd": {
@@ -720,7 +720,7 @@
     "redirectHint": "Você poderá escolher PIX ou Boleto na próxima tela."
   },
   "admin": {
-    "title": "Painel Administrativo",
+    "title": "Dashboard",
     "loginTitle": "Acesso Restrito",
     "loginSubtitle": "Faça login para acessar o painel",
     "email": "E-mail",
@@ -731,10 +731,23 @@
     "loginError": "E-mail ou senha inválidos",
     "loggingIn": "Entrando...",
     "logout": "Sair",
-    "welcome": "Bem-vindo",
+    "welcome": "Bem-vindo, {email}",
     "dashboard": "Dashboard",
     "stats": "Estatísticas",
-    "backToSite": "Voltar ao site"
+    "backToSite": "Voltar ao site",
+    "refresh": "Atualizar",
+    "updatedAgo": "Atualizado ha {min} min",
+    "updatedAt": "Agora",
+    "downloads": "Downloads",
+    "stars": "Estrelas",
+    "forks": "Forks",
+    "subscribers": "Assinantes",
+    "donations": "Doacoes",
+    "visits": "Visitas (30d)",
+    "recentActivity": "Atividade Recente",
+    "quickLinks": "Links Rapidos",
+    "noData": "Dados indisponiveis",
+    "loading": "Carregando..."
   },
   "download": {
     "metaTitle": "Baixar — PIANO LouvorJA",
