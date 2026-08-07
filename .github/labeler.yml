@@ -1,73 +1,73 @@
 # Auto-label rules for PRs based on changed file paths
 # https://github.com/actions/labeler
 
-"frontend":
+'frontend':
   - changed-files:
-    - any-glob-to-any-file:
-      - "app/**/*.vue"
-      - "app/**/*.ts"
-      - "app/assets/**/*"
+      - any-glob-to-any-file:
+          - 'app/**/*.vue'
+          - 'app/**/*.ts'
+          - 'app/assets/**/*'
 
-"backend":
+'backend':
   - changed-files:
-    - any-glob-to-any-file:
-      - "server/**/*"
-      - "server.api/**/*"
+      - any-glob-to-any-file:
+          - 'server/**/*'
+          - 'server.api/**/*'
 
-"ci-cd":
+'ci-cd':
   - changed-files:
-    - any-glob-to-any-file:
-      - ".github/workflows/**/*"
-      - ".github/**/*"
+      - any-glob-to-any-file:
+          - '.github/workflows/**/*'
+          - '.github/**/*'
 
-"i18n":
+'i18n':
   - changed-files:
-    - any-glob-to-any-file:
-      - "i18n/**/*"
-      - "app/i18n/**/*"
+      - any-glob-to-any-file:
+          - 'i18n/**/*'
+          - 'app/i18n/**/*'
 
-"tests":
+'tests':
   - changed-files:
-    - any-glob-to-any-file:
-      - "test/**/*"
-      - "e2e/**/*"
-      - "**/*.test.ts"
-      - "**/*.spec.ts"
+      - any-glob-to-any-file:
+          - 'test/**/*'
+          - 'e2e/**/*'
+          - '**/*.test.ts'
+          - '**/*.spec.ts'
 
-"docs":
+'docs':
   - changed-files:
-    - any-glob-to-any-file:
-      - "**/*.md"
-      - "LICENSE"
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'LICENSE'
 
-"config":
+'config':
   - changed-files:
-    - any-glob-to-any-file:
-      - "nuxt.config.ts"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "tsconfig.json"
-      - ".eslintrc*"
-      - "eslint.config.*"
-      - "vitest.config.*"
-      - "playwright.config.*"
-      - ".prettierrc*"
+      - any-glob-to-any-file:
+          - 'nuxt.config.ts'
+          - 'package.json'
+          - 'pnpm-lock.yaml'
+          - 'tsconfig.json'
+          - '.eslintrc*'
+          - 'eslint.config.*'
+          - 'vitest.config.*'
+          - 'playwright.config.*'
+          - '.prettierrc*'
 
-"dependencies":
+'dependencies':
   - changed-files:
-    - any-glob-to-any-file:
-      - "package.json"
-      - "pnpm-lock.yaml"
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'pnpm-lock.yaml'
 
-"storybook":
+'storybook':
   - changed-files:
-    - any-glob-to-any-file:
-      - ".storybook/**/*"
-      - "**/*.stories.ts"
+      - any-glob-to-any-file:
+          - '.storybook/**/*'
+          - '**/*.stories.ts'
 
-"accessibility":
+'accessibility':
   - changed-files:
-    - any-glob-to-any-file:
-      - "app/components/**/*"
-      - "app/pages/**/*"
-      - "app/layouts/**/*"
+      - any-glob-to-any-file:
+          - 'app/components/**/*'
+          - 'app/pages/**/*'
+          - 'app/layouts/**/*'
