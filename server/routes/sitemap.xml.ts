@@ -1,4 +1,4 @@
-import { defineEventHandler, getHeader } from 'h3'
+import { defineEventHandler } from 'h3'
 
 const SITE_URL = 'https://pianolouvorja.com.br'
 

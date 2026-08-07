@@ -1,12 +1,13 @@
 import { Octokit } from '@octokit/rest'
 
+// Token opcional — sem token, usa unauthenticated (60 req/h, suficiente com cache)
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
+  auth: process.env.GITHUB_TOKEN || undefined,
 })
 
 export default defineEventHandler(async (event) => {
-  // During CI/test prerender, return stub data to avoid GitHub API rate limits
-  if (process.env.CI === 'true' || process.env.NODE_ENV === 'test') {
+  // During test prerender only, return stub data (CI needs real releases for SSG)
+  if (process.env.NODE_ENV === 'test') {
     return [
       {
         tag_name: 'v1.0.0',
@@ -19,54 +20,45 @@ export default defineEventHandler(async (event) => {
     ]
   }
 
-  // Atualmente o site busca de pianolouvorja/web
-  // Mas vamos buscar dos 3 e consolidar.
-  const repos = ['web', 'app', 'site']
+  const repos = ['web', 'app', 'api', 'site'] as const
   const allReleases: any[] = []
 
-  try {
-    for (const repo of repos) {
-      let page = 1
-      let hasMore = true
+  // Fetch em paralelo — se um falhar, os outros ainda funcionam
+  const results = await Promise.allSettled(
+    repos.map(async (repo) => {
+      const response = await octokit.rest.repos.listReleases({
+        owner: 'pianolouvorja',
+        repo,
+        per_page: 10,
+      })
 
-      while (hasMore) {
-        const response = await octokit.rest.repos.listReleases({
-          owner: 'pianolouvorja',
-          repo: repo,
-          per_page: 100, // Máximo
-          page,
-        })
+      return response.data.map((r: any) => ({
+        ...r,
+        _repo: repo,
+      }))
+    }),
+  )
 
-        if (response.data.length === 0) {
-          hasMore = false
-        } else {
-          // Marca o repo em cada release caso precisemos na UI
-          const repoReleases = response.data.map((r) => ({
-            ...r,
-            _repo: repo,
-          }))
-          allReleases.push(...repoReleases)
-          page++
-        }
-      }
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i]!
+    const repo = repos[i]
+
+    if (result.status === 'fulfilled') {
+      allReleases.push(...result.value)
+    } else {
+      // Loga mas nao derruba a resposta inteira
+      console.error(`Error fetching releases from ${repo}:`, result.reason)
     }
-
-    // Ordena por data de publicação (mais recentes primeiro)
-    allReleases.sort((a, b) => {
-      const dateA = new Date(a.published_at || a.created_at).getTime()
-      const dateB = new Date(b.published_at || b.created_at).getTime()
-      return dateB - dateA
-    })
-
-    setHeader(event, 'cache-control', 'public, max-age=3600, s-maxage=3600')
-
-    // Retorna todos os releases combinados
-    return allReleases
-  } catch (error) {
-    console.error('Error fetching releases:', error)
-    return createError({
-      statusCode: 500,
-      message: 'Failed to fetch releases from GitHub',
-    })
   }
+
+  // Ordena por data de publicacao (mais recentes primeiro)
+  allReleases.sort((a, b) => {
+    const dateA = new Date(a.published_at || a.created_at).getTime()
+    const dateB = new Date(b.published_at || b.created_at).getTime()
+    return dateB - dateA
+  })
+
+  setHeader(event, 'cache-control', 'public, max-age=3600, s-maxage=3600')
+
+  return allReleases
 })

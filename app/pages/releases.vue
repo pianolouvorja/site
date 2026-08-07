@@ -6,12 +6,15 @@
     description: () => t('releases.metaDescription'),
   })
 
+  type RepoName = 'web' | 'app' | 'api' | 'site'
+
   interface GithubRelease {
     tag_name: string
     name: string
     published_at: string
     body: string
     html_url: string
+    _repo: RepoName
   }
 
   type ProductType = 'web' | 'desktop' | 'mobile'
@@ -21,6 +24,7 @@
     name: string
     date: string
     url: string
+    repo: RepoName
     products: ProductType[]
     highlights: string[]
     pullRequests: string[]
@@ -28,29 +32,30 @@
   }
 
   /**
-   * Detects which products a release affects based on tag/body keywords.
-   * - Tags like v* or containing "desktop"/"electron" → desktop
-   * - Tags containing "web"/"site"/"pwa" → web
-   * - Tags containing "mobile"/"android"/"ios" → mobile
-   * - Default: web (since this repo is pianolouvorja/web)
+   * Maps each repo to its primary product type.
+   * Uses _repo field from the API response for reliable detection.
    */
-  function detectProducts(tag: string, body: string): ProductType[] {
-    const products = new Set<ProductType>()
-    const combined = `${tag} ${body}`.toLowerCase()
+  const REPO_PRODUCTS: Record<RepoName, ProductType> = {
+    web: 'web',
+    site: 'web',
+    app: 'desktop',
+    api: 'web',
+  }
 
-    if (/electron|desktop|appimage|\.exe|\.dmg|windows|linux|macos/.test(combined)) {
-      products.add('desktop')
-    }
-    if (/web|site|pwa|browser|npm|vue|nuxt/.test(combined)) {
-      products.add('web')
-    }
+  /**
+   * Detects which products a release affects.
+   * Primary signal: the _repo field (exact source repository).
+   * Secondary signal: tag/body keywords (cross-cutting changes like mobile).
+   */
+  function detectProducts(repo: RepoName, tag: string, body: string): ProductType[] {
+    const products = new Set<ProductType>([REPO_PRODUCTS[repo]])
+
+    const combined = `${tag} ${body}`.toLowerCase()
     if (/mobile|android|ios|flutter|play-store|app-store/.test(combined)) {
       products.add('mobile')
     }
-
-    // Fallback: this is the web repo, so at least web
-    if (products.size === 0) {
-      products.add('web')
+    if (/electron|desktop|appimage|\.exe|\.dmg|windows|linux|macos/.test(combined)) {
+      products.add('desktop')
     }
 
     return Array.from(products)
@@ -202,7 +207,8 @@
         name: r.name || r.tag_name,
         date: formatDate(r.published_at, locale.value),
         url: r.html_url,
-        products: detectProducts(r.tag_name, r.body || ''),
+        repo: r._repo,
+        products: detectProducts(r._repo, r.tag_name, r.body || ''),
         ...parseReleaseBody(r.body || '', locale.value),
       }))
     } catch {
@@ -257,6 +263,12 @@
             <div class="release-card__header">
               <div class="release-card__version-info">
                 <span class="release-card__tag">{{ release.tag }}</span>
+                <span
+                  class="release-card__repo-badge"
+                  :class="`release-card__repo-badge--${release.repo}`"
+                >
+                  {{ $t(`releases.repos.${release.repo}`) }}
+                </span>
                 <span v-if="idx === 0" class="release-card__latest-badge">
                   {{ $t('releases.latest') }}
                 </span>
@@ -324,7 +336,7 @@
 
         <div v-if="!loading && !fetchError && releases.length > 0" class="releases-footer">
           <a
-            href="https://github.com/pianolouvorja/web/releases"
+            href="https://github.com/orgs/pianolouvorja/repositories"
             class="releases-footer__link"
             target="_blank"
             rel="noopener noreferrer"
@@ -454,6 +466,42 @@
       letter-spacing: 0.05em;
       background: var(--piano-accent);
       color: var(--piano-white);
+    }
+
+    &__repo-badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--piano-radius-sm);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: lowercase;
+      letter-spacing: 0.03em;
+      background: var(--piano-bg-tertiary);
+      color: var(--piano-text-secondary);
+      border: 1px solid var(--piano-border-subtle);
+
+      &--app {
+        background: rgba(99, 102, 241, 0.12);
+        color: #818cf8;
+        border-color: rgba(99, 102, 241, 0.25);
+      }
+
+      &--api {
+        background: rgba(245, 158, 11, 0.12);
+        color: #f59e0b;
+        border-color: rgba(245, 158, 11, 0.25);
+      }
+
+      &--site {
+        background: rgba(0, 193, 230, 0.12);
+        color: var(--piano-cyan);
+        border-color: rgba(0, 193, 230, 0.25);
+      }
+
+      &--web {
+        background: rgba(0, 193, 230, 0.12);
+        color: var(--piano-cyan);
+        border-color: rgba(0, 193, 230, 0.25);
+      }
     }
 
     &__date {
