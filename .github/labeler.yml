@@ -1,0 +1,73 @@
+# Auto-label rules for PRs based on changed file paths
+# https://github.com/actions/labeler
+
+'frontend':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'app/**/*.vue'
+          - 'app/**/*.ts'
+          - 'app/assets/**/*'
+
+'backend':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'server/**/*'
+          - 'server.api/**/*'
+
+'ci-cd':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**/*'
+          - '.github/**/*'
+
+'i18n':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'i18n/**/*'
+          - 'app/i18n/**/*'
+
+'tests':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'test/**/*'
+          - 'e2e/**/*'
+          - '**/*.test.ts'
+          - '**/*.spec.ts'
+
+'docs':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'LICENSE'
+
+'config':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'nuxt.config.ts'
+          - 'package.json'
+          - 'pnpm-lock.yaml'
+          - 'tsconfig.json'
+          - '.eslintrc*'
+          - 'eslint.config.*'
+          - 'vitest.config.*'
+          - 'playwright.config.*'
+          - '.prettierrc*'
+
+'dependencies':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'pnpm-lock.yaml'
+
+'storybook':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.storybook/**/*'
+          - '**/*.stories.ts'
+
+'accessibility':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'app/components/**/*'
+          - 'app/pages/**/*'
+          - 'app/layouts/**/*'
