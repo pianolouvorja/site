@@ -1,16 +1,16 @@
 name: CI
 
 on:
-  push:
-    branches: [staging, main]
   pull_request:
-    branches: [staging, main]
+    branches: [staging]
+  push:
+    branches: [staging]
 
 permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-staging-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
