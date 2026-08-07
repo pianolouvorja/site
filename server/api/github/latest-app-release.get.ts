@@ -5,8 +5,8 @@ const octokit = new Octokit({
 })
 
 export default defineEventHandler(async (event) => {
-  // During CI/test prerender, return stub data
-  if (process.env.CI === 'true' || process.env.NODE_ENV === 'test') {
+  // During test prerender only, return stub data
+  if (process.env.NODE_ENV === 'test') {
     return {
       tag_name: 'v1.0.0',
       assets: [],
