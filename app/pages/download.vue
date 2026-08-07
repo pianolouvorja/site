@@ -8,9 +8,7 @@
     description: () => t('download.metaDescription'),
   })
 
-  // GitHub releases endpoint for the Electron app
-  const GITHUB_LATEST_API = 'https://api.github.com/repos/pianolouvorja/app/releases/latest'
-
+  // Server-side proxy avoids GitHub API rate limits on client
   interface GithubAsset {
     name: string
     browser_download_url: string
@@ -26,20 +24,35 @@
   const downloadUrls = ref<Record<string, string>>({})
   const fetchError = ref(false)
 
+  // Detect OS client-side only to avoid hydration mismatch
+  const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
+
   onMounted(async () => {
+    // OS detection on client only (avoids SSR/client mismatch)
+    const ua = navigator.userAgent
+    const lower = ua.toLowerCase()
+    if (lower.includes('mac os') || lower.includes('macos') || lower.includes('darwin')) {
+      detectedOs.value = 'macos'
+    } else if (lower.includes('windows')) {
+      detectedOs.value = 'windows'
+    } else if (lower.includes('linux') || lower.includes('x11')) {
+      detectedOs.value = 'linux'
+    }
+
+    // Fetch latest release via server proxy (token-backed, no rate limit)
     try {
-      const res = await fetch(GITHUB_LATEST_API)
+      const res = await fetch('/api/github/latest-app-release')
       if (!res.ok) throw new Error('Failed to fetch release')
       const data: GithubRelease = await res.json()
       latestTag.value = data.tag_name
 
       for (const asset of data.assets) {
-        const lower = asset.name.toLowerCase()
-        if (lower.endsWith('.appimage')) {
+        const name = asset.name.toLowerCase()
+        if (name.endsWith('.appimage')) {
           downloadUrls.value.linux = asset.browser_download_url
-        } else if (lower.endsWith('.exe')) {
+        } else if (name.endsWith('.exe')) {
           downloadUrls.value.windows = asset.browser_download_url
-        } else if (lower.endsWith('.dmg')) {
+        } else if (name.endsWith('.dmg')) {
           downloadUrls.value.macos = asset.browser_download_url
         }
       }
@@ -47,22 +60,6 @@
       fetchError.value = true
     }
   })
-
-  // Detect OS from User-Agent (SSR-safe)
-  const headers = useRequestHeaders(['user-agent'])
-  const userAgent = headers['user-agent'] || ''
-
-  function detectOs(ua: string): 'linux' | 'windows' | 'macos' | null {
-    if (!ua) return null
-    const lower = ua.toLowerCase()
-    if (lower.includes('mac os') || lower.includes('macos') || lower.includes('darwin'))
-      return 'macos'
-    if (lower.includes('windows')) return 'windows'
-    if (lower.includes('linux') || lower.includes('x11')) return 'linux'
-    return null
-  }
-
-  const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(detectOs(userAgent))
 
   const desktopCards = computed(() => [
     {
