@@ -14,6 +14,7 @@
   const password = ref('')
   const loading = ref(false)
   const errorMsg = ref('')
+  const showPassword = ref(false)
 
   // Redirect if already logged in
   watchEffect(() => {
@@ -44,7 +45,7 @@
         <p>Painel Administrativo</p>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="login-form">
+      <form class="login-form" @submit.prevent="handleSubmit">
         <div class="field">
           <label for="email">E-mail</label>
           <input
@@ -60,25 +61,38 @@
 
         <div class="field">
           <label for="password">Senha</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            required
-            autocomplete="current-password"
-            placeholder="********"
-            :disabled="loading"
-          />
+          <div class="password-wrapper">
+            <input
+              id="password"
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              required
+              autocomplete="current-password"
+              placeholder="********"
+              :disabled="loading"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+              :title="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
+              @click="showPassword = !showPassword"
+            >
+              <i class="ti" :class="showPassword ? 'ti-eye-off' : 'ti-eye'" aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
-        <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
+        <p v-if="errorMsg" class="error">
+          {{ errorMsg }}
+        </p>
 
         <button type="submit" class="login-btn" :disabled="loading">
           {{ loading ? 'Entrando...' : 'Entrar' }}
         </button>
       </form>
 
-      <NuxtLink to="/" class="back-link">&larr; Voltar ao site</NuxtLink>
+      <NuxtLink to="/" class="back-link"> &larr; Voltar ao site </NuxtLink>
     </div>
   </div>
 </template>
@@ -154,6 +168,39 @@
 
   .field input:disabled {
     opacity: 0.5;
+  }
+
+  .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-wrapper input {
+    width: 100%;
+    padding-right: 2.75rem;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s;
+  }
+
+  .password-toggle:hover {
+    color: #22d3ee;
+  }
+
+  .password-toggle i {
+    font-size: 1.125rem;
   }
 
   .error {
