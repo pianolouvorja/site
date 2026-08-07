@@ -860,6 +860,12 @@
       "web": "Web",
       "desktop": "Desktop",
       "mobile": "Mobile"
+    },
+    "repos": {
+      "web": "Web (Site)",
+      "app": "App (Desktop)",
+      "api": "API",
+      "site": "Site"
     }
   }
 }
