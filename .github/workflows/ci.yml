@@ -115,6 +115,8 @@ jobs:
 
       - name: Generate static site
         run: pnpm generate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   mutation:
     name: Mutation Testing
@@ -243,6 +245,8 @@ jobs:
 
       - name: Generate static site
         run: pnpm generate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Lighthouse CI
         run: |

@@ -1,12 +1,13 @@
 import { Octokit } from '@octokit/rest'
 
+// Token opcional — sem token, usa unauthenticated (60 req/h, suficiente com cache)
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
+  auth: process.env.GITHUB_TOKEN || undefined,
 })
 
 export default defineEventHandler(async (event) => {
-  // During CI/test prerender, return stub data to avoid GitHub API rate limits
-  if (process.env.CI === 'true' || process.env.NODE_ENV === 'test') {
+  // During test prerender only, return stub data (CI needs real releases for SSG)
+  if (process.env.NODE_ENV === 'test') {
     return [
       {
         tag_name: 'v1.0.0',
@@ -19,44 +20,38 @@ export default defineEventHandler(async (event) => {
     ]
   }
 
-  // Busca releases de todos os repos da org pianolouvorja
-  const repos = ['web', 'app', 'api', 'site']
+  const repos = ['web', 'app', 'api', 'site'] as const
   const allReleases: any[] = []
 
-  // Cada repo é buscado de forma independente — se um falhar, os outros ainda funcionam
-  await Promise.all(
+  // Fetch em paralelo — se um falhar, os outros ainda funcionam
+  const results = await Promise.allSettled(
     repos.map(async (repo) => {
-      try {
-        let page = 1
-        let hasMore = true
+      const response = await octokit.rest.repos.listReleases({
+        owner: 'pianolouvorja',
+        repo,
+        per_page: 10,
+      })
 
-        while (hasMore) {
-          const response = await octokit.rest.repos.listReleases({
-            owner: 'pianolouvorja',
-            repo,
-            per_page: 100,
-            page,
-          })
-
-          if (response.data.length === 0) {
-            hasMore = false
-          } else {
-            const repoReleases = response.data.map((r) => ({
-              ...r,
-              _repo: repo,
-            }))
-            allReleases.push(...repoReleases)
-            page++
-          }
-        }
-      } catch (repoError) {
-        // Loga mas não derruba a resposta inteira — retorna o que conseguir dos outros
-        console.error(`Error fetching releases from ${repo}:`, repoError)
-      }
+      return response.data.map((r: any) => ({
+        ...r,
+        _repo: repo,
+      }))
     }),
   )
 
-  // Ordena por data de publicação (mais recentes primeiro)
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i]!
+    const repo = repos[i]
+
+    if (result.status === 'fulfilled') {
+      allReleases.push(...result.value)
+    } else {
+      // Loga mas nao derruba a resposta inteira
+      console.error(`Error fetching releases from ${repo}:`, result.reason)
+    }
+  }
+
+  // Ordena por data de publicacao (mais recentes primeiro)
   allReleases.sort((a, b) => {
     const dateA = new Date(a.published_at || a.created_at).getTime()
     const dateB = new Date(b.published_at || b.created_at).getTime()
