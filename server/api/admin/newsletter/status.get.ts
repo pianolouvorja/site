@@ -1,5 +1,5 @@
-import { verifyMailConnection } from '~/server/utils/mail'
-import { getSubscriberCount } from '~/server/utils/subscribers'
+import { verifyMailConnection } from '../../utils/mail'
+import { getSubscriberCount } from '../../utils/subscribers'
 
 export default defineEventHandler(async () => {
   const smtp = await verifyMailConnection()

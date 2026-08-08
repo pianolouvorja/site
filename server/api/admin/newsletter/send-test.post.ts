@@ -1,5 +1,5 @@
-import { renderTemplate } from '~/server/utils/email-templates'
-import { sendMail } from '~/server/utils/mail'
+import { renderTemplate } from '../../utils/email-templates'
+import { sendMail } from '../../utils/mail'
 
 interface SendTestBody {
   to: string

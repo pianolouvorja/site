@@ -1,7 +1,7 @@
-import { addToHistory } from '~/server/utils/newsletter-history'
-import { fetchSubscribers } from '~/server/utils/subscribers'
-import { renderTemplate } from '~/server/utils/email-templates'
-import { sendMail } from '~/server/utils/mail'
+import { addToHistory } from '../../utils/newsletter-history'
+import { fetchSubscribers, type Subscriber } from '../../utils/subscribers'
+import { renderTemplate } from '../../utils/email-templates'
+import { sendMail } from '../../utils/mail'
 
 interface SendBody {
   subject: string
@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const subs = await fetchSubscribers()
+  const subs: Subscriber[] = await fetchSubscribers()
   if (subs.length === 0) {
     return {
       total: 0,
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const emails = subs.filter((s) => s.active).map((s) => s.email)
+  const emails = subs.filter((s: Subscriber) => s.active).map((s: Subscriber) => s.email)
   const errors: string[] = []
   let sent = 0
   let failed = 0

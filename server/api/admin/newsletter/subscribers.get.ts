@@ -1,11 +1,13 @@
-import { fetchSubscribers } from '~/server/utils/subscribers'
+import { fetchSubscribers, type Subscriber } from '../../utils/subscribers'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const search = (query.search as string | undefined)?.toLowerCase() || ''
 
-  const all = await fetchSubscribers()
-  const filtered = search ? all.filter((s) => s.email.toLowerCase().includes(search)) : all
+  const all: Subscriber[] = await fetchSubscribers()
+  const filtered = search
+    ? all.filter((s: Subscriber) => s.email.toLowerCase().includes(search))
+    : all
 
   return {
     subscribers: filtered,
