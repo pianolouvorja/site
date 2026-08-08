@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-// defineEventHandler is provided globally via test/setup.ts
-
 // --- Mocks ---
 
 const mockFetch = vi.fn()
@@ -27,10 +25,116 @@ vi.mock('h3', () => ({
 }))
 
 // Import AFTER mocks
-import { createError, readBody } from 'h3'
-import { handleSubscribe } from '~~/server/api/newsletter/subscribe.post'
+import { readBody, createError } from 'h3'
+import {
+  handleSubscribe,
+  mapButtondownError,
+  validateSubscribeBody,
+} from '~~/server/api/newsletter/subscribe.post'
 
-describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
+describe('validateSubscribeBody', () => {
+  it('returns null for valid email with metadata', () => {
+    expect(
+      validateSubscribeBody({ email: 'user@example.com', metadata: { locale: 'pt-BR' } }),
+    ).toBeNull()
+  })
+
+  it('returns null for valid email without metadata', () => {
+    expect(validateSubscribeBody({ email: 'user@example.com' })).toBeNull()
+  })
+
+  it('returns invalid-email when email is missing', () => {
+    expect(validateSubscribeBody({ email: undefined })).toBe('invalid-email')
+  })
+
+  it('returns invalid-email when email is not a string', () => {
+    expect(validateSubscribeBody({ email: 12345 })).toBe('invalid-email')
+  })
+
+  it('returns invalid-email when email fails regex', () => {
+    expect(validateSubscribeBody({ email: 'not-an-email' })).toBe('invalid-email')
+  })
+
+  it('returns invalid-email when body is null', () => {
+    expect(validateSubscribeBody(null)).toBe('invalid-email')
+  })
+
+  it('returns invalid-email when body is undefined', () => {
+    expect(validateSubscribeBody(undefined)).toBe('invalid-email')
+  })
+
+  it('accepts email with subdomains', () => {
+    expect(validateSubscribeBody({ email: 'user@mail.example.co.uk' })).toBeNull()
+  })
+})
+
+describe('mapButtondownError', () => {
+  it('maps "already subscribed" detail to already-subscribed', () => {
+    expect(mapButtondownError({ data: { detail: 'already subscribed' } })).toBe(
+      'already-subscribed',
+    )
+  })
+
+  it('maps "already exists" detail to already-subscribed', () => {
+    expect(mapButtondownError({ data: { detail: 'Subscriber already exists' } })).toBe(
+      'already-subscribed',
+    )
+  })
+
+  it('maps "invalid" detail to invalid-email', () => {
+    expect(mapButtondownError({ data: { detail: 'Invalid email format' } })).toBe('invalid-email')
+  })
+
+  it('maps "email" in detail to invalid-email', () => {
+    expect(mapButtondownError({ data: { detail: 'email not valid' } })).toBe('invalid-email')
+  })
+
+  it('maps "rate limit" detail to rate-limited', () => {
+    expect(mapButtondownError({ data: { detail: 'rate limit exceeded' } })).toBe('rate-limited')
+  })
+
+  it('maps "too many" detail to rate-limited', () => {
+    expect(mapButtondownError({ data: { detail: 'too many requests' } })).toBe('rate-limited')
+  })
+
+  it('maps HTTP 429 statusCode to rate-limited (no detail)', () => {
+    expect(mapButtondownError({ statusCode: 429 })).toBe('rate-limited')
+  })
+
+  it('maps unrecognized detail to service-unavailable', () => {
+    expect(mapButtondownError({ data: { detail: 'Some unknown error' } })).toBe(
+      'service-unavailable',
+    )
+  })
+
+  it('maps generic Error without detail to service-unavailable', () => {
+    expect(mapButtondownError(new Error('Connection refused'))).toBe('service-unavailable')
+  })
+
+  it('maps empty object to service-unavailable', () => {
+    expect(mapButtondownError({})).toBe('service-unavailable')
+  })
+
+  it('maps null to service-unavailable', () => {
+    expect(mapButtondownError(null)).toBe('service-unavailable')
+  })
+
+  it('maps undefined to service-unavailable', () => {
+    expect(mapButtondownError(undefined)).toBe('service-unavailable')
+  })
+
+  it('maps error with detail but no recognized pattern to service-unavailable', () => {
+    expect(mapButtondownError({ data: { detail: 'something weird happened' } })).toBe(
+      'service-unavailable',
+    )
+  })
+
+  it('maps error with statusCode but not 429 to service-unavailable', () => {
+    expect(mapButtondownError({ statusCode: 500 })).toBe('service-unavailable')
+  })
+})
+
+describe('handleSubscribe', () => {
   beforeEach(() => {
     mockFetch.mockReset()
     vi.mocked(createError).mockClear()
@@ -82,7 +186,6 @@ describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
       }),
     )
 
-    // Restore
     vi.stubGlobal('useRuntimeConfig', () => ({ buttondownApiKey: 'bd_test_key' }))
   })
 
@@ -94,18 +197,6 @@ describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
       expect.objectContaining({
         statusCode: 400,
         statusMessage: 'invalid-email',
-        data: { code: 'invalid-email' },
-      }),
-    )
-  })
-
-  it('throws invalid-email when email is not a string', async () => {
-    mockReadBody = { email: 12345 }
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 400,
         data: { code: 'invalid-email' },
       }),
     )
@@ -123,8 +214,6 @@ describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
     )
   })
 
-  // --- Buttondown error mapping ---
-
   it('throws already-subscribed when Buttondown returns "already subscribed"', async () => {
     mockFetch.mockRejectedValueOnce({ data: { detail: 'already subscribed' } })
 
@@ -138,43 +227,6 @@ describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
     )
   })
 
-  it('throws already-subscribed when Buttondown returns "already exists"', async () => {
-    mockFetch.mockRejectedValueOnce({ data: { detail: 'Subscriber already exists' } })
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 409,
-        data: { code: 'already-subscribed' },
-      }),
-    )
-  })
-
-  it('throws invalid-email when Buttondown returns "invalid"', async () => {
-    mockFetch.mockRejectedValueOnce({ data: { detail: 'Invalid email format' } })
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 400,
-        statusMessage: 'invalid-email',
-        data: { code: 'invalid-email' },
-      }),
-    )
-  })
-
-  it('throws invalid-email when Buttondown returns "email" in detail', async () => {
-    mockFetch.mockRejectedValueOnce({ data: { detail: 'email not valid' } })
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 400,
-        data: { code: 'invalid-email' },
-      }),
-    )
-  })
-
   it('throws rate-limited when Buttondown returns "rate limit"', async () => {
     mockFetch.mockRejectedValueOnce({ data: { detail: 'rate limit exceeded' } })
 
@@ -182,37 +234,12 @@ describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
     expect(createError).toHaveBeenCalledWith(
       expect.objectContaining({
         statusCode: 429,
-        statusMessage: 'rate-limited',
         data: { code: 'rate-limited' },
       }),
     )
   })
 
-  it('throws rate-limited when Buttondown returns "too many"', async () => {
-    mockFetch.mockRejectedValueOnce({ data: { detail: 'too many requests' } })
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 429,
-        data: { code: 'rate-limited' },
-      }),
-    )
-  })
-
-  it('throws rate-limited when Buttondown returns HTTP 429 with no detail', async () => {
-    mockFetch.mockRejectedValueOnce({ statusCode: 429 })
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 429,
-        data: { code: 'rate-limited' },
-      }),
-    )
-  })
-
-  it('throws service-unavailable for unrecognized Buttondown error with detail', async () => {
+  it('throws service-unavailable for unrecognized Buttondown error', async () => {
     mockFetch.mockRejectedValueOnce({ data: { detail: 'Some unknown error' } })
 
     await expect(handleSubscribe({} as never)).rejects.toThrow()
@@ -232,19 +259,6 @@ describe('handleSubscribe (POST /api/newsletter/subscribe)', () => {
     expect(createError).toHaveBeenCalledWith(
       expect.objectContaining({
         statusCode: 502,
-        data: { code: 'service-unavailable' },
-      }),
-    )
-  })
-
-  it('throws service-unavailable for error with no data and no statusCode', async () => {
-    mockFetch.mockRejectedValueOnce({})
-
-    await expect(handleSubscribe({} as never)).rejects.toThrow()
-    expect(createError).toHaveBeenCalledWith(
-      expect.objectContaining({
-        statusCode: 502,
-        statusMessage: 'service-unavailable',
         data: { code: 'service-unavailable' },
       }),
     )

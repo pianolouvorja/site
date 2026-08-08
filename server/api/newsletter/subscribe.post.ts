@@ -18,15 +18,55 @@ interface SubscribeBody {
   metadata?: Record<string, string>
 }
 
-interface ButtondownErrorDetail {
+interface ButtondownErrorData {
   detail?: string
   statusCode?: number
   data?: { detail?: string }
 }
 
 /**
+ * Maps a Buttondown error to a user-friendly error code.
+ * Exported for unit testing (pure function, no h3 dependency).
+ */
+export function mapButtondownError(err: unknown): string {
+  const e = err as ButtondownErrorData
+  const detail = e?.data?.detail ?? ''
+  const statusCode = e?.statusCode ?? 0
+
+  if (detail) {
+    const lower = detail.toLowerCase()
+    if (lower.includes('already subscribed') || lower.includes('already exists')) {
+      return 'already-subscribed'
+    }
+    if (lower.includes('invalid') || lower.includes('email')) {
+      return 'invalid-email'
+    }
+    if (lower.includes('rate limit') || lower.includes('too many')) {
+      return 'rate-limited'
+    }
+  }
+
+  if (statusCode === 429) {
+    return 'rate-limited'
+  }
+
+  return 'service-unavailable'
+}
+
+/**
+ * Validates the subscribe body. Returns error code or null if valid.
+ * Exported for unit testing (pure function, no h3 dependency).
+ */
+export function validateSubscribeBody(body: SubscribeBody | null | undefined): string | null {
+  if (!body?.email || typeof body.email !== 'string' || !EMAIL_RE.test(body.email)) {
+    return 'invalid-email'
+  }
+  return null
+}
+
+/**
  * Core subscription logic — exported for unit testing.
- * Throws structured errors with { data: { code } } for the client to map.
+ * Uses h3's createError for structured error responses.
  */
 export async function handleSubscribe(event: H3Event): Promise<{ success: true }> {
   const config = useRuntimeConfig()
@@ -42,11 +82,12 @@ export async function handleSubscribe(event: H3Event): Promise<{ success: true }
 
   const body = await readBody<SubscribeBody>(event)
 
-  if (!body?.email || typeof body.email !== 'string' || !EMAIL_RE.test(body.email)) {
+  const validationError = validateSubscribeBody(body)
+  if (validationError) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'invalid-email',
-      data: { code: 'invalid-email' },
+      statusMessage: validationError,
+      data: { code: validationError },
     })
   }
 
@@ -58,56 +99,25 @@ export async function handleSubscribe(event: H3Event): Promise<{ success: true }
         'Content-Type': 'application/json',
       },
       body: {
-        email: body.email,
-        metadata: body.metadata ?? {},
+        email: body!.email as string,
+        metadata: body!.metadata ?? {},
       },
     })
 
     return { success: true }
   } catch (err: unknown) {
-    const e = err as ButtondownErrorDetail
-
-    const detail = e?.data?.detail ?? ''
-    const statusCode = e?.statusCode ?? 0
-
-    if (detail) {
-      const lower = detail.toLowerCase()
-      if (lower.includes('already subscribed') || lower.includes('already exists')) {
-        throw createError({
-          statusCode: 409,
-          statusMessage: 'already-subscribed',
-          data: { code: 'already-subscribed' },
-        })
-      }
-      if (lower.includes('invalid') || lower.includes('email')) {
-        throw createError({
-          statusCode: 400,
-          statusMessage: 'invalid-email',
-          data: { code: 'invalid-email' },
-        })
-      }
-      if (lower.includes('rate limit') || lower.includes('too many')) {
-        throw createError({
-          statusCode: 429,
-          statusMessage: 'rate-limited',
-          data: { code: 'rate-limited' },
-        })
-      }
+    const code = mapButtondownError(err)
+    const statusMap: Record<string, number> = {
+      'already-subscribed': 409,
+      'invalid-email': 400,
+      'rate-limited': 429,
+      'service-unavailable': 502,
     }
-
-    // HTTP status-based fallback
-    if (statusCode === 429) {
-      throw createError({
-        statusCode: 429,
-        statusMessage: 'rate-limited',
-        data: { code: 'rate-limited' },
-      })
-    }
-
+    // Stryker disable next-line EqualityOperator -- all mapButtondownError return values exist in statusMap
     throw createError({
-      statusCode: 502,
-      statusMessage: 'service-unavailable',
-      data: { code: 'service-unavailable' },
+      statusCode: statusMap[code],
+      statusMessage: code,
+      data: { code },
     })
   }
 }

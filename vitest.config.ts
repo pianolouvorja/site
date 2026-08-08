@@ -7,6 +7,7 @@ const alias = {
   '@': fileURLToPath(new URL('./app', import.meta.url)),
   '~~': fileURLToPath(new URL('.', import.meta.url)),
   '@@': fileURLToPath(new URL('.', import.meta.url)),
+  h3: fileURLToPath(new URL('node_modules/h3/dist/index.mjs', import.meta.url)),
 }
 
 export default defineConfig({
