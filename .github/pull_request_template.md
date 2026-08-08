@@ -1,39 +1,22 @@
-## Description
+## Issue Relacionada
 
-<!-- Brief description of what this PR does and why -->
+Closes #[NUMERO]
 
-## Type of Change
+## O que mudou
 
-- [ ] feat — New feature
-- [ ] fix — Bug fix
-- [ ] perf — Performance improvement
-- [ ] refactor — Code refactoring
-- [ ] docs — Documentation
-- [ ] test — Tests
-- [ ] build — Build system
-- [ ] ci — CI/CD
-- [ ] chore — Maintenance
-- [ ] revert — Revert
+[Breve descrição do que este PR faz e porquê]
+
+## Tipo de mudança
+
+- [ ] Bug fix (não quebra nada existente)
+- [ ] Feature (adiciona funcionalidade nova)
+- [ ] Refactor (não muda comportamento, melhora código)
+- [ ] Breaking change (quebra compatibilidade)
+- [ ] Documentação
 
 ## Checklist
 
-- [ ] Code follows project style (ESLint + Prettier pass)
-- [ ] Commits follow [Conventional Commits](https://conventionalcommits.org)
-- [ ] Tests added/updated for changes (100% coverage maintained)
-- [ ] `pnpm typecheck` passes
-- [ ] `pnpm lint` passes (0 errors)
-- [ ] `pnpm test` passes
-- [ ] Documentation updated if needed
-- [ ] No secrets/credentials in code
-
-## Breaking Changes
-
-<!-- If breaking change, describe migration path. Delete section if not applicable. -->
-
-## Screenshots
-
-<!-- For UI changes, add before/after screenshots. Delete if not applicable. -->
-
-## Related Issues
-
-<!-- Link issues: Closes #123, Refs #456 -->
+- [ ] Testes adicionados/atualizados
+- [ ] Type-check passa (`npm run type-check`)
+- [ ] Build passa (`npm run build`)
+- [ ] Documentação atualizada (se necessário)
