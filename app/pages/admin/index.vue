@@ -130,36 +130,148 @@
     return `Atualizado ha ${min} min`
   })
 
-  // Stats cards reativos
+  type DetailView = 'downloads' | 'newsletter' | 'donations' | 'visits' | null
+  const activeView = ref<DetailView>(null)
+
   const statCards = computed(() => {
     const s = stats.value
     return [
       {
+        key: 'downloads' as const,
         label: 'Downloads',
         value: s ? formatValue(s.downloads) : '—',
         icon: 'ti ti-download',
         loading: loading.value,
+        color: '#22d3ee',
       },
       {
+        key: 'newsletter' as const,
         label: 'Newsletter',
         value: s ? formatValue(s.subscribers) : '—',
         icon: 'ti ti-mail',
         loading: loading.value,
+        color: '#a78bfa',
       },
       {
+        key: 'donations' as const,
         label: 'Doacoes',
         value: s ? formatDonations(s.donations) : '—',
         icon: 'ti ti-heart',
         loading: loading.value,
+        color: '#f87171',
       },
       {
+        key: 'visits' as const,
         label: 'Visitas (30d)',
         value: s ? formatValue(s.visits) : '—',
         icon: 'ti ti-eye',
         loading: loading.value,
+        color: '#4ade80',
       },
     ]
   })
+
+  // Mock data for charts (will be replaced by real API data)
+  const downloadsChart = {
+    type: 'area' as const,
+    series: [{ name: 'Downloads', data: [12, 19, 15, 27, 22, 35, 44, 38, 52, 61, 55, 73] }],
+    categories: [
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
+    ],
+    colors: ['#22d3ee'],
+  }
+
+  const newsletterChart = {
+    type: 'area' as const,
+    series: [{ name: 'Novos inscritos', data: [3, 5, 2, 8, 6, 11, 9, 14, 12, 18, 22, 25] }],
+    categories: [
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
+    ],
+    colors: ['#a78bfa'],
+  }
+
+  const donationsChart = {
+    type: 'bar' as const,
+    series: [
+      { name: 'Doacoes (R$)', data: [0, 50, 25, 100, 75, 150, 120, 200, 180, 250, 210, 340] },
+    ],
+    categories: [
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
+    ],
+    colors: ['#f87171'],
+  }
+
+  const visitsChart = {
+    type: 'line' as const,
+    series: [
+      { name: 'Visitas', data: [120, 145, 180, 210, 195, 250, 310, 285, 340, 420, 380, 510] },
+    ],
+    categories: [
+      'Jan',
+      'Fev',
+      'Mar',
+      'Abr',
+      'Mai',
+      'Jun',
+      'Jul',
+      'Ago',
+      'Set',
+      'Out',
+      'Nov',
+      'Dez',
+    ],
+    colors: ['#4ade80'],
+  }
+
+  function getChart(view: DetailView) {
+    if (view === 'downloads') return downloadsChart
+    if (view === 'newsletter') return newsletterChart
+    if (view === 'donations') return donationsChart
+    return visitsChart
+  }
+
+  function getChartTitle(view: DetailView): string {
+    const titles: Record<string, string> = {
+      downloads: 'Downloads ao longo do tempo',
+      newsletter: 'Crescimento de assinantes',
+      donations: 'Doacoes por mes',
+      visits: 'Visitas ao site',
+    }
+    return titles[view || 'visits'] || ''
+  }
 
   // --- Lifecycle ---
   onMounted(() => {
@@ -241,7 +353,14 @@
     </header>
 
     <section class="stats-grid">
-      <div v-for="card in statCards" :key="card.label" class="stat-card">
+      <button
+        v-for="card in statCards"
+        :key="card.key"
+        class="stat-card"
+        :class="{ 'stat-card--active': activeView === card.key }"
+        :style="{ '--card-color': card.color }"
+        @click="activeView = activeView === card.key ? null : card.key"
+      >
         <i :class="card.icon" class="stat-icon" />
         <div>
           <div class="stat-value">
@@ -252,8 +371,27 @@
             {{ card.label }}
           </div>
         </div>
-      </div>
+      </button>
     </section>
+
+    <!-- Chart detail panel -->
+    <transition name="slide">
+      <section v-if="activeView" class="chart-panel">
+        <div class="chart-panel__header">
+          <h2>{{ getChartTitle(activeView) }}</h2>
+          <button class="chart-close" @click="activeView = null">
+            <i class="ti ti-x" />
+          </button>
+        </div>
+        <AdminChart
+          :type="getChart(activeView).type"
+          :series="getChart(activeView).series"
+          :categories="getChart(activeView).categories"
+          :colors="getChart(activeView).colors"
+          :height="320"
+        />
+      </section>
+    </transition>
 
     <section class="content-area">
       <div class="panel">
@@ -497,11 +635,78 @@
     border: 1px solid #1e293b;
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      border-color 0.15s,
+      transform 0.15s,
+      box-shadow 0.15s;
+    font-family: inherit;
+
+    &:hover {
+      border-color: var(--card-color, #22d3ee);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    &--active {
+      border-color: var(--card-color, #22d3ee);
+      background: rgba(34, 211, 238, 0.05);
+    }
   }
 
   .stat-icon {
     font-size: 1.75rem;
-    color: #22d3ee;
+    color: var(--card-color, #22d3ee);
+  }
+
+  .chart-panel {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h2 {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: #cbd5e1;
+        margin: 0;
+      }
+    }
+  }
+
+  .chart-close {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1.125rem;
+    transition: color 0.15s;
+
+    &:hover {
+      color: #f87171;
+    }
+  }
+
+  .slide-enter-active,
+  .slide-leave-active {
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
+  }
+
+  .slide-enter-from,
+  .slide-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 
   .stat-value {

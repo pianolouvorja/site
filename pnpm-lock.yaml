@@ -22,6 +22,9 @@ importers:
       '@tabler/icons-webfont':
         specifier: ^3.46.0
         version: 3.46.0(supports-color@10.2.2)
+      apexcharts:
+        specifier: ^6.7.0
+        version: 6.7.0
       firebase:
         specifier: ^12.17.0
         version: 12.17.0
@@ -46,6 +49,9 @@ importers:
       vue-router:
         specifier: ^5.2.0
         version: 5.2.0(@vue/compiler-sfc@3.5.40)(esbuild@0.25.12)(rolldown@1.2.1)(rollup@4.62.4)(vite@8.2.0(@types/node@20.19.43)(esbuild@0.25.12)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.49.0)(yaml@2.9.0))(vue@3.5.40(typescript@5.9.3))
+      vue3-apexcharts:
+        specifier: ^1.11.1
+        version: 1.11.1(apexcharts@6.7.0)(vue@3.5.40(typescript@5.9.3))
     devDependencies:
       '@commitlint/cli':
         specifier: ^21.2.1
@@ -3291,6 +3297,10 @@ packages:
 
   anynum@1.0.1:
     resolution: {integrity: sha512-N6//FLET/tXYNM/F6ABca1oH6fWB+KlTt909Le28WMDBk8oaT4vY17DCrwg2MvmuqUKt3Ni4N5dGJ/EoBgcO6A==}
+
+  apexcharts@6.7.0:
+    resolution: {integrity: sha512-1Z8AACzw2W2I/JOLh2jHVVHWYtOIf1Yr9/A99r1+YJwb31V2Wmi4fzfscWOJAAf47nW4qRWvLm+ZLEm0GeiqjQ==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
   archiver-utils@5.0.2:
     resolution: {integrity: sha512-wuLJMmIBQYCsGZgYLTy5FIB2pF6Lfb6cXMSF8Qywwk3t20zWnAi7zLcQFdKQmIB8wyZpY5ER38x08GbwtR2cLA==}
@@ -8486,6 +8496,12 @@ packages:
     peerDependencies:
       typescript: '>=5.0.0'
 
+  vue3-apexcharts@1.11.1:
+    resolution: {integrity: sha512-MbN3vg8bMG19wc0Lm1HkeQvODgLm56DgpIxtNUO0xpf/JCzYWVGE4jzXp2JISzy2s3Kul1yOxNQUYsLvKQ5L9g==}
+    peerDependencies:
+      apexcharts: '>=5.10.0'
+      vue: '>=3.0.0'
+
   vue@3.5.40:
     resolution: {integrity: sha512-+8PJ4SJXdn/cHGImF4CKdxlWHIN5Dkt7DoufRREM6h6uVCx2m7QxgcEQmmzyOK8A9mcafg7sFbJFYsdFVubTig==}
     peerDependencies:
@@ -12483,6 +12499,8 @@ snapshots:
 
   anynum@1.0.1:
     optional: true
+
+  apexcharts@6.7.0: {}
 
   archiver-utils@5.0.2:
     dependencies:
@@ -18406,6 +18424,11 @@ snapshots:
       '@volar/typescript': 2.4.28(typescript@5.9.3)
       '@vue/language-core': 3.3.8
       typescript: 5.9.3
+
+  vue3-apexcharts@1.11.1(apexcharts@6.7.0)(vue@3.5.40(typescript@5.9.3)):
+    dependencies:
+      apexcharts: 6.7.0
+      vue: 3.5.40(typescript@5.9.3)
 
   vue@3.5.40(typescript@5.9.3):
     dependencies:
