@@ -94,8 +94,6 @@ export default defineNuxtConfig({
 
     public: {
       web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
-      buttondownApiKey: process.env.BUTTONDOWN_API_KEY || '',
-      buttondownEndpoint: 'https://api.buttondown.com/api/v1/subscribers',
 
       // GA4
       googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || '',

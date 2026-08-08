@@ -1,11 +1,13 @@
 /**
- * useNewsletter — subscription management via Buttondown API.
+ * useNewsletter — subscription management via server-side proxy.
+ *
+ * The client calls our own /api/newsletter/subscribe endpoint (Nitro),
+ * which proxies to Buttondown server-side, keeping the API key private.
  *
  * State machine: idle → loading → (success | error) → idle
  *
- * Buttondown API docs: POST /api/v1/subscribers
- * Auth header: "Token <api-key>"
- * Error shape: { data: { detail: "..." } }
+ * Error codes returned by the server endpoint:
+ *   invalid-email, already-subscribed, rate-limited, service-unavailable, unknown-error
  */
 
 import { ref, readonly } from 'vue'
@@ -14,45 +16,23 @@ type NewsletterStatus = 'idle' | 'loading' | 'success' | 'error'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-interface ButtondownError {
-  data?: { detail?: string }
+interface ServerErrorResponse {
+  data?: { code?: string }
   message?: string
 }
 
 /**
- * Maps a Buttondown/network error to a user-friendly error code.
- *
- * Error codes → i18n keys (newsletter.errors.*):
- *   invalid-email        → invalidEmail
- *   already-subscribed   → alreadySubscribed
- *   rate-limited         → rateLimited
- *   service-unavailable  → serviceUnavailable
- *   subscribe-failed     → generic
- *   unknown-error        → generic (fallback)
+ * Maps a server error response to a user-friendly error code.
  */
-function mapErrorToCode(e: ButtondownError | null | undefined): string {
+function mapErrorToCode(e: ServerErrorResponse | null | undefined): string {
   if (!e) return 'unknown-error'
 
-  // Buttondown structured error: { data: { detail: "..." } }
-  const detail = e?.data?.detail ?? ''
+  // Server returns structured error: { data: { code: "..." } }
+  const code = e?.data?.code
+  if (code) return code
+
+  // Fallback: try message-based detection (network errors, etc.)
   const message = e?.message ?? ''
-
-  if (detail) {
-    const lower = detail.toLowerCase()
-    if (lower.includes('already subscribed') || lower.includes('already exists')) {
-      return 'already-subscribed'
-    }
-    if (lower.includes('invalid') || lower.includes('email')) {
-      return 'invalid-email'
-    }
-    if (lower.includes('rate limit') || lower.includes('too many')) {
-      return 'rate-limited'
-    }
-    // Buttondown returned an error we don't recognize
-    return 'subscribe-failed'
-  }
-
-  // Network/HTTP errors (no data.detail, but may have message)
   if (message) {
     const lower = message.toLowerCase()
     if (
@@ -75,7 +55,6 @@ function mapErrorToCode(e: ButtondownError | null | undefined): string {
 }
 
 export function useNewsletter() {
-  const config = useRuntimeConfig()
   const { locale } = useI18n()
   const status = ref<NewsletterStatus>('idle')
   const errorMessage = ref('')
@@ -100,20 +79,15 @@ export function useNewsletter() {
     errorMessage.value = ''
 
     try {
-      await $fetch(config.public.buttondownEndpoint, {
+      await $fetch('/api/newsletter/subscribe', {
         method: 'POST',
-        headers: {
-          Authorization: `Token ${config.public.buttondownApiKey}`,
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: { email, metadata: { locale: locale.value } },
       })
       status.value = 'success'
     } catch (err: unknown) {
-      const e = err as ButtondownError
+      const e = err as ServerErrorResponse
       status.value = 'error'
-
-      // User-friendly error messages - don't leak API details
       errorMessage.value = mapErrorToCode(e)
     }
   }

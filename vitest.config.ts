@@ -83,6 +83,7 @@ export default defineConfig({
         'server/utils/webhook-signature.ts',
         'server/utils/llm-translate.ts',
         'server/utils/release-payload.ts',
+        'server/api/newsletter/subscribe.post.ts',
       ],
       exclude: [
         'app/**/*.d.ts',
