@@ -1,3 +1,5 @@
+import { fetchSubscribers } from '~/server/utils/subscribers'
+
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const search = (query.search as string | undefined)?.toLowerCase() || ''

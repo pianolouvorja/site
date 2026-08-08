@@ -1,3 +1,5 @@
+import { removeSubscriber } from '~/server/utils/subscribers'
+
 export default defineEventHandler(async (event) => {
   const email = getRouterParam(event, 'email')
 

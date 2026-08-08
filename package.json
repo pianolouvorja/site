@@ -71,6 +71,7 @@
     "@stryker-mutator/vitest-runner": "^9.6.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/vue": "^8.1.0",
+    "@types/html-to-text": "^9.0.4",
     "@types/nodemailer": "^8.0.1",
     "@vitejs/plugin-vue": "^5.2.0",
     "@vitest/coverage-istanbul": "^3.2.7",

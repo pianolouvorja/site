@@ -1,3 +1,6 @@
+import { renderTemplate } from '~/server/utils/email-templates'
+import { sendMail } from '~/server/utils/mail'
+
 interface SendTestBody {
   to: string
   subject: string
