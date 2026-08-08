@@ -64,10 +64,11 @@
   const desktopCards = computed(() => [
     {
       os: 'linux' as const,
-      icon: '', // Tux renderizado via SVG inline no template
+      icon: '',
       i18nPrefix: 'download.desktop.linux',
       recommended: detectedOs.value === 'linux',
       requiresDiskSpace: true,
+      available: !!downloadUrls.value.linux,
     },
     {
       os: 'windows' as const,
@@ -75,6 +76,7 @@
       i18nPrefix: 'download.desktop.windows',
       recommended: detectedOs.value === 'windows',
       requiresDiskSpace: true,
+      available: !!downloadUrls.value.windows,
     },
     {
       os: 'macos' as const,
@@ -82,6 +84,7 @@
       i18nPrefix: 'download.desktop.macos',
       recommended: detectedOs.value === 'macos',
       requiresDiskSpace: true,
+      available: !!downloadUrls.value.macos,
     },
   ])
 </script>
@@ -135,11 +138,18 @@
             v-for="card in desktopCards"
             :key="card.os"
             class="download-card"
-            :class="{ 'download-card--recommended': card.recommended }"
+            :class="{
+              'download-card--recommended': card.recommended,
+              'download-card--disabled': !card.available,
+            }"
           >
-            <span v-if="card.recommended" class="download-card__badge">
+            <span v-if="card.recommended && card.available" class="download-card__badge">
               <i class="ti ti-star" aria-hidden="true" />
               {{ $t('download.desktop.badge') }}
+            </span>
+            <span v-if="!card.available" class="download-card__badge download-card__badge--soon">
+              <i class="ti ti-clock" aria-hidden="true" />
+              Em breve
             </span>
             <div class="download-card__header">
               <!-- Tux (Linux) via SVG inline - ti-brand-tux nao existe no Tabler -->
@@ -172,13 +182,21 @@
               {{ latestTag }}
             </p>
             <a
-              v-if="downloadUrls[card.os] && !fetchError"
+              v-if="card.available && downloadUrls[card.os] && !fetchError"
               :href="downloadUrls[card.os]"
               class="download-card__btn"
               :aria-label="$t(`${card.i18nPrefix}.downloadLabel`)"
             >
               <i class="ti ti-download" aria-hidden="true" />
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
+            </a>
+            <a
+              v-else-if="!card.available"
+              class="download-card__btn download-card__btn--disabled"
+              aria-disabled="true"
+            >
+              <i class="ti ti-clock" aria-hidden="true" />
+              Em breve
             </a>
             <a
               v-else
@@ -463,6 +481,11 @@
         background: rgba(217, 119, 6, 0.12);
         color: #b45309;
       }
+
+      &--soon {
+        background: rgba(148, 163, 184, 0.12);
+        color: #64748b;
+      }
     }
 
     &__title {
@@ -512,6 +535,15 @@
     &:hover {
       border-color: var(--piano-accent);
       box-shadow: var(--piano-shadow-md);
+    }
+
+    &--disabled {
+      opacity: 0.55;
+
+      &:hover {
+        border-color: var(--piano-border);
+        box-shadow: none;
+      }
     }
 
     /* Recommended badge */
@@ -610,6 +642,13 @@
         width: auto;
         padding: 0.875rem 2rem;
         margin-top: 0.5rem;
+      }
+
+      &--disabled {
+        background: var(--piano-bg-tertiary);
+        color: var(--piano-text-tertiary);
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
 

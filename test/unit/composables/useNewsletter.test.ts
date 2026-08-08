@@ -12,6 +12,10 @@ vi.stubGlobal('useRuntimeConfig', () => ({
   },
 }))
 
+// Mock useI18n — returns locale ref that tests can control
+const mockLocale = { value: 'pt-BR' }
+vi.stubGlobal('useI18n', () => ({ locale: mockLocale }))
+
 // Import AFTER mocks are set up
 import { useNewsletter } from '~/composables/useNewsletter'
 
@@ -60,7 +64,7 @@ describe('useNewsletter', () => {
   })
 
   describe('subscribe', () => {
-    it('chama $fetch com endpoint, headers e body corretos', async () => {
+    it('chama $fetch com endpoint, headers e body corretos (inclui locale)', async () => {
       mockFetch.mockResolvedValueOnce({ id: '123' })
       const { subscribe } = useNewsletter()
 
@@ -72,8 +76,23 @@ describe('useNewsletter', () => {
           Authorization: 'Token bd_test_key',
           'Content-Type': 'application/json',
         },
-        body: { email: 'user@example.com' },
+        body: {
+          email: 'user@example.com',
+          metadata: { locale: 'pt-BR' },
+        },
       })
+    })
+
+    it('envia locale correto quando useI18n retorna en', async () => {
+      mockLocale.value = 'en'
+      mockFetch.mockResolvedValueOnce({ id: '123' })
+      const { subscribe } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      const callArgs = mockFetch.mock.calls[0]![1] as { body: Record<string, unknown> }
+      expect(callArgs.body.metadata).toEqual({ locale: 'en' })
+      mockLocale.value = 'pt-BR' // reset
     })
 
     it('define status como success apos inscricao bem-sucedida', async () => {
@@ -104,17 +123,17 @@ describe('useNewsletter', () => {
       await subscribe('user@example.com')
 
       expect(status.value).toBe('error')
-      expect(errorMessage.value).toContain('already subscribed')
+      expect(errorMessage.value).toBe('already-subscribed')
     })
 
     it('define status error quando API rejeita com Error generico', async () => {
-      mockFetch.mockRejectedValueOnce(new Error('Network error'))
+      mockFetch.mockRejectedValueOnce(new Error('Unexpected failure'))
       const { subscribe, status, errorMessage } = useNewsletter()
 
       await subscribe('user@example.com')
 
       expect(status.value).toBe('error')
-      expect(errorMessage.value).toBe('Network error')
+      expect(errorMessage.value).toBe('unknown-error')
     })
 
     it('define errorMessage como unknown-error quando erro e null', async () => {
@@ -158,7 +177,7 @@ describe('useNewsletter', () => {
       // Forca um erro primeiro
       mockFetch.mockRejectedValueOnce({ data: { detail: 'Some error' } })
       await subscribe('user@example.com')
-      expect(errorMessage.value).toBe('Some error')
+      expect(errorMessage.value).toBe('subscribe-failed')
 
       // Agora sucesso: errorMessage deve ser resetado para '' no inicio
       mockFetch.mockResolvedValueOnce({ id: '123' })
@@ -186,7 +205,7 @@ describe('useNewsletter', () => {
 
       await subscribe('user@example.com')
 
-      expect(errorMessage.value).toBe('Invalid email format.')
+      expect(errorMessage.value).toBe('invalid-email')
     })
 
     it('define errorMessage como unknown-error quando erro nao tem detail nem message', async () => {
@@ -199,23 +218,150 @@ describe('useNewsletter', () => {
     })
 
     it('usa e.message quando erro tem message mas nao data.detail', async () => {
-      mockFetch.mockRejectedValueOnce(new Error('Custom network error'))
+      mockFetch.mockRejectedValueOnce(new Error('Something went wrong'))
       const { subscribe, errorMessage } = useNewsletter()
 
       await subscribe('user@example.com')
 
-      expect(errorMessage.value).toBe('Custom network error')
+      expect(errorMessage.value).toBe('unknown-error')
     })
 
     it('usa e.data.detail quando erro tem data.detail', async () => {
       mockFetch.mockRejectedValueOnce({
-        data: { detail: 'Already subscribed' },
+        data: { detail: 'already subscribed' },
       })
       const { subscribe, errorMessage } = useNewsletter()
 
       await subscribe('user@example.com')
 
-      expect(errorMessage.value).toBe('Already subscribed')
+      expect(errorMessage.value).toBe('already-subscribed')
+    })
+
+    it('define errorMessage como rate-limited quando API retorna rate limit', async () => {
+      mockFetch.mockRejectedValueOnce({
+        data: { detail: 'rate limit exceeded' },
+      })
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('rate-limited')
+    })
+
+    it('define errorMessage como rate-limited quando erro contem too many', async () => {
+      mockFetch.mockRejectedValueOnce({
+        data: { detail: 'too many requests' },
+      })
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('rate-limited')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem 404', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('404 Not Found'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem Not Found', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('Not Found'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    // --- mapErrorToCode: message-based service-unavailable paths ---
+
+    it('define errorMessage como service-unavailable quando erro contem 503', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('503 Service Unavailable'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem service unavailable', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('Service Unavailable'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem timeout', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('Request timeout'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem timed out', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('timed out'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem network', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('network error'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem fetch failed', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('fetch failed'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem ECONNREFUSED', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('ECONNREFUSED'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    it('define errorMessage como service-unavailable quando erro contem ECONNRESET', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('ECONNRESET'))
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('service-unavailable')
+    })
+
+    // --- mapErrorToCode: detail-based already-subscribed variant ---
+
+    it('define errorMessage como already-subscribed quando detail contem already exists', async () => {
+      mockFetch.mockRejectedValueOnce({
+        data: { detail: 'Subscriber already exists' },
+      })
+      const { subscribe, errorMessage } = useNewsletter()
+
+      await subscribe('user@example.com')
+
+      expect(errorMessage.value).toBe('already-subscribed')
     })
   })
 

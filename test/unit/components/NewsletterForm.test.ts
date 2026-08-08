@@ -26,8 +26,12 @@ vi.mock('vue-i18n', () => ({
         'newsletter.button': 'Inscrever',
         'newsletter.loading': 'Inscrevendo...',
         'newsletter.success': 'Inscrição confirmada!',
-        'newsletter.errorInvalid': 'E-mail inválido',
-        'newsletter.errorGeneric': 'Erro ao inscrever',
+        'newsletter.errors.invalidEmail': 'E-mail inválido',
+        'newsletter.errors.alreadySubscribed': 'Já inscrito',
+        'newsletter.errors.generic': 'Erro ao inscrever',
+        'newsletter.errors.rateLimited': 'Muitas tentativas',
+        'newsletter.errors.serviceUnavailable': 'Serviço indisponível',
+        'newsletter.errors.unknownError': 'Erro desconhecido',
       }
       return keys[key] ?? key
     },
@@ -114,13 +118,61 @@ describe('NewsletterForm', () => {
     expect(wrapper.text()).toContain('Inscrição confirmada!')
   })
 
-  it('shows error message when error', async () => {
+  it('shows translated error message for already-subscribed', async () => {
     mockStatus.value = 'error'
-    mockErrorMessage.value = 'Already subscribed'
+    mockErrorMessage.value = 'already-subscribed'
     const wrapper = mount(NewsletterForm)
     await flushPromises()
     expect(wrapper.find('[data-testid="newsletter-error"]').exists()).toBe(true)
-    expect(wrapper.text()).toContain('Already subscribed')
+    expect(wrapper.text()).toContain('Este e-mail já está inscrito')
+  })
+
+  it('shows translated error message for invalid-email', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'invalid-email'
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    expect(wrapper.text()).toContain('E-mail inválido')
+  })
+
+  it('shows translated error message for rate-limited', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'rate-limited'
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    expect(wrapper.text()).toContain('Muitas tentativas')
+  })
+
+  it('shows translated error message for service-unavailable', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'service-unavailable'
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    expect(wrapper.text()).toContain('Servico indisponivel')
+  })
+
+  it('shows translated error message for subscribe-failed (generic)', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'subscribe-failed'
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    expect(wrapper.text()).toContain('Erro ao inscrever')
+  })
+
+  it('shows translated error message for unknown-error (generic)', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'unknown-error'
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    expect(wrapper.text()).toContain('Erro ao inscrever')
+  })
+
+  it('falls back to generic for unmapped error code', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'some-future-error-code'
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    expect(wrapper.text()).toContain('Erro ao inscrever')
   })
 
   // --- KILL SURVIVING MUTANTS ---
@@ -187,6 +239,19 @@ describe('NewsletterForm', () => {
   it('error message NOT visible when idle', () => {
     const wrapper = mount(NewsletterForm)
     expect(wrapper.find('[data-testid="newsletter-error"]').exists()).toBe(false)
+  })
+
+  it('displayError returns empty when errorMessage is empty (branch coverage)', async () => {
+    // Status is 'error' but errorMessage is '' — forces computed evaluation
+    mockStatus.value = 'error'
+    mockErrorMessage.value = ''
+    const wrapper = mount(NewsletterForm)
+    await flushPromises()
+    // The error <p> exists (isError=true) but displayError is ''
+    const errorEl = wrapper.find('[data-testid="newsletter-error"]')
+    expect(errorEl.exists()).toBe(true)
+    // displayError computed returned '' — no translated text rendered
+    expect(errorEl.text()).toBe('')
   })
 
   it('submit button NOT disabled when idle', () => {

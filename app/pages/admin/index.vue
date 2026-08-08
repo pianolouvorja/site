@@ -130,36 +130,157 @@
     return `Atualizado ha ${min} min`
   })
 
-  // Stats cards reativos
+  type DetailView = 'downloads' | 'newsletter' | 'donations' | 'visits' | null
+  const activeView = ref<DetailView>(null)
+  const chartFilter = ref<'7d' | '30d' | '12m'>('12m')
+
   const statCards = computed(() => {
     const s = stats.value
     return [
       {
+        key: 'downloads' as const,
         label: 'Downloads',
         value: s ? formatValue(s.downloads) : '—',
         icon: 'ti ti-download',
         loading: loading.value,
+        color: '#22d3ee',
       },
       {
+        key: 'newsletter' as const,
         label: 'Newsletter',
         value: s ? formatValue(s.subscribers) : '—',
         icon: 'ti ti-mail',
         loading: loading.value,
+        color: '#a78bfa',
       },
       {
+        key: 'donations' as const,
         label: 'Doacoes',
         value: s ? formatDonations(s.donations) : '—',
         icon: 'ti ti-heart',
         loading: loading.value,
+        color: '#f87171',
       },
       {
+        key: 'visits' as const,
         label: 'Visitas (30d)',
         value: s ? formatValue(s.visits) : '—',
         icon: 'ti ti-eye',
         loading: loading.value,
+        color: '#4ade80',
       },
     ]
   })
+
+  // --- Chart data: mock in dev, empty in prod ---
+  interface ChartData {
+    type: 'area' | 'bar' | 'line'
+    series: Array<{ name: string; data: number[] }>
+    categories: string[]
+    colors: string[]
+  }
+
+  const chartMeta: Record<string, { type: ChartData['type']; name: string; color: string }> = {
+    downloads: { type: 'area', name: 'Downloads', color: '#22d3ee' },
+    newsletter: { type: 'bar', name: 'Assinantes', color: '#a78bfa' },
+    donations: { type: 'bar', name: 'Doacoes (R$)', color: '#f87171' },
+    visits: { type: 'line', name: 'Visitas', color: '#4ade80' },
+  }
+
+  // DEV-ONLY mock data (tree-shaken in production builds)
+  const mockByPeriod: Record<string, Record<'7d' | '30d' | '12m', number[]>> = import.meta.dev
+    ? {
+        downloads: {
+          '7d': [8, 12, 6, 15, 10, 22, 18],
+          '30d': [
+            3, 5, 2, 8, 6, 12, 9, 4, 7, 15, 11, 8, 14, 6, 10, 12, 9, 7, 16, 11, 8, 13, 5, 9, 14, 10,
+            7, 12, 15, 18,
+          ],
+          '12m': [12, 19, 15, 27, 22, 35, 44, 38, 52, 61, 55, 73],
+        },
+        newsletter: {
+          '7d': [2, 1, 3, 0, 2, 4, 3],
+          '30d': [
+            1, 0, 2, 1, 3, 2, 1, 0, 4, 2, 1, 3, 2, 1, 0, 3, 2, 4, 1, 2, 0, 3, 1, 2, 4, 3, 1, 2, 3,
+            5,
+          ],
+          '12m': [8, 12, 15, 18, 22, 28, 35, 42, 48, 55, 62, 78],
+        },
+        donations: {
+          '7d': [0, 50, 25, 80, 0, 120, 60],
+          '30d': [
+            0, 25, 0, 50, 40, 0, 75, 30, 0, 100, 50, 25, 0, 60, 45, 0, 80, 35, 0, 90, 50, 0, 70, 40,
+            0, 55, 30, 0, 65, 85,
+          ],
+          '12m': [0, 50, 25, 100, 75, 150, 120, 200, 180, 250, 210, 340],
+        },
+        visits: {
+          '7d': [45, 52, 38, 61, 48, 75, 82],
+          '30d': [
+            12, 18, 15, 22, 19, 28, 25, 31, 20, 26, 15, 33, 29, 24, 18, 35, 27, 22, 30, 19, 38, 25,
+            31, 16, 28, 34, 21, 26, 40, 45,
+          ],
+          '12m': [120, 145, 180, 210, 195, 250, 310, 285, 340, 420, 380, 510],
+        },
+      }
+    : {}
+
+  const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+  const monthLabels = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez',
+  ]
+
+  function getChart(view: DetailView): ChartData {
+    const key = view || 'visits'
+    const meta = chartMeta[key]
+    if (!meta) return { type: 'line', series: [], categories: monthLabels, colors: [] }
+    const period = chartFilter.value
+
+    if (import.meta.dev && mockByPeriod[key]) {
+      const data = mockByPeriod[key][period]
+      const categories =
+        period === '12m'
+          ? monthLabels
+          : period === '7d'
+            ? dayLabels
+            : Array.from({ length: 30 }, (_, i) => `${i + 1}`)
+      return {
+        type: meta.type,
+        series: [{ name: meta.name, data }],
+        categories,
+        colors: [meta.color],
+      }
+    }
+
+    // Prod: no historical data from API yet
+    return {
+      type: meta.type,
+      series: [{ name: meta.name, data: [] }],
+      categories: monthLabels,
+      colors: [meta.color],
+    }
+  }
+
+  function getChartTitle(view: DetailView): string {
+    const titles: Record<string, string> = {
+      downloads: 'Downloads ao longo do tempo',
+      newsletter: 'Crescimento de assinantes',
+      donations: 'Doacoes por mes',
+      visits: 'Visitas ao site',
+    }
+    return titles[view || 'visits'] || ''
+  }
 
   // --- Lifecycle ---
   onMounted(() => {
@@ -241,7 +362,14 @@
     </header>
 
     <section class="stats-grid">
-      <div v-for="card in statCards" :key="card.label" class="stat-card">
+      <button
+        v-for="card in statCards"
+        :key="card.key"
+        class="stat-card"
+        :class="{ 'stat-card--active': activeView === card.key }"
+        :style="{ '--card-color': card.color }"
+        @click="activeView = activeView === card.key ? null : card.key"
+      >
         <i :class="card.icon" class="stat-icon" />
         <div>
           <div class="stat-value">
@@ -252,8 +380,62 @@
             {{ card.label }}
           </div>
         </div>
-      </div>
+      </button>
     </section>
+
+    <!-- Chart detail panel -->
+    <transition name="slide">
+      <section v-if="activeView" class="chart-panel">
+        <div class="chart-panel__header">
+          <h2>{{ getChartTitle(activeView) }}</h2>
+          <div class="chart-panel__controls">
+            <div class="chart-filters">
+              <button
+                v-for="f in ['7d', '30d', '12m']"
+                :key="f"
+                class="chart-filter"
+                :class="{ 'chart-filter--active': chartFilter === f }"
+                @click="chartFilter = f"
+              >
+                {{ f }}
+              </button>
+            </div>
+            <button class="chart-close" @click="activeView = null">
+              <i class="ti ti-x" />
+            </button>
+          </div>
+        </div>
+        <AdminChart
+          :key="activeView + chartFilter"
+          :type="getChart(activeView).type"
+          :series="getChart(activeView).series"
+          :categories="getChart(activeView).categories"
+          :colors="getChart(activeView).colors"
+          :height="320"
+        />
+        <div v-if="activeView === 'donations'" class="chart-extra">
+          <div class="chart-stat">
+            <span class="chart-stat__label">Total confirmado</span>
+            <span class="chart-stat__value">{{ formatDonations(stats?.donations ?? null) }}</span>
+          </div>
+          <div class="chart-stat">
+            <span class="chart-stat__label">Doadores</span>
+            <span class="chart-stat__value">{{ stats?.donations?.count ?? '—' }}</span>
+          </div>
+          <div class="chart-stat">
+            <span class="chart-stat__label">Ticket medio</span>
+            <span class="chart-stat__value">{{
+              stats?.donations && stats.donations.count > 0
+                ? formatDonations({
+                    count: 1,
+                    totalBRL: stats.donations.totalBRL / stats.donations.count,
+                  })
+                : '—'
+            }}</span>
+          </div>
+        </div>
+      </section>
+    </transition>
 
     <section class="content-area">
       <div class="panel">
@@ -497,11 +679,141 @@
     border: 1px solid #1e293b;
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      border-color 0.15s,
+      transform 0.15s,
+      box-shadow 0.15s;
+    font-family: inherit;
+
+    &:hover {
+      border-color: var(--card-color, #22d3ee);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    &--active {
+      border-color: var(--card-color, #22d3ee);
+      background: rgba(34, 211, 238, 0.05);
+    }
   }
 
   .stat-icon {
     font-size: 1.75rem;
-    color: #22d3ee;
+    color: var(--card-color, #22d3ee);
+  }
+
+  .chart-panel {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h2 {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: #cbd5e1;
+        margin: 0;
+      }
+    }
+  }
+
+  .chart-close {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1.125rem;
+    transition: color 0.15s;
+
+    &:hover {
+      color: #f87171;
+    }
+  }
+
+  .chart-panel__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chart-filters {
+    display: flex;
+    gap: 0.25rem;
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 0.125rem;
+  }
+
+  .chart-filter {
+    padding: 0.25rem 0.625rem;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #64748b;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+
+    &:hover {
+      color: #94a3b8;
+    }
+
+    &--active {
+      background: #1e293b;
+      color: #22d3ee;
+    }
+  }
+
+  .chart-extra {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #1e293b;
+  }
+
+  .chart-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .chart-stat__label {
+    font-size: 0.6875rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .chart-stat__value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .slide-enter-active,
+  .slide-leave-active {
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
+  }
+
+  .slide-enter-from,
+  .slide-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 
   .stat-value {

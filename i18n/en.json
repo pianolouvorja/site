@@ -87,6 +87,9 @@
     "errors": {
       "invalidEmail": "Please enter a valid email address.",
       "alreadySubscribed": "This email is already subscribed.",
+      "rateLimited": "Too many attempts. Please wait a moment and try again.",
+      "serviceUnavailable": "Service temporarily unavailable. Please try again later.",
+      "subscribeFailed": "Could not subscribe. Please try again shortly.",
       "generic": "Something went wrong. Please try again shortly."
     }
   },
@@ -689,7 +692,10 @@
     "errors": {
       "invalidEmail": "Invalid email. Please check and try again.",
       "alreadySubscribed": "This email is already subscribed.",
-      "generic": "Subscription failed. Please try again."
+      "generic": "Subscription failed. Please try again.",
+      "rateLimited": "Too many attempts. Please wait a few minutes.",
+      "serviceUnavailable": "Service unavailable. Please try again later.",
+      "unknownError": "Something went wrong. Please try again."
     }
   },
   "welcomePopup": {
