@@ -94,8 +94,8 @@ export function useAppHead(options: AppHeadOptions = {}) {
       { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
       // Theme color for browser chrome
       { name: 'theme-color', content: '#0d1b2a' },
-      // Google Search Console verification (substituir pelo codigo real apos verificar)
-      // { name: 'google-site-verification', content: 'SEU_CODIGO_AQUI' },
+      // Google Search Console verification
+      { name: 'google-site-verification', content: 'A0OHlivpSyISUwtfHocbr3ESg1ShWBjjUSmRvaC0exQ' },
     ],
     link: [
       { rel: 'canonical', href: canonicalUrl.value },
