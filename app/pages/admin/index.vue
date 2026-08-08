@@ -407,7 +407,7 @@
         <div v-if="activeView === 'donations'" class="chart-extra">
           <div class="chart-stat">
             <span class="chart-stat__label">Total confirmado</span>
-            <span class="chart-stat__value">{{ formatDonations(stats?.donations) }}</span>
+            <span class="chart-stat__value">{{ formatDonations(stats?.donations ?? null) }}</span>
           </div>
           <div class="chart-stat">
             <span class="chart-stat__label">Doadores</span>
