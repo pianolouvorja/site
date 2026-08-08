@@ -132,6 +132,7 @@
 
   type DetailView = 'downloads' | 'newsletter' | 'donations' | 'visits' | null
   const activeView = ref<DetailView>(null)
+  const chartFilter = ref<'7d' | '30d' | '12m'>('12m')
 
   const statCards = computed(() => {
     const s = stats.value
@@ -379,9 +380,22 @@
       <section v-if="activeView" class="chart-panel">
         <div class="chart-panel__header">
           <h2>{{ getChartTitle(activeView) }}</h2>
-          <button class="chart-close" @click="activeView = null">
-            <i class="ti ti-x" />
-          </button>
+          <div class="chart-panel__controls">
+            <div class="chart-filters">
+              <button
+                v-for="f in ['7d', '30d', '12m']"
+                :key="f"
+                class="chart-filter"
+                :class="{ 'chart-filter--active': chartFilter === f }"
+                @click="chartFilter = f"
+              >
+                {{ f }}
+              </button>
+            </div>
+            <button class="chart-close" @click="activeView = null">
+              <i class="ti ti-x" />
+            </button>
+          </div>
         </div>
         <AdminChart
           :type="getChart(activeView).type"
@@ -390,6 +404,27 @@
           :colors="getChart(activeView).colors"
           :height="320"
         />
+        <div v-if="activeView === 'donations'" class="chart-extra">
+          <div class="chart-stat">
+            <span class="chart-stat__label">Total confirmado</span>
+            <span class="chart-stat__value">{{ formatDonations(stats?.donations) }}</span>
+          </div>
+          <div class="chart-stat">
+            <span class="chart-stat__label">Doadores</span>
+            <span class="chart-stat__value">{{ stats?.donations?.count ?? '—' }}</span>
+          </div>
+          <div class="chart-stat">
+            <span class="chart-stat__label">Ticket medio</span>
+            <span class="chart-stat__value">{{
+              stats?.donations && stats.donations.count > 0
+                ? formatDonations({
+                    count: 1,
+                    totalBRL: stats.donations.totalBRL / stats.donations.count,
+                  })
+                : '—'
+            }}</span>
+          </div>
+        </div>
       </section>
     </transition>
 
@@ -694,6 +729,69 @@
     &:hover {
       color: #f87171;
     }
+  }
+
+  .chart-panel__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chart-filters {
+    display: flex;
+    gap: 0.25rem;
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 0.125rem;
+  }
+
+  .chart-filter {
+    padding: 0.25rem 0.625rem;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #64748b;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+
+    &:hover {
+      color: #94a3b8;
+    }
+
+    &--active {
+      background: #1e293b;
+      color: #22d3ee;
+    }
+  }
+
+  .chart-extra {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #1e293b;
+  }
+
+  .chart-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .chart-stat__label {
+    font-size: 0.6875rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .chart-stat__value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #e2e8f0;
   }
 
   .slide-enter-active,

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import VueApexCharts from 'vue3-apexcharts'
-
   interface ChartProps {
     type: 'area' | 'bar' | 'donut' | 'line'
     series: Array<{ name?: string; data: number[] }>
@@ -98,22 +96,35 @@
 </script>
 
 <template>
-  <ClientOnly>
-    <VueApexCharts :type="type" :series="series" :options="chartOptions" :height="height" />
-    <template #fallback>
-      <div class="chart-fallback" :style="{ height: `${height}px` }">
-        <i class="ti ti-chart-bar" />
-      </div>
-    </template>
-  </ClientOnly>
+  <div class="chart-wrapper" :style="{ minHeight: `${height}px` }">
+    <ClientOnly>
+      <apexchart :type="type" :series="series" :options="chartOptions" :height="height" />
+      <template #fallback>
+        <div class="chart-fallback" :style="{ height: `${height}px` }">
+          <i class="ti ti-chart-bar" />
+          <span>Carregando gráfico...</span>
+        </div>
+      </template>
+    </ClientOnly>
+  </div>
 </template>
 
 <style scoped>
+  .chart-wrapper {
+    width: 100%;
+  }
+
   .chart-fallback {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     color: #334155;
+    font-size: 0.875rem;
+  }
+
+  .chart-fallback i {
     font-size: 2rem;
   }
 </style>
