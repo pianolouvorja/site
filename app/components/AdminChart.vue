@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import type { ApexOptions } from 'apexcharts'
+
   interface ChartProps {
     type: 'area' | 'bar' | 'donut' | 'line'
     series: Array<{ name?: string; data: number[] }>
@@ -12,7 +14,9 @@
     colors: () => ['#22d3ee'],
   })
 
-  const chartOptions = {
+  const isLine = computed(() => props.type === 'line' || props.type === 'area')
+
+  const chartOptions = computed<ApexOptions>(() => ({
     chart: {
       background: 'transparent',
       foreColor: '#94a3b8',
@@ -20,7 +24,7 @@
       fontFamily: 'system-ui, -apple-system, sans-serif',
       animations: { enabled: true, speed: 350 },
     },
-    theme: { mode: 'dark' as const },
+    theme: { mode: 'dark' },
     colors: props.colors,
     grid: {
       borderColor: '#1e293b',
@@ -43,31 +47,25 @@
       axisBorder: { show: true, color: '#334155' },
       axisTicks: { show: true, color: '#334155' },
     },
-    tooltip: { theme: 'dark' as const },
+    tooltip: { theme: 'dark' },
     dataLabels: { enabled: false },
     stroke: {
-      curve: 'smooth' as const,
-      width: props.type === 'line' || props.type === 'area' ? 2 : 0,
+      curve: 'smooth',
+      width: isLine.value ? 2 : 0,
     },
     fill:
       props.type === 'area'
         ? {
             type: 'gradient',
-            gradient: {
-              shadeIntensity: 1,
-              opacityFrom: 0.35,
-              opacityTo: 0.05,
-              stops: [0, 100],
-            },
+            gradient: { shadeIntensity: 1, opacityFrom: 0.35, opacityTo: 0.05, stops: [0, 100] },
           }
         : { opacity: 0.85 },
-    markers:
-      props.type === 'line' || props.type === 'area'
-        ? { size: 4, colors: props.colors, strokeWidth: 0, hover: { size: 6 } }
-        : { size: 0 },
+    markers: isLine.value
+      ? { size: 4, colors: props.colors, strokeWidth: 0, hover: { size: 6 } }
+      : { size: 0 },
     legend: {
-      position: 'top' as const,
-      horizontalAlign: 'right' as const,
+      position: 'top',
+      horizontalAlign: 'right',
       labels: { colors: '#94a3b8' },
     },
     plotOptions:
@@ -75,18 +73,22 @@
     responsive: [
       {
         breakpoint: 640,
-        options: {
-          xaxis: { labels: { style: { fontSize: '10px' }, rotate: -45 } },
-        },
+        options: { xaxis: { labels: { style: { fontSize: '10px' }, rotate: -45 } } },
       },
     ],
-  }
+  }))
 </script>
 
 <template>
   <div class="chart-wrapper">
     <ClientOnly>
-      <apexchart :type="type" :series="series" :options="chartOptions" :height="height" />
+      <apexchart
+        :key="type + categories.join()"
+        :type="type"
+        :series="series"
+        :options="chartOptions"
+        :height="height"
+      />
       <template #fallback>
         <div class="chart-fallback" :style="{ height: `${height}px` }">
           <i class="ti ti-chart-bar" />
