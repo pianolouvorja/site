@@ -1,65 +1,58 @@
 name: Bug Report
-description: Reporte um bug ou comportamento inesperado
-title: '[BUG] '
-labels: ['bug', 'triagem']
+description: Reporta um bug no Site
+labels: ["bug", "triage"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Obrigado por reportar! Preencha as informacoes abaixo para nos ajudar a reproduzir.
   - type: textarea
-    id: description
+    id: descricao
     attributes:
-      label: Descricao do bug
-      description: Uma descricao clara do que aconteceu.
+      label: Descrição do bug
+      description: O que aconteceu? Seja específico.
     validations:
       required: true
   - type: textarea
-    id: steps
+    id: reproducao
     attributes:
       label: Passos para reproduzir
-      description: Lista de passos para reproduzir o comportamento.
       placeholder: |
-        1. Va para '...'
-        2. Clica em '....'
-        3. Veja o erro
-    validations:
-      required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: Comportamento esperado
-      description: O que voce esperava que acontecesse?
-    validations:
-      required: true
-  - type: textarea
-    id: actual
-    attributes:
-      label: Comportamento atual
-      description: O que realmente aconteceu?
+        1. Abri o app em...
+        2. Cliquei em...
+        3. Vi que...
     validations:
       required: true
   - type: dropdown
-    id: device
+    id: prioridade
     attributes:
-      label: Dispositivo
+      label: Prioridade
       options:
-        - Desktop
-        - Tablet
-        - Mobile
-    validations:
-      required: true
-  - type: input
-    id: browser
-    attributes:
-      label: Navegador
-      placeholder: 'Ex: Chrome 126, Firefox 127, Safari 17'
+        - P0 — Crítico (não funciona)
+        - P1 — Alto (funciona mas quebra UX)
+        - P2 — Médio (workaround existe)
+        - P3 — Baixo (cosmético)
     validations:
       required: true
   - type: textarea
-    id: context
+    id: ambiente
     attributes:
-      label: Contexto adicional
-      description: Screenshots, logs, ou qualquer outra informacao relevante.
+      label: Ambiente
+      placeholder: Sistema operacional, navegador, versão, etc
+    validations:
+      required: true
+  - type: dropdown
+    id: modulo
+    attributes:
+      label: Módulo afetado
+      options:
+        - Router / Navegação
+        - Liturgia
+        - Bíblia
+        - Álbuns / Hinos
+        - Mídia / Player
+        - Settings / Aparência
+        - Design System
+        - Landing Page
+        - Blog
+        - SEO
+        - Infra / Deploy
+        - Outro
     validations:
       required: false
