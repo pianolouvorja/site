@@ -173,6 +173,41 @@
 
   const formatDate = (d: string) => new Date(d).toLocaleString('pt-BR')
 
+  // --- Live preview ---
+  const previewHtml = ref('')
+  const previewLoading = ref(false)
+  let previewTimer: ReturnType<typeof setTimeout> | null = null
+
+  async function fetchPreview() {
+    if (!body.value) {
+      previewHtml.value = ''
+      return
+    }
+    previewLoading.value = true
+    try {
+      const res = await $fetch<{ html: string }>('/api/admin/newsletter/preview', {
+        method: 'POST',
+        body: {
+          template: template.value,
+          subject: subject.value || 'Preview',
+          body: body.value,
+        },
+      })
+      previewHtml.value = res.html
+    } catch {
+      previewHtml.value = '<p style="color:#f87171">Erro ao gerar preview</p>'
+    } finally {
+      previewLoading.value = false
+    }
+  }
+
+  function schedulePreview() {
+    if (previewTimer) clearTimeout(previewTimer)
+    previewTimer = setTimeout(fetchPreview, 500)
+  }
+
+  watch([subject, body, template], schedulePreview)
+
   const templates_ = templates
   const subscribers_ = subscribers
   const history_ = history
@@ -243,8 +278,18 @@
           </div>
         </div>
         <div class="compose-preview">
-          <div class="preview-label">Preview</div>
-          <div class="preview-content" v-html="body" />
+          <div class="preview-label">
+            Preview
+            <span v-if="previewLoading" class="preview-loading">gerando...</span>
+          </div>
+          <iframe
+            v-if="previewHtml"
+            class="preview-frame"
+            :srcdoc="previewHtml"
+            sandbox=""
+            referrerpolicy="no-referrer"
+          />
+          <div v-else class="preview-empty">Digite o conteúdo para ver o preview...</div>
         </div>
       </div>
 
@@ -545,13 +590,31 @@
     color: #475569;
     text-transform: uppercase;
     margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .preview-content {
-    color: #cbd5e1;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    white-space: pre-wrap;
+  .preview-loading {
+    font-weight: 400;
+    text-transform: none;
+    color: #22d3ee;
+    font-size: 0.6875rem;
+  }
+
+  .preview-frame {
+    width: 100%;
+    min-height: 480px;
+    border: none;
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  .preview-empty {
+    color: #475569;
+    font-size: 0.8125rem;
+    text-align: center;
+    padding: 3rem 1rem;
   }
 
   .compose-actions {
