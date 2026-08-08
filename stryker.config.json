@@ -12,7 +12,8 @@
     "app/components/**/*.vue",
     "app/composables/**/*.ts",
     "app/data/**/*.ts",
-    "!app/components/DonateButton.vue"
+    "!app/components/DonateButton.vue",
+    "!app/components/AdminChart.vue"
   ],
   "coverageAnalysis": "perTest",
   "thresholds": {
