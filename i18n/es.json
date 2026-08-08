@@ -87,6 +87,9 @@
     "errors": {
       "invalidEmail": "Por favor, ingresa un correo válido.",
       "alreadySubscribed": "Este correo ya está registrado.",
+      "rateLimited": "Demasiados intentos. Espera un momento e intenta de nuevo.",
+      "serviceUnavailable": "Servicio no disponible temporalmente. Inténtalo más tarde.",
+      "subscribeFailed": "No fue posible suscribir. Inténtalo de nuevo en unos instantes.",
       "generic": "Algo salió mal. Inténtalo de nuevo en unos momentos."
     }
   },

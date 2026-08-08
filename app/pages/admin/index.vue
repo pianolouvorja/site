@@ -244,6 +244,7 @@
   function getChart(view: DetailView): ChartData {
     const key = view || 'visits'
     const meta = chartMeta[key]
+    if (!meta) return { type: 'line', series: [], categories: monthLabels, colors: [] }
     const period = chartFilter.value
 
     if (import.meta.dev && mockByPeriod[key]) {

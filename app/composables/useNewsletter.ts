@@ -21,6 +21,7 @@ interface ButtondownError {
 
 export function useNewsletter() {
   const config = useRuntimeConfig()
+  const { locale } = useI18n()
   const status = ref<NewsletterStatus>('idle')
   const errorMessage = ref('')
 
@@ -50,13 +51,33 @@ export function useNewsletter() {
           Authorization: `Token ${config.public.buttondownApiKey}`,
           'Content-Type': 'application/json',
         },
-        body: { email },
+        body: { email, metadata: { locale: locale.value } },
       })
       status.value = 'success'
     } catch (err: unknown) {
       const e = err as ButtondownError
       status.value = 'error'
-      errorMessage.value = e?.data?.detail ?? e?.message ?? 'unknown-error'
+
+      // User-friendly error messages - don't leak API details
+      if (e?.data?.detail) {
+        // Map Buttondown API errors to user-friendly messages
+        if (
+          e.data.detail.includes('already subscribed') ||
+          e.data.detail.includes('already exists')
+        ) {
+          errorMessage.value = 'already-subscribed'
+        } else if (e.data.detail.includes('invalid') || e.data.detail.includes('email')) {
+          errorMessage.value = 'invalid-email'
+        } else if (e.data.detail.includes('rate limit') || e.data.detail.includes('too many')) {
+          errorMessage.value = 'rate-limited'
+        } else {
+          errorMessage.value = 'subscribe-failed'
+        }
+      } else if (e?.message?.includes('404') || e?.message?.includes('Not Found')) {
+        errorMessage.value = 'service-unavailable'
+      } else {
+        errorMessage.value = 'unknown-error'
+      }
     }
   }
 
