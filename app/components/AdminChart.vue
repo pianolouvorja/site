@@ -14,38 +14,55 @@
     label: '',
   })
 
-  const chartOptions = computed(() => ({
+  // Options estaveis -- nao recalcula a cada render
+  const chartOptions = {
     chart: {
-      type: props.type,
       background: 'transparent',
       foreColor: '#94a3b8',
       toolbar: { show: false },
       fontFamily: 'system-ui, -apple-system, sans-serif',
+      animations: {
+        enabled: true,
+        speed: 350,
+      },
     },
     theme: { mode: 'dark' as const },
     colors: props.colors,
     grid: {
       borderColor: '#1e293b',
       strokeDashArray: 3,
+      padding: { left: 10, right: 10 },
     },
     xaxis: {
       categories: props.categories,
-      labels: { style: { colors: '#64748b', fontSize: '11px' } },
-      axisBorder: { color: '#1e293b' },
-      axisTicks: { color: '#1e293b' },
+      labels: {
+        style: { colors: '#64748b', fontSize: '11px' },
+        rotate: 0,
+        hideOverlappingLabels: true,
+      },
+      axisBorder: { show: true, color: '#1e293b' },
+      axisTicks: { show: true, color: '#1e293b' },
+      tooltip: { enabled: false },
     },
     yaxis: {
       labels: { style: { colors: '#64748b', fontSize: '11px' } },
+      tickAmount: 5,
     },
     tooltip: {
       theme: 'dark' as const,
+      y: {
+        formatter: (val: number) => {
+          if (val >= 1000) return (val / 1000).toFixed(1) + 'k'
+          return val.toString()
+        },
+      },
     },
     dataLabels: {
       enabled: false,
     },
     stroke: {
       curve: 'smooth' as const,
-      width: 2,
+      width: props.type === 'line' || props.type === 'area' ? 2 : 0,
     },
     fill:
       props.type === 'area'
@@ -53,46 +70,52 @@
             type: 'gradient',
             gradient: {
               shadeIntensity: 1,
-              opacityFrom: 0.3,
+              opacityFrom: 0.35,
               opacityTo: 0.05,
               stops: [0, 100],
             },
           }
-        : undefined,
+        : { opacity: 0.85 },
+    markers:
+      props.type === 'line' || props.type === 'area'
+        ? {
+            size: 4,
+            colors: props.colors,
+            strokeWidth: 0,
+            hover: { size: 6 },
+          }
+        : { size: 0 },
     legend: {
       position: 'top' as const,
+      horizontalAlign: 'right' as const,
       labels: { colors: '#94a3b8' },
+      markers: { fillColors: props.colors },
     },
     plotOptions:
       props.type === 'bar'
         ? {
             bar: {
               borderRadius: 6,
-              columnWidth: '60%',
+              columnWidth: '50%',
+              distributed: false,
+              dataLabels: { position: 'top' as const },
             },
           }
-        : props.type === 'donut'
-          ? {
-              pie: {
-                donut: {
-                  size: '70%',
-                  labels: {
-                    show: true,
-                    name: { color: '#94a3b8' },
-                    value: { color: '#22d3ee', fontSize: '24px', fontWeight: 700 },
-                    total: props.label
-                      ? {
-                          show: true,
-                          label: props.label,
-                          color: '#64748b',
-                        }
-                      : undefined,
-                  },
-                },
-              },
-            }
-          : undefined,
-  }))
+        : undefined,
+    responsive: [
+      {
+        breakpoint: 640,
+        options: {
+          xaxis: {
+            labels: {
+              style: { fontSize: '10px' },
+              rotate: -45,
+            },
+          },
+        },
+      },
+    ],
+  }
 </script>
 
 <template>
@@ -102,7 +125,7 @@
       <template #fallback>
         <div class="chart-fallback" :style="{ height: `${height}px` }">
           <i class="ti ti-chart-bar" />
-          <span>Carregando gráfico...</span>
+          <span>Carregando grafico...</span>
         </div>
       </template>
     </ClientOnly>
