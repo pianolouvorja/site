@@ -1,23 +1,16 @@
 <script setup lang="ts">
-  import { defineAsyncComponent } from 'vue'
-
   interface ChartProps {
     type: 'area' | 'bar' | 'donut' | 'line'
     series: Array<{ name?: string; data: number[] }>
     categories: string[]
     height?: number
     colors?: string[]
-    label?: string
   }
 
   const props = withDefaults(defineProps<ChartProps>(), {
     height: 280,
     colors: () => ['#22d3ee'],
-    label: '',
   })
-
-  // Lazy load apenas no client
-  const ApexChart = defineAsyncComponent(() => import('vue3-apexcharts').then((m) => m.default))
 
   const chartOptions = {
     chart: {
@@ -41,16 +34,16 @@
         rotate: 0,
         hideOverlappingLabels: true,
       },
-      axisBorder: { show: true, color: '#1e293b' },
-      axisTicks: { show: true, color: '#1e293b' },
+      axisBorder: { show: true, color: '#334155' },
+      axisTicks: { show: true, color: '#334155' },
     },
     yaxis: {
       labels: { style: { colors: '#64748b', fontSize: '11px' } },
       tickAmount: 5,
+      axisBorder: { show: true, color: '#334155' },
+      axisTicks: { show: true, color: '#334155' },
     },
-    tooltip: {
-      theme: 'dark' as const,
-    },
+    tooltip: { theme: 'dark' as const },
     dataLabels: { enabled: false },
     stroke: {
       curve: 'smooth' as const,
@@ -70,12 +63,7 @@
         : { opacity: 0.85 },
     markers:
       props.type === 'line' || props.type === 'area'
-        ? {
-            size: 4,
-            colors: props.colors,
-            strokeWidth: 0,
-            hover: { size: 6 },
-          }
+        ? { size: 4, colors: props.colors, strokeWidth: 0, hover: { size: 6 } }
         : { size: 0 },
     legend: {
       position: 'top' as const,
@@ -83,21 +71,12 @@
       labels: { colors: '#94a3b8' },
     },
     plotOptions:
-      props.type === 'bar'
-        ? {
-            bar: {
-              borderRadius: 6,
-              columnWidth: '50%',
-            },
-          }
-        : undefined,
+      props.type === 'bar' ? { bar: { borderRadius: 6, columnWidth: '50%' } } : undefined,
     responsive: [
       {
         breakpoint: 640,
         options: {
-          xaxis: {
-            labels: { style: { fontSize: '10px' }, rotate: -45 },
-          },
+          xaxis: { labels: { style: { fontSize: '10px' }, rotate: -45 } },
         },
       },
     ],
@@ -105,15 +84,9 @@
 </script>
 
 <template>
-  <div class="chart-wrapper" :style="{ minHeight: `${height}px` }">
+  <div class="chart-wrapper">
     <ClientOnly>
-      <component
-        :is="ApexChart"
-        :type="type"
-        :series="series"
-        :options="chartOptions"
-        :height="height"
-      />
+      <apexchart :type="type" :series="series" :options="chartOptions" :height="height" />
       <template #fallback>
         <div class="chart-fallback" :style="{ height: `${height}px` }">
           <i class="ti ti-chart-bar" />
