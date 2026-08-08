@@ -121,6 +121,9 @@ const localStorageMock = {
 }
 vi.stubGlobal('localStorage', localStorageMock)
 
+// Mock de defineEventHandler (Nitro auto-import)
+vi.stubGlobal('defineEventHandler', <T>(handler: T) => handler)
+
 beforeEach(() => {
   sharedLocale.value = 'pt-BR'
   stateMap.clear()

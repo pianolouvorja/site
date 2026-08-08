@@ -34,10 +34,35 @@ vi.mock('vue-i18n', () => ({
         'notifyModal.button': 'Inscrever',
         'notifyModal.loading': 'Enviando...',
         'notifyModal.success': 'Inscrição confirmada!',
+        'newsletter.errors.invalidEmail': 'E-mail inválido. Verifique e tente novamente.',
+        'newsletter.errors.alreadySubscribed': 'Este e-mail já está inscrito.',
+        'newsletter.errors.rateLimited': 'Muitas tentativas. Aguarde alguns minutos.',
+        'newsletter.errors.serviceUnavailable': 'Servico indisponivel. Tente novamente em breve.',
+        'newsletter.errors.generic': 'Erro ao inscrever. Tente novamente.',
       }
       return keys[key] || key
     },
   }),
+}))
+
+// Override global useI18n stub from setup.ts (Nuxt auto-import uses global, not module import)
+vi.stubGlobal('useI18n', () => ({
+  t: (key: string) => {
+    const keys: Record<string, string> = {
+      'notifyModal.title': 'Notificações',
+      'notifyModal.subtitle': 'Inscreva-se',
+      'notifyModal.placeholder': 'Seu e-mail',
+      'notifyModal.button': 'Inscrever',
+      'notifyModal.loading': 'Enviando...',
+      'notifyModal.success': 'Inscrição confirmada!',
+      'newsletter.errors.invalidEmail': 'E-mail inválido. Verifique e tente novamente.',
+      'newsletter.errors.alreadySubscribed': 'Este e-mail já está inscrito.',
+      'newsletter.errors.rateLimited': 'Muitas tentativas. Aguarde alguns minutos.',
+      'newsletter.errors.serviceUnavailable': 'Servico indisponivel. Tente novamente em breve.',
+      'newsletter.errors.generic': 'Erro ao inscrever. Tente novamente.',
+    }
+    return keys[key] || key
+  },
 }))
 
 import NotifyModal from '~/components/NotifyModal.vue'
@@ -161,13 +186,71 @@ describe('NotifyModal', () => {
     expect(input.attributes('disabled')).toBeDefined()
   })
 
-  it('shows error message with errorMessage when status is error', async () => {
+  it('shows translated error for service-unavailable code', async () => {
     mockStatus.value = 'error'
-    mockErrorMessage.value = 'Algo deu errado'
+    mockErrorMessage.value = 'service-unavailable'
     const wrapper = mountModal()
     await flushPromises()
     expect(wrapper.find('[data-testid="notify-modal-error"]').exists()).toBe(true)
-    expect(wrapper.text()).toContain('Algo deu errado')
+    expect(wrapper.text()).toContain('Servico indisponivel. Tente novamente em breve.')
+  })
+
+  it('shows translated error for already-subscribed code', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'already-subscribed'
+    const wrapper = mountModal()
+    await flushPromises()
+    expect(wrapper.text()).toContain('Este e-mail já está inscrito.')
+  })
+
+  it('shows translated error for invalid-email code', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'invalid-email'
+    const wrapper = mountModal()
+    await flushPromises()
+    expect(wrapper.text()).toContain('E-mail inválido. Verifique e tente novamente.')
+  })
+
+  it('shows translated error for rate-limited code', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'rate-limited'
+    const wrapper = mountModal()
+    await flushPromises()
+    expect(wrapper.text()).toContain('Muitas tentativas. Aguarde alguns minutos.')
+  })
+
+  it('shows generic error for unknown error code', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'unknown-error'
+    const wrapper = mountModal()
+    await flushPromises()
+    expect(wrapper.text()).toContain('Erro ao inscrever. Tente novamente.')
+  })
+
+  it('shows generic error for unrecognized error code', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'some-new-error'
+    const wrapper = mountModal()
+    await flushPromises()
+    expect(wrapper.text()).toContain('Erro ao inscrever. Tente novamente.')
+  })
+
+  it('does NOT show raw error code to user', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = 'service-unavailable'
+    const wrapper = mountModal()
+    await flushPromises()
+    expect(wrapper.text()).not.toContain('service-unavailable')
+  })
+
+  it('displayError returns empty when errorMessage is empty (branch coverage)', async () => {
+    mockStatus.value = 'error'
+    mockErrorMessage.value = ''
+    const wrapper = mountModal()
+    await flushPromises()
+    const errorEl = wrapper.find('[data-testid="notify-modal-error"]')
+    expect(errorEl.exists()).toBe(true)
+    expect(errorEl.text()).toBe('')
   })
 
   it('does NOT reset when modal opens (only on close)', async () => {

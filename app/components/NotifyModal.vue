@@ -15,6 +15,25 @@
 
   const email = ref('')
 
+  /**
+   * Maps internal error codes to i18n keys.
+   * Returns the translated message for display.
+   */
+  const errorI18nKeyMap: Record<string, string> = {
+    'invalid-email': 'newsletter.errors.invalidEmail',
+    'already-subscribed': 'newsletter.errors.alreadySubscribed',
+    'rate-limited': 'newsletter.errors.rateLimited',
+    'service-unavailable': 'newsletter.errors.serviceUnavailable',
+    'subscribe-failed': 'newsletter.errors.generic',
+    'unknown-error': 'newsletter.errors.generic',
+  }
+
+  const displayError = computed(() => {
+    if (!errorMessage.value) return ''
+    const key = errorI18nKeyMap[errorMessage.value] ?? 'newsletter.errors.generic'
+    return t(key)
+  })
+
   const isOpen = computed({
     get: () => props.modelValue,
     set: (val) => emit('update:modelValue', val),
@@ -112,7 +131,7 @@
                 class="notify-modal__message notify-modal__message--error"
               >
                 <i class="ti ti-alert-circle" />
-                {{ errorMessage }}
+                {{ displayError }}
               </p>
             </Transition>
           </div>

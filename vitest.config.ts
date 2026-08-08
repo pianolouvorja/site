@@ -72,7 +72,7 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'lcov', 'html'],
       all: true,
-      include: ['app/**/*.{ts,vue}'],
+      include: ['app/**/*.{ts,vue}', 'server/api/newsletter/subscribe.post.ts'],
       exclude: [
         'app/**/*.d.ts',
         'app/**/*.stories.ts',
