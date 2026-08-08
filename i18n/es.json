@@ -692,7 +692,10 @@
     "errors": {
       "invalidEmail": "Correo electrónico inválido. Verifica e inténtalo de nuevo.",
       "alreadySubscribed": "Este correo electrónico ya está suscrito.",
-      "generic": "Error al suscribir. Inténtalo de nuevo."
+      "generic": "Error al suscribir. Inténtalo de nuevo.",
+      "rateLimited": "Demasiados intentos. Espera unos minutos.",
+      "serviceUnavailable": "Servicio no disponible. Intentalo de nuevo mas tarde.",
+      "unknownError": "Algo salio mal. Intentalo de nuevo."
     }
   },
   "welcomePopup": {

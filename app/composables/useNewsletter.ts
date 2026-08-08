@@ -19,6 +19,61 @@ interface ButtondownError {
   message?: string
 }
 
+/**
+ * Maps a Buttondown/network error to a user-friendly error code.
+ *
+ * Error codes → i18n keys (newsletter.errors.*):
+ *   invalid-email        → invalidEmail
+ *   already-subscribed   → alreadySubscribed
+ *   rate-limited         → rateLimited
+ *   service-unavailable  → serviceUnavailable
+ *   subscribe-failed     → generic
+ *   unknown-error        → generic (fallback)
+ */
+function mapErrorToCode(e: ButtondownError | null | undefined): string {
+  if (!e) return 'unknown-error'
+
+  // Buttondown structured error: { data: { detail: "..." } }
+  const detail = e?.data?.detail ?? ''
+  const message = e?.message ?? ''
+
+  if (detail) {
+    const lower = detail.toLowerCase()
+    if (lower.includes('already subscribed') || lower.includes('already exists')) {
+      return 'already-subscribed'
+    }
+    if (lower.includes('invalid') || lower.includes('email')) {
+      return 'invalid-email'
+    }
+    if (lower.includes('rate limit') || lower.includes('too many')) {
+      return 'rate-limited'
+    }
+    // Buttondown returned an error we don't recognize
+    return 'subscribe-failed'
+  }
+
+  // Network/HTTP errors (no data.detail, but may have message)
+  if (message) {
+    const lower = message.toLowerCase()
+    if (
+      lower.includes('404') ||
+      lower.includes('not found') ||
+      lower.includes('503') ||
+      lower.includes('service unavailable') ||
+      lower.includes('timeout') ||
+      lower.includes('timed out') ||
+      lower.includes('network') ||
+      lower.includes('fetch failed') ||
+      lower.includes('econnrefused') ||
+      lower.includes('econnreset')
+    ) {
+      return 'service-unavailable'
+    }
+  }
+
+  return 'unknown-error'
+}
+
 export function useNewsletter() {
   const config = useRuntimeConfig()
   const { locale } = useI18n()
@@ -59,25 +114,7 @@ export function useNewsletter() {
       status.value = 'error'
 
       // User-friendly error messages - don't leak API details
-      if (e?.data?.detail) {
-        // Map Buttondown API errors to user-friendly messages
-        if (
-          e.data.detail.includes('already subscribed') ||
-          e.data.detail.includes('already exists')
-        ) {
-          errorMessage.value = 'already-subscribed'
-        } else if (e.data.detail.includes('invalid') || e.data.detail.includes('email')) {
-          errorMessage.value = 'invalid-email'
-        } else if (e.data.detail.includes('rate limit') || e.data.detail.includes('too many')) {
-          errorMessage.value = 'rate-limited'
-        } else {
-          errorMessage.value = 'subscribe-failed'
-        }
-      } else if (e?.message?.includes('404') || e?.message?.includes('Not Found')) {
-        errorMessage.value = 'service-unavailable'
-      } else {
-        errorMessage.value = 'unknown-error'
-      }
+      errorMessage.value = mapErrorToCode(e)
     }
   }
 

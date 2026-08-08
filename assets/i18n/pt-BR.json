@@ -683,7 +683,9 @@
     "errors": {
       "invalidEmail": "E-mail inválido. Verifique e tente novamente.",
       "alreadySubscribed": "Este e-mail já está inscrito.",
-      "generic": "Erro ao inscrever. Tente novamente."
+      "generic": "Erro ao inscrever. Tente novamente.",
+      "rateLimited": "Muitas tentativas. Aguarde alguns minutos.",
+      "serviceUnavailable": "Servico indisponivel. Tente novamente mais tarde."
     }
   },
   "releases": {
