@@ -1,37 +1,48 @@
 name: Feature Request
-description: Sugira uma nova funcionalidade ou melhoria
-title: '[FEATURE] '
-labels: ['enhancement', 'triagem']
+description: Sugere uma nova feature ou melhoria
+labels: ["enhancement", "triage"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Obrigado pela sugestao! Descreva sua ideia abaixo.
   - type: textarea
-    id: problem
+    id: problema
     attributes:
-      label: Problema ou motivacao
-      description: Que problema esta feature resolve? Ou qual motivacao?
+      label: Problema que resolve
+      description: Qual dor o usuário sente hoje?
     validations:
       required: true
   - type: textarea
-    id: solution
+    id: solucao
     attributes:
-      label: Solucao proposta
-      description: Descreva o que voce gostaria que acontecesse.
+      label: Solução proposta
+      description: O que você quer que aconteça?
     validations:
       required: true
-  - type: textarea
-    id: alternatives
+  - type: dropdown
+    id: prioridade
     attributes:
-      label: Alternativas consideradas
-      description: Voce considerou outras solucoes?
+      label: Prioridade
+      options:
+        - P0 — Crítico (bloqueia uso)
+        - P1 — Alto (impacto grande na UX)
+        - P2 — Médio (seria bom ter)
+        - P3 — Baixo (nice to have)
     validations:
-      required: false
-  - type: textarea
-    id: context
+      required: true
+  - type: dropdown
+    id: modulo
     attributes:
-      label: Contexto adicional
-      description: Mockups, links, referencias, ou qualquer outra informacao.
+      label: Módulo afetado
+      options:
+        - Router / Navegação
+        - Liturgia
+        - Bíblia
+        - Álbuns / Hinos
+        - Mídia / Player
+        - Settings / Aparência
+        - Design System
+        - Landing Page
+        - Blog
+        - SEO
+        - Infra / Deploy
+        - Outro
     validations:
       required: false
