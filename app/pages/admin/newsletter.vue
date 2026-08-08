@@ -208,6 +208,10 @@
 
   watch([subject, body, template], schedulePreview)
 
+  onBeforeUnmount(() => {
+    if (previewTimer) clearTimeout(previewTimer)
+  })
+
   const templates_ = templates
   const subscribers_ = subscribers
   const history_ = history

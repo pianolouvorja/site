@@ -83,7 +83,7 @@
   <div class="chart-wrapper">
     <ClientOnly>
       <apexchart
-        :key="type + categories.join()"
+        :key="categories.length"
         :type="type"
         :series="series"
         :options="chartOptions"

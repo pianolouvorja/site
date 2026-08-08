@@ -405,6 +405,7 @@
           </div>
         </div>
         <AdminChart
+          :key="activeView + chartFilter"
           :type="getChart(activeView).type"
           :series="getChart(activeView).series"
           :categories="getChart(activeView).categories"
