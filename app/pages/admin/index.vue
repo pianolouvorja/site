@@ -172,96 +172,88 @@
     ]
   })
 
-  // Mock data for charts (will be replaced by real API data)
-  const downloadsChart = {
-    type: 'area' as const,
-    series: [{ name: 'Downloads', data: [12, 19, 15, 27, 22, 35, 44, 38, 52, 61, 55, 73] }],
-    categories: [
-      'Jan',
-      'Fev',
-      'Mar',
-      'Abr',
-      'Mai',
-      'Jun',
-      'Jul',
-      'Ago',
-      'Set',
-      'Out',
-      'Nov',
-      'Dez',
-    ],
-    colors: ['#22d3ee'],
+  // --- Mock chart data by period ---
+  interface MockChart {
+    type: 'area' | 'bar' | 'line'
+    series: Array<{ name: string; data: number[] }>
+    categories: string[]
+    colors: string[]
   }
 
-  const newsletterChart = {
-    type: 'area' as const,
-    series: [{ name: 'Novos inscritos', data: [3, 5, 2, 8, 6, 11, 9, 14, 12, 18, 22, 25] }],
-    categories: [
-      'Jan',
-      'Fev',
-      'Mar',
-      'Abr',
-      'Mai',
-      'Jun',
-      'Jul',
-      'Ago',
-      'Set',
-      'Out',
-      'Nov',
-      'Dez',
-    ],
-    colors: ['#a78bfa'],
+  const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+  const monthLabels = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez',
+  ]
+
+  const mockByPeriod: Record<string, Record<'7d' | '30d' | '12m', number[]>> = {
+    downloads: {
+      '7d': [8, 12, 6, 15, 10, 22, 18],
+      '30d': [
+        3, 5, 2, 8, 6, 12, 9, 4, 7, 15, 11, 8, 14, 6, 10, 12, 9, 7, 16, 11, 8, 13, 5, 9, 14, 10, 7,
+        12, 15, 18,
+      ],
+      '12m': [12, 19, 15, 27, 22, 35, 44, 38, 52, 61, 55, 73],
+    },
+    newsletter: {
+      '7d': [2, 1, 3, 0, 2, 4, 3],
+      '30d': [
+        1, 0, 2, 1, 3, 2, 1, 0, 4, 2, 1, 3, 2, 1, 0, 3, 2, 4, 1, 2, 0, 3, 1, 2, 4, 3, 1, 2, 3, 5,
+      ],
+      '12m': [8, 12, 15, 18, 22, 28, 35, 42, 48, 55, 62, 78],
+    },
+    donations: {
+      '7d': [0, 50, 25, 80, 0, 120, 60],
+      '30d': [
+        0, 25, 0, 50, 40, 0, 75, 30, 0, 100, 50, 25, 0, 60, 45, 0, 80, 35, 0, 90, 50, 0, 70, 40, 0,
+        55, 30, 0, 65, 85,
+      ],
+      '12m': [0, 50, 25, 100, 75, 150, 120, 200, 180, 250, 210, 340],
+    },
+    visits: {
+      '7d': [45, 52, 38, 61, 48, 75, 82],
+      '30d': [
+        12, 18, 15, 22, 19, 28, 25, 31, 20, 26, 15, 33, 29, 24, 18, 35, 27, 22, 30, 19, 38, 25, 31,
+        16, 28, 34, 21, 26, 40, 45,
+      ],
+      '12m': [120, 145, 180, 210, 195, 250, 310, 285, 340, 420, 380, 510],
+    },
   }
 
-  const donationsChart = {
-    type: 'bar' as const,
-    series: [
-      { name: 'Doacoes (R$)', data: [0, 50, 25, 100, 75, 150, 120, 200, 180, 250, 210, 340] },
-    ],
-    categories: [
-      'Jan',
-      'Fev',
-      'Mar',
-      'Abr',
-      'Mai',
-      'Jun',
-      'Jul',
-      'Ago',
-      'Set',
-      'Out',
-      'Nov',
-      'Dez',
-    ],
-    colors: ['#f87171'],
+  const chartMeta: Record<string, { type: MockChart['type']; name: string; color: string }> = {
+    downloads: { type: 'area', name: 'Downloads', color: '#22d3ee' },
+    newsletter: { type: 'bar', name: 'Assinantes', color: '#a78bfa' },
+    donations: { type: 'bar', name: 'Doacoes (R$)', color: '#f87171' },
+    visits: { type: 'line', name: 'Visitas', color: '#4ade80' },
   }
 
-  const visitsChart = {
-    type: 'line' as const,
-    series: [
-      { name: 'Visitas', data: [120, 145, 180, 210, 195, 250, 310, 285, 340, 420, 380, 510] },
-    ],
-    categories: [
-      'Jan',
-      'Fev',
-      'Mar',
-      'Abr',
-      'Mai',
-      'Jun',
-      'Jul',
-      'Ago',
-      'Set',
-      'Out',
-      'Nov',
-      'Dez',
-    ],
-    colors: ['#4ade80'],
-  }
-
-  function getChart(view: DetailView) {
-    if (view === 'downloads') return downloadsChart
-    if (view === 'newsletter') return newsletterChart
-    if (view === 'donations') return donationsChart
-    return visitsChart
+  function getChart(view: DetailView): MockChart {
+    const key = view || 'visits'
+    const meta = chartMeta[key]
+    const period = chartFilter.value
+    const data = mockByPeriod[key][period]
+    const categories =
+      period === '12m'
+        ? monthLabels
+        : period === '7d'
+          ? dayLabels
+          : Array.from({ length: 30 }, (_, i) => `${i + 1}`)
+    return {
+      type: meta.type,
+      series: [{ name: meta.name, data }],
+      categories,
+      colors: [meta.color],
+    }
   }
 
   function getChartTitle(view: DetailView): string {
