@@ -1,8 +1,3 @@
-import { addToHistory } from '../../utils/newsletter-history'
-import { fetchSubscribers, type Subscriber } from '../../utils/subscribers'
-import { renderTemplate } from '../../utils/email-templates'
-import { sendMail } from '../../utils/mail'
-
 interface SendBody {
   subject: string
   body: string
@@ -22,7 +17,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const subs: Subscriber[] = await fetchSubscribers()
+  const subs = await fetchSubscribers()
   if (subs.length === 0) {
     return {
       total: 0,
@@ -32,7 +27,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const emails = subs.filter((s: Subscriber) => s.active).map((s: Subscriber) => s.email)
+  const emails = subs.filter((s) => s.active).map((s) => s.email)
   const errors: string[] = []
   let sent = 0
   let failed = 0
