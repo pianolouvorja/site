@@ -80,6 +80,16 @@ export default defineNuxtConfig({
     abacatePayApiKey: process.env.ABACATEPAY_API_KEY || '',
     firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
 
+    // SMTP (Hostinger) — Newsletter manager
+    smtpHost: process.env.SMTP_HOST || '',
+    smtpPort: parseInt(process.env.SMTP_PORT || '465'),
+    smtpSecure: process.env.SMTP_SECURE !== 'false',
+    smtpUser: process.env.SMTP_USER || '',
+    smtpPass: process.env.SMTP_PASS || '',
+    smtpFromName: process.env.SMTP_FROM_NAME || 'Piano LouvorJA',
+    smtpFromEmail: process.env.SMTP_FROM_EMAIL || '',
+    buttondownApiKey: process.env.BUTTONDOWN_API_KEY || '',
+
     public: {
       web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
       buttondownApiKey: process.env.BUTTONDOWN_API_KEY || '',
