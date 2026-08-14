@@ -18,6 +18,17 @@
   const resetMode = ref(false)
   const resetSent = ref(false)
 
+  const returnToLogin = () => {
+    resetMode.value = false
+    resetSent.value = false
+    errorMsg.value = ''
+  }
+
+  const openPasswordReset = () => {
+    resetMode.value = true
+    errorMsg.value = ''
+  }
+
   // If arriving from password reset email (oobCode in URL), redirect to reset page
   const route = useRoute()
   if (route.query.oobCode) {
@@ -66,15 +77,7 @@
         <p class="reset-hint">
           Verifique sua caixa de entrada (e o spam) e clique no link para redefinir sua senha.
         </p>
-        <button
-          class="login-btn"
-          @click="
-            resetMode = false
-            resetSent = false
-          "
-        >
-          Voltar ao login
-        </button>
+        <button class="login-btn" @click="returnToLogin">Voltar ao login</button>
       </div>
 
       <form v-else class="login-form" @submit.prevent="handleSubmit">
@@ -131,26 +134,10 @@
           }}
         </button>
 
-        <button
-          v-if="!resetMode"
-          type="button"
-          class="reset-link"
-          @click="
-            resetMode = true
-            errorMsg = ''
-          "
-        >
+        <button v-if="!resetMode" type="button" class="reset-link" @click="openPasswordReset">
           Esqueci minha senha
         </button>
-        <button
-          v-else
-          type="button"
-          class="reset-link"
-          @click="
-            resetMode = false
-            errorMsg = ''
-          "
-        >
+        <button v-else type="button" class="reset-link" @click="returnToLogin">
           &larr; Voltar ao login
         </button>
       </form>

@@ -1,3 +1,11 @@
+import {
+  addToNewsletterHistory,
+  type NewsletterSendRecord,
+} from '~~/server/utils/newsletter-history'
+import { fetchSubscribers, type Subscriber } from '~~/server/utils/subscribers'
+import { sendMail } from '~~/server/utils/mail'
+import { renderTemplate } from '~~/server/utils/email-templates'
+
 interface SendBody {
   subject: string
   body: string
@@ -17,7 +25,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const subs = await fetchSubscribers()
+  const subs: Subscriber[] = await fetchSubscribers()
   if (subs.length === 0) {
     return {
       total: 0,
@@ -58,7 +66,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  addToHistory({
+  const record: NewsletterSendRecord = {
     date: new Date().toISOString(),
     subject: body.subject,
     template: body.template || 'announcement',
@@ -66,7 +74,8 @@ export default defineEventHandler(async (event) => {
     sent,
     failed,
     errors,
-  })
+  }
+  addToNewsletterHistory(record)
 
   return {
     total: emails.length,

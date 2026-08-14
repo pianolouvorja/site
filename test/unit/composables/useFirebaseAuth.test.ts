@@ -140,6 +140,18 @@ describe('useFirebaseAuth', () => {
     await expect(login('test@test.com', 'pass')).rejects.toThrow('Firebase not initialized')
   })
 
+  it('sendPasswordReset throws when Firebase is not initialized', async () => {
+    vi.stubGlobal(
+      'useFirebaseClient',
+      vi.fn(() => {
+        throw new Error('Firebase not configured')
+      }),
+    )
+    const { sendPasswordReset } = useFirebaseAuth()
+
+    await expect(sendPasswordReset('user@example.com')).rejects.toThrow('Firebase not initialized')
+  })
+
   it('sends a password reset email with the admin login continue URL', async () => {
     vi.mocked(sendPasswordResetEmail).mockResolvedValue(undefined)
     const { sendPasswordReset } = useFirebaseAuth()
@@ -182,6 +194,20 @@ describe('useFirebaseAuth', () => {
     await expect(resetPassword('bad-code', 'new-secret')).rejects.toThrow('invalid code')
     expect(confirmPasswordReset).not.toHaveBeenCalled()
     expect(error.value).toBe('invalid code')
+  })
+
+  it('resetPassword throws when Firebase is not initialized', async () => {
+    vi.stubGlobal(
+      'useFirebaseClient',
+      vi.fn(() => {
+        throw new Error('Firebase not configured')
+      }),
+    )
+    const { resetPassword } = useFirebaseAuth()
+
+    await expect(resetPassword('oob-code', 'new-secret')).rejects.toThrow(
+      'Firebase not initialized',
+    )
   })
 
   it('logout calls signOut when auth exists', async () => {
