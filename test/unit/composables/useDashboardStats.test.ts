@@ -48,7 +48,6 @@ describe('useDashboardStats', () => {
         stars: 42,
         forks: 7,
         subscribers: 53,
-        donations: { count: 2, totalBRL: 75 },
         visits: null,
         updatedAt: '2026-08-05T23:00:00.000Z',
       }
