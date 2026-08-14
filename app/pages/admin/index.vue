@@ -94,14 +94,6 @@
     return value.toLocaleString('pt-BR')
   }
 
-  function formatDonations(donations: { count: number; totalBRL: number } | null): string {
-    if (!donations) return '—'
-    return donations.totalBRL.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    })
-  }
-
   function formatRelativeTime(dateString: string): string {
     const date = new Date(dateString)
     const diffMs = Date.now() - date.getTime()
@@ -152,14 +144,6 @@
         icon: 'ti ti-mail',
         loading: loading.value,
         color: '#a78bfa',
-      },
-      {
-        key: 'donations' as const,
-        label: 'Doacoes',
-        value: s ? formatDonations(s.donations) : '—',
-        icon: 'ti ti-heart',
-        loading: loading.value,
-        color: '#f87171',
       },
       {
         key: 'visits' as const,

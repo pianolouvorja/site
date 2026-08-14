@@ -3,11 +3,21 @@ import { ref, type Ref } from 'vue'
 
 vi.mock('firebase/auth', () => ({
   signInWithEmailAndPassword: vi.fn(),
+  sendPasswordResetEmail: vi.fn(),
+  confirmPasswordReset: vi.fn(),
+  verifyPasswordResetCode: vi.fn(),
   signOut: vi.fn(),
   onAuthStateChanged: vi.fn(() => vi.fn()),
 }))
 
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  confirmPasswordReset,
+  verifyPasswordResetCode,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth'
 
 // Mock useState from Nuxt — returns a reactive ref backed by a Map
 const stateMap = new Map<string, Ref<unknown>>()
@@ -128,6 +138,50 @@ describe('useFirebaseAuth', () => {
     )
     const { login } = useFirebaseAuth()
     await expect(login('test@test.com', 'pass')).rejects.toThrow('Firebase not initialized')
+  })
+
+  it('sends a password reset email with the admin login continue URL', async () => {
+    vi.mocked(sendPasswordResetEmail).mockResolvedValue(undefined)
+    const { sendPasswordReset } = useFirebaseAuth()
+
+    await sendPasswordReset('user@example.com')
+
+    expect(sendPasswordResetEmail).toHaveBeenCalledWith(
+      expect.anything(),
+      'user@example.com',
+      expect.objectContaining({
+        url: expect.stringMatching(/\/admin\/login$/),
+        handleCodeInApp: true,
+      }),
+    )
+  })
+
+  it('stores and rethrows an error when sending a password reset email fails', async () => {
+    vi.mocked(sendPasswordResetEmail).mockRejectedValue(new Error('email failed'))
+    const { error, sendPasswordReset } = useFirebaseAuth()
+
+    await expect(sendPasswordReset('user@example.com')).rejects.toThrow('email failed')
+    expect(error.value).toBe('email failed')
+  })
+
+  it('verifies the reset code before confirming the new password', async () => {
+    vi.mocked(verifyPasswordResetCode).mockResolvedValue('user@example.com')
+    vi.mocked(confirmPasswordReset).mockResolvedValue(undefined)
+    const { resetPassword } = useFirebaseAuth()
+
+    await resetPassword('oob-code', 'new-secret')
+
+    expect(verifyPasswordResetCode).toHaveBeenCalledWith(expect.anything(), 'oob-code')
+    expect(confirmPasswordReset).toHaveBeenCalledWith(expect.anything(), 'oob-code', 'new-secret')
+  })
+
+  it('does not confirm the password when reset-code verification fails', async () => {
+    vi.mocked(verifyPasswordResetCode).mockRejectedValue(new Error('invalid code'))
+    const { error, resetPassword } = useFirebaseAuth()
+
+    await expect(resetPassword('bad-code', 'new-secret')).rejects.toThrow('invalid code')
+    expect(confirmPasswordReset).not.toHaveBeenCalled()
+    expect(error.value).toBe('invalid code')
   })
 
   it('logout calls signOut when auth exists', async () => {

@@ -9,12 +9,20 @@
     title: 'Admin · Piano Louvor JA',
   })
 
-  const { login, user, error } = useFirebaseAuth()
+  const { login, sendPasswordReset, user, error } = useFirebaseAuth()
   const email = ref('')
   const password = ref('')
   const loading = ref(false)
   const errorMsg = ref('')
   const showPassword = ref(false)
+  const resetMode = ref(false)
+  const resetSent = ref(false)
+
+  // If arriving from password reset email (oobCode in URL), redirect to reset page
+  const route = useRoute()
+  if (route.query.oobCode) {
+    navigateTo(`/admin/reset-password${route.fullPath.substring(route.fullPath.indexOf('?'))}`)
+  }
 
   // Redirect if already logged in
   watchEffect(() => {
@@ -27,10 +35,17 @@
     errorMsg.value = ''
     loading.value = true
     try {
-      await login(email.value, password.value)
-      navigateTo('/admin')
+      if (resetMode.value) {
+        await sendPasswordReset(email.value)
+        resetSent.value = true
+      } else {
+        await login(email.value, password.value)
+        navigateTo('/admin')
+      }
     } catch {
-      errorMsg.value = error.value || 'Credenciais inválidas'
+      errorMsg.value = resetMode.value
+        ? 'Não foi possível enviar o email. Verifique o endereço.'
+        : error.value || 'Credenciais inválidas'
     } finally {
       loading.value = false
     }
@@ -42,10 +57,27 @@
     <div class="login-card">
       <div class="login-header">
         <h1>Piano Louvor JA</h1>
-        <p>Painel Administrativo</p>
+        <p>{{ resetMode ? 'Recuperar Senha' : 'Painel Administrativo' }}</p>
       </div>
 
-      <form class="login-form" @submit.prevent="handleSubmit">
+      <div v-if="resetSent" class="reset-success">
+        <i class="ti ti-mail-check" aria-hidden="true" style="font-size: 2.5rem; color: #22d3ee" />
+        <p>Email de recuperação enviado!</p>
+        <p class="reset-hint">
+          Verifique sua caixa de entrada (e o spam) e clique no link para redefinir sua senha.
+        </p>
+        <button
+          class="login-btn"
+          @click="
+            resetMode = false
+            resetSent = false
+          "
+        >
+          Voltar ao login
+        </button>
+      </div>
+
+      <form v-else class="login-form" @submit.prevent="handleSubmit">
         <div class="field">
           <label for="email">E-mail</label>
           <input
@@ -59,7 +91,7 @@
           />
         </div>
 
-        <div class="field">
+        <div v-if="!resetMode" class="field">
           <label for="password">Senha</label>
           <div class="password-wrapper">
             <input
@@ -88,7 +120,38 @@
         </p>
 
         <button type="submit" class="login-btn" :disabled="loading">
-          {{ loading ? 'Entrando...' : 'Entrar' }}
+          {{
+            loading
+              ? resetMode
+                ? 'Enviando...'
+                : 'Entrando...'
+              : resetMode
+                ? 'Enviar link de recuperação'
+                : 'Entrar'
+          }}
+        </button>
+
+        <button
+          v-if="!resetMode"
+          type="button"
+          class="reset-link"
+          @click="
+            resetMode = true
+            errorMsg = ''
+          "
+        >
+          Esqueci minha senha
+        </button>
+        <button
+          v-else
+          type="button"
+          class="reset-link"
+          @click="
+            resetMode = false
+            errorMsg = ''
+          "
+        >
+          &larr; Voltar ao login
         </button>
       </form>
 
@@ -246,5 +309,39 @@
 
   .back-link:hover {
     color: #94a3b8;
+  }
+
+  .reset-link {
+    display: block;
+    text-align: center;
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .reset-link:hover {
+    color: #22d3ee;
+  }
+
+  .reset-success {
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .reset-success p {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    margin: 0.75rem 0 0.25rem;
+  }
+
+  .reset-hint {
+    font-size: 0.8125rem !important;
+    color: #64748b !important;
+    margin-top: 0.5rem !important;
   }
 </style>
