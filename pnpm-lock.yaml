@@ -31,6 +31,9 @@ importers:
       firebase-admin:
         specifier: ^14.2.0
         version: 14.2.0(@firebase/app-compat@0.5.16)(@firebase/app@0.16.0)(encoding@0.1.13)(supports-color@10.2.2)
+      h3:
+        specifier: 1.15.11
+        version: 1.15.11
       html-to-text:
         specifier: ^10.0.0
         version: 10.0.0
@@ -3168,6 +3171,7 @@ packages:
   '@xmldom/xmldom@0.9.10':
     resolution: {integrity: sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@yr/monotone-cubic-spline@1.0.3':
     resolution: {integrity: sha512-FQXkOta0XBSUPHndIKON2Y9JeQz5ZeMqLYZVVK93FliNBFm7LNMIZmY6FrMEB9XPcDbE2bekMbZD6kzDkxwYjA==}
