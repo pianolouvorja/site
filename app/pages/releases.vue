@@ -8,12 +8,17 @@
 
   type RepoName = 'web' | 'app' | 'api' | 'site'
 
+  interface GithubAsset {
+    name: string
+    browser_download_url: string
+  }
+
   interface GithubRelease {
     tag_name: string
     name: string
     published_at: string
     body: string
-    html_url: string
+    assets: GithubAsset[]
     _repo: RepoName
   }
 
@@ -23,7 +28,7 @@
     tag: string
     name: string
     date: string
-    url: string
+    downloadUrl: string | null
     repo: RepoName
     products: ProductType[]
     highlights: string[]
@@ -183,6 +188,13 @@
     return sections
   }
 
+  function findDirectDownloadUrl(repo: RepoName, assets: GithubAsset[]): string | null {
+    if (repo !== 'app') return null
+
+    const installer = assets.find((asset) => /\.(appimage|exe|dmg)$/i.test(asset.name))
+    return installer?.browser_download_url ?? null
+  }
+
   function formatDate(dateStr: string, loc: string): string {
     const lang = loc === 'pt-BR' ? 'pt-BR' : loc === 'es' ? 'es' : 'en-US'
     return new Date(dateStr).toLocaleDateString(lang, {
@@ -206,7 +218,7 @@
         tag: r.tag_name,
         name: r.name || r.tag_name,
         date: formatDate(r.published_at, locale.value),
-        url: r.html_url,
+        downloadUrl: findDirectDownloadUrl(r._repo, r.assets ?? []),
         repo: r._repo,
         products: detectProducts(r._repo, r.tag_name, r.body || ''),
         ...parseReleaseBody(r.body || '', locale.value),
@@ -320,30 +332,13 @@
               </ul>
             </div>
 
-            <div class="release-card__links">
-              <a
-                :href="release.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="release-card__link"
-              >
-                <i class="ti ti-brand-github" aria-hidden="true" />
-                {{ $t('releases.viewOnGithub') }}
+            <div v-if="release.downloadUrl" class="release-card__links">
+              <a :href="release.downloadUrl" class="release-card__link" :download="true">
+                <i class="ti ti-download" aria-hidden="true" />
+                {{ $t('releases.download') }}
               </a>
             </div>
           </article>
-        </div>
-
-        <div v-if="!loading && !fetchError && releases.length > 0" class="releases-footer">
-          <a
-            href="https://github.com/orgs/pianolouvorja/repositories"
-            class="releases-footer__link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ $t('releases.allVersions') }}
-            <i class="ti ti-arrow-right" aria-hidden="true" />
-          </a>
         </div>
       </div>
     </section>

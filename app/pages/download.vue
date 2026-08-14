@@ -198,16 +198,16 @@
               <i class="ti ti-clock" aria-hidden="true" />
               Em breve
             </a>
-            <a
+            <button
               v-else
-              href="https://github.com/pianolouvorja/app/releases"
+              type="button"
               class="download-card__btn"
-              target="_blank"
-              rel="noopener noreferrer"
+              disabled
+              :aria-label="$t(`${card.i18nPrefix}.downloadLabel`)"
             >
               <i class="ti ti-download" aria-hidden="true" />
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
-            </a>
+            </button>
             <p class="download-card__hint">
               {{ $t(`${card.i18nPrefix}.hint`) }}
             </p>
