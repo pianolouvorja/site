@@ -932,6 +932,16 @@
         "description": "Automatización de pipelines, pruebas y revisión de código para garantizar estabilidad en cada lanzamiento."
       }
     },
+    "people": {
+      "title": "Quién construye el proyecto",
+      "avatarAlt": "Avatar de {name} en GitHub"
+    },
+    "members": {
+      "ezequiasfonseca": { "role": "Fundador · Liderazgo y App de Escritorio" },
+      "rafaumeu": { "role": "Sitio, API y Calidad" },
+      "rafaelji": { "role": "App de Escritorio" },
+      "educharquero": { "role": "App Web y PWA" }
+    },
     "work": {
       "title": "Cómo trabajamos",
       "text": "Código abierto, revisión por pares y entregas continuas: cada frente mantiene su repositorio en la organización, con integración e despliegue automatizados."

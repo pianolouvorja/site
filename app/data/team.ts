@@ -4,8 +4,47 @@ export interface TeamArea {
   stack: string[]
 }
 
+export interface TeamMember {
+  login: string
+  name: string
+  avatar: string
+  profileUrl: string
+}
+
 /** URL da organização no GitHub — institucional, sem pessoas. */
 export const teamOrgUrl = 'https://github.com/pianolouvorja'
+
+/**
+ * Camada de pessoas: perfis públicos do GitHub (avatar, nome e link), sem
+ * dados pessoais além do que já é público nos perfis. Papéis vêm do
+ * i18n (`team.members.<login>.role`).
+ */
+export const teamMembers: TeamMember[] = [
+  {
+    login: 'ezequiasfonseca',
+    name: 'Ezequias Fonseca',
+    avatar: 'https://github.com/ezequiasfonseca.png?size=96',
+    profileUrl: 'https://github.com/ezequiasfonseca',
+  },
+  {
+    login: 'rafaumeu',
+    name: 'Rafael Dias Zendron',
+    avatar: 'https://github.com/rafaumeu.png?size=96',
+    profileUrl: 'https://github.com/rafaumeu',
+  },
+  {
+    login: 'rafaelji',
+    name: 'Rafael Barbosa Silva',
+    avatar: 'https://github.com/rafaelji.png?size=96',
+    profileUrl: 'https://github.com/rafaelji',
+  },
+  {
+    login: 'educharquero',
+    name: 'Eduardo Charquero',
+    avatar: 'https://github.com/educharquero.png?size=96',
+    profileUrl: 'https://github.com/educharquero',
+  },
+]
 
 /**
  * Frentes de trabalho da equipe (visão institucional, sem pessoas identificadas).

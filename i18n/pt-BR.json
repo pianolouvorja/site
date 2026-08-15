@@ -932,6 +932,16 @@
         "description": "Automação de pipelines, testes e revisão de código para garantir estabilidade em cada release."
       }
     },
+    "people": {
+      "title": "Quem constrói o projeto",
+      "avatarAlt": "Avatar de {name} no GitHub"
+    },
+    "members": {
+      "ezequiasfonseca": { "role": "Fundador · Liderança e App Desktop" },
+      "rafaumeu": { "role": "Site, API e Qualidade" },
+      "rafaelji": { "role": "App Desktop" },
+      "educharquero": { "role": "Web App e PWA" }
+    },
     "work": {
       "title": "Como trabalhamos",
       "text": "Código aberto, revisão por pares e entregas contínuas: cada frente mantém seu repositório na organização, com integração e deploy automatizados."

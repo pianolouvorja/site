@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { teamAreas, teamOrgUrl } from '~/data/team'
+  import { teamAreas, teamMembers, teamOrgUrl } from '~/data/team'
 </script>
 
 <template>
@@ -32,6 +32,35 @@
             </li>
           </ul>
         </article>
+      </div>
+
+      <div class="team__people">
+        <h3 class="team__people-title">
+          {{ $t('team.people.title') }}
+        </h3>
+        <ul class="team__people-list">
+          <li v-for="member in teamMembers" :key="member.login" class="team__person">
+            <a
+              :href="member.profileUrl"
+              class="team__person-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                :src="member.avatar"
+                :alt="$t('team.people.avatarAlt', { name: member.name })"
+                class="team__avatar"
+                width="72"
+                height="72"
+                loading="lazy"
+              />
+              <span class="team__person-info">
+                <span class="team__person-name">{{ member.name }}</span>
+                <span class="team__person-role">{{ $t(`team.members.${member.login}.role`) }}</span>
+              </span>
+            </a>
+          </li>
+        </ul>
       </div>
 
       <div class="team__work">
@@ -161,6 +190,73 @@
       color: var(--piano-text-secondary);
     }
 
+    &__people {
+      margin-bottom: 3.5rem;
+    }
+
+    &__people-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--piano-text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    &__people-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    &__person-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1rem;
+      background: var(--piano-bg-secondary);
+      border: 1px solid var(--piano-border-subtle);
+      border-radius: var(--piano-radius-lg);
+      box-shadow: var(--piano-shadow-sm);
+      text-decoration: none;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--piano-shadow-lg);
+      }
+    }
+
+    &__avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    &__person-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+
+    &__person-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--piano-text-primary);
+    }
+
+    &__person-role {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--piano-accent);
+      line-height: 1.4;
+    }
+
     &__work {
       text-align: center;
       max-width: 640px;
@@ -205,12 +301,20 @@
       &__grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      &__people-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
 
   @media (max-width: 600px) {
     .team {
       &__grid {
+        grid-template-columns: 1fr;
+      }
+
+      &__people-list {
         grid-template-columns: 1fr;
       }
     }

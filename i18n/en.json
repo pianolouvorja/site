@@ -932,6 +932,16 @@
         "description": "Pipeline automation, testing and code review to ensure stability on every release."
       }
     },
+    "people": {
+      "title": "Who builds the project",
+      "avatarAlt": "{name}'s GitHub avatar"
+    },
+    "members": {
+      "ezequiasfonseca": { "role": "Founder · Leadership & Desktop App" },
+      "rafaumeu": { "role": "Website, API & Quality" },
+      "rafaelji": { "role": "Desktop App" },
+      "educharquero": { "role": "Web App & PWA" }
+    },
     "work": {
       "title": "How we work",
       "text": "Open source, peer review and continuous delivery: each front maintains its repository in the organization, with automated integration and deployment."
