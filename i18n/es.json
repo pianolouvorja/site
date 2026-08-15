@@ -711,7 +711,6 @@
     "reject": "Rechazar",
     "privacyLink": "Leer Política de Privacidad"
   },
-
   "admin": {
     "title": "Panel",
     "loginTitle": "Acceso Restringido",
@@ -902,5 +901,41 @@
     "cta": "Seguir novedades",
     "appleTvBrand": "Apple TV",
     "appleTvStatus": "Planificado"
+  },
+  "team": {
+    "eyebrow": "Nuestro Equipo",
+    "title": "Los profesionales detrás del proyecto",
+    "subtitle": "PIANO LouvorJA es construido por un equipo dedicado organizado en frentes de trabajo especializados, unidos por un propósito: servir a la comunidad con excelencia.",
+    "areas": {
+      "leadership": {
+        "title": "Liderazgo y Visión",
+        "description": "Dirección del proyecto, hoja de ruta del producto y relación con la comunidad adventista que PIANO sirve."
+      },
+      "desktop": {
+        "title": "App de Escritorio",
+        "description": "Aplicación Electron multipantalla para proyección en cultos: salida de medios, pantalla del escenario y control remoto."
+      },
+      "web": {
+        "title": "App Web y PWA",
+        "description": "Aplicación web progresiva para gestión de cultos, con acceso rápido y funcionamiento sin conexión."
+      },
+      "api": {
+        "title": "API e Infraestructura",
+        "description": "API pública y servicios de backend que alimentan himnarios, listas de reproducción y sincronización entre dispositivos."
+      },
+      "site": {
+        "title": "Sitio y Contenido",
+        "description": "Presencia digital, documentación y comunicación: sitio multilingüe, lanzamientos y materiales de apoyo."
+      },
+      "quality": {
+        "title": "Calidad y CI",
+        "description": "Automatización de pipelines, pruebas y revisión de código para garantizar estabilidad en cada lanzamiento."
+      }
+    },
+    "work": {
+      "title": "Cómo trabajamos",
+      "text": "Código abierto, revisión por pares y entregas continuas: cada frente mantiene su repositorio en la organización, con integración e despliegue automatizados."
+    },
+    "cta": "Conoce la organización en GitHub"
   }
 }

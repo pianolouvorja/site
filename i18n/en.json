@@ -711,7 +711,6 @@
     "reject": "Decline",
     "privacyLink": "Read Privacy Policy"
   },
-
   "admin": {
     "title": "Dashboard",
     "loginTitle": "Restricted Access",
@@ -902,5 +901,41 @@
     "cta": "Stay updated",
     "appleTvBrand": "Apple TV",
     "appleTvStatus": "Planned"
+  },
+  "team": {
+    "eyebrow": "Our Team",
+    "title": "The professionals behind the project",
+    "subtitle": "PIANO LouvorJA is built by a dedicated team organized into specialized work fronts, united by one purpose: serving the community with excellence.",
+    "areas": {
+      "leadership": {
+        "title": "Leadership & Vision",
+        "description": "Project direction, product roadmap and relationship with the community PIANO serves."
+      },
+      "desktop": {
+        "title": "Desktop App",
+        "description": "Multi-screen Electron app for worship projection: media output, stage display and remote control."
+      },
+      "web": {
+        "title": "Web App & PWA",
+        "description": "Progressive web app for service management, with fast access and offline support."
+      },
+      "api": {
+        "title": "API & Infrastructure",
+        "description": "Public API and backend services powering hymnals, playlists and cross-device sync."
+      },
+      "site": {
+        "title": "Website & Content",
+        "description": "Digital presence, documentation and communication: multilingual site, releases and resources."
+      },
+      "quality": {
+        "title": "Quality & CI",
+        "description": "Pipeline automation, testing and code review to ensure stability on every release."
+      }
+    },
+    "work": {
+      "title": "How we work",
+      "text": "Open source, peer review and continuous delivery: each front maintains its repository in the organization, with automated integration and deployment."
+    },
+    "cta": "Explore the organization on GitHub"
   }
 }
