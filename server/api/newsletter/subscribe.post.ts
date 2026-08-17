@@ -18,10 +18,22 @@ interface SubscribeBody {
   metadata?: Record<string, string>
 }
 
-interface ButtondownErrorData {
-  detail?: string
+interface ButtondownError {
+  data?: { detail?: string | Array<{ detail?: string; code?: string }> }
   statusCode?: number
-  data?: { detail?: string }
+}
+
+/**
+ * Extracts a string detail from a Buttondown error response.
+ * Detail can be a string or an array of { detail, code } objects.
+ */
+function extractDetail(err: ButtondownError): string {
+  const rawDetail = err?.data?.detail
+  if (typeof rawDetail === 'string') return rawDetail
+  if (Array.isArray(rawDetail)) {
+    return rawDetail.map((d) => d?.detail ?? '').join(' ')
+  }
+  return ''
 }
 
 /**
@@ -29,8 +41,8 @@ interface ButtondownErrorData {
  * Exported for unit testing (pure function, no h3 dependency).
  */
 export function mapButtondownError(err: unknown): string {
-  const e = err as ButtondownErrorData
-  const detail = e?.data?.detail ?? ''
+  const e = err as ButtondownError
+  const detail = extractDetail(e)
   const statusCode = e?.statusCode ?? 0
 
   if (detail) {
@@ -92,14 +104,14 @@ export async function handleSubscribe(event: H3Event): Promise<{ success: true }
   }
 
   try {
-    await $fetch('https://api.buttondown.com/api/v1/subscribers', {
+    await $fetch('https://api.buttondown.com/v1/subscribers', {
       method: 'POST',
       headers: {
         Authorization: `Token ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: {
-        email: body!.email as string,
+        email_address: body!.email as string,
         metadata: body!.metadata ?? {},
       },
     })
