@@ -1,5 +1,19 @@
 <script setup lang="ts">
   import { teamAreas, teamMembers, teamOrgUrl } from '~/data/team'
+
+  const activeMember = ref<(typeof teamMembers)[number] | null>(null)
+
+  function openMember(member: (typeof teamMembers)[number]): void {
+    activeMember.value = member
+  }
+
+  function closeMember(): void {
+    activeMember.value = null
+  }
+
+  function onModalKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') closeMember()
+  }
 </script>
 
 <template>
@@ -59,8 +73,75 @@
                 <span class="team__person-role">{{ $t(`team.members.${member.login}.role`) }}</span>
               </span>
             </a>
+            <button
+              type="button"
+              class="team__person-more"
+              :aria-label="$t('team.people.more')"
+              @click="openMember(member)"
+            >
+              {{ $t('team.people.more') }}
+              <i class="ti ti-arrow-right" aria-hidden="true" />
+            </button>
           </li>
         </ul>
+      </div>
+
+      <div
+        v-if="activeMember"
+        class="team-modal"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="activeMember.name"
+        @keydown="onModalKeydown"
+      >
+        <div class="team-modal__overlay" @click="closeMember" />
+        <div class="team-modal__panel">
+          <button
+            type="button"
+            class="team-modal__close"
+            :aria-label="$t('team.modal.close')"
+            @click="closeMember"
+          >
+            <i class="ti ti-x" aria-hidden="true" />
+          </button>
+          <img
+            :src="activeMember.avatar"
+            :alt="$t('team.people.avatarAlt', { name: activeMember.name })"
+            class="team-modal__avatar"
+            width="96"
+            height="96"
+          />
+          <h4 class="team-modal__name">
+            {{ activeMember.name }}
+          </h4>
+          <p class="team-modal__role">
+            {{ $t(`team.members.${activeMember.login}.role`) }}
+          </p>
+          <p class="team-modal__bio">
+            {{ $t(`team.members.${activeMember.login}.bio`) }}
+          </p>
+          <div class="team-modal__links">
+            <a
+              :href="activeMember.profileUrl"
+              class="team-modal__profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="ti ti-brand-github" aria-hidden="true" />
+              GitHub
+            </a>
+            <a
+              v-for="link in activeMember.links ?? []"
+              :key="link.url"
+              :href="link.url"
+              class="team-modal__profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ link.label }}
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class="team__work">
@@ -210,6 +291,11 @@
       margin: 0;
     }
 
+    &__person {
+      display: flex;
+      flex-direction: column;
+    }
+
     &__person-link {
       display: flex;
       align-items: center;
@@ -257,6 +343,26 @@
       line-height: 1.4;
     }
 
+    &__person-more {
+      margin-top: 0.5rem;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--piano-accent);
+      background: none;
+      border: none;
+      padding: 0.25rem 0;
+      cursor: pointer;
+      transition: gap 0.2s ease;
+
+      &:hover {
+        gap: 0.55rem;
+      }
+    }
+
     &__work {
       text-align: center;
       max-width: 640px;
@@ -292,6 +398,110 @@
 
       &:hover {
         gap: 0.75rem;
+      }
+    }
+  }
+
+  .team-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+
+    &__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgb(0 0 0 / 55%);
+    }
+
+    &__panel {
+      position: relative;
+      max-width: 480px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: var(--piano-white);
+      border-radius: var(--piano-radius-lg);
+      box-shadow: var(--piano-shadow-lg);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+
+    &__close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      font-size: 1.1rem;
+      color: var(--piano-text-secondary);
+      background: none;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: var(--piano-gray-100);
+      }
+    }
+
+    &__avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    &__name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--piano-text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    &__role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--piano-accent);
+      margin-bottom: 1rem;
+    }
+
+    &__bio {
+      font-size: 0.95rem;
+      color: var(--piano-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    &__links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    &__profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--piano-accent);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--piano-border-subtle);
+      border-radius: 999px;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: var(--piano-gray-100);
       }
     }
   }

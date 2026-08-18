@@ -76,4 +76,60 @@ describe('TeamSection', () => {
     expect(link.exists()).toBe(true)
     expect(link.attributes('href')).toBe('https://github.com/pianolouvorja')
   })
+
+  it('cada pessoa tem botao saiba mais que abre o modal', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    const buttons = wrapper.findAll('button.team__person-more')
+    expect(buttons).toHaveLength(4)
+
+    expect(wrapper.find('.team-modal').exists()).toBe(false)
+    await buttons[0].trigger('click')
+    expect(wrapper.find('.team-modal').exists()).toBe(true)
+  })
+
+  it('modal exibe nome, papel, bio e links do membro', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    await wrapper.findAll('button.team__person-more')[0].trigger('click')
+
+    const modal = wrapper.find('.team-modal')
+    expect(modal.attributes('role')).toBe('dialog')
+    expect(modal.attributes('aria-modal')).toBe('true')
+    expect(modal.attributes('aria-label')?.length).toBeGreaterThan(3)
+    expect(modal.find('.team-modal__name').text().length).toBeGreaterThan(3)
+    expect(modal.find('.team-modal__role').text().length).toBeGreaterThan(3)
+    expect(modal.find('.team-modal__bio').text().length).toBeGreaterThan(30)
+    expect(modal.find('a.team-modal__profile').attributes('href')).toMatch(
+      /^https:\/\/github\.com\/[a-z]+$/,
+    )
+  })
+
+  it('modal fecha ao clicar no botao fechar', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    await wrapper.findAll('button.team__person-more')[0].trigger('click')
+    await wrapper.find('button.team-modal__close').trigger('click')
+    expect(wrapper.find('.team-modal').exists()).toBe(false)
+  })
+
+  it('modal fecha ao pressionar Escape', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    await wrapper.findAll('button.team__person-more')[0].trigger('click')
+    await wrapper.find('.team-modal').trigger('keydown', { key: 'Escape' })
+    expect(wrapper.find('.team-modal').exists()).toBe(false)
+  })
+
+  it('modal fecha ao clicar no overlay', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    await wrapper.findAll('button.team__person-more')[0].trigger('click')
+    await wrapper.find('.team-modal__overlay').trigger('click')
+    expect(wrapper.find('.team-modal').exists()).toBe(false)
+  })
+
+  it('abrir outro membro substitui o conteudo do modal', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    await wrapper.findAll('button.team__person-more')[0].trigger('click')
+    const first = wrapper.find('.team-modal__name').text()
+    await wrapper.findAll('button.team__person-more')[1].trigger('click')
+    expect(wrapper.find('.team-modal').exists()).toBe(true)
+    expect(wrapper.find('.team-modal__name').text()).not.toBe(first)
+  })
 })

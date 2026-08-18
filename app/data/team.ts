@@ -9,6 +9,8 @@ export interface TeamMember {
   name: string
   avatar: string
   profileUrl: string
+  /** Links externos opcionais (LinkedIn, site, etc). */
+  links?: { label: string; url: string }[]
 }
 
 /** URL da organização no GitHub — institucional, sem pessoas. */
