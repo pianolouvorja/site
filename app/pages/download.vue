@@ -332,6 +332,63 @@
       </div>
     </section>
 
+    <!-- Smart TV -->
+    <section class="download-section download-section--alt">
+      <div class="download-section__container">
+        <div class="download-section__header">
+          <span class="download-section__badge download-section__badge--muted">
+            {{ $t('download.tv.badge') }}
+          </span>
+          <h2 class="download-section__title">
+            {{ $t('download.tv.title') }}
+          </h2>
+          <p class="download-section__desc">
+            {{ $t('download.tv.description') }}
+          </p>
+        </div>
+
+        <div class="tv-brands">
+          <div class="tv-brand-card" data-testid="download-tv-brand">
+            <img
+              src="/brand/lg-logo.svg"
+              alt="LG Smart TV"
+              class="tv-brand-card__logo"
+              loading="lazy"
+            />
+            <div class="tv-brand-card__info">
+              <h3 class="tv-brand-card__name">
+                {{ $t('download.tv.lgBrand') }}
+              </h3>
+              <span class="tv-brand-card__status">
+                <i class="ti ti-loader-2" aria-hidden="true" />
+                {{ $t('download.tv.lgStatus') }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <ul class="download-features download-features--muted">
+          <li>
+            <i class="ti ti-clock" aria-hidden="true" />
+            {{ $t('download.tv.features.nativeLg') }}
+          </li>
+          <li>
+            <i class="ti ti-clock" aria-hidden="true" />
+            {{ $t('download.tv.features.bigScreen') }}
+          </li>
+          <li>
+            <i class="ti ti-clock" aria-hidden="true" />
+            {{ $t('download.tv.features.remoteControl') }}
+          </li>
+        </ul>
+
+        <a href="#download" class="download-card__btn download-card__btn--large">
+          <i class="ti ti-device-desktop" aria-hidden="true" />
+          {{ $t('download.tv.useDesktopInstead') }}
+        </a>
+      </div>
+    </section>
+
     <!-- System Requirements -->
     <section class="download-section download-section--alt">
       <div class="download-section__container download-requirements">
@@ -716,6 +773,68 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+  }
+
+  /* TV Brands */
+  .tv-brands {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .tv-brand-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--piano-border);
+    border-radius: var(--download-radius);
+    background: var(--piano-bg-solid);
+    transition: border-color 0.15s ease;
+
+    &:hover {
+      border-color: var(--piano-accent);
+    }
+
+    &__logo {
+      width: 72px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    &__name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--piano-text-primary);
+    }
+
+    &__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--piano-text-tertiary);
+
+      i {
+        font-size: 0.85rem;
+        animation: spin 1.5s linear infinite;
+      }
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 

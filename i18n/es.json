@@ -814,6 +814,19 @@
       "title": "Requisitos del Sistema",
       "desktop": "Escritorio: 4GB RAM, 500MB espacio en disco, GPU con soporte WebGL",
       "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexión a internet para primer acceso"
+    },
+    "tv": {
+      "badge": "Próximamente",
+      "title": "Smart TV",
+      "description": "Estamos preparando PIANO para Smart TVs. La primera plataforma será LG con webOS.",
+      "lgBrand": "webOS (LG)",
+      "lgStatus": "En desarrollo",
+      "features": {
+        "nativeLg": "App nativo LG webOS",
+        "bigScreen": "Proyección directa en TV",
+        "remoteControl": "Control remoto vía app móvil"
+      },
+      "useDesktopInstead": "Usa la app Desktop por ahora"
     }
   },
   "contributors": {
@@ -860,5 +873,13 @@
       "api": "API",
       "site": "Sitio"
     }
+  },
+  "tvSupport": {
+    "eyebrow": "Hoja de ruta",
+    "title": "Próximamente en Smart TVs",
+    "description": "Estamos desarrollando PIANO para Smart TVs, llevando el gestor de culto directamente a la pantalla grande de tu iglesia.",
+    "lgBrand": "webOS (LG)",
+    "lgStatus": "En desarrollo",
+    "cta": "Seguir novedades"
   }
 }

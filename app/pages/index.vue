@@ -7,6 +7,7 @@
     <AboutSection />
     <HowItWorksSection />
     <ContributorsSection />
+    <TvSupportSection />
     <NewsletterForm variant="section" />
     <CtaSection />
     <WelcomePopup />

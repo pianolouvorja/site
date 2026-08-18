@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" fill="none">
+  <circle cx="38" cy="30" r="24" fill="#A50034"/>
+  <circle cx="82" cy="30" r="24" fill="#A50034"/>
+  <circle cx="60" cy="30" r="30" fill="#A50034" opacity="0.5"/>
+  <text x="60" y="37" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="white" letter-spacing="0.05em">LG</text>
+</svg>
