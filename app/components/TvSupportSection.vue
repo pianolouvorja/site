@@ -1,12 +1,5 @@
 <script setup lang="ts">
-  const tvBrands = [
-    {
-      id: 'lg',
-      logo: '/brand/lg-logo.svg',
-      nameKey: 'tvSupport.lgBrand',
-      statusKey: 'tvSupport.lgStatus',
-    },
-  ] as const
+  const tvBrands = useTvBrands()
 </script>
 
 <template>
@@ -29,18 +22,13 @@
           class="tv-support__brand"
           data-testid="tv-brand-card"
         >
-          <img
-            :src="brand.logo"
-            :alt="`${brand.id === 'lg' ? 'LG' : ''} Smart TV`"
-            class="tv-support__brand-logo"
-            loading="lazy"
-          />
+          <img :src="brand.logo" :alt="brand.alt" class="tv-support__brand-logo" loading="lazy" />
           <p class="tv-support__brand-name">
-            {{ $t(brand.nameKey) }}
+            {{ $t(`tvSupport.${brand.id}Brand`) }}
           </p>
           <span class="tv-support__brand-status">
             <i class="ti ti-loader-2" aria-hidden="true" />
-            {{ $t(brand.statusKey) }}
+            {{ $t(`tvSupport.${brand.id}Status`) }}
           </span>
         </div>
       </div>
@@ -90,10 +78,19 @@
     }
 
     &__brands {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
     }
 
     &__brand {
@@ -116,8 +113,9 @@
     }
 
     &__brand-logo {
-      width: 120px;
-      height: auto;
+      height: 56px;
+      width: auto;
+      max-width: 120px;
       object-fit: contain;
       filter: brightness(1.1);
     }

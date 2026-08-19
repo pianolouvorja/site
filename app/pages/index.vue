@@ -3,11 +3,11 @@
     <HeroSection />
     <StatsSection />
     <PlatformsSection />
+    <TvSupportSection />
     <FeaturesSection />
     <AboutSection />
     <HowItWorksSection />
     <ContributorsSection />
-    <TvSupportSection />
     <NewsletterForm variant="section" />
     <CtaSection />
     <WelcomePopup />

@@ -801,14 +801,15 @@
     "mobile": {
       "badge": "Próximamente",
       "title": "Móvil",
-      "description": "Las apps nativas para Android e iOS están en nuestro roadmap. Mientras tanto, puedes usar la web app en tu teléfono.",
+      "description": "La app Android (APK) está en desarrollo avanzado, aún sin lanzamiento oficial. Mientras tanto, usa la web app en el móvil.",
       "platforms": "Android e iOS",
       "features": {
-        "nativeAndroid": "Android nativo (planificado)",
+        "nativeAndroid": "App Android (APK) — en desarrollo avanzado",
         "nativeIos": "iOS nativo (planificado)",
         "cloudSync": "Sincronización en la nube (planificado)"
       },
-      "useWebInstead": "Usar web app en el teléfono por ahora"
+      "useWebInstead": "Usar web app en el teléfono por ahora",
+      "apkNote": "Vista previa del APK: build interno, disponible pronto para pruebas."
     },
     "systemRequirements": {
       "title": "Requisitos del Sistema",
@@ -821,12 +822,22 @@
       "description": "Estamos preparando PIANO para Smart TVs. La primera plataforma será LG con webOS.",
       "lgBrand": "webOS (LG)",
       "lgStatus": "En desarrollo",
+      "samsungBrand": "Tizen (Samsung)",
+      "samsungStatus": "En desarrollo",
+      "rokuBrand": "Roku TV",
+      "rokuStatus": "Planificado",
+      "androidTvBrand": "Android TV / Google TV",
+      "androidTvStatus": "Planificado",
+      "chromecastBrand": "Chromecast",
+      "chromecastStatus": "Planificado",
       "features": {
         "nativeLg": "App nativo LG webOS",
         "bigScreen": "Proyección directa en TV",
         "remoteControl": "Control remoto vía app móvil"
       },
-      "useDesktopInstead": "Usa la app Desktop por ahora"
+      "useDesktopInstead": "Usa la app Desktop por ahora",
+      "appleTvBrand": "Apple TV",
+      "appleTvStatus": "Planificado"
     }
   },
   "contributors": {
@@ -876,10 +887,20 @@
   },
   "tvSupport": {
     "eyebrow": "Hoja de ruta",
-    "title": "Próximamente en Smart TVs",
-    "description": "Estamos desarrollando PIANO para Smart TVs, llevando el gestor de culto directamente a la pantalla grande de tu iglesia.",
+    "title": "Tu TV se convierte en el escenario",
+    "description": "Controla el culto desde el celular mientras la Smart TV muestra los himnos y la liturgia como un escenario digital — ideal para grupos pequeños sin proyector ni PC.",
     "lgBrand": "webOS (LG)",
     "lgStatus": "En desarrollo",
-    "cta": "Seguir novedades"
+    "samsungBrand": "Tizen (Samsung)",
+    "samsungStatus": "En desarrollo",
+    "rokuBrand": "Roku TV",
+    "rokuStatus": "Planificado",
+    "androidTvBrand": "Android TV / Google TV",
+    "androidTvStatus": "Planificado",
+    "chromecastBrand": "Chromecast",
+    "chromecastStatus": "Planificado",
+    "cta": "Seguir novedades",
+    "appleTvBrand": "Apple TV",
+    "appleTvStatus": "Planificado"
   }
 }

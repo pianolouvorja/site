@@ -801,14 +801,15 @@
     "mobile": {
       "badge": "Coming soon",
       "title": "Mobile",
-      "description": "Native apps for Android and iOS are on our roadmap. In the meantime, you can use the web app on your phone.",
+      "description": "The Android app (APK) is in advanced development, not officially released yet. Meanwhile, use the web app on your phone.",
       "platforms": "Android and iOS",
       "features": {
-        "nativeAndroid": "Native Android (planned)",
+        "nativeAndroid": "Android app (APK) — in advanced development",
         "nativeIos": "Native iOS (planned)",
         "cloudSync": "Cloud sync (planned)"
       },
-      "useWebInstead": "Use web app on phone for now"
+      "useWebInstead": "Use web app on phone for now",
+      "apkNote": "APK preview: internal build, available soon for testing."
     },
     "systemRequirements": {
       "title": "System Requirements",
@@ -821,12 +822,22 @@
       "description": "We are preparing PIANO for Smart TVs. The first platform will be LG with webOS.",
       "lgBrand": "webOS (LG)",
       "lgStatus": "In development",
+      "samsungBrand": "Tizen (Samsung)",
+      "samsungStatus": "In development",
+      "rokuBrand": "Roku TV",
+      "rokuStatus": "Planned",
+      "androidTvBrand": "Android TV / Google TV",
+      "androidTvStatus": "Planned",
+      "chromecastBrand": "Chromecast",
+      "chromecastStatus": "Planned",
       "features": {
         "nativeLg": "Native LG webOS app",
         "bigScreen": "Direct TV projection",
         "remoteControl": "Remote control via mobile app"
       },
-      "useDesktopInstead": "Use the Desktop app for now"
+      "useDesktopInstead": "Use the Desktop app for now",
+      "appleTvBrand": "Apple TV",
+      "appleTvStatus": "Planned"
     }
   },
   "contributors": {
@@ -876,10 +887,20 @@
   },
   "tvSupport": {
     "eyebrow": "Roadmap",
-    "title": "Coming to Smart TVs",
-    "description": "We are developing PIANO for Smart TVs, bringing the worship manager directly to your church's big screen.",
+    "title": "Your TV becomes the church stage",
+    "description": "Control the service from your phone while the Smart TV displays hymns and liturgy as a digital stage — ideal for small groups without a projector or PC.",
     "lgBrand": "webOS (LG)",
     "lgStatus": "In development",
-    "cta": "Stay updated"
+    "samsungBrand": "Tizen (Samsung)",
+    "samsungStatus": "In development",
+    "rokuBrand": "Roku TV",
+    "rokuStatus": "Planned",
+    "androidTvBrand": "Android TV / Google TV",
+    "androidTvStatus": "Planned",
+    "chromecastBrand": "Chromecast",
+    "chromecastStatus": "Planned",
+    "cta": "Stay updated",
+    "appleTvBrand": "Apple TV",
+    "appleTvStatus": "Planned"
   }
 }

@@ -3,6 +3,8 @@
 
   const { t } = useI18n()
 
+  const tvBrands = useTvBrands()
+
   useSeoMeta({
     title: () => t('download.metaTitle'),
     description: () => t('download.metaDescription'),
@@ -325,6 +327,11 @@
           </li>
         </ul>
 
+        <p class="download-section__subtext download-section__apk-note">
+          <i class="ti ti-flask" aria-hidden="true" />
+          {{ $t('download.mobile.apkNote') }}
+        </p>
+
         <a :href="siteConfig.appUrl" class="download-card__btn download-card__btn--large">
           <i class="ti ti-device-mobile" aria-hidden="true" />
           {{ $t('download.mobile.useWebInstead') }}
@@ -348,20 +355,20 @@
         </div>
 
         <div class="tv-brands">
-          <div class="tv-brand-card" data-testid="download-tv-brand">
-            <img
-              src="/brand/lg-logo.svg"
-              alt="LG Smart TV"
-              class="tv-brand-card__logo"
-              loading="lazy"
-            />
+          <div
+            v-for="brand in tvBrands"
+            :key="brand.id"
+            class="tv-brand-card"
+            data-testid="download-tv-brand"
+          >
+            <img :src="brand.logo" :alt="brand.alt" class="tv-brand-card__logo" loading="lazy" />
             <div class="tv-brand-card__info">
               <h3 class="tv-brand-card__name">
-                {{ $t('download.tv.lgBrand') }}
+                {{ $t(`download.tv.${brand.id}Brand`) }}
               </h3>
               <span class="tv-brand-card__status">
                 <i class="ti ti-loader-2" aria-hidden="true" />
-                {{ $t('download.tv.lgStatus') }}
+                {{ $t(`download.tv.${brand.id}Status`) }}
               </span>
             </div>
           </div>
@@ -800,8 +807,9 @@
     }
 
     &__logo {
-      width: 72px;
-      height: auto;
+      height: 40px;
+      width: auto;
+      max-width: 140px;
       object-fit: contain;
     }
 
