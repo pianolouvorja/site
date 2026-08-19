@@ -74,10 +74,13 @@ describe('DownloadPage', () => {
     const downloadControls = wrapper.findAll('.download-cards .download-card__btn')
 
     expect(downloadControls).toHaveLength(3)
-    expect(downloadControls.every((control) => control.element.tagName === 'BUTTON')).toBe(true)
-    expect(downloadControls.every((control) => control.attributes('disabled') !== undefined)).toBe(
-      true,
-    )
+    expect(downloadControls.every((control) => control.attributes('href') === undefined)).toBe(true)
+    expect(
+      downloadControls.every((control) =>
+        control.classes().includes('download-card__btn--disabled'),
+      ),
+    ).toBe(true)
     expect(wrapper.html()).not.toContain('https://github.com/pianolouvorja/app/releases')
+    expect(wrapper.text()).toContain('Em breve')
   })
 })

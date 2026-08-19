@@ -21,7 +21,7 @@ interface ButtondownResponse {
   count?: number
 }
 
-function parseSubscriber(raw: ButtondownSubscriber): Subscriber {
+export function parseSubscriber(raw: ButtondownSubscriber): Subscriber {
   return {
     email: raw.email,
     createdAt: raw.creation_date ?? raw.created_at ?? '',
@@ -30,6 +30,8 @@ function parseSubscriber(raw: ButtondownSubscriber): Subscriber {
     locale: raw.metadata?.locale ?? 'pt-BR',
   }
 }
+
+export const parseSub = parseSubscriber
 
 export async function fetchSubscribers(): Promise<Subscriber[]> {
   const config = useRuntimeConfig()
