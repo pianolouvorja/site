@@ -134,6 +134,7 @@
     "title": "Hecho por y para la comunidad",
     "text1": "El {name} es un proyecto colaborativo de código abierto, creado para facilitar la gestión del culto.",
     "text2": "Desarrollado por el equipo Piano, la plataforma evoluciona continuamente con contribuciones de la comunidad. Gratuito, sin anuncios, sin recopilación de datos.",
+    "forkCredit": "PIANO LouvorJA es un fork del proyecto LouvorJA (louvorja.github.io/app/), mantenido por la comunidad desde 2019. Agradecemos a los creadores y contribuidores originales que hicieron posible este proyecto.",
     "openSource": "Código Abierto",
     "stats": {
       "free": "Gratis",
@@ -385,6 +386,8 @@
     "developedBy": "Desarrollado por",
     "team": "Equipo Piano",
     "rights": "Todos los derechos reservados.",
+    "forkedFrom": "Fork de",
+    "originalProject": "Proyecto original LouvorJA",
     "legalNavLabel": "Enlaces legales",
     "legalNavTitle": "Legal",
     "moreNavLabel": "Más enlaces",
