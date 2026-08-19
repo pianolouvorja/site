@@ -77,7 +77,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Server-only secrets
-    abacatePayApiKey: process.env.ABACATEPAY_API_KEY || '',
     firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
 
     // SMTP (Hostinger) — Newsletter manager

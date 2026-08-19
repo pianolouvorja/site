@@ -7,12 +7,10 @@ vi.stubGlobal('$fetch', mockFetch)
 
 vi.stubGlobal('useRuntimeConfig', () => ({
   public: {
-    buttondownApiKey: 'test-buttondown-key',
-    abacatePayApiKey: 'test-abacate-key',
+    buttondownApiKey: 'test-...ey',
     googleAnalyticsId: '',
   },
-  abacatePayApiKey: 'test-abacate-key',
-  buttondownApiKey: 'test-buttondown-key',
+  buttondownApiKey: 'test-...ey',
 }))
 
 // Mock @octokit/rest — Octokit construtor que retorna dados fake
@@ -54,7 +52,6 @@ vi.mock('@octokit/rest', () => {
 import {
   fetchGitHubStats,
   fetchNewsletterStats,
-  fetchDonationStats,
   fetchVisitStats,
   getDashboardStats,
   clearStatsCache,
@@ -138,28 +135,6 @@ describe('dashboard-stats', () => {
     })
   })
 
-  // --- Donation Stats ---
-
-  describe('fetchDonationStats', () => {
-    it('soma doacoes confirmadas e retorna total em BRL', async () => {
-      mockFetch.mockResolvedValueOnce({
-        data: [
-          { status: 'paid', amount: 5000 }, // R$ 50,00 (centavos)
-          { status: 'paid', amount: 2500 }, // R$ 25,00
-          { status: 'pending', amount: 10000 }, // pendente - nao conta
-        ],
-      })
-      const result = await fetchDonationStats()
-      expect(result).toEqual({ count: 2, totalBRL: 75 })
-    })
-
-    it('retorna null se a API falhar', async () => {
-      mockFetch.mockRejectedValueOnce(new Error('AbacatePay error'))
-      const result = await fetchDonationStats()
-      expect(result).toBeNull()
-    })
-  })
-
   // --- Visit Stats (GA4) ---
 
   describe('fetchVisitStats', () => {
@@ -181,25 +156,22 @@ describe('dashboard-stats', () => {
       expect(result).toHaveProperty('stars')
       expect(result).toHaveProperty('forks')
       expect(result).toHaveProperty('subscribers')
-      expect(result).toHaveProperty('donations')
+
       expect(result).toHaveProperty('visits')
       expect(result).toHaveProperty('updatedAt')
       expect(typeof result.updatedAt).toBe('string')
     })
 
-    it('se newsletter e donations falham, GitHub continua retornando dados', async () => {
+    it('se newsletter falha, GitHub continua retornando dados', async () => {
       // GitHub funciona (mock padrao)
-      // Newsletter e donations falham
-      mockFetch
-        .mockRejectedValueOnce(new Error('newsletter fail'))
-        .mockRejectedValueOnce(new Error('donations fail'))
+      // Newsletter falha
+      mockFetch.mockRejectedValueOnce(new Error('newsletter fail'))
 
       const result = await getDashboardStats()
 
       expect(result.downloads).toBe(950)
       expect(result.stars).toBe(42)
       expect(result.subscribers).toBeNull()
-      expect(result.donations).toBeNull()
     })
 
     it('se GitHub falha, outras fontes ainda retornam dados (Promise.allSettled)', async () => {
@@ -214,17 +186,14 @@ describe('dashboard-stats', () => {
       } as unknown as Octokit
       __setOctokitForTesting(failingOctokit)
 
-      // Newsletter e donations funcionam
-      mockFetch
-        .mockResolvedValueOnce({ count: 25 })
-        .mockResolvedValueOnce({ data: [{ status: 'paid', amount: 5000 }] })
+      // Newsletter funciona
+      mockFetch.mockResolvedValueOnce({ count: 25 })
 
       const result = await getDashboardStats()
 
       expect(result.downloads).toBeNull()
       expect(result.stars).toBeNull()
       expect(result.subscribers).toBe(25)
-      expect(result.donations).toEqual({ count: 1, totalBRL: 50 })
     })
 
     it('usa cache na segunda chamada dentro de 5 minutos', async () => {

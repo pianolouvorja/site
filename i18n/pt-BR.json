@@ -711,20 +711,7 @@
     "reject": "Recusar",
     "privacyLink": "Ler Política de Privacidade"
   },
-  "donate": {
-    "title": "Apoie o Projeto",
-    "button": "Doar (PIX / Boleto)",
-    "description": "PIANO LouvorJA é mantido por voluntários e precisa de apoio para pagar servidores e custos.",
-    "pixTitle": "Apoie com qualquer valor",
-    "pixSubtitle": "Digite o valor e seja redirecionado para o checkout seguro da AbacatePay",
-    "close": "Fechar",
-    "amountLabel": "Valor da Doação",
-    "amountPlaceholder": "Ex: 20,00",
-    "submitButton": "Ir para Pagamento",
-    "processing": "Processando...",
-    "error": "Erro ao gerar doação.",
-    "redirectHint": "Você poderá escolher PIX ou Boleto na próxima tela."
-  },
+
   "admin": {
     "title": "Dashboard",
     "loginTitle": "Acesso Restrito",
@@ -857,7 +844,7 @@
     "highlights": "Destaques",
     "pullRequests": "PRs",
     "changelog": "Changelog",
-    "viewOnGithub": "Ver no GitHub",
+    "download": "Baixar versão",
     "allVersions": "Todas as versões",
     "loading": "Carregando versões...",
     "error": "Não foi possível carregar as versões no momento.",

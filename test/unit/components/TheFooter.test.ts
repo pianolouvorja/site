@@ -19,7 +19,6 @@ describe('TheFooter', () => {
       global: {
         stubs: {
           NuxtLink: RouterLinkStub,
-          DonateButton: true,
         },
         mocks: {
           $t: (key: string) => key,

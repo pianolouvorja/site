@@ -711,20 +711,7 @@
     "reject": "Decline",
     "privacyLink": "Read Privacy Policy"
   },
-  "donate": {
-    "title": "Support the Project",
-    "button": "Donate (PIX / Boleto)",
-    "description": "PIANO LouvorJA is maintained by volunteers and needs support to pay for servers and costs.",
-    "pixTitle": "Support with any amount",
-    "pixSubtitle": "Enter the amount and you will be redirected to AbacatePay's secure checkout",
-    "close": "Close",
-    "amountLabel": "Donation Amount",
-    "amountPlaceholder": "Ex: 20.00",
-    "submitButton": "Go to Payment",
-    "processing": "Processing...",
-    "error": "Error generating donation.",
-    "redirectHint": "You can choose PIX or Boleto on the next screen."
-  },
+
   "admin": {
     "title": "Dashboard",
     "loginTitle": "Restricted Access",
@@ -857,7 +844,7 @@
     "highlights": "Highlights",
     "pullRequests": "PRs",
     "changelog": "Changelog",
-    "viewOnGithub": "View on GitHub",
+    "download": "Download version",
     "allVersions": "All versions",
     "loading": "Loading versions...",
     "error": "Could not load versions at this time.",

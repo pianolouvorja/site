@@ -1,4 +1,4 @@
-export interface SendRecord {
+export interface NewsletterSendRecord {
   date: string
   subject: string
   template: string
@@ -8,16 +8,20 @@ export interface SendRecord {
   errors: string[]
 }
 
-const history: SendRecord[] = []
 const MAX_HISTORY = 50
+const history: NewsletterSendRecord[] = []
 
-export function addToHistory(record: SendRecord): void {
+export function addToNewsletterHistory(record: NewsletterSendRecord): void {
   history.unshift(record)
   if (history.length > MAX_HISTORY) {
     history.pop()
   }
 }
 
-export function getHistory(): SendRecord[] {
+export function getNewsletterHistory(): readonly NewsletterSendRecord[] {
   return history
+}
+
+export function clearNewsletterHistoryForTesting(): void {
+  history.length = 0
 }
