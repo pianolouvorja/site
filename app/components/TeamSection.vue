@@ -151,9 +151,41 @@
         <p class="team__work-text">
           {{ $t('team.work.text') }}
         </p>
-        <a :href="teamOrgUrl" class="team__cta" target="_blank" rel="noopener noreferrer">
-          {{ $t('team.cta') }}
-          <i class="ti ti-arrow-right" aria-hidden="true" />
+      </div>
+
+      <div class="team__contribute">
+        <h3 class="team__contribute-title">
+          {{ $t('team.contribute.title') }}
+        </h3>
+        <p class="team__contribute-text">
+          {{ $t('team.contribute.text') }}
+        </p>
+        <ul class="team__contribute-ways">
+          <li class="team__contribute-way">
+            <i class="ti ti-code" aria-hidden="true" />
+            <span>{{ $t('team.contribute.ways.code') }}</span>
+          </li>
+          <li class="team__contribute-way">
+            <i class="ti ti-bug" aria-hidden="true" />
+            <span>{{ $t('team.contribute.ways.bugs') }}</span>
+          </li>
+          <li class="team__contribute-way">
+            <i class="ti ti-language" aria-hidden="true" />
+            <span>{{ $t('team.contribute.ways.translate') }}</span>
+          </li>
+          <li class="team__contribute-way">
+            <i class="ti ti-share" aria-hidden="true" />
+            <span>{{ $t('team.contribute.ways.share') }}</span>
+          </li>
+        </ul>
+        <a
+          :href="teamOrgUrl"
+          class="team__contribute-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="ti ti-brand-github" aria-hidden="true" />
+          {{ $t('team.contribute.button') }}
         </a>
       </div>
     </div>
@@ -383,21 +415,79 @@
       font-size: 0.95rem;
       color: var(--piano-text-secondary);
       line-height: 1.7;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0;
     }
 
-    &__cta {
+    &__contribute {
+      max-width: 640px;
+      margin: 2.5rem auto 0;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      background: var(--piano-bg-solid);
+      border: 1px solid var(--piano-border-subtle);
+      border-radius: var(--piano-radius-lg);
+      text-align: center;
+    }
+
+    &__contribute-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--piano-text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    &__contribute-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--piano-text-secondary);
+      max-width: 36rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    &__contribute-ways {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      text-align: left;
+    }
+
+    &__contribute-way {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--piano-text-secondary);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--piano-radius-sm);
+      background: var(--piano-gray-100);
+
+      i {
+        color: var(--piano-accent);
+        font-size: 1.125rem;
+        flex-shrink: 0;
+      }
+    }
+
+    &__contribute-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--piano-accent);
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--piano-radius-md);
+      font-weight: 600;
+      font-size: 0.9375rem;
       text-decoration: none;
-      transition: gap 0.2s ease;
+      background: var(--piano-accent);
+      color: var(--piano-text-on-dark);
+      transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 
       &:hover {
-        gap: 0.75rem;
+        background: var(--piano-accent-hover);
+        transform: translateY(-2px);
       }
     }
   }

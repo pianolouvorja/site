@@ -70,11 +70,26 @@ describe('TeamSection', () => {
     expect(wrapper.find('.team__work-text').text().length).toBeGreaterThan(30)
   })
 
-  it('linka para a organizacao no GitHub', () => {
+  it('renderiza o CTA de contribuicao com 4 formas de ajudar', () => {
     const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
-    const link = wrapper.find('a.team__cta')
-    expect(link.exists()).toBe(true)
-    expect(link.attributes('href')).toBe('https://github.com/pianolouvorja')
+    expect(wrapper.find('.team__contribute').exists()).toBe(true)
+    expect(wrapper.find('.team__contribute-title').text().length).toBeGreaterThan(3)
+    expect(wrapper.find('.team__contribute-text').text().length).toBeGreaterThan(30)
+    expect(wrapper.findAll('.team__contribute-way')).toHaveLength(4)
+  })
+
+  it('botao de contribuicao linka para a org no GitHub', () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    const btn = wrapper.find('a.team__contribute-btn')
+    expect(btn.exists()).toBe(true)
+    expect(btn.attributes('href')).toBe('https://github.com/pianolouvorja')
+    expect(btn.attributes('target')).toBe('_blank')
+    expect(btn.text().length).toBeGreaterThan(5)
+  })
+
+  it('bloco de como trabalhamos nao tem link, o CTA e separado', () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    expect(wrapper.find('.team__work a').exists()).toBe(false)
   })
 
   it('cada pessoa tem botao saiba mais que abre o modal', async () => {

@@ -8,7 +8,6 @@
     <AboutSection />
     <HowItWorksSection />
     <TeamSection />
-    <ContributorsSection />
     <NewsletterForm variant="section" />
     <CtaSection />
     <WelcomePopup />

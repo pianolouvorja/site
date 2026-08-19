@@ -962,6 +962,17 @@
     "cta": "Conoce la organización en GitHub",
     "modal": {
       "close": "Cerrar"
+    },
+    "contribute": {
+      "title": "Contribuye al proyecto",
+      "text": "PIANO es open-source y crece con la comunidad. Puedes contribuir con código, reportar bugs, sugerir funciones, ayudar con traducciones o compartir el proyecto.",
+      "ways": {
+        "code": "Enviar pull requests en GitHub",
+        "bugs": "Reportar bugs y sugerir mejorias",
+        "translate": "Ayudar con traducciones",
+        "share": "Compartir con tu comunidad"
+      },
+      "button": "Empezar a contribuir"
     }
   }
 }
