@@ -54,12 +54,7 @@
         </h3>
         <ul class="team__people-list">
           <li v-for="member in teamMembers" :key="member.login" class="team__person">
-            <a
-              :href="member.profileUrl"
-              class="team__person-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <div class="team__person-card">
               <img
                 :src="member.avatar"
                 :alt="$t('team.people.avatarAlt', { name: member.name })"
@@ -72,7 +67,7 @@
                 <span class="team__person-name">{{ member.name }}</span>
                 <span class="team__person-role">{{ $t(`team.members.${member.login}.role`) }}</span>
               </span>
-            </a>
+            </div>
             <button
               type="button"
               class="team__person-more"
@@ -316,7 +311,7 @@
 
     &__people-list {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1.5rem;
       list-style: none;
       padding: 0;
@@ -328,7 +323,7 @@
       flex-direction: column;
     }
 
-    &__person-link {
+    &__person-card {
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -337,15 +332,10 @@
       border: 1px solid var(--piano-border-subtle);
       border-radius: var(--piano-radius-lg);
       box-shadow: var(--piano-shadow-sm);
-      text-decoration: none;
       transition:
         transform 0.25s ease,
         box-shadow 0.25s ease;
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--piano-shadow-lg);
-      }
+      cursor: default;
     }
 
     &__avatar {
@@ -601,20 +591,12 @@
       &__grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
-      &__people-list {
-        grid-template-columns: repeat(2, 1fr);
-      }
     }
   }
 
   @media (max-width: 600px) {
     .team {
       &__grid {
-        grid-template-columns: 1fr;
-      }
-
-      &__people-list {
         grid-template-columns: 1fr;
       }
     }

@@ -45,14 +45,13 @@ describe('TeamSection', () => {
     )
   })
 
-  it('cada pessoa tem avatar do GitHub, papel via i18n e link para o perfil', () => {
+  it('cada pessoa tem avatar do GitHub, papel via i18n, sem link externo no card', () => {
     const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
     wrapper.findAll('.team__person').forEach((person) => {
-      const link = person.find('a.team__person-link')
-      expect(link.exists()).toBe(true)
-      expect(link.attributes('href')).toMatch(/^https:\/\/github\.com\/[a-z]+$/)
-      expect(link.attributes('target')).toBe('_blank')
-      expect(link.attributes('rel')).toContain('noopener')
+      const card = person.find('div.team__person-card')
+      expect(card.exists()).toBe(true)
+      // cards nao tem link — info completa fica no modal
+      expect(card.find('a').exists()).toBe(false)
 
       const avatar = person.find('img.team__avatar')
       expect(avatar.exists()).toBe(true)
