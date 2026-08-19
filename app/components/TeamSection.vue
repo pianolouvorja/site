@@ -350,6 +350,7 @@
       flex-direction: column;
       gap: 0.25rem;
       min-width: 0;
+      overflow: hidden;
     }
 
     &__person-name {
@@ -363,6 +364,9 @@
       font-weight: 600;
       color: var(--piano-accent);
       line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &__person-more {
