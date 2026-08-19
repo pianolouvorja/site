@@ -342,7 +342,7 @@
       },
       "data": {
         "question": "Meus dados ficam armazenados onde?",
-        "answer": "Os dados do aplicativo — hinos, liturgias, configurações — ficam armazenados localmente no seu navegador ou dispositivo. Nada é enviado para servidores externos durante o uso. Ao enviar o formulário de contato, as informações (nome, email, mensagem) são transmitidas via Web3Forms para que possamos responder. Consulte nossa Política de Privacidade para detalhes completos."
+        "answer": "O aplicativo desktop armazena dados (hinos, liturgias, configurações) localmente no seu dispositivo. A versão web requer conexão com internet e não armazena dados persistentes. Ao enviar o formulário de contato, as informações (nome, email, mensagem) são transmitidas via Web3Forms para que possamos responder. Consulte nossa Política de Privacidade para detalhes completos."
       },
       "privacy": {
         "question": "Como vocês protegem minha privacidade?",
@@ -425,9 +425,7 @@
           "Conteúdo da mensagem",
           "1.2 Dados técnicos",
           "Cookie técnico piano_lang: armazena apenas sua preferência de idioma. Não contém identificador pessoal.",
-          "Não utilizamos cookies de rastreamento, analytics, publicidade ou perfilação.",
-          "1.3 Dados do aplicativo",
-          "O aplicativo PIANO LouvorJA (hinos, liturgias, configurações, playlists) armazena todos os dados localmente no seu navegador (LocalStorage/IndexedDB). Esses dados não são enviados para nossos servidores."
+          "Não utilizamos cookies de rastreamento, analytics, publicidade ou perfilação."
         ]
       },
       "purpose": {
@@ -600,7 +598,7 @@
           "Utilizar o aplicativo de forma ética e em conformidade com a legislação",
           "Não utilizar para fins ilegais, difamatórios ou que violem direitos de terceiros",
           "Respeitar os direitos autorais das obras projetadas",
-          "Manter seus dados locais salvos de forma segura (não mantemos backup em servidor)",
+
           "Não tentar comprometer a segurança ou disponibilidade do serviço"
         ]
       },
