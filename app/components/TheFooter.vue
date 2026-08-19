@@ -116,6 +116,16 @@
         <p class="footer__copyright">
           &copy; {{ currentYear }} {{ siteConfig.name }}. {{ $t('footer.rights') }}
         </p>
+        <p class="footer__credits">
+          {{ $t('footer.forkedFrom') }}
+          <a
+            href="https://louvorja.github.io/app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer__portfolio-link"
+            >{{ $t('footer.originalProject') }}</a
+          >
+        </p>
       </div>
     </div>
   </footer>

@@ -24,6 +24,16 @@
         <p class="about__text">
           {{ $t('about.text2') }}
         </p>
+        <p class="about__fork-credit">
+          {{ $t('about.forkCredit') }}
+          <a
+            href="https://louvorja.github.io/app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="about__fork-link"
+            >louvorja.github.io/app/</a
+          >
+        </p>
 
         <div class="about__stats">
           <div class="about__stat">
@@ -128,6 +138,24 @@
       color: var(--piano-text-secondary);
       line-height: 1.8;
       margin-bottom: 1.25rem;
+    }
+
+    &__fork-credit {
+      font-size: 0.9rem;
+      color: var(--piano-gray-600);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+
+    &__fork-link {
+      color: var(--piano-blue);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover {
+        color: var(--piano-cyan);
+      }
     }
 
     &__stats {
