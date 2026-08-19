@@ -122,7 +122,7 @@
     return `Atualizado ha ${min} min`
   })
 
-  type DetailView = 'downloads' | 'newsletter' | 'donations' | 'visits' | null
+  type DetailView = 'downloads' | 'newsletter' | 'visits' | null
   const activeView = ref<DetailView>(null)
   const chartFilter = ref<'7d' | '30d' | '12m'>('12m')
 
@@ -167,7 +167,6 @@
   const chartMeta: Record<string, { type: ChartData['type']; name: string; color: string }> = {
     downloads: { type: 'area', name: 'Downloads', color: '#22d3ee' },
     newsletter: { type: 'bar', name: 'Assinantes', color: '#a78bfa' },
-    donations: { type: 'bar', name: 'Doacoes (R$)', color: '#f87171' },
     visits: { type: 'line', name: 'Visitas', color: '#4ade80' },
   }
 
@@ -189,14 +188,6 @@
             5,
           ],
           '12m': [8, 12, 15, 18, 22, 28, 35, 42, 48, 55, 62, 78],
-        },
-        donations: {
-          '7d': [0, 50, 25, 80, 0, 120, 60],
-          '30d': [
-            0, 25, 0, 50, 40, 0, 75, 30, 0, 100, 50, 25, 0, 60, 45, 0, 80, 35, 0, 90, 50, 0, 70, 40,
-            0, 55, 30, 0, 65, 85,
-          ],
-          '12m': [0, 50, 25, 100, 75, 150, 120, 200, 180, 250, 210, 340],
         },
         visits: {
           '7d': [45, 52, 38, 61, 48, 75, 82],
@@ -260,7 +251,6 @@
     const titles: Record<string, string> = {
       downloads: 'Downloads ao longo do tempo',
       newsletter: 'Crescimento de assinantes',
-      donations: 'Doacoes por mes',
       visits: 'Visitas ao site',
     }
     return titles[view || 'visits'] || ''
@@ -397,27 +387,6 @@
           :colors="getChart(activeView).colors"
           :height="320"
         />
-        <div v-if="activeView === 'donations'" class="chart-extra">
-          <div class="chart-stat">
-            <span class="chart-stat__label">Total confirmado</span>
-            <span class="chart-stat__value">{{ formatDonations(stats?.donations ?? null) }}</span>
-          </div>
-          <div class="chart-stat">
-            <span class="chart-stat__label">Doadores</span>
-            <span class="chart-stat__value">{{ stats?.donations?.count ?? '—' }}</span>
-          </div>
-          <div class="chart-stat">
-            <span class="chart-stat__label">Ticket medio</span>
-            <span class="chart-stat__value">{{
-              stats?.donations && stats.donations.count > 0
-                ? formatDonations({
-                    count: 1,
-                    totalBRL: stats.donations.totalBRL / stats.donations.count,
-                  })
-                : '—'
-            }}</span>
-          </div>
-        </div>
       </section>
     </transition>
 
