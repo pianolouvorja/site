@@ -14,7 +14,15 @@ const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutos
 
 let cached: { data: DashboardStats; timestamp: number } | null = null
 
+let octokitOverride: Octokit | null = null
+
+/** Override do Octokit para testes (injeta instancia mockada ou null). */
+export function __setOctokitForTesting(octokit: Octokit | null): void {
+  octokitOverride = octokit
+}
+
 function getOctokit(): Octokit {
+  if (octokitOverride) return octokitOverride
   return new Octokit({ auth: process.env.GITHUB_TOKEN || undefined })
 }
 
