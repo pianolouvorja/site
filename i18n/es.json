@@ -40,7 +40,7 @@
     "features": "Funciones",
     "free": "Gratis",
     "installs": "Instalaciones",
-    "offline": "Funciona sin conexión"
+    "offline": "Datos locales"
   },
   "platforms": {
     "eyebrow": "Multiplataforma",
@@ -127,8 +127,8 @@
         "description": "Apariencia, proyección, multi-pantalla y preferencias totalmente personalizables."
       },
       "offline": {
-        "title": "Funciona Sin Conexión",
-        "description": "La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web requiere descargar los recursos primero."
+        "title": "Datos Locales",
+        "description": "La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web requiere conexión a internet para funcionar."
       }
     }
   },
@@ -142,7 +142,7 @@
     "stats": {
       "free": "Gratis",
       "installs": "Instalaciones",
-      "offline": "PWA Sin Conexión"
+      "offline": "Datos locales"
     }
   },
   "how": {
@@ -256,7 +256,7 @@
     },
     "content": {
       "gettingStarted": {
-        "intro": "PIANO LouvorJA es una aplicación web (PWA) que funciona en cualquier dispositivo con navegador moderno.",
+        "intro": "PIANO LouvorJA es una aplicación web que funciona en cualquier dispositivo con navegador moderno.",
         "steps": [
           "Abra la aplicación en su navegador o descargue la versión de escritorio.",
           "Importe su himnario o cree una colección en el Centro de Medios.",
@@ -335,7 +335,7 @@
       },
       "offline": {
         "question": "¿Funciona sin internet?",
-        "answer": "Sí. La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web también funciona sin conexión, pero necesita descargar los recursos primero. Todos los datos se almacenan localmente."
+        "answer": "La app de escritorio funciona 100% sin conexion tras descargar los medios. La version web requiere conexion a internet para funcionar. La app APK tambien funciona sin internet, siempre que el contenido este descargado localmente y los dispositivos esten en la misma red."
       },
       "devices": {
         "question": "¿En qué dispositivos puedo usarlo?",
@@ -355,7 +355,7 @@
       },
       "updates": {
         "question": "¿Cómo se actualiza la aplicación?",
-        "answer": "PIANO LouvorJA es una aplicación web progresiva (PWA). Las actualizaciones se aplican automáticamente al recargar la página. No es necesario descargar ni instalar actualizaciones manualmente. Siempre tendrá la versión más reciente."
+        "answer": "PIANO LouvorJA es una aplicacion web. Las actualizaciones se aplican automaticamente al recargar la pagina. No es necesario descargar ni instalar actualizaciones manualmente. Siempre tendra la version mas reciente."
       },
       "troubleshooting": {
         "question": "¿Qué hago si la aplicación no carga o muestra un error?",
@@ -797,7 +797,7 @@
         "noInstall": "Sin instalación",
         "anyOs": "Cualquier sistema operativo",
         "autoUpdate": "Actualizaciones automáticas",
-        "pwa": "Instalable como PWA"
+        "pwa": "Acceso vía navegador"
       }
     },
     "mobile": {

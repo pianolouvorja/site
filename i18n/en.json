@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "PIANO LouvorJA — Worship Service Manager",
-    "description": "Web platform for worship service management: hymnals, Bible, liturgy, multi-screen projection and more. Free, open-source, works offline."
+    "description": "Web platform for worship service management: hymnals, Bible, liturgy, multi-screen projection and more. Free and open-source."
   },
   "nav": {
     "features": "Features",
@@ -40,7 +40,7 @@
     "features": "Features",
     "free": "Free",
     "installs": "Installs",
-    "offline": "Works offline"
+    "offline": "Local data"
   },
   "platforms": {
     "eyebrow": "Cross-platform",
@@ -127,8 +127,8 @@
         "description": "Appearance, projection, multi-screen and fully customizable preferences."
       },
       "offline": {
-        "title": "Works Offline",
-        "description": "The desktop app works 100% offline after downloading media. The web version requires downloading offline resources first."
+        "title": "Local Data",
+        "description": "The desktop app works 100% offline after downloading media. The web version requires internet connection to function."
       }
     }
   },
@@ -142,7 +142,7 @@
     "stats": {
       "free": "Free",
       "installs": "Installs",
-      "offline": "PWA Offline"
+      "offline": "Local data"
     }
   },
   "how": {
@@ -255,11 +255,11 @@
     },
     "content": {
       "gettingStarted": {
-        "intro": "PIANO LouvorJA is a web application (PWA) that works on any device with a modern browser. No installation is required, but you can 'install' it as an app through your browser for offline use.",
+        "intro": "PIANO LouvorJA is a web application that works on any device with a modern browser. No installation required — just open it in your browser.",
         "steps": [
           "Open the app in your desktop or mobile device's browser.",
-          "Click 'Install app' or use the browser shortcut to add to home screen.",
-          "Done! The app works offline after the first load."
+          "For a better experience, add it to your home screen from the browser menu.",
+          "Done! Start organizing your worship service."
         ],
         "tip": "For the best worship experience, use a desktop with dual monitors: one for control and one for projection."
       },
@@ -334,7 +334,7 @@
       },
       "offline": {
         "question": "Does it work without internet?",
-        "answer": "Yes. The desktop app works 100% offline after downloading media. The web version also works offline, but you need to download the offline resources first. All hymns, liturgies, and settings are stored locally on your device."
+        "answer": "The desktop app works 100% offline after downloading media. The web version requires internet connection to function. The APK app also works without internet, as long as content is downloaded locally and devices are on the same network."
       },
       "devices": {
         "question": "Which devices can I use it on?",
@@ -354,7 +354,7 @@
       },
       "updates": {
         "question": "How is the application updated?",
-        "answer": "PIANO LouvorJA is a Progressive Web App (PWA). Updates are applied automatically when you reload the page. No manual download or installation is required. You always have the latest version."
+        "answer": "PIANO LouvorJA is a web application. Updates are applied automatically when you reload the page. No manual download or installation is required. You always have the latest version."
       },
       "troubleshooting": {
         "question": "What if the application does not load or shows an error?",
@@ -797,7 +797,7 @@
         "noInstall": "No installation",
         "anyOs": "Any operating system",
         "autoUpdate": "Automatic updates",
-        "pwa": "Installable as PWA"
+        "pwa": "Browser access"
       }
     },
     "mobile": {

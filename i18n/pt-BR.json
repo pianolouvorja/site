@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "PIANO LouvorJA — Gerenciador de Culto Web",
-    "description": "Plataforma web para gerenciamento de cultos: hinário, Bíblia, liturgia, projeção multi-tela e mais. Gratuito, open-source, funciona offline."
+    "description": "Plataforma web para gerenciamento de cultos: hinário, Bíblia, liturgia, projeção multi-tela e mais. Gratuito e open-source."
   },
   "nav": {
     "features": "Funcionalidades",
@@ -40,7 +40,7 @@
     "features": "Funcionalidades",
     "free": "Gratuito",
     "installs": "Instalações",
-    "offline": "Funciona offline"
+    "offline": "Dados locais"
   },
   "platforms": {
     "eyebrow": "Multiplataforma",
@@ -127,8 +127,8 @@
         "description": "Aparência, projeção, multi-tela e preferências totalmente personalizáveis."
       },
       "offline": {
-        "title": "Funciona Offline",
-        "description": "O app desktop funciona 100% offline após o download das mídias. A versão web exige download dos recursos antes de usar offline."
+        "title": "Dados Locais",
+        "description": "O app desktop funciona 100% offline após o download das mídias. A versão web requer conexão com internet para funcionar."
       }
     }
   },
@@ -142,7 +142,7 @@
     "stats": {
       "free": "Gratuito",
       "installs": "Instalações",
-      "offline": "PWA Offline"
+      "offline": "Dados locais"
     }
   },
   "how": {
@@ -255,11 +255,11 @@
     },
     "content": {
       "gettingStarted": {
-        "intro": "O PIANO LouvorJA é uma aplicação web (PWA) que funciona em qualquer dispositivo com navegador moderno. Não é necessário instalar, mas você pode 'instalar' como app pelo navegador para uso offline.",
+        "intro": "O PIANO LouvorJA é uma aplicação web que funciona em qualquer dispositivo com navegador moderno. Não é necessário instalar — basta acessar pelo navegador.",
         "steps": [
           "Abra o aplicativo no navegador do seu computador ou dispositivo móvel.",
-          "Clique em 'Instalar app' ou use o atalho do navegador para adicionar à tela inicial.",
-          "Pronto! O app funciona offline após o primeiro carregamento."
+          "Para melhor experiência, adicione à tela inicial pelo menu do navegador.",
+          "Pronto! Comece a organizar seu culto."
         ],
         "tip": "Para melhor experiência em cultos, use desktop com dois monitores: um para controle e outro para projeção."
       },
@@ -334,7 +334,7 @@
       },
       "offline": {
         "question": "Funciona sem internet?",
-        "answer": "Sim. O aplicativo desktop funciona 100% offline após o download das mídias. A versão web também funciona offline, mas é necessário baixar os recursos offline primeiro. Todos os hinos, liturgias e configurações ficam armazenados localmente no seu dispositivo."
+        "answer": "O aplicativo desktop funciona 100% offline após o download das mídias. A versão web requer conexão com internet para funcionar. O app APK também funciona sem internet, desde que o conteúdo esteja baixado localmente e os dispositivos estejam na mesma rede."
       },
       "devices": {
         "question": "Em quais dispositivos posso usar?",
@@ -354,7 +354,7 @@
       },
       "updates": {
         "question": "Como o aplicativo é atualizado?",
-        "answer": "O PIANO LouvorJA é um aplicativo web progressivo (PWA). As atualizações são aplicadas automaticamente quando você recarrega a página. Não é necessário baixar ou instalar atualizações manualmente. Você sempre terá a versão mais recente."
+        "answer": "O PIANO LouvorJA é um aplicativo web. As atualizações são aplicadas automaticamente quando você recarrega a página. Não é necessário baixar ou instalar atualizações manualmente. Você sempre terá a versão mais recente."
       },
       "troubleshooting": {
         "question": "O que fazer se o aplicativo não carregar ou apresentar erro?",
@@ -797,7 +797,7 @@
         "noInstall": "Sem instalação",
         "anyOs": "Qualquer sistema operacional",
         "autoUpdate": "Atualizações automáticas",
-        "pwa": "Instalável como PWA"
+        "pwa": "Acesso via navegador"
       }
     },
     "mobile": {
