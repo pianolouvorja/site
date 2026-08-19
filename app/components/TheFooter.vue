@@ -123,7 +123,7 @@
         <p class="footer__credits">
           {{ $t('footer.forkedFrom') }}
           <a
-            href="https://louvorja.github.io/app/"
+            href="https://github.com/louvorja"
             target="_blank"
             rel="noopener noreferrer"
             class="footer__portfolio-link"
