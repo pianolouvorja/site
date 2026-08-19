@@ -1,11 +1,13 @@
 /**
- * useNewsletter — subscription management via Buttondown API.
+ * useNewsletter — subscription management via server-side proxy.
+ *
+ * The client calls our own /api/newsletter/subscribe endpoint (Nitro),
+ * which proxies to Buttondown server-side, keeping the API key private.
  *
  * State machine: idle → loading → (success | error) → idle
  *
- * Buttondown API docs: POST /api/v1/subscribers
- * Auth header: "Token <api-key>"
- * Error shape: { data: { detail: "..." } }
+ * Error codes returned by the server endpoint:
+ *   invalid-email, already-subscribed, rate-limited, service-unavailable, unknown-error
  */
 
 import { ref, readonly } from 'vue'
@@ -14,13 +16,46 @@ type NewsletterStatus = 'idle' | 'loading' | 'success' | 'error'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-interface ButtondownError {
-  data?: { detail?: string }
+interface ServerErrorResponse {
+  data?: { code?: string }
   message?: string
 }
 
+/**
+ * Maps a server error response to a user-friendly error code.
+ */
+function mapErrorToCode(e: ServerErrorResponse | null | undefined): string {
+  if (!e) return 'unknown-error'
+
+  // Server returns structured error: { data: { code: "..." } }
+  const code = e?.data?.code
+  if (code) return code
+
+  // Fallback: try message-based detection (network errors, etc.)
+  const message = e?.message ?? ''
+  if (message) {
+    const lower = message.toLowerCase()
+    if (
+      lower.includes('404') ||
+      lower.includes('not found') ||
+      lower.includes('503') ||
+      lower.includes('service unavailable') ||
+      lower.includes('timeout') ||
+      lower.includes('timed out') ||
+      lower.includes('network') ||
+      lower.includes('fetch failed') ||
+      lower.includes('econnrefused') ||
+      lower.includes('econnreset')
+    ) {
+      return 'service-unavailable'
+    }
+  }
+
+  return 'unknown-error'
+}
+
 export function useNewsletter() {
-  const config = useRuntimeConfig()
+  const { locale } = useI18n()
   const status = ref<NewsletterStatus>('idle')
   const errorMessage = ref('')
 
@@ -44,19 +79,16 @@ export function useNewsletter() {
     errorMessage.value = ''
 
     try {
-      await $fetch(config.public.buttondownEndpoint, {
+      await $fetch('/api/newsletter/subscribe', {
         method: 'POST',
-        headers: {
-          Authorization: `Token ${config.public.buttondownApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: { email },
+        headers: { 'Content-Type': 'application/json' },
+        body: { email, metadata: { locale: locale.value } },
       })
       status.value = 'success'
     } catch (err: unknown) {
-      const e = err as ButtondownError
+      const e = err as ServerErrorResponse
       status.value = 'error'
-      errorMessage.value = e?.data?.detail ?? e?.message ?? 'unknown-error'
+      errorMessage.value = mapErrorToCode(e)
     }
   }
 

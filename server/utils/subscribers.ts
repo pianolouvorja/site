@@ -3,6 +3,7 @@ export interface Subscriber {
   createdAt: string
   tags: string[]
   active: boolean
+  locale: string
 }
 
 interface ButtondownSub {
@@ -11,6 +12,7 @@ interface ButtondownSub {
   created_at?: string
   tags?: string[]
   secondary_type?: string
+  metadata?: Record<string, string>
 }
 
 interface ButtondownResponse {
@@ -19,12 +21,13 @@ interface ButtondownResponse {
   count?: number
 }
 
-function parseSub(raw: ButtondownSub): Subscriber {
+export function parseSub(raw: ButtondownSub): Subscriber {
   return {
     email: raw.email,
     createdAt: raw.creation_date ?? raw.created_at ?? '',
     tags: raw.tags ?? [],
     active: !raw.secondary_type || raw.secondary_type === 'regular',
+    locale: raw.metadata?.locale ?? 'pt-BR',
   }
 }
 

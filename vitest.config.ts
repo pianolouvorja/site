@@ -5,6 +5,9 @@ import { fileURLToPath } from 'node:url'
 const alias = {
   '~': fileURLToPath(new URL('./app', import.meta.url)),
   '@': fileURLToPath(new URL('./app', import.meta.url)),
+  '~~': fileURLToPath(new URL('.', import.meta.url)),
+  '@@': fileURLToPath(new URL('.', import.meta.url)),
+  h3: fileURLToPath(new URL('node_modules/h3/dist/index.mjs', import.meta.url)),
 }
 
 export default defineConfig({
@@ -72,7 +75,17 @@ export default defineConfig({
       provider: 'istanbul',
       reporter: ['text', 'lcov', 'html'],
       all: true,
-      include: ['app/**/*.{ts,vue}'],
+      include: [
+        'app/**/*.{ts,vue}',
+        'server/utils/email-brand.ts',
+        'server/utils/email-i18n.ts',
+        'server/utils/email-templates.ts',
+        'server/utils/subscribers.ts',
+        'server/utils/webhook-signature.ts',
+        'server/utils/llm-translate.ts',
+        'server/utils/release-payload.ts',
+        'server/api/newsletter/subscribe.post.ts',
+      ],
       exclude: [
         'app/**/*.d.ts',
         'app/**/*.stories.ts',

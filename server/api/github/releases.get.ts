@@ -7,7 +7,7 @@ const octokit = new Octokit({
 
 export default defineEventHandler(async (event) => {
   // During test prerender only, return stub data (CI needs real releases for SSG)
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.VITEST === 'true' || process.env.NODE_ENV === 'test') {
     return [
       {
         tag_name: 'v1.0.0',

@@ -8,7 +8,7 @@ const octokit = new Octokit({
 
 export default defineEventHandler(async (event) => {
   // During CI/test prerender, return stub data to avoid GitHub API rate limits
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.VITEST === 'true' || process.env.NODE_ENV === 'test') {
     return [
       {
         login: 'test-user',

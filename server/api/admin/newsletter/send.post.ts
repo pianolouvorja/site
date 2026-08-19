@@ -1,6 +1,3 @@
-import type { Subscriber } from '../../../utils/subscribers'
-import { addToHistory, type SendRecord } from '../../../utils/newsletter-history'
-
 interface SendBody {
   subject: string
   body: string
@@ -20,7 +17,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const subs: Subscriber[] = await fetchSubscribers()
+  const subs = await fetchSubscribers()
   if (subs.length === 0) {
     return {
       total: 0,
@@ -61,7 +58,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const record: SendRecord = {
+  addToHistory({
     date: new Date().toISOString(),
     subject: body.subject,
     template: body.template || 'announcement',
@@ -69,8 +66,7 @@ export default defineEventHandler(async (event) => {
     sent,
     failed,
     errors,
-  }
-  addToHistory(record)
+  })
 
   return {
     total: emails.length,
