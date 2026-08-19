@@ -943,15 +943,15 @@
         "bio": "Desenvolvedor sênior de software com 15 anos de atuação em tecnologia, cobrindo infraestrutura, administração de sistemas Linux, DevOps e desenvolvimento Full Stack. Fundador do LouvorJA, lidera a visão do produto e o desenvolvimento do app desktop."
       },
       "rafaumeu": {
-        "role": "Site, API e Qualidade",
+        "role": "Tech Lead · Site, API e Qualidade",
         "bio": "Desenvolvedor full stack focado no ecossistema LouvorJA: site institucional, API, PWA e automação de qualidade. Responsável por CI/CD, testes e a experiência multi-dispositivo do projeto."
       },
       "rafaelji": {
-        "role": "App Desktop",
+        "role": "App Desktop e Mac",
         "bio": "Programador desde 2015, com passagem por backend, frontend e mobile — atualmente focado em frontend com React. Mantém três projetos pessoais: Alva (app de Escola Sabatina), Appentecostes (tradução em tempo real de sermões para 13 idiomas com IA) e FatIA (cortes automáticos de vídeos para redes sociais com IA local)."
       },
       "educharquero": {
-        "role": "Web App e PWA",
+        "role": "Linux, Web App e PWA",
         "bio": "Formação em Redes de Computadores com pós-graduação em Docência. Usuário de Linux desde o Kurumin, atua em infraestrutura há décadas e é responsável pela conectux.com.br."
       }
     },

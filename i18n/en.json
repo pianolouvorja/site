@@ -943,15 +943,15 @@
         "bio": "Senior software engineer with 15 years in technology, spanning infrastructure, Linux system administration, DevOps and full stack development. Founder of LouvorJA, leads product vision and the desktop app."
       },
       "rafaumeu": {
-        "role": "Website, API & Quality",
+        "role": "Tech Lead · Site, API & QA",
         "bio": "Full stack developer focused on the LouvorJA ecosystem: website, API, PWA and quality automation. Responsible for CI/CD, testing and the project's multi-device experience."
       },
       "rafaelji": {
-        "role": "Desktop App",
+        "role": "Desktop App & Mac",
         "bio": "Programmer since 2015, with experience across backend, frontend and mobile — currently focused on React frontend. Maintains three personal projects: Alva (Sabbath School app), Appentecostes (real-time AI sermon translation into 13 languages) and FatIA (AI-generated video clips for social media)."
       },
       "educharquero": {
-        "role": "Web App & PWA",
+        "role": "Linux, Web App & PWA",
         "bio": "Degree in Computer Networks with a postgraduate qualification in Teaching. Linux user since Kurumin, decades in infrastructure and owner of conectux.com.br."
       }
     },

@@ -39,6 +39,7 @@ export const teamMembers: TeamMember[] = [
     name: 'Rafael Barbosa Silva',
     avatar: 'https://github.com/rafaelji.png?size=96',
     profileUrl: 'https://github.com/rafaelji',
+    links: [{ label: 'LinkedIn', url: 'https://www.linkedin.com/in/rafaelbarbosasilva/' }],
   },
   {
     login: 'educharquero',
