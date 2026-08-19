@@ -19,30 +19,48 @@ const STATIC_SNAPSHOT: AllDownloadsResponse = {
     repo: 'app',
     tag: 'v0.1.53',
     assets: {
-      linux:
-        'https://github.com/pianolouvorja/app/releases/download/v0.1.53/piano-louvor-ja-0.1.53.AppImage',
-      windows:
-        'https://github.com/pianolouvorja/app/releases/download/v0.1.53/piano-louvor-ja-Setup-0.1.53.exe',
-      macos:
-        'https://github.com/pianolouvorja/app/releases/download/v0.1.53/piano-louvor-ja-0.1.53.dmg',
+      linux: {
+        url: 'https://github.com/pianolouvorja/app/releases/download/v0.1.53/piano-louvor-ja-0.1.53.AppImage',
+        name: 'piano-louvor-ja-0.1.53.AppImage',
+        size: 95000000,
+      },
+      windows: {
+        url: 'https://github.com/pianolouvorja/app/releases/download/v0.1.53/piano-louvor-ja-Setup-0.1.53.exe',
+        name: 'piano-louvor-ja-Setup-0.1.53.exe',
+        size: 98000000,
+      },
+      macos: {
+        url: 'https://github.com/pianolouvorja/app/releases/download/v0.1.53/piano-louvor-ja-0.1.53.dmg',
+        name: 'piano-louvor-ja-0.1.53.dmg',
+        size: 102000000,
+      },
     },
   },
   tv: {
     repo: 'palco-receiver',
     tag: 'v1.0.0',
     assets: {
-      webos:
-        'https://github.com/pianolouvorja/palco-receiver/releases/download/v1.0.0/palco-receiver_1.0.0_all.ipk',
-      tizen:
-        'https://github.com/pianolouvorja/palco-receiver/releases/download/v1.0.0/palco-receiver_1.0.0.tpk',
+      webos: {
+        url: 'https://github.com/pianolouvorja/palco-receiver/releases/download/v1.0.0/palco-receiver_1.0.0_all.ipk',
+        name: 'palco-receiver_1.0.0_all.ipk',
+        size: 2500000,
+      },
+      tizen: {
+        url: 'https://github.com/pianolouvorja/palco-receiver/releases/download/v1.0.0/palco-receiver_1.0.0.tpk',
+        name: 'palco-receiver_1.0.0.tpk',
+        size: 2800000,
+      },
     },
   },
   mobile: {
     repo: 'apk',
     tag: 'v0.1.53',
     assets: {
-      android:
-        'https://github.com/pianolouvorja/apk/releases/download/v0.1.53/piano-louvor-ja-0.1.53.apk',
+      android: {
+        url: 'https://github.com/pianolouvorja/apk/releases/download/v0.1.53/piano-louvor-ja-0.1.53.apk',
+        name: 'piano-louvor-ja-0.1.53.apk',
+        size: 35000000,
+      },
     },
   },
 }
