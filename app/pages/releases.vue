@@ -6,7 +6,7 @@
     description: () => t('releases.metaDescription'),
   })
 
-  type RepoName = 'web' | 'app' | 'api' | 'site'
+  type RepoName = 'web' | 'app' | 'api' | 'site' | 'palco-receiver' | 'apk'
 
   interface GithubAsset {
     name: string
@@ -22,7 +22,7 @@
     _repo: RepoName
   }
 
-  type ProductType = 'web' | 'desktop' | 'mobile'
+  type ProductType = 'web' | 'desktop' | 'mobile' | 'tv'
 
   interface ParsedRelease {
     tag: string
@@ -45,6 +45,8 @@
     site: 'web',
     app: 'desktop',
     api: 'web',
+    'palco-receiver': 'tv',
+    apk: 'mobile',
   }
 
   /**
@@ -62,6 +64,9 @@
     if (/electron|desktop|appimage|\.exe|\.dmg|windows|linux|macos/.test(combined)) {
       products.add('desktop')
     }
+    if (/tv|palco|android-tv|androidtv|webos|smart-tv|smarttv|ipk/.test(combined)) {
+      products.add('tv')
+    }
 
     return Array.from(products)
   }
@@ -70,6 +75,7 @@
     web: 'ti-world',
     desktop: 'ti-device-desktop',
     mobile: 'ti-device-mobile',
+    tv: 'ti-device-tv',
   }
 
   const releases = ref<ParsedRelease[]>([])

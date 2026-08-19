@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { siteConfig } from '~/data/site'
+  import type { AllDownloadsResponse, CategoryResult } from '~/utils/downloads'
   import { useTvBrands } from '~/composables/useTvBrands'
 
   const { t } = useI18n()
@@ -26,6 +27,15 @@
   const latestTag = ref<string | null>(null)
   const downloadUrls = ref<Record<string, string>>({})
   const fetchError = ref(false)
+
+  // Dynamic downloads from all-downloads endpoint
+  const allDownloads = ref<AllDownloadsResponse | null>(null)
+  const tvData = computed<CategoryResult>(
+    () => allDownloads.value?.tv ?? { repo: 'palco-receiver', tag: null, assets: {} },
+  )
+  const mobileData = computed<CategoryResult>(
+    () => allDownloads.value?.mobile ?? { repo: 'apk', tag: null, assets: {} },
+  )
 
   // Detect OS client-side only to avoid hydration mismatch
   const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
@@ -62,6 +72,19 @@
     } catch {
       fetchError.value = true
     }
+
+    // Fetch TV + Mobile downloads (non-blocking, independent)
+    fetch('/api/github/all-downloads')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch all downloads')
+        return res.json() as Promise<AllDownloadsResponse>
+      })
+      .then((data) => {
+        allDownloads.value = data
+      })
+      .catch(() => {
+        // Silently fall back to empty (components show "coming soon")
+      })
   })
 
   const desktopCards = computed(() => [
@@ -295,50 +318,11 @@
       </div>
     </section>
 
+    <!-- TV e Palco Digital -->
+    <TvDownloadCards :tv-data="tvData" />
+
     <!-- Mobile -->
-    <section class="download-section">
-      <div class="download-section__container">
-        <div class="download-section__header">
-          <span class="download-section__badge download-section__badge--muted">
-            {{ $t('download.mobile.badge') }}
-          </span>
-          <h2 class="download-section__title">
-            {{ $t('download.mobile.title') }}
-          </h2>
-          <p class="download-section__desc">
-            {{ $t('download.mobile.description') }}
-          </p>
-          <p class="download-section__subtext">
-            {{ $t('download.mobile.platforms') }}
-          </p>
-        </div>
-
-        <ul class="download-features download-features--muted">
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.mobile.features.nativeAndroid') }}
-          </li>
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.mobile.features.nativeIos') }}
-          </li>
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.mobile.features.cloudSync') }}
-          </li>
-        </ul>
-
-        <p class="download-section__subtext download-section__apk-note">
-          <i class="ti ti-flask" aria-hidden="true" />
-          {{ $t('download.mobile.apkNote') }}
-        </p>
-
-        <a :href="siteConfig.appUrl" class="download-card__btn download-card__btn--large">
-          <i class="ti ti-device-mobile" aria-hidden="true" />
-          {{ $t('download.mobile.useWebInstead') }}
-        </a>
-      </div>
-    </section>
+    <MobileDownloadCards :mobile-data="mobileData" :app-url="siteConfig.appUrl" />
 
     <!-- Smart TV -->
     <section class="download-section download-section--alt">

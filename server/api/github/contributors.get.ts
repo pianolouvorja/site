@@ -7,12 +7,8 @@ const octokit = new Octokit({
 })
 
 export default defineEventHandler(async (event) => {
-  // Stub em CI/teste/prerender para não estourar rate limit da API do GitHub.
-  if (
-    process.env.CI === 'true' ||
-    process.env.VITEST === 'true' ||
-    process.env.NODE_ENV === 'test'
-  ) {
+  // During CI/test prerender, return stub data to avoid GitHub API rate limits
+  if (process.env.VITEST) {
     return [
       {
         login: 'test-user',
