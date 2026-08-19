@@ -27,11 +27,11 @@
         <p class="about__fork-credit">
           {{ $t('about.forkCredit') }}
           <a
-            href="https://louvorja.github.io/app/"
+            href="https://github.com/louvorja"
             target="_blank"
             rel="noopener noreferrer"
             class="about__fork-link"
-            >louvorja.github.io/app/</a
+            >github.com/louvorja</a
           >
         </p>
 
