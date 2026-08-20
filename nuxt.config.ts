@@ -35,6 +35,8 @@ export default defineNuxtConfig({
   routeRules: {
     // Admin pages are client-only (Firebase Auth)
     '/admin/**': { ssr: false },
+    // pt-BR é defaultLocale (sem prefixo). Evita 404 de URL antiga /pt-BR
+    '/pt-BR': { redirect: '/' },
   },
 
   nitro: {

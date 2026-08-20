@@ -137,6 +137,7 @@
     "title": "Made by and for the community",
     "text1": "{name} is a collaborative open-source project created to make worship service management easier.",
     "text2": "Developed by the Piano team, the platform evolves continuously with community contributions. Free, no ads, no data collection.",
+    "forkCredit": "PIANO LouvorJA is a fork of the LouvorJA project (github.com/louvorja), maintained by the community since 2019. We thank the original creators and contributors who made this project possible.",
     "openSource": "Open Source",
     "stats": {
       "free": "Free",
@@ -388,6 +389,8 @@
     "developedBy": "Developed by",
     "team": "Piano Team",
     "rights": "All rights reserved.",
+    "forkedFrom": "Forked from",
+    "originalProject": "Original LouvorJA project",
     "legalNavLabel": "Legal links",
     "legalNavTitle": "Legal",
     "moreNavLabel": "More links",
