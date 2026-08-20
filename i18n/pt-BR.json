@@ -45,7 +45,7 @@
   "platforms": {
     "eyebrow": "Multiplataforma",
     "title": "Disponível onde você precisa",
-    "description": "Use no desktop para máxima produtividade, no navegador como alternativa rápida, ou aguarde os apps móveis nativos.",
+    "description": "Use no desktop para máxima produtividade, no navegador como alternativa rápida ou no celular com o app Android.",
     "desktop": {
       "badge": "Recomendado",
       "title": "Desktop Nativo",
@@ -67,14 +67,14 @@
       "cta": "Abrir no Navegador"
     },
     "mobile": {
-      "badge": "Em Breve",
-      "title": "Mobile (Em Breve)",
-      "subtitle": "Android e iOS",
-      "description": "Apps nativos em desenvolvimento para levar o PIANO ao celular e tablet.",
-      "feature1": "Android nativo",
-      "feature2": "iOS nativo",
-      "feature3": "Sincronização na nuvem",
-      "cta": "Avisar quando lançar"
+      "badge": "Novo",
+      "title": "Mobile",
+      "subtitle": "Android disponível",
+      "description": "App nativo Android disponível agora. Controle o palco digital direto do celular.",
+      "feature1": "Android nativo disponível",
+      "feature2": "Controle do palco digital",
+      "feature3": "iOS em desenvolvimento",
+      "cta": "Baixar App"
     }
   },
   "notifyModal": {
@@ -799,9 +799,9 @@
       }
     },
     "mobile": {
-      "badge": "Em breve",
+      "badge": "Disponível",
       "title": "Mobile",
-      "description": "Apps nativos para Android e iOS estão no nosso roadmap. Enquanto isso, você pode usar o web app no celular.",
+      "description": "Baixe o app Android e leve o PIANO no celular — controle o palco direto do dispositivo.",
       "platforms": "Android e iOS",
       "features": {
         "nativeAndroid": "Android nativo (planejado)",
@@ -811,8 +811,8 @@
         "network": "Sincronização via rede local",
         "offline": "Funciona offline"
       },
-      "useWebInstead": "Usar web app no celular por enquanto",
-      "noAssets": "Os apps mobile serão publicados em breve.",
+      "useWebInstead": "Usar web app no celular",
+      "noAssets": "Os downloads mobile estarão disponíveis em instantes.",
       "android": {
         "name": "Android",
         "format": "Pacote .apk",
@@ -836,7 +836,7 @@
     "tv": {
       "badge": "Novo",
       "title": "TV / Palco Digital",
-      "description": "Transforme qualquer Smart TV num receptor de palco. Controle pelo desktop, exiba na TV via rede local.",
+      "description": "Transforme qualquer Smart TV num receptor de palco. Controle pelo app Android (APK) — controle via web e desktop chega em breve.",
       "noAssets": "Pacotes da TV serão publicados em breve.",
       "features": {
         "realtime": "Espelhamento em tempo real",

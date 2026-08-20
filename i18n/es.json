@@ -45,7 +45,7 @@
   "platforms": {
     "eyebrow": "Multiplataforma",
     "title": "Disponible donde lo necesitas",
-    "description": "Úselo en escritorio para máxima productividad, en el navegador como alternativa rápida, o en el móvil próximamente.",
+    "description": "Usa la app de escritorio para máxima productividad, el navegador como alternativa rápida o tu móvil con la app Android.",
     "desktop": {
       "badge": "Recomendado",
       "title": "Escritorio Nativo",
@@ -67,14 +67,14 @@
       "cta": "Abrir en Navegador"
     },
     "mobile": {
-      "badge": "Próximamente",
-      "title": "Móvil (Próximamente)",
-      "subtitle": "Android e iOS",
-      "description": "Aplicaciones nativas en desarrollo para llevar PIANO al teléfono y la tablet.",
-      "feature1": "Android nativo",
-      "feature2": "iOS nativo",
-      "feature3": "Sincronización en la nube",
-      "cta": "Avisar al lanzar"
+      "badge": "Nuevo",
+      "title": "Mobile",
+      "subtitle": "Android disponible",
+      "description": "App nativa Android disponible ahora. Controla el escenario digital desde tu móvil.",
+      "feature1": "Android nativo disponible",
+      "feature2": "Control del escenario digital",
+      "feature3": "iOS en desarrollo",
+      "cta": "Descargar App"
     }
   },
   "notifyModal": {
@@ -798,9 +798,9 @@
       }
     },
     "mobile": {
-      "badge": "Próximamente",
+      "badge": "Disponible",
       "title": "Móvil",
-      "description": "Las apps nativas para Android e iOS están en nuestro roadmap. Mientras tanto, puedes usar la web app en tu teléfono.",
+      "description": "Descarga la app Android y lleva el PIANO en el móvil — controla el escenario desde tu dispositivo.",
       "platforms": "Android e iOS",
       "features": {
         "nativeAndroid": "Android nativo (planificado)",
@@ -810,8 +810,8 @@
         "network": "Sincronización por red local",
         "offline": "Funciona sin conexión"
       },
-      "useWebInstead": "Usar web app en el teléfono por ahora",
-      "noAssets": "Las apps móviles se publicarán pronto.",
+      "useWebInstead": "Usar la web app en el móvil",
+      "noAssets": "Las descargas móviles estarán disponibles en breve.",
       "android": {
         "name": "Android",
         "format": "Paquete .apk",
@@ -835,7 +835,7 @@
     "tv": {
       "badge": "Nuevo",
       "title": "TV / Escenario Digital",
-      "description": "Convierta cualquier Smart TV en un receptor de escenario. Controle desde el desktop y muestre en la TV por red local.",
+      "description": "Convierte cualquier Smart TV en un receptor de escenario. Contrólala desde la app Android (APK) — control vía web y escritorio próximamente.",
       "noAssets": "Los paquetes de TV se publicarán pronto.",
       "features": {
         "realtime": "Duplicación en tiempo real",

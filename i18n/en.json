@@ -45,7 +45,7 @@
   "platforms": {
     "eyebrow": "Cross-platform",
     "title": "Available where you need it",
-    "description": "Use on desktop for maximum productivity, in the browser as a quick alternative, or wait for native mobile apps.",
+    "description": "Use the desktop app for maximum productivity, the browser as a quick alternative, or your phone with the Android app.",
     "desktop": {
       "badge": "Recommended",
       "title": "Native Desktop",
@@ -67,14 +67,14 @@
       "cta": "Open in Browser"
     },
     "mobile": {
-      "badge": "Coming Soon",
-      "title": "Mobile (Coming Soon)",
-      "subtitle": "Android and iOS",
-      "description": "Native apps in development to bring PIANO to your phone and tablet.",
-      "feature1": "Native Android",
-      "feature2": "Native iOS",
-      "feature3": "Cloud sync",
-      "cta": "Notify on launch"
+      "badge": "New",
+      "title": "Mobile",
+      "subtitle": "Android available",
+      "description": "Native Android app available now. Control the digital stage right from your phone.",
+      "feature1": "Native Android available",
+      "feature2": "Digital stage control",
+      "feature3": "iOS in development",
+      "cta": "Download App"
     }
   },
   "notifyModal": {
@@ -799,9 +799,9 @@
       }
     },
     "mobile": {
-      "badge": "Coming soon",
+      "badge": "Available",
       "title": "Mobile",
-      "description": "Native apps for Android and iOS are on our roadmap. In the meantime, you can use the web app on your phone.",
+      "description": "Download the Android app and take PIANO with you — control the stage right from your phone.",
       "platforms": "Android and iOS",
       "features": {
         "nativeAndroid": "Native Android (planned)",
@@ -811,8 +811,8 @@
         "network": "Local network sync",
         "offline": "Works offline"
       },
-      "useWebInstead": "Use web app on phone for now",
-      "noAssets": "Mobile apps will be published soon.",
+      "useWebInstead": "Use the web app on your phone",
+      "noAssets": "Mobile downloads will be available shortly.",
       "android": {
         "name": "Android",
         "format": ".apk package",
@@ -836,7 +836,7 @@
     "tv": {
       "badge": "New",
       "title": "TV / Digital Stage",
-      "description": "Turn any Smart TV into a stage receiver. Control from desktop, display on TV over the local network.",
+      "description": "Turn any Smart TV into a stage receiver. Control it from the Android app (APK) — web and desktop control coming soon.",
       "noAssets": "TV packages will be published soon.",
       "features": {
         "realtime": "Real-time mirroring",
