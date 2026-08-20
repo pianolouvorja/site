@@ -72,6 +72,7 @@ export default [
         useAuthState: 'readonly',
         useNewsletter: 'readonly',
         useDashboardStats: 'readonly',
+        useTvBrands: 'readonly',
         // Browser DOM types
         MouseEvent: 'readonly',
         KeyboardEvent: 'readonly',

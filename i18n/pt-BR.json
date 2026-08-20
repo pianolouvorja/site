@@ -801,19 +801,43 @@
     "mobile": {
       "badge": "Em breve",
       "title": "Mobile",
-      "description": "Apps nativos para Android e iOS estão no nosso roadmap. Enquanto isso, você pode usar o web app no celular.",
+      "description": "O app Android (APK) está em desenvolvimento avançado, ainda sem lançamento oficial. Enquanto isso, use o web app no celular.",
       "platforms": "Android e iOS",
       "features": {
-        "nativeAndroid": "Android nativo (planejado)",
+        "nativeAndroid": "App Android (APK) — em desenvolvimento avançado",
         "nativeIos": "iOS nativo (planejado)",
         "cloudSync": "Sincronização na nuvem (planejado)"
       },
-      "useWebInstead": "Usar web app no celular por enquanto"
+      "useWebInstead": "Usar web app no celular por enquanto",
+      "apkNote": "Prévia do APK: build interno, disponível em breve para testes."
     },
     "systemRequirements": {
       "title": "Requisitos do Sistema",
       "desktop": "Desktop: 4GB RAM, 500MB espaço em disco, GPU com suporte a WebGL",
       "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexão de internet para primeiro acesso"
+    },
+    "tv": {
+      "badge": "Em Breve",
+      "title": "Smart TV",
+      "description": "Estamos preparando o PIANO para Smart TVs. A primeira plataforma será a LG com webOS.",
+      "lgBrand": "webOS (LG)",
+      "lgStatus": "Em desenvolvimento",
+      "samsungBrand": "Tizen (Samsung)",
+      "samsungStatus": "Em desenvolvimento",
+      "rokuBrand": "Roku TV",
+      "rokuStatus": "Planejado",
+      "androidTvBrand": "Android TV / Google TV",
+      "androidTvStatus": "Planejado",
+      "chromecastBrand": "Chromecast",
+      "chromecastStatus": "Planejado",
+      "features": {
+        "nativeLg": "App nativo LG webOS",
+        "bigScreen": "Projeção direto na TV",
+        "remoteControl": "Controle via app mobile"
+      },
+      "useDesktopInstead": "Use o app Desktop por enquanto",
+      "appleTvBrand": "Apple TV",
+      "appleTvStatus": "Planejado"
     }
   },
   "contributors": {
@@ -860,5 +884,23 @@
       "api": "API",
       "site": "Site"
     }
+  },
+  "tvSupport": {
+    "eyebrow": "Roadmap",
+    "title": "A TV vira o palco da sua igreja",
+    "description": "Controle o culto pelo celular enquanto a Smart TV exibe os hinos e a liturgia como um palco digital — perfeito para pequenos grupos que não têm projetor ou PC.",
+    "lgBrand": "webOS (LG)",
+    "lgStatus": "Em desenvolvimento",
+    "samsungBrand": "Tizen (Samsung)",
+    "samsungStatus": "Em desenvolvimento",
+    "rokuBrand": "Roku TV",
+    "rokuStatus": "Planejado",
+    "androidTvBrand": "Android TV / Google TV",
+    "androidTvStatus": "Planejado",
+    "chromecastBrand": "Chromecast",
+    "chromecastStatus": "Planejado",
+    "cta": "Acompanhar novidades",
+    "appleTvBrand": "Apple TV",
+    "appleTvStatus": "Planejado"
   }
 }

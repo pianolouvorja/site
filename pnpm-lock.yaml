@@ -6,6 +6,7 @@ settings:
 
 overrides:
   rollup: 4.62.4
+  sass-embedded: '-'
   sass-embedded-linux-x64: '-'
   sass-embedded-linux-musl-x64: '-'
 
@@ -8394,7 +8395,7 @@ packages:
       jiti: '>=1.21.0'
       less: ^4.0.0
       sass: ^1.70.0
-      sass-embedded: ^1.70.0
+      sass-embedded: '*'
       stylus: '>=0.54.8'
       sugarss: ^5.0.0
       terser: ^5.16.0

@@ -3,6 +3,7 @@
     <HeroSection />
     <StatsSection />
     <PlatformsSection />
+    <TvSupportSection />
     <FeaturesSection />
     <AboutSection />
     <HowItWorksSection />
