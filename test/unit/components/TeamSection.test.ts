@@ -117,6 +117,21 @@ describe('TeamSection', () => {
     )
   })
 
+  it('modal exibe links extras do membro quando existem', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    // index 2 = rafaelji, unico membro com links definidos em app/data/team.ts
+    const buttons = wrapper.findAll('button.team__person-more')
+    await buttons[2]!.trigger('click')
+
+    // Deve ter pelo menos 2 links (GitHub + LinkedIn) para o membro com links
+    const allLinks = wrapper.findAll('a.team-modal__profile')
+    expect(allLinks.length).toBeGreaterThanOrEqual(2)
+
+    // Deve conter link do LinkedIn
+    const linkedin = allLinks.find((l) => l.attributes('href')?.includes('linkedin.com'))
+    expect(linkedin).toBeTruthy()
+  })
+
   it('modal fecha ao clicar no botao fechar', async () => {
     const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
     await wrapper.findAll('button.team__person-more')[0].trigger('click')
