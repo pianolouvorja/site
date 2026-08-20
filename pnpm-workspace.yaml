@@ -8,5 +8,10 @@ allowBuilds:
   ttf2woff2: false
 overrides:
   rollup: 4.62.4
+  # Hostinger: binário Dart do sass-embedded falha com EACCES.
+  # Bloquear só o *-linux-* deixa o pacote JS do sass-embedded instalado;
+  # o Vite prefere ele e trava em "unavailable in pure JS mode" (Vitest/Nuxt setup).
+  # Remover o pacote inteiro força o Vite a usar `sass` (JS).
+  sass-embedded: '-'
   sass-embedded-linux-x64: '-'
   sass-embedded-linux-musl-x64: '-'

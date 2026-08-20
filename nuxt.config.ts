@@ -59,6 +59,15 @@ export default defineNuxtConfig({
     server: {
       allowedHosts: true,
     },
+    // sass-embedded é bloqueado no pnpm-workspace (Hostinger EACCES);
+    // força API do pacote `sass` (JS) em vez de modern-compiler.
+    css: {
+      preprocessorMaxWorkers: false,
+      preprocessorOptions: {
+        scss: { api: 'modern' },
+        sass: { api: 'modern' },
+      },
+    },
   },
 
   app: {
