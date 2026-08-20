@@ -132,6 +132,20 @@ describe('mapButtondownError', () => {
   it('maps error with statusCode but not 429 to service-unavailable', () => {
     expect(mapButtondownError({ statusCode: 500 })).toBe('service-unavailable')
   })
+
+  it('maps array detail (already subscribed) to already-subscribed', () => {
+    expect(
+      mapButtondownError({
+        data: {
+          detail: [{ detail: 'Subscriber already subscribed' }, { code: 'ignored' }],
+        },
+      }),
+    ).toBe('already-subscribed')
+  })
+
+  it('maps empty array detail to service-unavailable', () => {
+    expect(mapButtondownError({ data: { detail: [] } })).toBe('service-unavailable')
+  })
 })
 
 describe('handleSubscribe', () => {
