@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { siteConfig } from '~/data/site'
+  import { useTvBrands } from '~/composables/useTvBrands'
 
   const { t } = useI18n()
 
