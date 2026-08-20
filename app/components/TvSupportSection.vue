@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { useTvBrands } from '~/composables/useTvBrands'
+
   const tvBrands = useTvBrands()
 </script>
 

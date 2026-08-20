@@ -14,7 +14,7 @@ const mountSection = () =>
 describe('TvSupportSection', () => {
   it('renderiza o titulo da secao', () => {
     const wrapper = mountSection()
-    expect(wrapper.text()).toContain('Chegando nas Smart TVs')
+    expect(wrapper.text()).toContain('A TV vira o palco da sua igreja')
   })
 
   it('renderiza o eyebrow "Roadmap"', () => {
@@ -25,7 +25,7 @@ describe('TvSupportSection', () => {
   it('renderiza a descricao da secao', () => {
     const wrapper = mountSection()
     expect(wrapper.text()).toContain(
-      'Estamos desenvolvendo o PIANO para Smart TVs',
+      'Controle o culto pelo celular enquanto a Smart TV exibe os hinos',
     )
   })
 
