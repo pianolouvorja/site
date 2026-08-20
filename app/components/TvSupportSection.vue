@@ -1,7 +1,45 @@
 <script setup lang="ts">
   import { useTvBrands } from '~/composables/useTvBrands'
+  import type { AllDownloadsResponse } from '~/utils/downloads'
 
   const tvBrands = useTvBrands()
+
+  // Map each brand card to the download asset platform it depends on.
+  // Brands without a platform mapping (Roku, Chromecast, Apple TV) stay on
+  // their i18n roadmap status — nothing published for them yet.
+  const BRAND_PLATFORMS: Record<string, string | undefined> = {
+    lg: 'webos',
+    samsung: 'tizen',
+    androidTv: 'androidtv',
+    appleTv: undefined,
+    roku: undefined,
+    chromecast: undefined,
+  }
+
+  const downloads = ref<AllDownloadsResponse | null>(null)
+
+  onMounted(async () => {
+    try {
+      const res = await fetch('/api/github/all-downloads')
+      if (!res.ok) return
+      downloads.value = (await res.json()) as AllDownloadsResponse
+    } catch {
+      // keep roadmap statuses — network failure must not blank the section
+    }
+  })
+
+  function isAvailable(brandId: string): boolean {
+    const platform = BRAND_PLATFORMS[brandId]
+    if (!platform || !downloads.value) return false
+    return Boolean(downloads.value.tv?.assets?.[platform]?.url)
+  }
+
+  function brandStatus(brandId: string): string {
+    if (isAvailable(brandId)) {
+      return useI18n().t('tvSupport.statusAvailable')
+    }
+    return useI18n().t(`tvSupport.${brandId}Status`)
+  }
 </script>
 
 <template>
@@ -22,6 +60,7 @@
           v-for="brand in tvBrands"
           :key="brand.id"
           class="tv-support__brand"
+          :class="{ 'tv-support__brand--available': isAvailable(brand.id) }"
           data-testid="tv-brand-card"
         >
           <img :src="brand.logo" :alt="brand.alt" class="tv-support__brand-logo" loading="lazy" />
@@ -29,15 +68,26 @@
             {{ $t(`tvSupport.${brand.id}Brand`) }}
           </p>
           <span class="tv-support__brand-status">
-            <i class="ti ti-loader-2" aria-hidden="true" />
-            {{ $t(`tvSupport.${brand.id}Status`) }}
+            <i
+              :class="isAvailable(brand.id) ? 'ti ti-circle-check' : 'ti ti-loader-2'"
+              aria-hidden="true"
+            />
+            {{ brandStatus(brand.id) }}
           </span>
+          <a
+            v-if="isAvailable(brand.id)"
+            :href="`/download#tv`"
+            class="tv-support__brand-link"
+            data-testid="tv-brand-download"
+          >
+            {{ $t('tvSupport.downloadCta') }}
+            <i class="ti ti-arrow-right" aria-hidden="true" />
+          </a>
         </div>
       </div>
     </div>
   </section>
 </template>
-
 <style scoped lang="scss">
   .tv-support {
     padding: 5rem 1.5rem;
@@ -144,6 +194,31 @@
       i {
         font-size: 0.85rem;
         animation: spin 1.5s linear infinite;
+      }
+    }
+
+    &__brand--available &__brand-status {
+      color: var(--piano-green, #4ade80);
+      background: rgba(74, 222, 128, 0.1);
+      border-color: rgba(74, 222, 128, 0.25);
+
+      i {
+        animation: none;
+      }
+    }
+
+    &__brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--piano-cyan);
+      text-decoration: none;
+      margin-top: 0.5rem;
+
+      &:hover {
+        text-decoration: underline;
       }
     }
 

@@ -196,10 +196,14 @@ describe('REPO_CONFIGS', () => {
     expect(desktop.assetMatchers.map((m) => m.platform)).toEqual(['linux', 'windows', 'macos'])
   })
 
-  it('tv has androidtv, webos matchers', () => {
+  it('tv has androidtv, webos, tizen matchers', () => {
     const tv = REPO_CONFIGS[1]
     expect(tv.category).toBe('tv')
-    expect(tv.assetMatchers.map((m) => m.platform)).toEqual(['androidtv', 'webos'])
+    expect(tv.assetMatchers.map((m: { platform: string }) => m.platform)).toEqual([
+      'androidtv',
+      'webos',
+      'tizen',
+    ])
   })
 
   it('mobile has android, ios matchers', () => {

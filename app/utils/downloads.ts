@@ -25,6 +25,13 @@ export interface RepoConfig {
   name: string
   category: keyof AllDownloadsResponse
   assetMatchers: AssetMatcher[]
+  /**
+   * Repo publishes one release per platform (per-platform tags like
+   * `webos-v0.1.16`, `tizen-v1.0.4`, `androidtv-v0.2.5`). When true, the
+   * server aggregates the most recent asset of each platform across recent
+   * releases instead of reading only the latest single release.
+   */
+  aggregatePlatforms?: boolean
 }
 
 export const REPO_CONFIGS: RepoConfig[] = [
@@ -46,7 +53,9 @@ export const REPO_CONFIGS: RepoConfig[] = [
     assetMatchers: [
       { platform: 'androidtv', test: (n) => /AndroidTV.*\.apk$/i.test(n) },
       { platform: 'webos', test: (n) => /\.ipk$/i.test(n) },
+      { platform: 'tizen', test: (n) => /\.wgt$|\.tpk$/i.test(n) },
     ],
+    aggregatePlatforms: true,
   },
   {
     name: 'apk',

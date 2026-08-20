@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/rest'
 import {
   type AllDownloadsResponse,
+  type AssetInfo,
   REPO_CONFIGS,
   matchAssets,
   makeEmptyCategory,
@@ -79,22 +80,46 @@ export default defineEventHandler(async (event): Promise<AllDownloadsResponse> =
 
       const results = await Promise.allSettled(
         REPO_CONFIGS.map(async (config) => {
+          // Repos with per-platform release tags (e.g. palco-receiver:
+          // webos-v*, tizen-v*, androidtv-v*) publish each platform as its own
+          // release, so `getLatestRelease` would only ever surface one platform.
+          // Aggregate across the most recent releases per platform instead.
+          if (config.aggregatePlatforms) {
+            const list = await octokit.rest.repos.listReleases({
+              owner: 'pianolouvorja',
+              repo: config.name,
+              per_page: 15,
+            })
+            const assets: Record<string, AssetInfo> = {}
+            for (const release of list.data) {
+              const matched = matchAssets(release.assets, config.assetMatchers)
+              for (const [platform, info] of Object.entries(matched)) {
+                // keep the first (most recent) asset per platform
+                if (!assets[platform]) assets[platform] = info
+              }
+            }
+            return { config, assets, tag: list.data[0]?.tag_name ?? null }
+          }
+
           const release = await octokit.rest.repos.getLatestRelease({
             owner: 'pianolouvorja',
             repo: config.name,
           })
-          return { config, release: release.data }
+          return {
+            config,
+            assets: matchAssets(release.data.assets, config.assetMatchers),
+            tag: release.data.tag_name,
+          }
         }),
       )
 
       let anyFulfilled = false
       for (const result of results) {
         if (result.status === 'fulfilled') {
-          const { config, release } = result.value
-          const assets = matchAssets(release.assets, config.assetMatchers)
+          const { config, assets, tag } = result.value
           categories[config.category] = {
             repo: config.name,
-            tag: release.tag_name,
+            tag,
             assets,
           }
           anyFulfilled = true

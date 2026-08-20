@@ -60,7 +60,7 @@ vi.stubGlobal('useLocalePath', () => (path: string) => path)
 // Mock de useRuntimeConfig
 vi.stubGlobal('useRuntimeConfig', () => ({
   public: {
-    firebaseApiKey: 'test-api-key',
+    firebaseApiKey: '***',
     firebaseAuthDomain: 'test.firebaseapp.com',
     firebaseProjectId: 'test-project',
     firebaseStorageBucket: 'test.appspot.com',

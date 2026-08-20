@@ -894,14 +894,18 @@
     "products": {
       "web": "Web",
       "desktop": "Desktop",
-      "mobile": "Mobile"
+      "mobile": "Mobile",
+      "tv": "Smart TV"
     },
     "repos": {
       "web": "Web (Sitio)",
       "app": "App (Desktop)",
       "api": "API",
       "site": "Sitio"
-    }
+    },
+    "filterLabel": "Filtrar por producto",
+    "filterAll": "Todos",
+    "filterEmpty": "Aún no hay releases para este producto."
   },
   "tvSupport": {
     "eyebrow": "Hoja de ruta",
@@ -919,7 +923,9 @@
     "chromecastStatus": "Planificado",
     "cta": "Seguir novedades",
     "appleTvBrand": "Apple TV",
-    "appleTvStatus": "Planificado"
+    "appleTvStatus": "Planificado",
+    "statusAvailable": "Disponible",
+    "downloadCta": "Descargar ahora"
   },
   "team": {
     "eyebrow": "Nuestro Equipo",
