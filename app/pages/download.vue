@@ -2,6 +2,7 @@
   import { siteConfig } from '~/data/site'
   import type { AllDownloadsResponse, CategoryResult } from '~/utils/downloads'
   import { useTvBrands } from '~/composables/useTvBrands'
+  import { detectDevice } from '~/utils/device-detection'
 
   const { t } = useI18n()
 
@@ -37,19 +38,26 @@
     () => allDownloads.value?.mobile ?? { repo: 'apk', tag: null, assets: {} },
   )
 
-  // Detect OS client-side only to avoid hydration mismatch
+  // Detect OS client-side only to avoid hydration mismatch.
+  // Uses the shared device-detection util so Android phones (whose UA
+  // contains "Linux") are NOT misclassified as desktop Linux.
   const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
+  const detectedMobilePlatform = ref<'android' | 'ios' | null>(null)
 
   onMounted(async () => {
-    // OS detection on client only (avoids SSR/client mismatch)
-    const ua = navigator.userAgent
-    const lower = ua.toLowerCase()
-    if (lower.includes('mac os') || lower.includes('macos') || lower.includes('darwin')) {
-      detectedOs.value = 'macos'
-    } else if (lower.includes('windows')) {
-      detectedOs.value = 'windows'
-    } else if (lower.includes('linux') || lower.includes('x11')) {
-      detectedOs.value = 'linux'
+    const device = detectDevice(navigator.userAgent)
+    if (device.category === 'desktop') {
+      detectedOs.value =
+        device.platform === 'macos'
+          ? 'macos'
+          : device.platform === 'windows'
+            ? 'windows'
+            : device.platform === 'linux'
+              ? 'linux'
+              : null
+    } else if (device.category === 'mobile') {
+      detectedMobilePlatform.value =
+        device.platform === 'android' ? 'android' : device.platform === 'ios' ? 'ios' : null
     }
 
     // Fetch latest release via server proxy (token-backed, no rate limit)
@@ -322,7 +330,11 @@
     <TvDownloadCards :tv-data="tvData" />
 
     <!-- Mobile -->
-    <MobileDownloadCards :mobile-data="mobileData" :app-url="siteConfig.appUrl" />
+    <MobileDownloadCards
+      :mobile-data="mobileData"
+      :app-url="siteConfig.appUrl"
+      :detected-platform="detectedMobilePlatform"
+    />
 
     <!-- Smart TV -->
     <section class="download-section download-section--alt">

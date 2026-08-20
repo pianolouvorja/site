@@ -4,6 +4,8 @@
   const props = defineProps<{
     mobileData: CategoryResult
     appUrl: string
+    /** Platform detected on the visitor's device — highlights the matching card. */
+    detectedPlatform?: 'android' | 'ios' | null
   }>()
 
   const { t } = useI18n()
@@ -17,6 +19,7 @@
       asset,
       icon: platform === 'ios' ? 'ti-brand-apple' : 'ti-brand-android',
       i18nPrefix: `download.mobile.${platform}`,
+      recommended: props.detectedPlatform === platform,
     }))
   })
 
@@ -43,7 +46,16 @@
       </div>
 
       <div v-if="hasAssets" class="download-cards">
-        <div v-for="card in mobileCards" :key="card.platform" class="download-card">
+        <div
+          v-for="card in mobileCards"
+          :key="card.platform"
+          class="download-card"
+          :class="{ 'download-card--recommended': card.recommended }"
+        >
+          <span v-if="card.recommended" class="download-card__badge">
+            <i class="ti ti-star" aria-hidden="true" />
+            {{ t('download.desktop.badge') }}
+          </span>
           <div class="download-card__header">
             <i :class="`ti ${card.icon}`" class="download-card__icon" aria-hidden="true" />
             <div>
