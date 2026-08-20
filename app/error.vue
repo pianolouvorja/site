@@ -29,6 +29,10 @@
         <i class="ti" :class="error?.statusCode === 404 ? 'ti-error-404' : 'ti-alert-circle'" />
       </div>
 
+      <p class="error-page__code">
+        {{ error?.statusCode === 404 ? $t('error.errorCode404') : $t('error.errorCode500') }}
+      </p>
+
       <h1 class="error-page__title">
         {{ error?.statusCode === 404 ? $t('error.title') : $t('error.serverErrorTitle') }}
       </h1>
@@ -122,6 +126,15 @@
 
   .error-page__icon i {
     font-size: 2.5rem;
+  }
+
+  .error-page__code {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+    line-height: 1;
   }
 
   /* Typography */
