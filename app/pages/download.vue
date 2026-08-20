@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { siteConfig } from '~/data/site'
+  import { useTvBrands } from '~/composables/useTvBrands'
 
   const { t } = useI18n()
+
+  const tvBrands = useTvBrands()
 
   useSeoMeta({
     title: () => t('download.metaTitle'),
@@ -64,10 +67,11 @@
   const desktopCards = computed(() => [
     {
       os: 'linux' as const,
-      icon: '', // Tux renderizado via SVG inline no template
+      icon: '',
       i18nPrefix: 'download.desktop.linux',
       recommended: detectedOs.value === 'linux',
       requiresDiskSpace: true,
+      available: !!downloadUrls.value.linux,
     },
     {
       os: 'windows' as const,
@@ -75,6 +79,7 @@
       i18nPrefix: 'download.desktop.windows',
       recommended: detectedOs.value === 'windows',
       requiresDiskSpace: true,
+      available: !!downloadUrls.value.windows,
     },
     {
       os: 'macos' as const,
@@ -82,6 +87,7 @@
       i18nPrefix: 'download.desktop.macos',
       recommended: detectedOs.value === 'macos',
       requiresDiskSpace: true,
+      available: !!downloadUrls.value.macos,
     },
   ])
 </script>
@@ -135,11 +141,18 @@
             v-for="card in desktopCards"
             :key="card.os"
             class="download-card"
-            :class="{ 'download-card--recommended': card.recommended }"
+            :class="{
+              'download-card--recommended': card.recommended,
+              'download-card--disabled': !card.available,
+            }"
           >
-            <span v-if="card.recommended" class="download-card__badge">
+            <span v-if="card.recommended && card.available" class="download-card__badge">
               <i class="ti ti-star" aria-hidden="true" />
               {{ $t('download.desktop.badge') }}
+            </span>
+            <span v-if="!card.available" class="download-card__badge download-card__badge--soon">
+              <i class="ti ti-clock" aria-hidden="true" />
+              Em breve
             </span>
             <div class="download-card__header">
               <!-- Tux (Linux) via SVG inline - ti-brand-tux nao existe no Tabler -->
@@ -172,7 +185,7 @@
               {{ latestTag }}
             </p>
             <a
-              v-if="downloadUrls[card.os] && !fetchError"
+              v-if="card.available && downloadUrls[card.os] && !fetchError"
               :href="downloadUrls[card.os]"
               class="download-card__btn"
               :aria-label="$t(`${card.i18nPrefix}.downloadLabel`)"
@@ -181,15 +194,23 @@
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
             </a>
             <a
+              v-else-if="!card.available"
+              class="download-card__btn download-card__btn--disabled"
+              aria-disabled="true"
+            >
+              <i class="ti ti-clock" aria-hidden="true" />
+              Em breve
+            </a>
+            <button
               v-else
-              href="https://github.com/pianolouvorja/app/releases"
+              type="button"
               class="download-card__btn"
-              target="_blank"
-              rel="noopener noreferrer"
+              disabled
+              :aria-label="$t(`${card.i18nPrefix}.downloadLabel`)"
             >
               <i class="ti ti-download" aria-hidden="true" />
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
-            </a>
+            </button>
             <p class="download-card__hint">
               {{ $t(`${card.i18nPrefix}.hint`) }}
             </p>
@@ -307,9 +328,71 @@
           </li>
         </ul>
 
+        <p class="download-section__subtext download-section__apk-note">
+          <i class="ti ti-flask" aria-hidden="true" />
+          {{ $t('download.mobile.apkNote') }}
+        </p>
+
         <a :href="siteConfig.appUrl" class="download-card__btn download-card__btn--large">
           <i class="ti ti-device-mobile" aria-hidden="true" />
           {{ $t('download.mobile.useWebInstead') }}
+        </a>
+      </div>
+    </section>
+
+    <!-- Smart TV -->
+    <section class="download-section download-section--alt">
+      <div class="download-section__container">
+        <div class="download-section__header">
+          <span class="download-section__badge download-section__badge--muted">
+            {{ $t('download.tv.badge') }}
+          </span>
+          <h2 class="download-section__title">
+            {{ $t('download.tv.title') }}
+          </h2>
+          <p class="download-section__desc">
+            {{ $t('download.tv.description') }}
+          </p>
+        </div>
+
+        <div class="tv-brands">
+          <div
+            v-for="brand in tvBrands"
+            :key="brand.id"
+            class="tv-brand-card"
+            data-testid="download-tv-brand"
+          >
+            <img :src="brand.logo" :alt="brand.alt" class="tv-brand-card__logo" loading="lazy" />
+            <div class="tv-brand-card__info">
+              <h3 class="tv-brand-card__name">
+                {{ $t(`download.tv.${brand.id}Brand`) }}
+              </h3>
+              <span class="tv-brand-card__status">
+                <i class="ti ti-loader-2" aria-hidden="true" />
+                {{ $t(`download.tv.${brand.id}Status`) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <ul class="download-features download-features--muted">
+          <li>
+            <i class="ti ti-clock" aria-hidden="true" />
+            {{ $t('download.tv.features.nativeLg') }}
+          </li>
+          <li>
+            <i class="ti ti-clock" aria-hidden="true" />
+            {{ $t('download.tv.features.bigScreen') }}
+          </li>
+          <li>
+            <i class="ti ti-clock" aria-hidden="true" />
+            {{ $t('download.tv.features.remoteControl') }}
+          </li>
+        </ul>
+
+        <a href="#download" class="download-card__btn download-card__btn--large">
+          <i class="ti ti-device-desktop" aria-hidden="true" />
+          {{ $t('download.tv.useDesktopInstead') }}
         </a>
       </div>
     </section>
@@ -463,6 +546,11 @@
         background: rgba(217, 119, 6, 0.12);
         color: #b45309;
       }
+
+      &--soon {
+        background: rgba(148, 163, 184, 0.12);
+        color: #64748b;
+      }
     }
 
     &__title {
@@ -512,6 +600,15 @@
     &:hover {
       border-color: var(--piano-accent);
       box-shadow: var(--piano-shadow-md);
+    }
+
+    &--disabled {
+      opacity: 0.55;
+
+      &:hover {
+        border-color: var(--piano-border);
+        box-shadow: none;
+      }
     }
 
     /* Recommended badge */
@@ -611,6 +708,13 @@
         padding: 0.875rem 2rem;
         margin-top: 0.5rem;
       }
+
+      &--disabled {
+        background: var(--piano-bg-tertiary);
+        color: var(--piano-text-tertiary);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
 
     &__hint {
@@ -677,6 +781,69 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+  }
+
+  /* TV Brands */
+  .tv-brands {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .tv-brand-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--piano-border);
+    border-radius: var(--download-radius);
+    background: var(--piano-bg-solid);
+    transition: border-color 0.15s ease;
+
+    &:hover {
+      border-color: var(--piano-accent);
+    }
+
+    &__logo {
+      height: 40px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    &__name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--piano-text-primary);
+    }
+
+    &__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--piano-text-tertiary);
+
+      i {
+        font-size: 0.85rem;
+        animation: spin 1.5s linear infinite;
+      }
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 

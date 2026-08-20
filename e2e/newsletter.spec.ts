@@ -9,9 +9,9 @@ test.describe('Newsletter — fluxo E2E', () => {
   })
 
   test('aceita email válido e envia', async ({ page }) => {
-    // Interceptar TODAS as chamadas externas
-    // Buttondown API (newsletter)
-    await page.route('**/api.buttondown.com/**', (route) =>
+    // O navegador chama o proxy Nitro; a chamada à Buttondown ocorre no servidor
+    // e não pode ser interceptada por page.route().
+    await page.route('**/api/newsletter/subscribe', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',

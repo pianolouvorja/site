@@ -1,4 +1,12 @@
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged, type User } from 'firebase/auth'
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  confirmPasswordReset,
+  verifyPasswordResetCode,
+  signOut,
+  onAuthStateChanged,
+  type User,
+} from 'firebase/auth'
 
 // Extracted for testability — can be overridden in tests via __setIsClientForTesting
 let _isClient = true
@@ -42,6 +50,32 @@ export function useFirebaseAuth() {
     }
   }
 
+  async function sendPasswordReset(email: string) {
+    error.value = null
+    if (!auth) throw new Error('Firebase not initialized')
+    try {
+      await sendPasswordResetEmail(auth, email, {
+        url: `${window.location.origin}/admin/login`,
+        handleCodeInApp: true,
+      })
+    } catch (e) {
+      error.value = (e as Error).message
+      throw e
+    }
+  }
+
+  async function resetPassword(oobCode: string, newPassword: string) {
+    error.value = null
+    if (!auth) throw new Error('Firebase not initialized')
+    try {
+      await verifyPasswordResetCode(auth, oobCode)
+      await confirmPasswordReset(auth, oobCode, newPassword)
+    } catch (e) {
+      error.value = (e as Error).message
+      throw e
+    }
+  }
+
   async function logout() {
     if (!auth) return
     await signOut(auth)
@@ -53,5 +87,5 @@ export function useFirebaseAuth() {
     return await user.value.getIdToken()
   }
 
-  return { user, loading, error, login, logout, getToken }
+  return { user, loading, error, login, sendPasswordReset, resetPassword, logout, getToken }
 }

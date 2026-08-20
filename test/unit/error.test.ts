@@ -80,6 +80,22 @@ describe('error.vue', () => {
     expect(wrapper.text()).toContain('500')
   })
 
+  it('usa desc404 quando 404 sem message', () => {
+    const wrapper = mount(ErrorPage, {
+      props: { error: { statusCode: 404 } as any },
+      global: globalMountOptions,
+    })
+    expect(wrapper.text()).toContain('error.desc404')
+  })
+
+  it('usa desc500 quando 500 sem message', () => {
+    const wrapper = mount(ErrorPage, {
+      props: { error: { statusCode: 500, message: '' } as any },
+      global: globalMountOptions,
+    })
+    expect(wrapper.text()).toContain('error.desc500')
+  })
+
   it('exibe stack trace em modo dev', () => {
     const wrapper = mount(ErrorPage, {
       props: { error: { statusCode: 500, message: 'Server Error', stack: 'Fake Stack Trace' } },

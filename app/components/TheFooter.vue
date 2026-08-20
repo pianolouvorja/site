@@ -71,10 +71,6 @@
               <i :class="`ti ${social.icon}`" />
             </a>
           </div>
-
-          <div style="margin-top: 1.5rem; width: 100%">
-            <DonateButton variant="inline" />
-          </div>
         </div>
 
         <nav class="footer__nav" :aria-label="$t('footer.navLabel')">
@@ -119,6 +115,16 @@
       <div class="footer__bottom">
         <p class="footer__copyright">
           &copy; {{ currentYear }} {{ siteConfig.name }}. {{ $t('footer.rights') }}
+        </p>
+        <p class="footer__credits">
+          {{ $t('footer.forkedFrom') }}
+          <a
+            href="https://louvorja.github.io/app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer__portfolio-link"
+            >{{ $t('footer.originalProject') }}</a
+          >
         </p>
       </div>
     </div>

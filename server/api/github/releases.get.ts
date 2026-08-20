@@ -6,16 +6,20 @@ const octokit = new Octokit({
 })
 
 export default defineEventHandler(async (event) => {
-  // During test prerender only, return stub data (CI needs real releases for SSG)
-  if (process.env.NODE_ENV === 'test') {
+  // Stub em CI/teste/prerender para não estourar rate limit da API do GitHub.
+  if (
+    process.env.CI === 'true' ||
+    process.env.VITEST === 'true' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     return [
       {
         tag_name: 'v1.0.0',
         name: 'Test Release',
         published_at: '2025-01-01T00:00:00Z',
         _repo: 'web',
-        html_url: '',
         body: '',
+        assets: [],
       },
     ]
   }

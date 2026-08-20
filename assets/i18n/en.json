@@ -683,7 +683,9 @@
     "errors": {
       "invalidEmail": "Invalid email. Please check and try again.",
       "alreadySubscribed": "This email is already subscribed.",
-      "generic": "Subscription failed. Please try again."
+      "generic": "Subscription failed. Please try again.",
+      "rateLimited": "Too many attempts. Please wait a few minutes.",
+      "serviceUnavailable": "Service unavailable. Please try again later."
     }
   },
   "releases": {

@@ -35,6 +35,8 @@ export default defineNuxtConfig({
   routeRules: {
     // Admin pages are client-only (Firebase Auth)
     '/admin/**': { ssr: false },
+    // pt-BR é defaultLocale (sem prefixo). Evita 404 de URL antiga /pt-BR
+    '/pt-BR': { redirect: '/' },
   },
 
   nitro: {
@@ -49,8 +51,8 @@ export default defineNuxtConfig({
         '/200.html',
         '/404.html',
         // GitHub API — pré-renderizado como JSON estático (sem servidor Node em produção)
-        '/api/github/contributors',
-        '/api/github/releases',
+        // Pular durante testes (VITEST) para evitar rate limit da API do GitHub
+        ...(!process.env.VITEST ? ['/api/github/contributors', '/api/github/releases'] : []),
       ],
     },
   },
@@ -77,7 +79,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Server-only secrets
-    abacatePayApiKey: process.env.ABACATEPAY_API_KEY || '',
     firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
 
     // SMTP (Hostinger) — Newsletter manager
@@ -89,11 +90,11 @@ export default defineNuxtConfig({
     smtpFromName: process.env.SMTP_FROM_NAME || 'Piano LouvorJA',
     smtpFromEmail: process.env.SMTP_FROM_EMAIL || '',
     buttondownApiKey: process.env.BUTTONDOWN_API_KEY || '',
+    llmApiKey: process.env.LLM_API_KEY || '',
+    llmModel: process.env.LLM_MODEL || 'glm-4-flash',
 
     public: {
       web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
-      buttondownApiKey: process.env.BUTTONDOWN_API_KEY || '',
-      buttondownEndpoint: 'https://api.buttondown.com/api/v1/subscribers',
 
       // GA4
       googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || '',
