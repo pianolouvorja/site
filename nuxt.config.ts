@@ -15,7 +15,7 @@ export default defineNuxtConfig({
       { code: 'en', language: 'en', name: 'English', file: 'en.json' },
       { code: 'es', language: 'es', name: 'Espanol', file: 'es.json' },
     ],
-    defaultLocale: 'en',
+    defaultLocale: 'pt-BR',
     strategy: 'prefix_except_default',
     langDir: '../i18n',
 
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
       cookieKey: 'piano_lang',
       redirectOn: 'root',
       alwaysRedirect: false,
-      fallbackLocale: 'en',
+      fallbackLocale: 'pt-BR',
     },
   },
 
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
       crawlLinks: false,
       routes: [
         '/',
-        '/pt-BR',
+        '/en',
         '/es',
         '/200.html',
         '/404.html',
