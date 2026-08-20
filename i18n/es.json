@@ -40,7 +40,7 @@
     "features": "Funciones",
     "free": "Gratis",
     "installs": "Instalaciones",
-    "offline": "Funciona sin conexión"
+    "offline": "Datos locales"
   },
   "platforms": {
     "eyebrow": "Multiplataforma",
@@ -127,8 +127,8 @@
         "description": "Apariencia, proyección, multi-pantalla y preferencias totalmente personalizables."
       },
       "offline": {
-        "title": "Funciona Sin Conexión",
-        "description": "La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web requiere descargar los recursos primero."
+        "title": "Datos Locales",
+        "description": "La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web requiere conexión a internet para funcionar."
       }
     }
   },
@@ -142,7 +142,7 @@
     "stats": {
       "free": "Gratis",
       "installs": "Instalaciones",
-      "offline": "PWA Sin Conexión"
+      "offline": "Datos locales"
     }
   },
   "how": {
@@ -256,7 +256,7 @@
     },
     "content": {
       "gettingStarted": {
-        "intro": "PIANO LouvorJA es una aplicación web (PWA) que funciona en cualquier dispositivo con navegador moderno.",
+        "intro": "PIANO LouvorJA es una aplicación web que funciona en cualquier dispositivo con navegador moderno.",
         "steps": [
           "Abra la aplicación en su navegador o descargue la versión de escritorio.",
           "Importe su himnario o cree una colección en el Centro de Medios.",
@@ -335,7 +335,7 @@
       },
       "offline": {
         "question": "¿Funciona sin internet?",
-        "answer": "Sí. La app de escritorio funciona 100% sin conexión tras descargar los medios. La versión web también funciona sin conexión, pero necesita descargar los recursos primero. Todos los datos se almacenan localmente."
+        "answer": "La app de escritorio funciona 100% sin conexion tras descargar los medios. La version web requiere conexion a internet para funcionar. La app APK tambien funciona sin internet, siempre que el contenido este descargado localmente y los dispositivos esten en la misma red."
       },
       "devices": {
         "question": "¿En qué dispositivos puedo usarlo?",
@@ -343,7 +343,7 @@
       },
       "data": {
         "question": "¿Dónde se almacenan mis datos?",
-        "answer": "Los datos de la aplicación — himnos, liturgias, configuraciones — se almacenan localmente en su navegador o dispositivo. Nada se envía a servidores externos durante el uso. Al enviar el formulario de contacto, la información (nombre, correo, mensaje) se transmite vía Web3Forms para que podamos responder. Consulte nuestra Política de Privacidad para más detalles."
+        "answer": "La app de escritorio almacena datos (himnos, liturgia, configuraciones) localmente en su dispositivo. La versión web requiere conexión a internet y no almacena datos persistentes. Al enviar el formulario de contacto, la información (nombre, correo, mensaje) se transmite vía Web3Forms para que podamos responder. Consulte nuestra Política de Privacidad para más detalles."
       },
       "privacy": {
         "question": "¿Cómo protegen mi privacidad?",
@@ -355,7 +355,7 @@
       },
       "updates": {
         "question": "¿Cómo se actualiza la aplicación?",
-        "answer": "PIANO LouvorJA es una aplicación web progresiva (PWA). Las actualizaciones se aplican automáticamente al recargar la página. No es necesario descargar ni instalar actualizaciones manualmente. Siempre tendrá la versión más reciente."
+        "answer": "PIANO LouvorJA es una aplicacion web. Las actualizaciones se aplican automaticamente al recargar la pagina. No es necesario descargar ni instalar actualizaciones manualmente. Siempre tendra la version mas reciente."
       },
       "troubleshooting": {
         "question": "¿Qué hago si la aplicación no carga o muestra un error?",
@@ -425,9 +425,7 @@
           "Contenido del mensaje",
           "1.2 Datos técnicos",
           "Cookie técnica piano_lang: almacena solo su preferencia de idioma. No contiene identificador personal.",
-          "No usamos cookies de rastreo, análisis, publicidad o perfilación.",
-          "1.3 Datos de la aplicación",
-          "La aplicación PIANO LouvorJA (himnos, liturgia, configuraciones, listas de reproducción) almacena todos los datos localmente en su navegador (LocalStorage/IndexedDB). Estos datos nunca se envían a nuestros servidores."
+          "No usamos cookies de rastreo, análisis, publicidad o perfilación."
         ]
       },
       "purpose": {
@@ -600,7 +598,6 @@
           "Usar la aplicación de forma ética y conforme a la ley aplicable",
           "No usarla para fines ilegales, difamatorios o que violen derechos de terceros",
           "Respetar los derechos de autor de las obras proyectadas",
-          "Mantener sus datos locales de forma segura (no mantenemos copias de seguridad en el servidor)",
           "No intentar comprometer la seguridad o disponibilidad del servicio"
         ]
       },
@@ -656,7 +653,7 @@
       "termination": {
         "title": "10. Resolución",
         "body": [
-          "Puede dejar de usar la aplicación en cualquier momento cerrando el navegador o desinstalando la PWA. Como no hay sistema de cuentas, no se requiere cancelación formal."
+          "Puede dejar de usar la aplicación en cualquier momento cerrando el navegador. Como no hay sistema de cuentas, no se requiere cancelación formal."
         ]
       },
       "law": {
@@ -797,7 +794,7 @@
         "noInstall": "Sin instalación",
         "anyOs": "Cualquier sistema operativo",
         "autoUpdate": "Actualizaciones automáticas",
-        "pwa": "Instalable como PWA"
+        "pwa": "Acceso vía navegador"
       }
     },
     "mobile": {
@@ -919,8 +916,8 @@
         "description": "Aplicación Electron multipantalla para proyección en cultos: salida de medios, pantalla del escenario y control remoto."
       },
       "web": {
-        "title": "App Web y PWA",
-        "description": "Aplicación web progresiva para gestión de cultos, con acceso rápido y funcionamiento sin conexión."
+        "title": "App Web",
+        "description": "Aplicación web para gestión de cultos, con acceso rápido desde el navegador (requiere conexión a internet)."
       },
       "api": {
         "title": "API e Infraestructura",

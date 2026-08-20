@@ -57,7 +57,7 @@ describe('useAppHead', () => {
     const descMeta = arg.meta.find((m: any) => m.name === 'description')
     // t('meta.description') resolves to the real i18n string in pt-BR
     expect(descMeta.content.value).toBe(
-      'Plataforma web para gerenciamento de cultos: hinário, Bíblia, liturgia, projeção multi-tela e mais. Gratuito, open-source, funciona offline.',
+      'Plataforma web para gerenciamento de cultos: hinário, Bíblia, liturgia, projeção multi-tela e mais. Gratuito e open-source.',
     )
   })
 

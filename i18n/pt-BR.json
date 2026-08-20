@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "PIANO LouvorJA — Gerenciador de Culto Web",
-    "description": "Plataforma web para gerenciamento de cultos: hinário, Bíblia, liturgia, projeção multi-tela e mais. Gratuito, open-source, funciona offline."
+    "description": "Plataforma web para gerenciamento de cultos: hinário, Bíblia, liturgia, projeção multi-tela e mais. Gratuito e open-source."
   },
   "nav": {
     "features": "Funcionalidades",
@@ -40,7 +40,7 @@
     "features": "Funcionalidades",
     "free": "Gratuito",
     "installs": "Instalações",
-    "offline": "Funciona offline"
+    "offline": "Dados locais"
   },
   "platforms": {
     "eyebrow": "Multiplataforma",
@@ -127,8 +127,8 @@
         "description": "Aparência, projeção, multi-tela e preferências totalmente personalizáveis."
       },
       "offline": {
-        "title": "Funciona Offline",
-        "description": "O app desktop funciona 100% offline após o download das mídias. A versão web exige download dos recursos antes de usar offline."
+        "title": "Dados Locais",
+        "description": "O app desktop funciona 100% offline após o download das mídias. A versão web requer conexão com internet para funcionar."
       }
     }
   },
@@ -142,7 +142,7 @@
     "stats": {
       "free": "Gratuito",
       "installs": "Instalações",
-      "offline": "PWA Offline"
+      "offline": "Dados locais"
     }
   },
   "how": {
@@ -255,11 +255,11 @@
     },
     "content": {
       "gettingStarted": {
-        "intro": "O PIANO LouvorJA é uma aplicação web (PWA) que funciona em qualquer dispositivo com navegador moderno. Não é necessário instalar, mas você pode 'instalar' como app pelo navegador para uso offline.",
+        "intro": "O PIANO LouvorJA é uma aplicação web que funciona em qualquer dispositivo com navegador moderno. Não é necessário instalar — basta acessar pelo navegador.",
         "steps": [
           "Abra o aplicativo no navegador do seu computador ou dispositivo móvel.",
-          "Clique em 'Instalar app' ou use o atalho do navegador para adicionar à tela inicial.",
-          "Pronto! O app funciona offline após o primeiro carregamento."
+          "Para melhor experiência, adicione à tela inicial pelo menu do navegador.",
+          "Pronto! Comece a organizar seu culto."
         ],
         "tip": "Para melhor experiência em cultos, use desktop com dois monitores: um para controle e outro para projeção."
       },
@@ -334,7 +334,7 @@
       },
       "offline": {
         "question": "Funciona sem internet?",
-        "answer": "Sim. O aplicativo desktop funciona 100% offline após o download das mídias. A versão web também funciona offline, mas é necessário baixar os recursos offline primeiro. Todos os hinos, liturgias e configurações ficam armazenados localmente no seu dispositivo."
+        "answer": "O aplicativo desktop funciona 100% offline após o download das mídias. A versão web requer conexão com internet para funcionar. O app APK também funciona sem internet, desde que o conteúdo esteja baixado localmente e os dispositivos estejam na mesma rede."
       },
       "devices": {
         "question": "Em quais dispositivos posso usar?",
@@ -342,7 +342,7 @@
       },
       "data": {
         "question": "Meus dados ficam armazenados onde?",
-        "answer": "Os dados do aplicativo — hinos, liturgias, configurações — ficam armazenados localmente no seu navegador ou dispositivo. Nada é enviado para servidores externos durante o uso. Ao enviar o formulário de contato, as informações (nome, email, mensagem) são transmitidas via Web3Forms para que possamos responder. Consulte nossa Política de Privacidade para detalhes completos."
+        "answer": "O aplicativo desktop armazena dados (hinos, liturgias, configurações) localmente no seu dispositivo. A versão web requer conexão com internet e não armazena dados persistentes. Ao enviar o formulário de contato, as informações (nome, email, mensagem) são transmitidas via Web3Forms para que possamos responder. Consulte nossa Política de Privacidade para detalhes completos."
       },
       "privacy": {
         "question": "Como vocês protegem minha privacidade?",
@@ -354,7 +354,7 @@
       },
       "updates": {
         "question": "Como o aplicativo é atualizado?",
-        "answer": "O PIANO LouvorJA é um aplicativo web progressivo (PWA). As atualizações são aplicadas automaticamente quando você recarrega a página. Não é necessário baixar ou instalar atualizações manualmente. Você sempre terá a versão mais recente."
+        "answer": "O PIANO LouvorJA é um aplicativo web. As atualizações são aplicadas automaticamente quando você recarrega a página. Não é necessário baixar ou instalar atualizações manualmente. Você sempre terá a versão mais recente."
       },
       "troubleshooting": {
         "question": "O que fazer se o aplicativo não carregar ou apresentar erro?",
@@ -425,9 +425,7 @@
           "Conteúdo da mensagem",
           "1.2 Dados técnicos",
           "Cookie técnico piano_lang: armazena apenas sua preferência de idioma. Não contém identificador pessoal.",
-          "Não utilizamos cookies de rastreamento, analytics, publicidade ou perfilação.",
-          "1.3 Dados do aplicativo",
-          "O aplicativo PIANO LouvorJA (hinos, liturgias, configurações, playlists) armazena todos os dados localmente no seu navegador (LocalStorage/IndexedDB). Esses dados não são enviados para nossos servidores."
+          "Não utilizamos cookies de rastreamento, analytics, publicidade ou perfilação."
         ]
       },
       "purpose": {
@@ -600,7 +598,7 @@
           "Utilizar o aplicativo de forma ética e em conformidade com a legislação",
           "Não utilizar para fins ilegais, difamatórios ou que violem direitos de terceiros",
           "Respeitar os direitos autorais das obras projetadas",
-          "Manter seus dados locais salvos de forma segura (não mantemos backup em servidor)",
+
           "Não tentar comprometer a segurança ou disponibilidade do serviço"
         ]
       },
@@ -656,7 +654,7 @@
       "termination": {
         "title": "10. Rescisão",
         "body": [
-          "Você pode cessar o uso do aplicativo a qualquer momento, basta fechar o navegador ou desinstalar a PWA. Como não há sistema de contas, não há necessidade de cancelamento formal."
+          "Você pode cessar o uso do aplicativo a qualquer momento, basta fechar o navegador. Como não há sistema de contas, não há necessidade de cancelamento formal."
         ]
       },
       "law": {
@@ -797,7 +795,7 @@
         "noInstall": "Sem instalação",
         "anyOs": "Qualquer sistema operacional",
         "autoUpdate": "Atualizações automáticas",
-        "pwa": "Instalável como PWA"
+        "pwa": "Acesso via navegador"
       }
     },
     "mobile": {
@@ -919,8 +917,8 @@
         "description": "Aplicativo Electron multi-tela para projeção em cultos: saída de mídia, palco digital e controle remoto."
       },
       "web": {
-        "title": "Web App e PWA",
-        "description": "Aplicação web progressiva para gerenciamento de cultos, com acesso rápido e funcionamento offline."
+        "title": "Web App",
+        "description": "Aplicação web para gerenciamento de cultos, com acesso rápido pelo navegador (requer conexão com internet)."
       },
       "api": {
         "title": "API e Infraestrutura",

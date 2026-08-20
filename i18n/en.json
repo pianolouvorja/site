@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "PIANO LouvorJA — Worship Service Manager",
-    "description": "Web platform for worship service management: hymnals, Bible, liturgy, multi-screen projection and more. Free, open-source, works offline."
+    "description": "Web platform for worship service management: hymnals, Bible, liturgy, multi-screen projection and more. Free and open-source."
   },
   "nav": {
     "features": "Features",
@@ -40,7 +40,7 @@
     "features": "Features",
     "free": "Free",
     "installs": "Installs",
-    "offline": "Works offline"
+    "offline": "Local data"
   },
   "platforms": {
     "eyebrow": "Cross-platform",
@@ -127,8 +127,8 @@
         "description": "Appearance, projection, multi-screen and fully customizable preferences."
       },
       "offline": {
-        "title": "Works Offline",
-        "description": "The desktop app works 100% offline after downloading media. The web version requires downloading offline resources first."
+        "title": "Local Data",
+        "description": "The desktop app works 100% offline after downloading media. The web version requires internet connection to function."
       }
     }
   },
@@ -142,7 +142,7 @@
     "stats": {
       "free": "Free",
       "installs": "Installs",
-      "offline": "PWA Offline"
+      "offline": "Local data"
     }
   },
   "how": {
@@ -255,11 +255,11 @@
     },
     "content": {
       "gettingStarted": {
-        "intro": "PIANO LouvorJA is a web application (PWA) that works on any device with a modern browser. No installation is required, but you can 'install' it as an app through your browser for offline use.",
+        "intro": "PIANO LouvorJA is a web application that works on any device with a modern browser. No installation required — just open it in your browser.",
         "steps": [
           "Open the app in your desktop or mobile device's browser.",
-          "Click 'Install app' or use the browser shortcut to add to home screen.",
-          "Done! The app works offline after the first load."
+          "For a better experience, add it to your home screen from the browser menu.",
+          "Done! Start organizing your worship service."
         ],
         "tip": "For the best worship experience, use a desktop with dual monitors: one for control and one for projection."
       },
@@ -334,7 +334,7 @@
       },
       "offline": {
         "question": "Does it work without internet?",
-        "answer": "Yes. The desktop app works 100% offline after downloading media. The web version also works offline, but you need to download the offline resources first. All hymns, liturgies, and settings are stored locally on your device."
+        "answer": "The desktop app works 100% offline after downloading media. The web version requires internet connection to function. The APK app also works without internet, as long as content is downloaded locally and devices are on the same network."
       },
       "devices": {
         "question": "Which devices can I use it on?",
@@ -342,7 +342,7 @@
       },
       "data": {
         "question": "Where is my data stored?",
-        "answer": "App data — hymns, liturgies, settings — is stored locally in your browser or device. Nothing is sent to external servers during use. When you submit the contact form, your information (name, email, message) is transmitted via Web3Forms so we can reply. See our Privacy Policy for full details."
+        "answer": "The desktop app stores data (hymns, liturgy, settings) locally on your device. The web version requires internet connection and does not store persistent data. When you submit the contact form, your information (name, email, message) is transmitted via Web3Forms so we can reply. See our Privacy Policy for full details."
       },
       "privacy": {
         "question": "How do you protect my privacy?",
@@ -354,7 +354,7 @@
       },
       "updates": {
         "question": "How is the application updated?",
-        "answer": "PIANO LouvorJA is a Progressive Web App (PWA). Updates are applied automatically when you reload the page. No manual download or installation is required. You always have the latest version."
+        "answer": "PIANO LouvorJA is a web application. Updates are applied automatically when you reload the page. No manual download or installation is required. You always have the latest version."
       },
       "troubleshooting": {
         "question": "What if the application does not load or shows an error?",
@@ -425,9 +425,7 @@
           "Message content",
           "1.2 Technical data",
           "Technical cookie piano_lang: stores only your language preference. Contains no personal identifier.",
-          "We do not use tracking, analytics, advertising, or profiling cookies.",
-          "1.3 App data",
-          "The PIANO LouvorJA app (hymns, liturgy, settings, playlists) stores all data locally in your browser (LocalStorage/IndexedDB). This data is never sent to our servers."
+          "We do not use tracking, analytics, advertising, or profiling cookies."
         ]
       },
       "purpose": {
@@ -600,7 +598,7 @@
           "Use the app ethically and in compliance with applicable law",
           "Not use it for illegal, defamatory purposes or that violate third-party rights",
           "Respect the copyrights of displayed works",
-          "Keep your local data safely (we do not keep server backups)",
+
           "Not attempt to compromise security or availability"
         ]
       },
@@ -615,7 +613,7 @@
           "5.2 Limitation of liability",
           "To the maximum extent permitted by law, PIANO LouvorJA shall not be liable for:",
           "Direct, indirect, incidental, or consequential damages",
-          "Data loss (make backups — data is local)",
+          "Data loss (make regular backups)",
           "Service interruption during critical use",
           "Third-party content or external links"
         ]
@@ -656,7 +654,7 @@
       "termination": {
         "title": "10. Termination",
         "body": [
-          "You may stop using the app at any time by closing the browser or uninstalling the PWA. Since there is no account system, formal cancellation is not required."
+          "You may stop using the app at any time by closing the browser. Since there is no account system, formal cancellation is not required."
         ]
       },
       "law": {
@@ -797,7 +795,7 @@
         "noInstall": "No installation",
         "anyOs": "Any operating system",
         "autoUpdate": "Automatic updates",
-        "pwa": "Installable as PWA"
+        "pwa": "Browser access"
       }
     },
     "mobile": {
@@ -919,8 +917,8 @@
         "description": "Multi-screen Electron app for worship projection: media output, stage display and remote control."
       },
       "web": {
-        "title": "Web App & PWA",
-        "description": "Progressive web app for service management, with fast access and offline support."
+        "title": "Web App",
+        "description": "Web application for service management, with quick browser access (requires an internet connection)."
       },
       "api": {
         "title": "API & Infrastructure",
