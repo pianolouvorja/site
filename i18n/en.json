@@ -654,7 +654,7 @@
       "termination": {
         "title": "10. Termination",
         "body": [
-          "You may stop using the app at any time by closing the browser or uninstalling the PWA. Since there is no account system, formal cancellation is not required."
+          "You may stop using the app at any time by closing the browser. Since there is no account system, formal cancellation is not required."
         ]
       },
       "law": {
@@ -917,8 +917,8 @@
         "description": "Multi-screen Electron app for worship projection: media output, stage display and remote control."
       },
       "web": {
-        "title": "Web App & PWA",
-        "description": "Progressive web app for service management, with fast access and offline support."
+        "title": "Web App",
+        "description": "Web application for service management, with quick browser access (requires an internet connection)."
       },
       "api": {
         "title": "API & Infrastructure",

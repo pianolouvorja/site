@@ -653,7 +653,7 @@
       "termination": {
         "title": "10. Resolución",
         "body": [
-          "Puede dejar de usar la aplicación en cualquier momento cerrando el navegador o desinstalando la PWA. Como no hay sistema de cuentas, no se requiere cancelación formal."
+          "Puede dejar de usar la aplicación en cualquier momento cerrando el navegador. Como no hay sistema de cuentas, no se requiere cancelación formal."
         ]
       },
       "law": {
@@ -916,8 +916,8 @@
         "description": "Aplicación Electron multipantalla para proyección en cultos: salida de medios, pantalla del escenario y control remoto."
       },
       "web": {
-        "title": "App Web y PWA",
-        "description": "Aplicación web progresiva para gestión de cultos, con acceso rápido y funcionamiento sin conexión."
+        "title": "App Web",
+        "description": "Aplicación web para gestión de cultos, con acceso rápido desde el navegador (requiere conexión a internet)."
       },
       "api": {
         "title": "API e Infraestructura",

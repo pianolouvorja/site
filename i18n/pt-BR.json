@@ -654,7 +654,7 @@
       "termination": {
         "title": "10. Rescisão",
         "body": [
-          "Você pode cessar o uso do aplicativo a qualquer momento, basta fechar o navegador ou desinstalar a PWA. Como não há sistema de contas, não há necessidade de cancelamento formal."
+          "Você pode cessar o uso do aplicativo a qualquer momento, basta fechar o navegador. Como não há sistema de contas, não há necessidade de cancelamento formal."
         ]
       },
       "law": {
@@ -917,8 +917,8 @@
         "description": "Aplicativo Electron multi-tela para projeção em cultos: saída de mídia, palco digital e controle remoto."
       },
       "web": {
-        "title": "Web App e PWA",
-        "description": "Aplicação web progressiva para gerenciamento de cultos, com acesso rápido e funcionamento offline."
+        "title": "Web App",
+        "description": "Aplicação web para gerenciamento de cultos, com acesso rápido pelo navegador (requer conexão com internet)."
       },
       "api": {
         "title": "API e Infraestrutura",
