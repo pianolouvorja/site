@@ -800,15 +800,32 @@
     "mobile": {
       "badge": "Próximamente",
       "title": "Móvil",
-      "description": "La app Android (APK) está en desarrollo avanzado, aún sin lanzamiento oficial. Mientras tanto, usa la web app en el móvil.",
+      "description": "Las apps nativas para Android e iOS están en nuestro roadmap. Mientras tanto, puedes usar la web app en tu teléfono.",
       "platforms": "Android e iOS",
       "features": {
-        "nativeAndroid": "App Android (APK) — en desarrollo avanzado",
+        "nativeAndroid": "Android nativo (planificado)",
         "nativeIos": "iOS nativo (planificado)",
-        "cloudSync": "Sincronización en la nube (planificado)"
+        "cloudSync": "Sincronización en la nube (planificado)",
+        "remote": "Control remoto desde el desktop",
+        "network": "Sincronización por red local",
+        "offline": "Funciona sin conexión"
       },
       "useWebInstead": "Usar web app en el teléfono por ahora",
-      "apkNote": "Vista previa del APK: build interno, disponible pronto para pruebas."
+      "noAssets": "Las apps móviles se publicarán pronto.",
+      "android": {
+        "name": "Android",
+        "format": "Paquete .apk",
+        "arch": "arm64",
+        "downloadLabel": "Descargar APK",
+        "hint": "Instale el APK permitiendo orígenes desconocidos."
+      },
+      "ios": {
+        "name": "iOS",
+        "format": "App TestFlight",
+        "arch": "universal",
+        "downloadLabel": "Abrir TestFlight",
+        "hint": "Requiere invitación de TestFlight."
+      }
     },
     "systemRequirements": {
       "title": "Requisitos del Sistema",
@@ -816,27 +833,29 @@
       "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexión a internet para primer acceso"
     },
     "tv": {
-      "badge": "Próximamente",
-      "title": "Smart TV",
-      "description": "Estamos preparando PIANO para Smart TVs. La primera plataforma será LG con webOS.",
-      "lgBrand": "webOS (LG)",
-      "lgStatus": "En desarrollo",
-      "samsungBrand": "Tizen (Samsung)",
-      "samsungStatus": "En desarrollo",
-      "rokuBrand": "Roku TV",
-      "rokuStatus": "Planificado",
-      "androidTvBrand": "Android TV / Google TV",
-      "androidTvStatus": "Planificado",
-      "chromecastBrand": "Chromecast",
-      "chromecastStatus": "Planificado",
+      "badge": "Nuevo",
+      "title": "TV / Escenario Digital",
+      "description": "Convierta cualquier Smart TV en un receptor de escenario. Controle desde el desktop y muestre en la TV por red local.",
+      "noAssets": "Los paquetes de TV se publicarán pronto.",
       "features": {
-        "nativeLg": "App nativo LG webOS",
-        "bigScreen": "Proyección directa en TV",
-        "remoteControl": "Control remoto vía app móvil"
+        "realtime": "Duplicación en tiempo real",
+        "multicast": "Varias TVs a la vez",
+        "autodiscover": "Descubrimiento automático en red"
       },
-      "useDesktopInstead": "Usa la app Desktop por ahora",
-      "appleTvBrand": "Apple TV",
-      "appleTvStatus": "Planificado"
+      "webos": {
+        "name": "LG webOS TV",
+        "format": "Paquete .ipk",
+        "arch": "arm",
+        "downloadLabel": "Descargar para webOS",
+        "hint": "Use Developer Mode o sideload con LG Device Manager."
+      },
+      "androidtv": {
+        "name": "Android TV",
+        "format": "Paquete .apk",
+        "arch": "arm64",
+        "downloadLabel": "Descargar para Android TV",
+        "hint": "Instale el APK con un gestor de archivos o via ADB."
+      }
     }
   },
   "contributors": {
