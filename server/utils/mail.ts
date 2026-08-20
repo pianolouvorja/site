@@ -1,5 +1,4 @@
 import nodemailer, { type Transporter } from 'nodemailer'
-// @ts-expect-error html-to-text v10 does not ship TypeScript declarations.
 import { convert } from 'html-to-text'
 
 let transporter: Transporter | null = null
