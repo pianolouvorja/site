@@ -149,7 +149,7 @@ describe('handleSubscribe', () => {
 
     expect(result).toEqual({ success: true })
     expect(mockFetch).toHaveBeenCalledWith(
-      'https://api.buttondown.com/api/v1/subscribers',
+      'https://api.buttondown.com/v1/subscribers',
       expect.objectContaining({
         method: 'POST',
         headers: {
@@ -157,7 +157,7 @@ describe('handleSubscribe', () => {
           'Content-Type': 'application/json',
         },
         body: {
-          email: 'user@example.com',
+          email_address: 'user@example.com',
           metadata: { locale: 'pt-BR' },
         },
       }),
