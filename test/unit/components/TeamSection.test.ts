@@ -132,6 +132,18 @@ describe('TeamSection', () => {
     expect(linkedin).toBeTruthy()
   })
 
+  it('modal nao fecha ao pressionar tecla que nao seja Escape', async () => {
+    const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
+    await wrapper.findAll('button.team__person-more')[0].trigger('click')
+
+    const modal = wrapper.find('.team-modal')
+    await modal.trigger('keydown', { key: 'Enter' })
+    expect(wrapper.find('.team-modal').exists()).toBe(true)
+
+    await modal.trigger('keydown', { key: 'Escape' })
+    expect(wrapper.find('.team-modal').exists()).toBe(false)
+  })
+
   it('modal fecha ao clicar no botao fechar', async () => {
     const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
     await wrapper.findAll('button.team__person-more')[0].trigger('click')
