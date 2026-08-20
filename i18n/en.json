@@ -711,7 +711,6 @@
     "reject": "Decline",
     "privacyLink": "Read Privacy Policy"
   },
-
   "admin": {
     "title": "Dashboard",
     "loginTitle": "Restricted Access",
@@ -902,5 +901,78 @@
     "cta": "Stay updated",
     "appleTvBrand": "Apple TV",
     "appleTvStatus": "Planned"
+  },
+  "team": {
+    "eyebrow": "Our Team",
+    "title": "The professionals behind the project",
+    "subtitle": "PIANO LouvorJA is built by a dedicated team organized into specialized work fronts, united by one purpose: serving the community with excellence.",
+    "areas": {
+      "leadership": {
+        "title": "Leadership & Vision",
+        "description": "Project direction, product roadmap and relationship with the community PIANO serves."
+      },
+      "desktop": {
+        "title": "Desktop App",
+        "description": "Multi-screen Electron app for worship projection: media output, stage display and remote control."
+      },
+      "web": {
+        "title": "Web App & PWA",
+        "description": "Progressive web app for service management, with fast access and offline support."
+      },
+      "api": {
+        "title": "API & Infrastructure",
+        "description": "Public API and backend services powering hymnals, playlists and cross-device sync."
+      },
+      "site": {
+        "title": "Website & Content",
+        "description": "Digital presence, documentation and communication: multilingual site, releases and resources."
+      },
+      "quality": {
+        "title": "Quality & CI",
+        "description": "Pipeline automation, testing and code review to ensure stability on every release."
+      }
+    },
+    "people": {
+      "title": "Who builds the project",
+      "avatarAlt": "{name}'s GitHub avatar",
+      "more": "Learn more"
+    },
+    "members": {
+      "ezequiasfonseca": {
+        "role": "Founder · Leadership & Desktop App",
+        "bio": "Senior Software Engineer with 15 years of experience in technology, covering infrastructure, Linux system administration, DevOps, and Full Stack development. Founder of PIANO LouvorJA, leads product vision and the desktop app."
+      },
+      "rafaumeu": {
+        "role": "Tech Lead · Site, API & QA",
+        "bio": "Full stack developer focused on the PIANO LouvorJA ecosystem: website, API, PWA and quality automation. Responsible for CI/CD, testing and the project's multi-device experience."
+      },
+      "rafaelji": {
+        "role": "Desktop App & Mac",
+        "bio": "Programmer since 2015, with experience across backend, frontend and mobile — currently focused on React frontend. Maintains three personal projects: Alva (Sabbath School app), Appentecostes (real-time AI sermon translation into 13 languages) and FatIA (AI-generated video clips for social media)."
+      },
+      "educharquero": {
+        "role": "Linux, Web App & PWA",
+        "bio": "Degree in Computer Networks with a postgraduate qualification in Teaching. Linux user since Kurumin, decades in infrastructure and owner of conectux.com.br."
+      }
+    },
+    "work": {
+      "title": "How we work",
+      "text": "Open source, peer review and continuous delivery: each front maintains its repository in the organization, with automated integration and deployment."
+    },
+    "cta": "Explore the organization on GitHub",
+    "modal": {
+      "close": "Close"
+    },
+    "contribute": {
+      "title": "Contribute to the project",
+      "text": "PIANO is open-source and grows with the community. You can contribute code, report bugs, suggest features, help with translations, or share the project.",
+      "ways": {
+        "code": "Send pull requests on GitHub",
+        "bugs": "Report bugs and suggest improvements",
+        "translate": "Help with translations",
+        "share": "Share with your community"
+      },
+      "button": "Start contributing"
+    }
   }
 }

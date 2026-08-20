@@ -711,7 +711,6 @@
     "reject": "Rechazar",
     "privacyLink": "Leer Política de Privacidad"
   },
-
   "admin": {
     "title": "Panel",
     "loginTitle": "Acceso Restringido",
@@ -902,5 +901,78 @@
     "cta": "Seguir novedades",
     "appleTvBrand": "Apple TV",
     "appleTvStatus": "Planificado"
+  },
+  "team": {
+    "eyebrow": "Nuestro Equipo",
+    "title": "Los profesionales detrás del proyecto",
+    "subtitle": "PIANO LouvorJA es construido por un equipo dedicado organizado en frentes de trabajo especializados, unidos por un propósito: servir a la comunidad con excelencia.",
+    "areas": {
+      "leadership": {
+        "title": "Liderazgo y Visión",
+        "description": "Dirección del proyecto, hoja de ruta del producto y relación con la comunidad adventista que PIANO sirve."
+      },
+      "desktop": {
+        "title": "App de Escritorio",
+        "description": "Aplicación Electron multipantalla para proyección en cultos: salida de medios, pantalla del escenario y control remoto."
+      },
+      "web": {
+        "title": "App Web y PWA",
+        "description": "Aplicación web progresiva para gestión de cultos, con acceso rápido y funcionamiento sin conexión."
+      },
+      "api": {
+        "title": "API e Infraestructura",
+        "description": "API pública y servicios de backend que alimentan himnarios, listas de reproducción y sincronización entre dispositivos."
+      },
+      "site": {
+        "title": "Sitio y Contenido",
+        "description": "Presencia digital, documentación y comunicación: sitio multilingüe, lanzamientos y materiales de apoyo."
+      },
+      "quality": {
+        "title": "Calidad y CI",
+        "description": "Automatización de pipelines, pruebas y revisión de código para garantizar estabilidad en cada lanzamiento."
+      }
+    },
+    "people": {
+      "title": "Quién construye el proyecto",
+      "avatarAlt": "Avatar de {name} en GitHub",
+      "more": "Saber más"
+    },
+    "members": {
+      "ezequiasfonseca": {
+        "role": "Fundador · Liderazgo y App de Escritorio",
+        "bio": "Ingeniero de Software senior con 15 años de experiencia en tecnología, cubriendo infraestructura, administración de sistemas Linux, DevOps y desarrollo Full Stack. Fundador de PIANO LouvorJA, lidera la visión del producto y la app de escritorio."
+      },
+      "rafaumeu": {
+        "role": "Tech Lead · Sitio, API y Calidad",
+        "bio": "Desarrollador full stack enfocado en el ecosistema PIANO LouvorJA: sitio, API, PWA y automatización de calidad. Responsable de CI/CD, pruebas y la experiencia multidispositivo del proyecto."
+      },
+      "rafaelji": {
+        "role": "App de Escritorio y Mac",
+        "bio": "Programador desde 2015, con experiencia en backend, frontend y mobile — hoy enfocado en React. Mantiene tres proyectos personales: Alva (app de Escuela Sabática), Appentecostes (traducción en tiempo real de sermones a 13 idiomas con IA) y FatIA (clips de video con IA local para redes sociales)."
+      },
+      "educharquero": {
+        "role": "Linux, App Web y PWA",
+        "bio": "Formación en Redes de Computadoras con posgrado en Docencia. Usuario de Linux desde Kurumin, décadas en infraestructura y responsable de conectux.com.br."
+      }
+    },
+    "work": {
+      "title": "Cómo trabajamos",
+      "text": "Código abierto, revisión por pares y entregas continuas: cada frente mantiene su repositorio en la organización, con integración e despliegue automatizados."
+    },
+    "cta": "Conoce la organización en GitHub",
+    "modal": {
+      "close": "Cerrar"
+    },
+    "contribute": {
+      "title": "Contribuye al proyecto",
+      "text": "PIANO es open-source y crece con la comunidad. Puedes contribuir con código, reportar bugs, sugerir funciones, ayudar con traducciones o compartir el proyecto.",
+      "ways": {
+        "code": "Enviar pull requests en GitHub",
+        "bugs": "Reportar bugs y sugerir mejorias",
+        "translate": "Ayudar con traducciones",
+        "share": "Compartir con tu comunidad"
+      },
+      "button": "Empezar a contribuir"
+    }
   }
 }
