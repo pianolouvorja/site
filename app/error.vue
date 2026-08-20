@@ -30,11 +30,13 @@
       </div>
 
       <h1 class="error-page__title">
-        {{ error?.statusCode === 404 ? $t('error.title404') : $t('error.title500') }}
+        {{ error?.statusCode === 404 ? $t('error.title') : $t('error.serverErrorTitle') }}
       </h1>
 
       <p class="error-page__message">
-        {{ error?.message || $t('error.defaultMessage') }}
+        {{
+          error?.message || (error?.statusCode === 404 ? $t('error.desc404') : $t('error.desc500'))
+        }}
       </p>
 
       <div v-if="isDev && error?.stack" class="error-page__dev-info">
