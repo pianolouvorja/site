@@ -6,7 +6,7 @@
     description: () => t('releases.metaDescription'),
   })
 
-  type RepoName = 'web' | 'app' | 'api' | 'site'
+  type RepoName = 'web' | 'app' | 'api' | 'site' | 'palco-receiver' | 'apk'
 
   interface GithubAsset {
     name: string
@@ -22,7 +22,7 @@
     _repo: RepoName
   }
 
-  type ProductType = 'web' | 'desktop' | 'mobile'
+  type ProductType = 'web' | 'desktop' | 'mobile' | 'tv'
 
   interface ParsedRelease {
     tag: string
@@ -45,6 +45,8 @@
     site: 'web',
     app: 'desktop',
     api: 'web',
+    'palco-receiver': 'tv',
+    apk: 'mobile',
   }
 
   /**
@@ -62,6 +64,9 @@
     if (/electron|desktop|appimage|\.exe|\.dmg|windows|linux|macos/.test(combined)) {
       products.add('desktop')
     }
+    if (/tv|palco|android-tv|androidtv|webos|smart-tv|smarttv|ipk/.test(combined)) {
+      products.add('tv')
+    }
 
     return Array.from(products)
   }
@@ -70,11 +75,21 @@
     web: 'ti-world',
     desktop: 'ti-device-desktop',
     mobile: 'ti-device-mobile',
+    tv: 'ti-device-tv',
   }
 
   const releases = ref<ParsedRelease[]>([])
   const loading = ref(true)
   const fetchError = ref(false)
+  const activeFilter = ref<ProductType | 'all'>('all')
+
+  const availableProducts: ProductType[] = ['web', 'desktop', 'mobile', 'tv']
+
+  const filteredReleases = computed(() =>
+    activeFilter.value === 'all'
+      ? releases.value
+      : releases.value.filter((r) => r.products.includes(activeFilter.value as ProductType)),
+  )
 
   /**
    * Maps locale codes to regex patterns that identify language sections in release notes.
@@ -266,8 +281,37 @@
 
         <!-- Release list -->
         <div v-else class="releases-list">
+          <!-- Product filter -->
+          <div class="releases-filter" role="group" :aria-label="$t('releases.filterLabel')">
+            <button
+              class="releases-filter__option"
+              :class="{ 'releases-filter__option--active': activeFilter === 'all' }"
+              data-testid="filter-all"
+              @click="activeFilter = 'all'"
+            >
+              {{ $t('releases.filterAll') }}
+            </button>
+            <button
+              v-for="product in availableProducts"
+              :key="product"
+              class="releases-filter__option"
+              :class="{ 'releases-filter__option--active': activeFilter === product }"
+              :data-testid="`filter-${product}`"
+              @click="activeFilter = product"
+            >
+              <i class="ti" :class="PRODUCT_ICONS[product]" aria-hidden="true" />
+              {{ $t(`releases.products.${product}`) }}
+            </button>
+          </div>
+
+          <!-- Empty after filter -->
+          <div v-if="filteredReleases.length === 0" class="releases-state">
+            <i class="ti ti-package-off" aria-hidden="true" />
+            <p>{{ $t('releases.filterEmpty') }}</p>
+          </div>
+
           <article
-            v-for="(release, idx) in releases"
+            v-for="(release, idx) in filteredReleases"
             :key="release.tag"
             class="release-card"
             :class="{ 'release-card--latest': idx === 0 }"
@@ -415,6 +459,39 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+
+  .releases-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &__option {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--piano-border);
+      background: var(--piano-bg-solid);
+      color: var(--piano-text-secondary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: var(--piano-accent);
+        color: var(--piano-text-primary);
+      }
+
+      &--active {
+        background: var(--piano-accent);
+        border-color: var(--piano-accent);
+        color: var(--piano-white);
+      }
+    }
   }
 
   .release-card {

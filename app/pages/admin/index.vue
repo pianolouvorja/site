@@ -132,7 +132,7 @@
       {
         key: 'downloads' as const,
         label: 'Downloads',
-        value: s ? formatValue(s.downloads) : '—',
+        value: s?.downloads ? formatValue(s.downloads.total) : '—',
         icon: 'ti ti-download',
         loading: loading.value,
         color: '#22d3ee',
@@ -355,6 +355,27 @@
           </div>
         </div>
       </button>
+    </section>
+
+    <!-- Download breakdown by app -->
+    <section v-if="stats?.downloads?.apps?.length" class="download-breakdown">
+      <h2 class="breakdown-title">Downloads por App</h2>
+      <div class="breakdown-grid">
+        <div v-for="app in stats.downloads.apps" :key="app.repo" class="breakdown-card">
+          <div class="breakdown-card__header">
+            <span class="breakdown-card__label">{{ app.label }}</span>
+            <span v-if="app.latestTag" class="breakdown-card__tag">{{ app.latestTag }}</span>
+          </div>
+          <div class="breakdown-card__total">{{ formatValue(app.totalDownloads) }}</div>
+          <ul v-if="app.platforms.length" class="breakdown-platforms">
+            <li v-for="p in app.platforms" :key="p.platform" class="breakdown-platform">
+              <span class="breakdown-platform__name">{{ p.platform }}</span>
+              <span class="breakdown-platform__count">{{ formatValue(p.downloads) }}</span>
+            </li>
+          </ul>
+          <div v-else class="breakdown-platforms--empty">Sem dados por plataforma</div>
+        </div>
+      </div>
     </section>
 
     <!-- Chart detail panel -->
@@ -888,5 +909,88 @@
 
   .quick-links a:hover {
     color: #06b6d4;
+  }
+  .download-breakdown {
+    margin-bottom: 2rem;
+  }
+
+  .breakdown-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #94a3b8;
+    margin: 0 0 1rem;
+  }
+
+  .breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .breakdown-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .breakdown-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .breakdown-card__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .breakdown-card__tag {
+    font-size: 0.6875rem;
+    color: #64748b;
+    background: #1e293b;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .breakdown-card__total {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #22d3ee;
+    margin-bottom: 0.75rem;
+  }
+
+  .breakdown-platforms {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .breakdown-platform {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+  }
+
+  .breakdown-platform__name {
+    color: #94a3b8;
+  }
+
+  .breakdown-platform__count {
+    color: #e2e8f0;
+    font-weight: 500;
+  }
+
+  .breakdown-platforms--empty {
+    font-size: 0.75rem;
+    color: #475569;
+    font-style: italic;
   }
 </style>
