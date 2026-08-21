@@ -12,16 +12,15 @@
 
   const hasAssets = computed(() => Object.keys(props.mobileData.assets).length > 0)
 
-  const mobileCards = computed(() => {
-    if (!hasAssets.value) return []
-    return Object.entries(props.mobileData.assets).map(([platform, asset]) => ({
+  const mobileCards = computed(() =>
+    Object.entries(props.mobileData.assets).map(([platform, asset]) => ({
       platform,
       asset,
       icon: platform === 'ios' ? 'ti-brand-apple' : 'ti-brand-android',
       i18nPrefix: `download.mobile.${platform}`,
       recommended: props.detectedPlatform === platform,
-    }))
-  })
+    })),
+  )
 
   const features = [
     { key: 'download.mobile.features.remote', icon: 'ti-device-mobile' },

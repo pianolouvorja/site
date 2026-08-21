@@ -51,6 +51,18 @@ const mobileWithAsset: CategoryResult = {
 
 const APP_URL = 'https://app.pianolouvorja.com.br'
 
+const mobileWithIosAsset: CategoryResult = {
+  repo: 'apk',
+  tag: 'v0.1.53',
+  assets: {
+    ios: {
+      url: 'https://github.com/pianolouvorja/apk/releases/download/v0.1.53/app.ipa',
+      name: 'app.ipa',
+      size: 80000000,
+    },
+  },
+}
+
 describe('MobileDownloadCards', () => {
   it('renders section with badge and title', () => {
     const wrapper = mount(MobileDownloadCards, {
@@ -139,5 +151,34 @@ describe('MobileDownloadCards', () => {
     const btn = wrapper.find('.download-card__btn')
     expect(btn.attributes('target')).toBe('_blank')
     expect(btn.attributes('rel')).toBe('noopener noreferrer')
+  })
+
+  it('marks the card matching detectedPlatform as recommended', () => {
+    const wrapper = mount(MobileDownloadCards, {
+      props: { mobileData: mobileWithAsset, appUrl: APP_URL, detectedPlatform: 'android' },
+      global: { stubs: ['i'] },
+    })
+    const recommended = wrapper.find('.download-card--recommended')
+    expect(recommended.exists()).toBe(true)
+    expect(wrapper.find('.download-card__badge').exists()).toBe(true)
+  })
+
+  it('does not mark any card when detectedPlatform is null', () => {
+    const wrapper = mount(MobileDownloadCards, {
+      props: { mobileData: mobileWithAsset, appUrl: APP_URL, detectedPlatform: null },
+      global: { stubs: ['i'] },
+    })
+    expect(wrapper.find('.download-card--recommended').exists()).toBe(false)
+    expect(wrapper.find('.download-card__badge').exists()).toBe(false)
+  })
+
+  it('renders ios card with apple icon when ios asset exists', () => {
+    const wrapper = mount(MobileDownloadCards, {
+      props: { mobileData: mobileWithIosAsset, appUrl: APP_URL, detectedPlatform: 'ios' },
+      global: { stubs: ['i'] },
+    })
+    const icon = wrapper.find('.download-card__icon')
+    expect(icon.classes()).toContain('ti-brand-apple')
+    expect(wrapper.find('.download-card--recommended').exists()).toBe(true)
   })
 })

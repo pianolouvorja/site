@@ -1,44 +1,11 @@
 <script setup lang="ts">
   import { useTvBrands } from '~/composables/useTvBrands'
-  import type { AllDownloadsResponse } from '~/utils/downloads'
 
   const tvBrands = useTvBrands()
 
-  // Map each brand card to the download asset platform it depends on.
-  // Brands without a platform mapping (Roku, Chromecast, Apple TV) stay on
-  // their i18n roadmap status — nothing published for them yet.
-  const BRAND_PLATFORMS: Record<string, string | undefined> = {
-    lg: 'webos',
-    samsung: 'tizen',
-    androidTv: 'androidtv',
-    appleTv: undefined,
-    roku: undefined,
-    chromecast: undefined,
-  }
-
-  const downloads = ref<AllDownloadsResponse | null>(null)
-
-  onMounted(async () => {
-    try {
-      const res = await fetch('/api/github/all-downloads')
-      if (!res.ok) return
-      downloads.value = (await res.json()) as AllDownloadsResponse
-    } catch {
-      // keep roadmap statuses — network failure must not blank the section
-    }
-  })
-
-  function isAvailable(brandId: string): boolean {
-    const platform = BRAND_PLATFORMS[brandId]
-    if (!platform || !downloads.value) return false
-    return Boolean(downloads.value.tv?.assets?.[platform]?.url)
-  }
-
-  function brandStatus(brandId: string): string {
-    if (isAvailable(brandId)) {
-      return useI18n().t('tvSupport.statusAvailable')
-    }
-    return useI18n().t(`tvSupport.${brandId}Status`)
+  function statusLabel(brand: { id: string; status: string }): string {
+    if (brand.status === 'available') return `tvSupport.statusAvailable`
+    return `tvSupport.${brand.id}Status`
   }
 </script>
 
@@ -60,31 +27,31 @@
           v-for="brand in tvBrands"
           :key="brand.id"
           class="tv-support__brand"
-          :class="{ 'tv-support__brand--available': isAvailable(brand.id) }"
+          :class="{ 'tv-support__brand--available': brand.status === 'available' }"
           data-testid="tv-brand-card"
         >
           <img :src="brand.logo" :alt="brand.alt" class="tv-support__brand-logo" loading="lazy" />
           <p class="tv-support__brand-name">
             {{ $t(`tvSupport.${brand.id}Brand`) }}
           </p>
-          <span class="tv-support__brand-status">
+          <span
+            class="tv-support__brand-status"
+            :class="`tv-support__brand-status--${brand.status}`"
+          >
             <i
-              :class="isAvailable(brand.id) ? 'ti ti-circle-check' : 'ti ti-loader-2'"
+              class="ti"
+              :class="brand.status === 'available' ? 'ti-circle-check' : 'ti-loader-2'"
               aria-hidden="true"
             />
-            {{ brandStatus(brand.id) }}
+            {{ $t(statusLabel(brand)) }}
           </span>
-          <a
-            v-if="isAvailable(brand.id)"
-            :href="`/download#tv`"
-            class="tv-support__brand-link"
-            data-testid="tv-brand-download"
-          >
-            {{ $t('tvSupport.downloadCta') }}
-            <i class="ti ti-arrow-right" aria-hidden="true" />
-          </a>
         </div>
       </div>
+
+      <a href="/download#tv" class="tv-support__cta">
+        {{ $t('tvSupport.cta') }}
+        <i class="ti ti-arrow-right" aria-hidden="true" />
+      </a>
     </div>
   </section>
 </template>
@@ -92,7 +59,6 @@
   .tv-support {
     padding: 5rem 1.5rem;
     background: var(--piano-bg-primary);
-    position: relative;
 
     &__container {
       max-width: 1200px;
@@ -134,7 +100,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       max-width: 900px;
-      margin: 0 auto;
+      margin: 0 auto 2.5rem;
 
       @media (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
@@ -162,6 +128,19 @@
         transform: translateY(-4px);
         border-color: rgba(0, 193, 230, 0.35);
       }
+
+      &--available {
+        border-color: rgba(34, 197, 94, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(34, 197, 94, 0.06) 0%,
+          rgba(16, 67, 140, 0.08) 100%
+        );
+
+        &:hover {
+          border-color: rgba(34, 197, 94, 0.5);
+        }
+      }
     }
 
     &__brand-logo {
@@ -185,40 +164,61 @@
       gap: 0.35rem;
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--piano-yellow);
-      background: rgba(252, 206, 2, 0.1);
       padding: 0.25rem 0.75rem;
       border-radius: var(--piano-radius-full);
-      border: 1px solid rgba(252, 206, 2, 0.2);
 
-      i {
-        font-size: 0.85rem;
-        animation: spin 1.5s linear infinite;
+      // In-development / planned — amarelo com spinner
+      &--in-development,
+      &--planned {
+        color: var(--piano-yellow);
+        background: rgba(252, 206, 2, 0.1);
+        border: 1px solid rgba(252, 206, 2, 0.2);
+
+        i {
+          font-size: 0.85rem;
+          animation: spin 1.5s linear infinite;
+        }
+      }
+
+      // Available — verde com check
+      &--available {
+        color: #22c55e;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+
+        i {
+          font-size: 0.9rem;
+        }
       }
     }
 
-    &__brand--available &__brand-status {
-      color: var(--piano-green, #4ade80);
-      background: rgba(74, 222, 128, 0.1);
-      border-color: rgba(74, 222, 128, 0.25);
-
-      i {
-        animation: none;
-      }
-    }
-
-    &__brand-link {
+    &__cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      font-size: 0.8rem;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--piano-radius-md);
       font-weight: 600;
+      font-size: 0.9375rem;
       color: var(--piano-cyan);
       text-decoration: none;
-      margin-top: 0.5rem;
+      border: 1px solid var(--piano-cyan);
+      transition:
+        background 0.15s ease,
+        color 0.15s ease;
 
       &:hover {
-        text-decoration: underline;
+        background: var(--piano-cyan);
+        color: #000;
+      }
+
+      i {
+        font-size: 1.125rem;
+        transition: transform 0.15s ease;
+      }
+
+      &:hover i {
+        transform: translateX(3px);
       }
     }
 

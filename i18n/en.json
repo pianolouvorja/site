@@ -598,7 +598,6 @@
           "Use the app ethically and in compliance with applicable law",
           "Not use it for illegal, defamatory purposes or that violate third-party rights",
           "Respect the copyrights of displayed works",
-
           "Not attempt to compromise security or availability"
         ]
       },
@@ -856,6 +855,12 @@
         "arch": "arm64",
         "downloadLabel": "Download for Android TV",
         "hint": "Sideload the APK with a file manager or via ADB."
+      },
+      "downloadGeneric": "Download",
+      "tizen": {
+        "name": "Samsung Tizen TV",
+        "format": ".tpk package",
+        "hint": "Install via USB or Tizen Studio Device Manager."
       }
     }
   },

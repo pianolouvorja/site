@@ -1,23 +1,54 @@
 <script setup lang="ts">
   import type { CategoryResult } from '~/utils/downloads'
+  import { useTvBrands } from '~/composables/useTvBrands'
 
   const props = defineProps<{
     tvData: CategoryResult
   }>()
 
   const { t } = useI18n()
+  const tvBrands = useTvBrands()
 
-  const hasAssets = computed(() => Object.keys(props.tvData.assets).length > 0)
+  // Brand → download asset platform. Brands without mapping stay on roadmap.
+  const BRAND_PLATFORMS: Record<string, string | undefined> = {
+    lg: 'webos',
+    samsung: 'tizen',
+    androidTv: 'androidtv',
+    appleTv: undefined,
+    roku: undefined,
+    chromecast: undefined,
+  }
 
-  const tvCards = computed(() => {
-    if (!hasAssets.value) return []
-    return Object.entries(props.tvData.assets).map(([platform, asset]) => ({
-      platform,
-      asset,
-      icon: platform === 'androidtv' ? 'ti-brand-android' : 'ti-device-tv',
-      i18nPrefix: `download.tv.${platform}`,
-    }))
-  })
+  interface TvCard {
+    id: string
+    logo: string
+    alt: string
+    name: string
+    format: string
+    hint: string
+    available: boolean
+    url?: string
+  }
+
+  const tvCards = computed<TvCard[]>(() =>
+    tvBrands.map((brand) => {
+      const platform = BRAND_PLATFORMS[brand.id]
+      const asset = platform ? props.tvData.assets[platform] : undefined
+      const available = Boolean(asset?.url)
+      return {
+        id: brand.id,
+        logo: brand.logo,
+        alt: brand.alt,
+        name: t(`tvSupport.${brand.id}Brand`),
+        format: available ? t(`download.tv.${platform}.format`) : '',
+        hint: available ? t(`download.tv.${platform}.hint`) : '',
+        available,
+        url: asset?.url,
+      }
+    }),
+  )
+
+  const hasAnyAsset = computed(() => Object.keys(props.tvData.assets).length > 0)
 
   const features = [
     { key: 'download.tv.features.realtime', icon: 'ti-broadcast' },
@@ -39,42 +70,46 @@
         </p>
       </div>
 
-      <div v-if="hasAssets" class="download-cards">
-        <div v-for="card in tvCards" :key="card.platform" class="download-card">
-          <div class="download-card__header">
-            <i :class="`ti ${card.icon}`" class="download-card__icon" aria-hidden="true" />
-            <div>
-              <h3 class="download-card__title">
-                {{ t(`${card.i18nPrefix}.name`) }}
-              </h3>
-              <p class="download-card__format">
-                {{ t(`${card.i18nPrefix}.format`) }}
-              </p>
-            </div>
-          </div>
-          <p class="download-card__arch">
-            {{ t(`${card.i18nPrefix}.arch`) }}
+      <div class="download-cards">
+        <div
+          v-for="card in tvCards"
+          :key="card.id"
+          class="download-card download-card--tv"
+          :class="{ 'download-card--wip': !card.available }"
+          :data-testid="`tv-download-${card.id}`"
+        >
+          <img :src="card.logo" :alt="card.alt" class="download-card__brand-logo" loading="lazy" />
+          <h3 class="download-card__title">
+            {{ card.name }}
+          </h3>
+          <p v-if="card.format" class="download-card__format">
+            {{ card.format }}
           </p>
-          <p v-if="tvData.tag" class="download-card__version">
+          <p v-if="tvData.tag && card.available" class="download-card__version">
             {{ tvData.tag }}
           </p>
           <a
-            :href="card.asset.url"
+            v-if="card.available && card.url"
+            :href="card.url"
             class="download-card__btn"
-            :aria-label="t(`${card.i18nPrefix}.downloadLabel`)"
+            :aria-label="t('download.tv.downloadGeneric')"
             target="_blank"
             rel="noopener noreferrer"
           >
             <i class="ti ti-download" aria-hidden="true" />
-            {{ t(`${card.i18nPrefix}.downloadLabel`) }}
+            {{ t('download.tv.downloadGeneric') }}
           </a>
-          <p class="download-card__hint">
-            {{ t(`${card.i18nPrefix}.hint`) }}
+          <span v-else class="download-card__status">
+            <i class="ti ti-loader-2" aria-hidden="true" />
+            {{ t('download.tv.noAssets') }}
+          </span>
+          <p v-if="card.hint" class="download-card__hint">
+            {{ card.hint }}
           </p>
         </div>
       </div>
 
-      <p v-else class="download-section__empty">
+      <p v-if="!hasAnyAsset" class="download-section__empty">
         {{ t('download.tv.noAssets') }}
       </p>
 
@@ -139,7 +174,7 @@
 
   .download-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
   }
@@ -151,7 +186,8 @@
     background: var(--piano-bg-solid);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     transition:
       border-color 0.15s ease,
       box-shadow 0.15s ease;
@@ -161,22 +197,24 @@
       box-shadow: var(--piano-shadow-md);
     }
 
-    &__header {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-      margin-bottom: 0.75rem;
+    &--wip {
+      opacity: 0.75;
     }
 
-    &__icon {
-      font-size: 2rem;
-      color: var(--piano-accent);
+    &__brand-logo {
+      height: 48px;
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      filter: brightness(1.1);
     }
 
     &__title {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--piano-text-primary);
+      margin-bottom: 0.25rem;
     }
 
     &__format {
@@ -184,17 +222,11 @@
       color: var(--piano-text-secondary);
     }
 
-    &__arch {
-      font-size: 0.8125rem;
-      color: var(--piano-text-tertiary);
-      margin-bottom: 0.25rem;
-    }
-
     &__version {
       font-size: 0.75rem;
       color: var(--piano-accent);
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-top: 0.25rem;
     }
 
     &__btn {
@@ -212,10 +244,29 @@
       color: var(--piano-text-on-dark);
       transition: background 0.15s ease;
       cursor: pointer;
-      margin-bottom: 0.5rem;
+      margin-top: 1rem;
 
       &:hover {
         background: var(--piano-accent-hover);
+      }
+    }
+
+    &__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--piano-yellow);
+      background: rgba(252, 206, 2, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--piano-radius-full);
+      border: 1px solid rgba(252, 206, 2, 0.2);
+      margin-top: 1rem;
+
+      i {
+        font-size: 0.85rem;
+        animation: tv-spin 1.5s linear infinite;
       }
     }
 
@@ -223,6 +274,7 @@
       font-size: 0.75rem;
       color: var(--piano-text-tertiary);
       line-height: 1.4;
+      margin-top: 0.75rem;
     }
   }
 
@@ -245,6 +297,12 @@
         color: var(--piano-accent);
         font-size: 1.25rem;
       }
+    }
+  }
+
+  @keyframes tv-spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 </style>

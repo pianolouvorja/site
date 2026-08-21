@@ -855,6 +855,12 @@
         "arch": "arm64",
         "downloadLabel": "Descargar para Android TV",
         "hint": "Instale el APK con un gestor de archivos o via ADB."
+      },
+      "downloadGeneric": "Descargar",
+      "tizen": {
+        "name": "Samsung Tizen TV",
+        "format": "Paquete .tpk",
+        "hint": "Instalar mediante USB o Tizen Studio Device Manager."
       }
     }
   },

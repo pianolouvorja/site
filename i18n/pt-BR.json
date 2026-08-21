@@ -598,7 +598,6 @@
           "Utilizar o aplicativo de forma ética e em conformidade com a legislação",
           "Não utilizar para fins ilegais, difamatórios ou que violem direitos de terceiros",
           "Respeitar os direitos autorais das obras projetadas",
-
           "Não tentar comprometer a segurança ou disponibilidade do serviço"
         ]
       },
@@ -846,16 +845,18 @@
       "webos": {
         "name": "LG webOS TV",
         "format": "Pacote .ipk",
-        "arch": "arm",
-        "downloadLabel": "Baixar para webOS",
         "hint": "Use o Developer Mode ou sideload via Device Manager da LG."
       },
       "androidtv": {
         "name": "Android TV",
         "format": "Pacote .apk",
-        "arch": "arm64",
-        "downloadLabel": "Baixar para Android TV",
         "hint": "Faça sideload do APK com um app de arquivos ou via ADB."
+      },
+      "downloadGeneric": "Baixar",
+      "tizen": {
+        "name": "Samsung Tizen TV",
+        "format": "Pacote .tpk",
+        "hint": "Instale via USB ou Tizen Studio Device Manager."
       }
     }
   },
@@ -925,8 +926,7 @@
     "cta": "Acompanhar novidades",
     "appleTvBrand": "Apple TV",
     "appleTvStatus": "Planejado",
-    "statusAvailable": "Disponível",
-    "downloadCta": "Baixar agora"
+    "statusAvailable": "Disponivel"
   },
   "team": {
     "eyebrow": "Nossa Equipe",

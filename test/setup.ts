@@ -2,6 +2,7 @@ import { vi, beforeEach } from 'vitest'
 import { config, RouterLinkStub } from '@vue/test-utils'
 import { computed, ref } from 'vue'
 import ptBR from '../i18n/pt-BR.json'
+import { detectDevice } from '~/utils/device-detection'
 
 // Função auxiliar simples para buscar o valor dentro de chaves encadeadas
 function getNestedValue(obj: Record<string, unknown>, path: string): string {
@@ -54,6 +55,7 @@ vi.stubGlobal('useRoute', () => ({
 vi.stubGlobal('useHead', vi.fn())
 vi.stubGlobal('computed', computed)
 vi.stubGlobal('ref', ref)
+vi.stubGlobal('detectDevice', detectDevice)
 
 vi.stubGlobal('useLocalePath', () => (path: string) => path)
 
