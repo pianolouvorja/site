@@ -8,18 +8,18 @@ No interesse de promover um ambiente aberto e acolhedor, nós como contribuidore
 
 Exemplos de comportamento que contribuem para criar um ambiente positivo:
 
-* Uso de linguagem acolhedora e inclusiva
-* Respeito a pontos de vista e experiências diferentes
-* Aceitação de críticas construtivas
-* Foco no que é melhor para a comunidade
-* Empatia para com outros membros da comunidade
+- Uso de linguagem acolhedora e inclusiva
+- Respeito a pontos de vista e experiências diferentes
+- Aceitação de críticas construtivas
+- Foco no que é melhor para a comunidade
+- Empatia para com outros membros da comunidade
 
 Exemplos de comportamento inaceitável:
 
-* Uso de linguagem ou imagens sexuais e atenção sexual indesejada
-* Trolling, comentários insultuosos/depreciativos e ataques pessoais ou políticos
-* Assédio público ou privado
-* Publicar informações privadas de outros sem consentimento explícito
+- Uso de linguagem ou imagens sexuais e atenção sexual indesejada
+- Trolling, comentários insultuosos/depreciativos e ataques pessoais ou políticos
+- Assédio público ou privado
+- Publicar informações privadas de outros sem consentimento explícito
 
 ## Aplicação
 
