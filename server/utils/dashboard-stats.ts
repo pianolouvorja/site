@@ -1,22 +1,90 @@
 import { Octokit } from '@octokit/rest'
 
+// Types mirroring app/types/dashboard.ts to avoid cross-boundary import.
+// Keep in sync with app/types/dashboard.ts.
+
+export interface PlatformDownloads {
+  platform: string
+  downloads: number
+}
+
+export interface AppDownloadStats {
+  repo: string
+  category: string
+  label: string
+  latestTag: string | null
+  totalDownloads: number
+  platforms: PlatformDownloads[]
+}
+
+export interface DownloadStats {
+  total: number
+  apps: AppDownloadStats[]
+}
+
 export interface DashboardStats {
-  downloads: number | null
+  downloads: DownloadStats | null
   stars: number | null
   forks: number | null
   subscribers: number | null
-
+  donations: { count: number; totalBRL: number } | null
   visits: number | null
   updatedAt: string
 }
 
-const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutos
+// Matchers server-side — kept in sync with app/utils/downloads.ts REPO_CONFIGS.
+interface AssetMatcher {
+  platform: string
+  test: (name: string) => boolean
+}
+
+interface RepoConfig {
+  name: string
+  category: string
+  label: string
+  assetMatchers: AssetMatcher[]
+  aggregatePlatforms?: boolean
+}
+
+const REPO_CONFIGS: RepoConfig[] = [
+  {
+    name: 'app',
+    category: 'desktop',
+    label: 'Desktop',
+    assetMatchers: [
+      { platform: 'Linux', test: (n) => /\.appimage$/i.test(n) },
+      { platform: 'Windows', test: (n) => /\.exe$/i.test(n) && !/\.yml$/i.test(n) && !/\.blockmap$/i.test(n) },
+      { platform: 'macOS', test: (n) => /\.dmg$/i.test(n) },
+    ],
+  },
+  {
+    name: 'palco-receiver',
+    category: 'tv',
+    label: 'TV / Palco',
+    assetMatchers: [
+      { platform: 'Android TV', test: (n) => /AndroidTV.*\.apk$/i.test(n) },
+      { platform: 'WebOS', test: (n) => /\.ipk$/i.test(n) },
+      { platform: 'Tizen', test: (n) => /\.wgt$|\.tpk$/i.test(n) },
+    ],
+    aggregatePlatforms: true,
+  },
+  {
+    name: 'apk',
+    category: 'mobile',
+    label: 'Mobile',
+    assetMatchers: [
+      { platform: 'Android', test: (n) => /^louvorja-piano-.*\.apk$/i.test(n) },
+      { platform: 'iOS', test: (n) => /ios-unsigned\.ipa$/i.test(n) },
+    ],
+  },
+]
+
+const CACHE_TTL_MS = 5 * 60 * 1000
 
 let cached: { data: DashboardStats; timestamp: number } | null = null
 
 let octokitOverride: Octokit | null = null
 
-/** Override do Octokit para testes (injeta instancia mockada ou null). */
 export function __setOctokitForTesting(octokit: Octokit | null): void {
   octokitOverride = octokit
 }
@@ -30,38 +98,88 @@ export function clearStatsCache(): void {
   cached = null
 }
 
+interface ReleaseAsset {
+  name: string
+  download_count: number
+}
+
+interface Release {
+  tag_name: string
+  assets: ReleaseAsset[]
+}
+
 /**
- * GitHub Stats: downloads (soma de assets), stars, forks.
- * Busca do repo pianolouvorja/web.
+ * GitHub Stats: downloads por app/plataforma, stars, forks.
+ * Busca dos repos: app, palco-receiver, apk.
  */
 export async function fetchGitHubStats(): Promise<{
-  downloads: number | null
+  downloads: DownloadStats | null
   stars: number | null
   forks: number | null
 }> {
   try {
     const octokit = getOctokit()
 
-    const [releasesResponse, repoResponse] = await Promise.all([
-      octokit.rest.repos.listReleases({
-        owner: 'pianolouvorja',
-        repo: 'web',
-        per_page: 100,
-      }),
-      octokit.rest.repos.get({
-        owner: 'pianolouvorja',
-        repo: 'web',
-      }),
+    const [appReleases, tvReleases, mobileReleases, repoInfo] = await Promise.all([
+      octokit.rest.repos.listReleases({ owner: 'pianolouvorja', repo: 'app', per_page: 100 }),
+      octokit.rest.repos.listReleases({ owner: 'pianolouvorja', repo: 'palco-receiver', per_page: 100 }),
+      octokit.rest.repos.listReleases({ owner: 'pianolouvorja', repo: 'apk', per_page: 100 }),
+      octokit.rest.repos.get({ owner: 'pianolouvorja', repo: 'app' }),
     ])
 
-    const downloads = releasesResponse.data
-      .flatMap((r) => r.assets || [])
-      .reduce((sum, a) => sum + (a.download_count || 0), 0)
+    const allReleases = [appReleases.data, tvReleases.data, mobileReleases.data] as Release[][]
+
+    const apps: AppDownloadStats[] = REPO_CONFIGS.map((config, i) => {
+      const releases = allReleases[i] ?? []
+      const platformMap = new Map<string, number>()
+      let totalApp = 0
+      let latestTag: string | null = null
+
+      for (const release of releases) {
+        if (!latestTag) latestTag = release.tag_name
+
+        for (const asset of release.assets || []) {
+          for (const matcher of config.assetMatchers) {
+            if (matcher.test(asset.name)) {
+              if (config.aggregatePlatforms) {
+                const current = platformMap.get(matcher.platform) ?? 0
+                if (asset.download_count > current) {
+                  platformMap.set(matcher.platform, asset.download_count)
+                }
+              } else {
+                platformMap.set(
+                  matcher.platform,
+                  (platformMap.get(matcher.platform) ?? 0) + asset.download_count,
+                )
+              }
+              totalApp += asset.download_count
+              break
+            }
+          }
+        }
+      }
+
+      const platforms: PlatformDownloads[] = [...platformMap.entries()].map(([platform, downloads]) => ({
+        platform,
+        downloads,
+      }))
+
+      return {
+        repo: config.name,
+        category: config.category,
+        label: config.label,
+        latestTag,
+        totalDownloads: totalApp,
+        platforms,
+      }
+    })
+
+    const total = apps.reduce((sum, a) => sum + a.totalDownloads, 0)
 
     return {
-      downloads,
-      stars: repoResponse.data.stargazers_count ?? null,
-      forks: repoResponse.data.forks_count ?? null,
+      downloads: { total, apps },
+      stars: repoInfo.data.stargazers_count ?? null,
+      forks: repoInfo.data.forks_count ?? null,
     }
   } catch {
     return { downloads: null, stars: null, forks: null }
@@ -105,8 +223,6 @@ export async function fetchVisitStats(): Promise<{
     const propertyId = config.public?.googleAnalyticsId
     if (!propertyId) return { visits: null }
 
-    // GA4 Data API requer service account — implementar quando BD-DASH-04 for resolvido
-    // Por ora retorna null se nao configurado
     return { visits: null }
   } catch {
     return { visits: null }
@@ -118,7 +234,6 @@ export async function fetchVisitStats(): Promise<{
  * Usa cache de 5 minutos para evitar rate limit.
  */
 export async function getDashboardStats(): Promise<DashboardStats> {
-  // Verificar cache
   if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
     return cached.data
   }
@@ -140,7 +255,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     stars: githubValue.stars,
     forks: githubValue.forks,
     subscribers: newsletterValue.subscribers,
-
+    donations: null,
     visits: visitsValue.visits,
     updatedAt: new Date().toISOString(),
   }

@@ -44,10 +44,18 @@ describe('useDashboardStats', () => {
   describe('fetchStats', () => {
     it('popula stats quando fetch sucede', async () => {
       const mockData = {
-        downloads: 950,
+        downloads: {
+          total: 950,
+          apps: [
+            { repo: 'app', category: 'desktop', label: 'Desktop', latestTag: 'v2.0.0', totalDownloads: 500, platforms: [{ platform: 'Windows', downloads: 300 }, { platform: 'Linux', downloads: 200 }] },
+            { repo: 'apk', category: 'mobile', label: 'Mobile', latestTag: 'v1.2.0', totalDownloads: 350, platforms: [{ platform: 'Android', downloads: 350 }] },
+            { repo: 'palco-receiver', category: 'tv', label: 'TV', latestTag: 'v0.5.0', totalDownloads: 100, platforms: [{ platform: 'Android TV', downloads: 100 }] },
+          ],
+        },
         stars: 42,
         forks: 7,
         subscribers: 53,
+        donations: null,
         visits: null,
         updatedAt: '2026-08-05T23:00:00.000Z',
       }
@@ -131,28 +139,28 @@ describe('useDashboardStats', () => {
 
   describe('refresh', () => {
     it('forca novo fetch ignorando estado atual', async () => {
-      const firstData = { downloads: 100, updatedAt: '2026-01-01T00:00:00Z' }
-      const secondData = { downloads: 200, updatedAt: '2026-01-02T00:00:00Z' }
+      const firstData = { downloads: { total: 100, apps: [] }, updatedAt: '2026-01-01T00:00:00Z' }
+      const secondData = { downloads: { total: 200, apps: [] }, updatedAt: '2026-01-02T00:00:00Z' }
       mockFetch.mockResolvedValueOnce(firstData).mockResolvedValueOnce(secondData)
 
       const { stats, fetchStats, refresh } = useDashboardStats()
       await fetchStats()
-      expect(stats.value?.downloads).toBe(100)
+      expect(stats.value?.downloads?.total).toBe(100)
 
       await refresh()
-      expect(stats.value?.downloads).toBe(200)
+      expect(stats.value?.downloads?.total).toBe(200)
     })
   })
 
   describe('polling', () => {
     it('startPolling chama fetchStats e popula stats', async () => {
-      mockFetch.mockResolvedValueOnce({ downloads: 50, updatedAt: '2026-01-01T00:00:00Z' })
+      mockFetch.mockResolvedValueOnce({ downloads: { total: 50, apps: [] }, updatedAt: '2026-01-01T00:00:00Z' })
       const { startPolling, stats } = useDashboardStats()
       startPolling()
       // fetchStats e async — aguardar microtask
       await new Promise((r) => setTimeout(r, 10))
       expect(stats.value).not.toBeNull()
-      expect(stats.value?.downloads).toBe(50)
+      expect(stats.value?.downloads?.total).toBe(50)
     })
 
     it('stopPolling limpa o interval apos startPolling', async () => {
