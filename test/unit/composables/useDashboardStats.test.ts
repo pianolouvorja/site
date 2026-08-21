@@ -47,9 +47,33 @@ describe('useDashboardStats', () => {
         downloads: {
           total: 950,
           apps: [
-            { repo: 'app', category: 'desktop', label: 'Desktop', latestTag: 'v2.0.0', totalDownloads: 500, platforms: [{ platform: 'Windows', downloads: 300 }, { platform: 'Linux', downloads: 200 }] },
-            { repo: 'apk', category: 'mobile', label: 'Mobile', latestTag: 'v1.2.0', totalDownloads: 350, platforms: [{ platform: 'Android', downloads: 350 }] },
-            { repo: 'palco-receiver', category: 'tv', label: 'TV', latestTag: 'v0.5.0', totalDownloads: 100, platforms: [{ platform: 'Android TV', downloads: 100 }] },
+            {
+              repo: 'app',
+              category: 'desktop',
+              label: 'Desktop',
+              latestTag: 'v2.0.0',
+              totalDownloads: 500,
+              platforms: [
+                { platform: 'Windows', downloads: 300 },
+                { platform: 'Linux', downloads: 200 },
+              ],
+            },
+            {
+              repo: 'apk',
+              category: 'mobile',
+              label: 'Mobile',
+              latestTag: 'v1.2.0',
+              totalDownloads: 350,
+              platforms: [{ platform: 'Android', downloads: 350 }],
+            },
+            {
+              repo: 'palco-receiver',
+              category: 'tv',
+              label: 'TV',
+              latestTag: 'v0.5.0',
+              totalDownloads: 100,
+              platforms: [{ platform: 'Android TV', downloads: 100 }],
+            },
           ],
         },
         stars: 42,
@@ -154,7 +178,10 @@ describe('useDashboardStats', () => {
 
   describe('polling', () => {
     it('startPolling chama fetchStats e popula stats', async () => {
-      mockFetch.mockResolvedValueOnce({ downloads: { total: 50, apps: [] }, updatedAt: '2026-01-01T00:00:00Z' })
+      mockFetch.mockResolvedValueOnce({
+        downloads: { total: 50, apps: [] },
+        updatedAt: '2026-01-01T00:00:00Z',
+      })
       const { startPolling, stats } = useDashboardStats()
       startPolling()
       // fetchStats e async — aguardar microtask

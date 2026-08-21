@@ -53,7 +53,10 @@ const REPO_CONFIGS: RepoConfig[] = [
     label: 'Desktop',
     assetMatchers: [
       { platform: 'Linux', test: (n) => /\.appimage$/i.test(n) },
-      { platform: 'Windows', test: (n) => /\.exe$/i.test(n) && !/\.yml$/i.test(n) && !/\.blockmap$/i.test(n) },
+      {
+        platform: 'Windows',
+        test: (n) => /\.exe$/i.test(n) && !/\.yml$/i.test(n) && !/\.blockmap$/i.test(n),
+      },
       { platform: 'macOS', test: (n) => /\.dmg$/i.test(n) },
     ],
   },
@@ -122,7 +125,11 @@ export async function fetchGitHubStats(): Promise<{
 
     const [appReleases, tvReleases, mobileReleases, repoInfo] = await Promise.all([
       octokit.rest.repos.listReleases({ owner: 'pianolouvorja', repo: 'app', per_page: 100 }),
-      octokit.rest.repos.listReleases({ owner: 'pianolouvorja', repo: 'palco-receiver', per_page: 100 }),
+      octokit.rest.repos.listReleases({
+        owner: 'pianolouvorja',
+        repo: 'palco-receiver',
+        per_page: 100,
+      }),
       octokit.rest.repos.listReleases({ owner: 'pianolouvorja', repo: 'apk', per_page: 100 }),
       octokit.rest.repos.get({ owner: 'pianolouvorja', repo: 'app' }),
     ])
@@ -159,10 +166,12 @@ export async function fetchGitHubStats(): Promise<{
         }
       }
 
-      const platforms: PlatformDownloads[] = [...platformMap.entries()].map(([platform, downloads]) => ({
-        platform,
-        downloads,
-      }))
+      const platforms: PlatformDownloads[] = [...platformMap.entries()].map(
+        ([platform, downloads]) => ({
+          platform,
+          downloads,
+        }),
+      )
 
       return {
         repo: config.name,

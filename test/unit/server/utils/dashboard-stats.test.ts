@@ -63,9 +63,7 @@ const defaultListReleasesResults = [
       },
       {
         tag_name: 'v1.1.0',
-        assets: [
-          { name: 'louvorja-piano-1.1.0.apk', download_count: 200 },
-        ],
+        assets: [{ name: 'louvorja-piano-1.1.0.apk', download_count: 200 }],
       },
     ],
   },
@@ -124,9 +122,17 @@ describe('dashboard-stats', () => {
       const result = await fetchGitHubStats()
       expect(result.downloads).not.toBeNull()
       expect(result.downloads!.total).toBe(
-        200 + 350 + 100 + 80 + 120 + // desktop: 850
-          45 + 12 + 8 + // TV: 65
-          500 + 30 + 200, // mobile: 730
+        200 +
+          350 +
+          100 +
+          80 +
+          120 + // desktop: 850
+          45 +
+          12 +
+          8 + // TV: 65
+          500 +
+          30 +
+          200, // mobile: 730
       ) // total: 1645
       expect(result.downloads!.apps).toHaveLength(3)
     })
