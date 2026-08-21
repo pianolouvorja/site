@@ -116,7 +116,17 @@ describe('MobileDownloadCards', () => {
     expect(wrapper.text()).toContain('v0.1.53')
   })
 
-  it('does not display version when tag is null', () => {
+  it('does not display version when tag is null (with assets)', () => {
+    const noTag = { ...mobileWithAsset, tag: null }
+    const wrapper = mount(MobileDownloadCards, {
+      props: { mobileData: noTag, appUrl: APP_URL },
+      global: { stubs: ['i'] },
+    })
+    const versionEls = wrapper.findAll('.download-card__version')
+    expect(versionEls).toHaveLength(0)
+  })
+
+  it('does not display version when tag is null (no assets)', () => {
     const wrapper = mount(MobileDownloadCards, {
       props: { mobileData: emptyCategory, appUrl: APP_URL },
       global: { stubs: ['i'] },
