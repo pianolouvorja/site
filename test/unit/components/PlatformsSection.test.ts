@@ -7,7 +7,6 @@ const mountPlatform = () =>
     global: {
       stubs: {
         ClientOnly: { template: '<slot />' },
-        NotifyModal: { template: '<div class="stub-notify" />' },
       },
     },
   })
@@ -46,68 +45,25 @@ describe('PlatformsSection', () => {
     expect(cta.attributes('href')).toBe('#download')
   })
 
-  it('card web aponta para a URL do app', () => {
+  it('card web aponta para a URL do app e abre em nova aba', () => {
     const wrapper = mountPlatform()
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     const webCard = cards[1]
     const cta = webCard.find('a')
     expect(cta.attributes('href')).toMatch(/^https:\/\//)
+    expect(cta.attributes('target')).toBe('_blank')
   })
 
-  it('card mobile abre modal de notificacao', async () => {
-    const NotifyModalStub = {
-      name: 'NotifyModal',
-      props: ['modelValue'],
-      template: '<div v-if="modelValue" data-testid="notify-modal" />',
-    }
-    const wrapper = mount(PlatformsSection, {
-      global: {
-        stubs: {
-          ClientOnly: { name: 'ClientOnly', template: '<slot />' },
-          NotifyModal: NotifyModalStub,
-        },
-      },
-    })
+  it('card mobile aponta para a pagina de download (app disponivel)', () => {
+    const wrapper = mountPlatform()
     const cards = wrapper.findAll('[data-testid="platform-card"]')
     const mobileCard = cards[2]
-    const cta = mobileCard.find('[data-testid="mobile-notify-trigger"]')
-    expect(cta.exists()).toBe(true)
-    await cta.trigger('click')
-    expect(wrapper.find('[data-testid="notify-modal"]').exists()).toBe(true)
-  })
-
-  it('openNotifyModal define showNotifyModal como true', () => {
-    const wrapper = mountPlatform()
-    // Chama a funcao diretamente para garantir coverage da funcao
-    wrapper.vm.openNotifyModal()
-    expect(wrapper.vm.showNotifyModal).toBe(true)
-  })
-
-  it('showNotifyModal inicia como false', () => {
-    const wrapper = mountPlatform()
-    expect(wrapper.vm.showNotifyModal).toBe(false)
-  })
-
-  it('v-model update:modelValue fecha o modal', async () => {
-    const NotifyModalStub = {
-      name: 'NotifyModal',
-      props: ['modelValue'],
-      emits: ['update:modelValue'],
-      template: '<div data-testid="notify-stub" />',
-    }
-    const wrapper = mount(PlatformsSection, {
-      global: {
-        stubs: {
-          ClientOnly: { name: 'ClientOnly', template: '<slot />' },
-          NotifyModal: NotifyModalStub,
-        },
-      },
-    })
-    wrapper.vm.openNotifyModal()
-    expect(wrapper.vm.showNotifyModal).toBe(true)
-    // Simula NotifyModal emitindo update:modelValue=false (fechar)
-    wrapper.findComponent({ name: 'NotifyModal' }).vm.$emit('update:modelValue', false)
-    await wrapper.vm.$nextTick()
-    expect(wrapper.vm.showNotifyModal).toBe(false)
+    const cta = mobileCard.find('a')
+    expect(cta.attributes('href')).toBe('/download')
+    // Link interno — nao deve abrir em nova aba
+    expect(cta.attributes('target')).toBeUndefined()
+    // Badge de disponibilidade, nao "Em breve"
+    expect(mobileCard.text()).toContain('Novo')
+    expect(mobileCard.text()).not.toContain('Em Breve')
   })
 })

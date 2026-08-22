@@ -8,15 +8,7 @@ export interface ActivityItem {
   url: string
 }
 
-/** Override para testes */
-let _octokitOverride: Octokit | null = null
-
-export function __setOctokitForTesting(octokit: Octokit | null): void {
-  _octokitOverride = octokit
-}
-
 function getOctokit(): Octokit {
-  if (_octokitOverride) return _octokitOverride
   return new Octokit({ auth: process.env.GITHUB_TOKEN || undefined })
 }
 

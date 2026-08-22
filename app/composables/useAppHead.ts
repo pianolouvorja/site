@@ -94,7 +94,7 @@ export function useAppHead(options: AppHeadOptions = {}) {
       { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
       // Theme color for browser chrome
       { name: 'theme-color', content: '#0d1b2a' },
-      // Google Search Console verification
+      // Google Search Console verification (valor default; sobrescrever via NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION)
       { name: 'google-site-verification', content: 'A0OHlivpSyISUwtfHocbr3ESg1ShWBjjUSmRvaC0exQ' },
     ],
     link: [

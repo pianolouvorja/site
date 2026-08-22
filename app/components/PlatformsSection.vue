@@ -1,12 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
   import { siteConfig } from '~/data/site'
-
-  const showNotifyModal = ref(false)
-
-  function openNotifyModal() {
-    showNotifyModal.value = true
-  }
 
   const platforms = [
     {
@@ -50,10 +43,11 @@
       description: 'platforms.mobile.description',
       features: [
         { icon: 'ti-brand-android', key: 'feature1' },
-        { icon: 'ti-brand-apple', key: 'feature2' },
-        { icon: 'ti-cloud', key: 'feature3' },
+        { icon: 'ti-device-tv', key: 'feature2' },
+        { icon: 'ti-brand-apple', key: 'feature3' },
       ],
       accent: 'blue',
+      ctaHref: '/download',
       ctaLabel: 'platforms.mobile.cta',
     },
   ] as const
@@ -110,23 +104,11 @@
           </ul>
 
           <a
-            v-if="platform.id === 'mobile'"
-            href="#"
-            class="platforms__card-cta"
-            :class="`platforms__card-cta--${platform.accent}`"
-            data-testid="mobile-notify-trigger"
-            @click.prevent="openNotifyModal"
-          >
-            <span>{{ $t(platform.ctaLabel) }}</span>
-            <i class="ti ti-arrow-right" />
-          </a>
-          <a
-            v-else
             :href="platform.ctaHref"
             class="platforms__card-cta"
             :class="`platforms__card-cta--${platform.accent}`"
-            target="_blank"
-            rel="noopener noreferrer"
+            :target="platform.id === 'web' ? '_blank' : undefined"
+            :rel="platform.id === 'web' ? 'noopener noreferrer' : undefined"
           >
             <span>{{ $t(platform.ctaLabel) }}</span>
             <i class="ti ti-arrow-right" />
@@ -134,8 +116,6 @@
         </div>
       </div>
     </div>
-
-    <NotifyModal v-model="showNotifyModal" />
   </section>
 </template>
 

@@ -1,10 +1,9 @@
 <script setup lang="ts">
   import { siteConfig } from '~/data/site'
-  import { useTvBrands } from '~/composables/useTvBrands'
+  import type { AllDownloadsResponse, CategoryResult } from '~/utils/downloads'
+  import { detectDevice } from '~/utils/device-detection'
 
   const { t } = useI18n()
-
-  const tvBrands = useTvBrands()
 
   useSeoMeta({
     title: () => t('download.metaTitle'),
@@ -27,19 +26,35 @@
   const downloadUrls = ref<Record<string, string>>({})
   const fetchError = ref(false)
 
-  // Detect OS client-side only to avoid hydration mismatch
+  // Dynamic downloads from all-downloads endpoint
+  const allDownloads = ref<AllDownloadsResponse | null>(null)
+  const tvData = computed<CategoryResult>(
+    () => allDownloads.value?.tv ?? { repo: 'palco-receiver', tag: null, assets: {} },
+  )
+  const mobileData = computed<CategoryResult>(
+    () => allDownloads.value?.mobile ?? { repo: 'apk', tag: null, assets: {} },
+  )
+
+  // Detect OS client-side only to avoid hydration mismatch.
+  // Uses the shared device-detection util so Android phones (whose UA
+  // contains "Linux") are NOT misclassified as desktop Linux.
   const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
+  const detectedMobilePlatform = ref<'android' | 'ios' | null>(null)
 
   onMounted(async () => {
-    // OS detection on client only (avoids SSR/client mismatch)
-    const ua = navigator.userAgent
-    const lower = ua.toLowerCase()
-    if (lower.includes('mac os') || lower.includes('macos') || lower.includes('darwin')) {
-      detectedOs.value = 'macos'
-    } else if (lower.includes('windows')) {
-      detectedOs.value = 'windows'
-    } else if (lower.includes('linux') || lower.includes('x11')) {
-      detectedOs.value = 'linux'
+    const device = detectDevice(navigator.userAgent)
+    if (device.category === 'desktop') {
+      detectedOs.value =
+        device.platform === 'macos'
+          ? 'macos'
+          : device.platform === 'windows'
+            ? 'windows'
+            : device.platform === 'linux'
+              ? 'linux'
+              : null
+    } else if (device.category === 'mobile') {
+      detectedMobilePlatform.value =
+        device.platform === 'android' ? 'android' : device.platform === 'ios' ? 'ios' : null
     }
 
     // Fetch latest release via server proxy (token-backed, no rate limit)
@@ -62,6 +77,19 @@
     } catch {
       fetchError.value = true
     }
+
+    // Fetch TV + Mobile downloads (non-blocking, independent)
+    fetch('/api/github/all-downloads')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch all downloads')
+        return res.json() as Promise<AllDownloadsResponse>
+      })
+      .then((data) => {
+        allDownloads.value = data
+      })
+      .catch(() => {
+        // Silently fall back to empty (components show "coming soon")
+      })
   })
 
   const desktopCards = computed(() => [
@@ -295,107 +323,15 @@
       </div>
     </section>
 
+    <!-- TV e Palco Digital -->
+    <TvDownloadCards :tv-data="tvData" />
+
     <!-- Mobile -->
-    <section class="download-section">
-      <div class="download-section__container">
-        <div class="download-section__header">
-          <span class="download-section__badge download-section__badge--muted">
-            {{ $t('download.mobile.badge') }}
-          </span>
-          <h2 class="download-section__title">
-            {{ $t('download.mobile.title') }}
-          </h2>
-          <p class="download-section__desc">
-            {{ $t('download.mobile.description') }}
-          </p>
-          <p class="download-section__subtext">
-            {{ $t('download.mobile.platforms') }}
-          </p>
-        </div>
-
-        <ul class="download-features download-features--muted">
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.mobile.features.nativeAndroid') }}
-          </li>
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.mobile.features.nativeIos') }}
-          </li>
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.mobile.features.cloudSync') }}
-          </li>
-        </ul>
-
-        <p class="download-section__subtext download-section__apk-note">
-          <i class="ti ti-flask" aria-hidden="true" />
-          {{ $t('download.mobile.apkNote') }}
-        </p>
-
-        <a :href="siteConfig.appUrl" class="download-card__btn download-card__btn--large">
-          <i class="ti ti-device-mobile" aria-hidden="true" />
-          {{ $t('download.mobile.useWebInstead') }}
-        </a>
-      </div>
-    </section>
-
-    <!-- Smart TV -->
-    <section class="download-section download-section--alt">
-      <div class="download-section__container">
-        <div class="download-section__header">
-          <span class="download-section__badge download-section__badge--muted">
-            {{ $t('download.tv.badge') }}
-          </span>
-          <h2 class="download-section__title">
-            {{ $t('download.tv.title') }}
-          </h2>
-          <p class="download-section__desc">
-            {{ $t('download.tv.description') }}
-          </p>
-        </div>
-
-        <div class="tv-brands">
-          <div
-            v-for="brand in tvBrands"
-            :key="brand.id"
-            class="tv-brand-card"
-            data-testid="download-tv-brand"
-          >
-            <img :src="brand.logo" :alt="brand.alt" class="tv-brand-card__logo" loading="lazy" />
-            <div class="tv-brand-card__info">
-              <h3 class="tv-brand-card__name">
-                {{ $t(`download.tv.${brand.id}Brand`) }}
-              </h3>
-              <span class="tv-brand-card__status">
-                <i class="ti ti-loader-2" aria-hidden="true" />
-                {{ $t(`download.tv.${brand.id}Status`) }}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <ul class="download-features download-features--muted">
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.tv.features.nativeLg') }}
-          </li>
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.tv.features.bigScreen') }}
-          </li>
-          <li>
-            <i class="ti ti-clock" aria-hidden="true" />
-            {{ $t('download.tv.features.remoteControl') }}
-          </li>
-        </ul>
-
-        <a href="#download" class="download-card__btn download-card__btn--large">
-          <i class="ti ti-device-desktop" aria-hidden="true" />
-          {{ $t('download.tv.useDesktopInstead') }}
-        </a>
-      </div>
-    </section>
+    <MobileDownloadCards
+      :mobile-data="mobileData"
+      :app-url="siteConfig.appUrl"
+      :detected-platform="detectedMobilePlatform"
+    />
 
     <!-- System Requirements -->
     <section class="download-section download-section--alt">
@@ -780,63 +716,6 @@
 
       &:hover {
         text-decoration: underline;
-      }
-    }
-  }
-
-  /* TV Brands */
-  .tv-brands {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .tv-brand-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    border: 1px solid var(--piano-border);
-    border-radius: var(--download-radius);
-    background: var(--piano-bg-solid);
-    transition: border-color 0.15s ease;
-
-    &:hover {
-      border-color: var(--piano-accent);
-    }
-
-    &__logo {
-      height: 40px;
-      width: auto;
-      max-width: 140px;
-      object-fit: contain;
-    }
-
-    &__info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    &__name {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--piano-text-primary);
-    }
-
-    &__status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--piano-text-tertiary);
-
-      i {
-        font-size: 0.85rem;
-        animation: spin 1.5s linear infinite;
       }
     }
   }

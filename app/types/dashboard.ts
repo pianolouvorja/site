@@ -3,8 +3,27 @@
  * Evita import cross-boundary que quebra o typecheck do Nuxt.
  */
 
+export interface PlatformDownloads {
+  platform: string
+  downloads: number
+}
+
+export interface AppDownloadStats {
+  repo: string
+  category: string
+  label: string
+  latestTag: string | null
+  totalDownloads: number
+  platforms: PlatformDownloads[]
+}
+
+export interface DownloadStats {
+  total: number
+  apps: AppDownloadStats[]
+}
+
 export interface DashboardStats {
-  downloads: number | null
+  downloads: DownloadStats | null
   stars: number | null
   forks: number | null
   subscribers: number | null

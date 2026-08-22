@@ -45,7 +45,7 @@
   "platforms": {
     "eyebrow": "Cross-platform",
     "title": "Available where you need it",
-    "description": "Use on desktop for maximum productivity, in the browser as a quick alternative, or wait for native mobile apps.",
+    "description": "Use the desktop app for maximum productivity, the browser as a quick alternative, or your phone with the Android app.",
     "desktop": {
       "badge": "Recommended",
       "title": "Native Desktop",
@@ -67,14 +67,14 @@
       "cta": "Open in Browser"
     },
     "mobile": {
-      "badge": "Coming Soon",
-      "title": "Mobile (Coming Soon)",
-      "subtitle": "Android and iOS",
-      "description": "Native apps in development to bring PIANO to your phone and tablet.",
-      "feature1": "Native Android",
-      "feature2": "Native iOS",
-      "feature3": "Cloud sync",
-      "cta": "Notify on launch"
+      "badge": "New",
+      "title": "Mobile",
+      "subtitle": "Android available",
+      "description": "Native Android app available now. Control the digital stage right from your phone.",
+      "feature1": "Native Android available",
+      "feature2": "Digital stage control",
+      "feature3": "iOS in development",
+      "cta": "Download App"
     }
   },
   "notifyModal": {
@@ -598,7 +598,6 @@
           "Use the app ethically and in compliance with applicable law",
           "Not use it for illegal, defamatory purposes or that violate third-party rights",
           "Respect the copyrights of displayed works",
-
           "Not attempt to compromise security or availability"
         ]
       },
@@ -799,17 +798,34 @@
       }
     },
     "mobile": {
-      "badge": "Coming soon",
+      "badge": "Available",
       "title": "Mobile",
-      "description": "The Android app (APK) is in advanced development, not officially released yet. Meanwhile, use the web app on your phone.",
+      "description": "Download the Android app and take PIANO with you — control the stage right from your phone.",
       "platforms": "Android and iOS",
       "features": {
-        "nativeAndroid": "Android app (APK) — in advanced development",
+        "nativeAndroid": "Native Android (planned)",
         "nativeIos": "Native iOS (planned)",
-        "cloudSync": "Cloud sync (planned)"
+        "cloudSync": "Cloud sync (planned)",
+        "remote": "Remote control from desktop",
+        "network": "Local network sync",
+        "offline": "Works offline"
       },
-      "useWebInstead": "Use web app on phone for now",
-      "apkNote": "APK preview: internal build, available soon for testing."
+      "useWebInstead": "Use the web app on your phone",
+      "noAssets": "Mobile downloads will be available shortly.",
+      "android": {
+        "name": "Android",
+        "format": ".apk package",
+        "arch": "arm64",
+        "downloadLabel": "Download APK",
+        "hint": "Install the APK allowing unknown sources."
+      },
+      "ios": {
+        "name": "iOS",
+        "format": "TestFlight app",
+        "arch": "universal",
+        "downloadLabel": "Open TestFlight",
+        "hint": "TestFlight invite required."
+      }
     },
     "systemRequirements": {
       "title": "System Requirements",
@@ -817,27 +833,35 @@
       "web": "Web: Modern browser (Chrome, Firefox, Edge, Safari), internet connection for first access"
     },
     "tv": {
-      "badge": "Coming Soon",
-      "title": "Smart TV",
-      "description": "We are preparing PIANO for Smart TVs. The first platform will be LG with webOS.",
-      "lgBrand": "webOS (LG)",
-      "lgStatus": "In development",
-      "samsungBrand": "Tizen (Samsung)",
-      "samsungStatus": "In development",
-      "rokuBrand": "Roku TV",
-      "rokuStatus": "Planned",
-      "androidTvBrand": "Android TV / Google TV",
-      "androidTvStatus": "Planned",
-      "chromecastBrand": "Chromecast",
-      "chromecastStatus": "Planned",
+      "badge": "New",
+      "title": "TV / Digital Stage",
+      "description": "Turn any Smart TV into a stage receiver. Control it from the Android app (APK) — web and desktop control coming soon.",
+      "noAssets": "TV packages will be published soon.",
       "features": {
-        "nativeLg": "Native LG webOS app",
-        "bigScreen": "Direct TV projection",
-        "remoteControl": "Remote control via mobile app"
+        "realtime": "Real-time mirroring",
+        "multicast": "Multiple TVs at once",
+        "autodiscover": "Automatic network discovery"
       },
-      "useDesktopInstead": "Use the Desktop app for now",
-      "appleTvBrand": "Apple TV",
-      "appleTvStatus": "Planned"
+      "webos": {
+        "name": "LG webOS TV",
+        "format": ".ipk package",
+        "arch": "arm",
+        "downloadLabel": "Download for webOS",
+        "hint": "Use Developer Mode or sideload via LG Device Manager."
+      },
+      "androidtv": {
+        "name": "Android TV",
+        "format": ".apk package",
+        "arch": "arm64",
+        "downloadLabel": "Download for Android TV",
+        "hint": "Sideload the APK with a file manager or via ADB."
+      },
+      "downloadGeneric": "Download",
+      "tizen": {
+        "name": "Samsung Tizen TV",
+        "format": ".tpk package",
+        "hint": "Install via USB or Tizen Studio Device Manager."
+      }
     }
   },
   "contributors": {
@@ -876,14 +900,18 @@
     "products": {
       "web": "Web",
       "desktop": "Desktop",
-      "mobile": "Mobile"
+      "mobile": "Mobile",
+      "tv": "Smart TV"
     },
     "repos": {
       "web": "Web (Site)",
       "app": "App (Desktop)",
       "api": "API",
       "site": "Site"
-    }
+    },
+    "filterLabel": "Filter by product",
+    "filterAll": "All",
+    "filterEmpty": "No releases for this product yet."
   },
   "tvSupport": {
     "eyebrow": "Roadmap",
@@ -901,7 +929,9 @@
     "chromecastStatus": "Planned",
     "cta": "Stay updated",
     "appleTvBrand": "Apple TV",
-    "appleTvStatus": "Planned"
+    "appleTvStatus": "Planned",
+    "statusAvailable": "Available",
+    "downloadCta": "Download now"
   },
   "team": {
     "eyebrow": "Our Team",

@@ -1,2 +1,3 @@
-# Default reviewers — Ezequias (criador/mantenedor) em todo PR
-*                @ezequiasfonseca
+# Piano Louvor JA — revisão padrão em qualquer alteração.
+# GitHub solicita @ezequiasfonseca automaticamente em novas PRs.
+* @ezequiasfonseca

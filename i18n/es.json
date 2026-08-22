@@ -45,7 +45,7 @@
   "platforms": {
     "eyebrow": "Multiplataforma",
     "title": "Disponible donde lo necesitas",
-    "description": "Úselo en escritorio para máxima productividad, en el navegador como alternativa rápida, o en el móvil próximamente.",
+    "description": "Usa la app de escritorio para máxima productividad, el navegador como alternativa rápida o tu móvil con la app Android.",
     "desktop": {
       "badge": "Recomendado",
       "title": "Escritorio Nativo",
@@ -67,14 +67,14 @@
       "cta": "Abrir en Navegador"
     },
     "mobile": {
-      "badge": "Próximamente",
-      "title": "Móvil (Próximamente)",
-      "subtitle": "Android e iOS",
-      "description": "Aplicaciones nativas en desarrollo para llevar PIANO al teléfono y la tablet.",
-      "feature1": "Android nativo",
-      "feature2": "iOS nativo",
-      "feature3": "Sincronización en la nube",
-      "cta": "Avisar al lanzar"
+      "badge": "Nuevo",
+      "title": "Mobile",
+      "subtitle": "Android disponible",
+      "description": "App nativa Android disponible ahora. Controla el escenario digital desde tu móvil.",
+      "feature1": "Android nativo disponible",
+      "feature2": "Control del escenario digital",
+      "feature3": "iOS en desarrollo",
+      "cta": "Descargar App"
     }
   },
   "notifyModal": {
@@ -798,17 +798,34 @@
       }
     },
     "mobile": {
-      "badge": "Próximamente",
+      "badge": "Disponible",
       "title": "Móvil",
-      "description": "La app Android (APK) está en desarrollo avanzado, aún sin lanzamiento oficial. Mientras tanto, usa la web app en el móvil.",
+      "description": "Descarga la app Android y lleva el PIANO en el móvil — controla el escenario desde tu dispositivo.",
       "platforms": "Android e iOS",
       "features": {
-        "nativeAndroid": "App Android (APK) — en desarrollo avanzado",
+        "nativeAndroid": "Android nativo (planificado)",
         "nativeIos": "iOS nativo (planificado)",
-        "cloudSync": "Sincronización en la nube (planificado)"
+        "cloudSync": "Sincronización en la nube (planificado)",
+        "remote": "Control remoto desde el desktop",
+        "network": "Sincronización por red local",
+        "offline": "Funciona sin conexión"
       },
-      "useWebInstead": "Usar web app en el teléfono por ahora",
-      "apkNote": "Vista previa del APK: build interno, disponible pronto para pruebas."
+      "useWebInstead": "Usar la web app en el móvil",
+      "noAssets": "Las descargas móviles estarán disponibles en breve.",
+      "android": {
+        "name": "Android",
+        "format": "Paquete .apk",
+        "arch": "arm64",
+        "downloadLabel": "Descargar APK",
+        "hint": "Instale el APK permitiendo orígenes desconocidos."
+      },
+      "ios": {
+        "name": "iOS",
+        "format": "App TestFlight",
+        "arch": "universal",
+        "downloadLabel": "Abrir TestFlight",
+        "hint": "Requiere invitación de TestFlight."
+      }
     },
     "systemRequirements": {
       "title": "Requisitos del Sistema",
@@ -816,27 +833,35 @@
       "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexión a internet para primer acceso"
     },
     "tv": {
-      "badge": "Próximamente",
-      "title": "Smart TV",
-      "description": "Estamos preparando PIANO para Smart TVs. La primera plataforma será LG con webOS.",
-      "lgBrand": "webOS (LG)",
-      "lgStatus": "En desarrollo",
-      "samsungBrand": "Tizen (Samsung)",
-      "samsungStatus": "En desarrollo",
-      "rokuBrand": "Roku TV",
-      "rokuStatus": "Planificado",
-      "androidTvBrand": "Android TV / Google TV",
-      "androidTvStatus": "Planificado",
-      "chromecastBrand": "Chromecast",
-      "chromecastStatus": "Planificado",
+      "badge": "Nuevo",
+      "title": "TV / Escenario Digital",
+      "description": "Convierte cualquier Smart TV en un receptor de escenario. Contrólala desde la app Android (APK) — control vía web y escritorio próximamente.",
+      "noAssets": "Los paquetes de TV se publicarán pronto.",
       "features": {
-        "nativeLg": "App nativo LG webOS",
-        "bigScreen": "Proyección directa en TV",
-        "remoteControl": "Control remoto vía app móvil"
+        "realtime": "Duplicación en tiempo real",
+        "multicast": "Varias TVs a la vez",
+        "autodiscover": "Descubrimiento automático en red"
       },
-      "useDesktopInstead": "Usa la app Desktop por ahora",
-      "appleTvBrand": "Apple TV",
-      "appleTvStatus": "Planificado"
+      "webos": {
+        "name": "LG webOS TV",
+        "format": "Paquete .ipk",
+        "arch": "arm",
+        "downloadLabel": "Descargar para webOS",
+        "hint": "Use Developer Mode o sideload con LG Device Manager."
+      },
+      "androidtv": {
+        "name": "Android TV",
+        "format": "Paquete .apk",
+        "arch": "arm64",
+        "downloadLabel": "Descargar para Android TV",
+        "hint": "Instale el APK con un gestor de archivos o via ADB."
+      },
+      "downloadGeneric": "Descargar",
+      "tizen": {
+        "name": "Samsung Tizen TV",
+        "format": "Paquete .tpk",
+        "hint": "Instalar mediante USB o Tizen Studio Device Manager."
+      }
     }
   },
   "contributors": {
@@ -875,14 +900,18 @@
     "products": {
       "web": "Web",
       "desktop": "Desktop",
-      "mobile": "Mobile"
+      "mobile": "Mobile",
+      "tv": "Smart TV"
     },
     "repos": {
       "web": "Web (Sitio)",
       "app": "App (Desktop)",
       "api": "API",
       "site": "Sitio"
-    }
+    },
+    "filterLabel": "Filtrar por producto",
+    "filterAll": "Todos",
+    "filterEmpty": "Aún no hay releases para este producto."
   },
   "tvSupport": {
     "eyebrow": "Hoja de ruta",
@@ -900,7 +929,9 @@
     "chromecastStatus": "Planificado",
     "cta": "Seguir novedades",
     "appleTvBrand": "Apple TV",
-    "appleTvStatus": "Planificado"
+    "appleTvStatus": "Planificado",
+    "statusAvailable": "Disponible",
+    "downloadCta": "Descargar ahora"
   },
   "team": {
     "eyebrow": "Nuestro Equipo",

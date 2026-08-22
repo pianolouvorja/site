@@ -45,7 +45,7 @@
   "platforms": {
     "eyebrow": "Multiplataforma",
     "title": "Disponível onde você precisa",
-    "description": "Use no desktop para máxima produtividade, no navegador como alternativa rápida, ou aguarde os apps móveis nativos.",
+    "description": "Use no desktop para máxima produtividade, no navegador como alternativa rápida ou no celular com o app Android.",
     "desktop": {
       "badge": "Recomendado",
       "title": "Desktop Nativo",
@@ -67,14 +67,14 @@
       "cta": "Abrir no Navegador"
     },
     "mobile": {
-      "badge": "Em Breve",
-      "title": "Mobile (Em Breve)",
-      "subtitle": "Android e iOS",
-      "description": "Apps nativos em desenvolvimento para levar o PIANO ao celular e tablet.",
-      "feature1": "Android nativo",
-      "feature2": "iOS nativo",
-      "feature3": "Sincronização na nuvem",
-      "cta": "Avisar quando lançar"
+      "badge": "Novo",
+      "title": "Mobile",
+      "subtitle": "Android disponível",
+      "description": "App nativo Android disponível agora. Controle o palco digital direto do celular.",
+      "feature1": "Android nativo disponível",
+      "feature2": "Controle do palco digital",
+      "feature3": "iOS em desenvolvimento",
+      "cta": "Baixar App"
     }
   },
   "notifyModal": {
@@ -598,7 +598,6 @@
           "Utilizar o aplicativo de forma ética e em conformidade com a legislação",
           "Não utilizar para fins ilegais, difamatórios ou que violem direitos de terceiros",
           "Respeitar os direitos autorais das obras projetadas",
-
           "Não tentar comprometer a segurança ou disponibilidade do serviço"
         ]
       },
@@ -799,17 +798,34 @@
       }
     },
     "mobile": {
-      "badge": "Em breve",
+      "badge": "Disponível",
       "title": "Mobile",
-      "description": "O app Android (APK) está em desenvolvimento avançado, ainda sem lançamento oficial. Enquanto isso, use o web app no celular.",
+      "description": "Baixe o app Android e leve o PIANO no celular — controle o palco direto do dispositivo.",
       "platforms": "Android e iOS",
       "features": {
-        "nativeAndroid": "App Android (APK) — em desenvolvimento avançado",
+        "nativeAndroid": "Android nativo (planejado)",
         "nativeIos": "iOS nativo (planejado)",
-        "cloudSync": "Sincronização na nuvem (planejado)"
+        "cloudSync": "Sincronização na nuvem (planejado)",
+        "remote": "Controle remoto do desktop",
+        "network": "Sincronização via rede local",
+        "offline": "Funciona offline"
       },
-      "useWebInstead": "Usar web app no celular por enquanto",
-      "apkNote": "Prévia do APK: build interno, disponível em breve para testes."
+      "useWebInstead": "Usar web app no celular",
+      "noAssets": "Os downloads mobile estarão disponíveis em instantes.",
+      "android": {
+        "name": "Android",
+        "format": "Pacote .apk",
+        "arch": "arm64",
+        "downloadLabel": "Baixar APK",
+        "hint": "Instale o APK permitindo fontes desconhecidas."
+      },
+      "ios": {
+        "name": "iOS",
+        "format": "App TestFlight",
+        "arch": "universal",
+        "downloadLabel": "Acessar TestFlight",
+        "hint": "Convite do TestFlight necessário."
+      }
     },
     "systemRequirements": {
       "title": "Requisitos do Sistema",
@@ -817,27 +833,31 @@
       "web": "Web: Navegador moderno (Chrome, Firefox, Edge, Safari), conexão de internet para primeiro acesso"
     },
     "tv": {
-      "badge": "Em Breve",
-      "title": "Smart TV",
-      "description": "Estamos preparando o PIANO para Smart TVs. A primeira plataforma será a LG com webOS.",
-      "lgBrand": "webOS (LG)",
-      "lgStatus": "Em desenvolvimento",
-      "samsungBrand": "Tizen (Samsung)",
-      "samsungStatus": "Em desenvolvimento",
-      "rokuBrand": "Roku TV",
-      "rokuStatus": "Planejado",
-      "androidTvBrand": "Android TV / Google TV",
-      "androidTvStatus": "Planejado",
-      "chromecastBrand": "Chromecast",
-      "chromecastStatus": "Planejado",
+      "badge": "Novo",
+      "title": "TV / Palco Digital",
+      "description": "Transforme qualquer Smart TV num receptor de palco. Controle pelo app Android (APK) — controle via web e desktop chega em breve.",
+      "noAssets": "Pacotes da TV serão publicados em breve.",
       "features": {
-        "nativeLg": "App nativo LG webOS",
-        "bigScreen": "Projeção direto na TV",
-        "remoteControl": "Controle via app mobile"
+        "realtime": "Espelhamento em tempo real",
+        "multicast": "Múltiplas TVs simultâneas",
+        "autodiscover": "Descoberta automática na rede"
       },
-      "useDesktopInstead": "Use o app Desktop por enquanto",
-      "appleTvBrand": "Apple TV",
-      "appleTvStatus": "Planejado"
+      "webos": {
+        "name": "LG webOS TV",
+        "format": "Pacote .ipk",
+        "hint": "Use o Developer Mode ou sideload via Device Manager da LG."
+      },
+      "androidtv": {
+        "name": "Android TV",
+        "format": "Pacote .apk",
+        "hint": "Faça sideload do APK com um app de arquivos ou via ADB."
+      },
+      "downloadGeneric": "Baixar",
+      "tizen": {
+        "name": "Samsung Tizen TV",
+        "format": "Pacote .tpk",
+        "hint": "Instale via USB ou Tizen Studio Device Manager."
+      }
     }
   },
   "contributors": {
@@ -876,14 +896,18 @@
     "products": {
       "web": "Web",
       "desktop": "Desktop",
-      "mobile": "Mobile"
+      "mobile": "Mobile",
+      "tv": "Smart TV"
     },
     "repos": {
       "web": "Web (Site)",
       "app": "App (Desktop)",
       "api": "API",
       "site": "Site"
-    }
+    },
+    "filterLabel": "Filtrar por produto",
+    "filterAll": "Todos",
+    "filterEmpty": "Nenhuma release para este produto ainda."
   },
   "tvSupport": {
     "eyebrow": "Roadmap",
@@ -901,7 +925,8 @@
     "chromecastStatus": "Planejado",
     "cta": "Acompanhar novidades",
     "appleTvBrand": "Apple TV",
-    "appleTvStatus": "Planejado"
+    "appleTvStatus": "Planejado",
+    "statusAvailable": "Disponivel"
   },
   "team": {
     "eyebrow": "Nossa Equipe",
