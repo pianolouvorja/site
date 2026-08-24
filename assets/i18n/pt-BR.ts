@@ -733,7 +733,8 @@ export default {
   },
   donate: {
     title: 'Apoie o projeto',
-    subtitle: 'O PIANO LouvorJA é gratuito. Sua doação ajuda a manter o projeto vivo e sem anúncios.',
+    subtitle:
+      'O PIANO LouvorJA é gratuito. Sua doação ajuda a manter o projeto vivo e sem anúncios.',
     button: 'Doar agora',
     pix: 'Pix',
     boleto: 'Boleto',
