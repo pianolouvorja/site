@@ -9,6 +9,7 @@
     <HowItWorksSection />
     <TeamSection />
     <NewsletterForm variant="section" />
+    <DonateButton />
     <CtaSection />
     <WelcomePopup />
   </div>
