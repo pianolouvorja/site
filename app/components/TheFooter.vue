@@ -28,6 +28,11 @@
 
   const socialLinks = [
     { icon: 'ti-brand-github', href: 'https://github.com/pianolouvorja', label: 'GitHub' },
+    {
+      icon: 'ti-brand-youtube',
+      href: 'https://www.youtube.com/@pianolouvorja',
+      label: 'YouTube',
+    },
   ]
 </script>
 

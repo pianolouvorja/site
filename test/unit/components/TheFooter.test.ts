@@ -39,6 +39,13 @@ describe('TheFooter', () => {
     expect(github.attributes('href')).toBe('https://github.com/pianolouvorja')
   })
 
+  it('tem link do YouTube do projeto', () => {
+    const wrapper = createWrapper()
+    const youtube = wrapper.find('[aria-label="YouTube"]')
+    expect(youtube.exists()).toBe(true)
+    expect(youtube.attributes('href')).toBe('https://www.youtube.com/@pianolouvorja')
+  })
+
   it('tem ano atual no copyright', () => {
     const wrapper = createWrapper()
     const year = new Date().getFullYear()
