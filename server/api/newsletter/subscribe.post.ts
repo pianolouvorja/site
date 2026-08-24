@@ -53,6 +53,9 @@ export function mapButtondownError(err: unknown): string {
     if (lower.includes('invalid') || lower.includes('email')) {
       return 'invalid-email'
     }
+    if (lower.includes('blocked')) {
+      return 'invalid-email'
+    }
     if (lower.includes('rate limit') || lower.includes('too many')) {
       return 'rate-limited'
     }
