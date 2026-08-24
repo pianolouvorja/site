@@ -26,6 +26,9 @@
 
   const currentYear = new Date().getFullYear()
 
+  const config = useRuntimeConfig()
+  const donateUrl = config.public.asaasDonateUrl as string
+
   const socialLinks = [
     { icon: 'ti-brand-github', href: 'https://github.com/pianolouvorja', label: 'GitHub' },
     {
@@ -118,6 +121,18 @@
       </div>
 
       <div class="footer__bottom">
+        <a
+          v-if="donateUrl"
+          :href="donateUrl"
+          data-testid="footer-donate-button"
+          class="footer__donate"
+          target="_blank"
+          rel="noopener noreferrer"
+          :aria-label="$t('donate.title')"
+        >
+          <i class="ti ti-heart" />
+          {{ $t('donate.button') }}
+        </a>
         <p class="footer__copyright">
           &copy; {{ currentYear }} {{ siteConfig.name }}. {{ $t('footer.rights') }}
         </p>
@@ -273,6 +288,32 @@
     &__copyright {
       font-size: 0.85rem;
       margin: 0;
+    }
+
+    &__donate {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--piano-radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff5c5c 0%, #ff8a5c 100%);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(255, 92, 92, 0.3);
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 92, 92, 0.45);
+      }
+
+      i {
+        font-size: 0.95rem;
+      }
     }
 
     &__credits {

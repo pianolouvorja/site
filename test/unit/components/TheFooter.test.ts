@@ -14,7 +14,10 @@ describe('TheFooter', () => {
     vi.stubGlobal('useLocalePath', () => mockLocalePath)
   })
 
-  const createWrapper = () => {
+  const createWrapper = (donateUrl = '') => {
+    vi.stubGlobal('useRuntimeConfig', () => ({
+      public: { asaasDonateUrl: donateUrl },
+    }))
     return mount(TheFooter, {
       global: {
         stubs: {
@@ -30,6 +33,19 @@ describe('TheFooter', () => {
   it('renderiza rodape', () => {
     const wrapper = createWrapper()
     expect(wrapper.find('footer').exists()).toBe(true)
+  })
+
+  it('nao renderiza botao de doacao sem url configurada', () => {
+    const wrapper = createWrapper()
+    expect(wrapper.find('[data-testid="footer-donate-button"]').exists()).toBe(false)
+  })
+
+  it('renderiza botao de doacao com link do Asaas quando configurado', () => {
+    const wrapper = createWrapper('https://www.asaas.com/pay/test-link')
+    const donate = wrapper.find('[data-testid="footer-donate-button"]')
+    expect(donate.exists()).toBe(true)
+    expect(donate.attributes('href')).toBe('https://www.asaas.com/pay/test-link')
+    expect(donate.attributes('target')).toBe('_blank')
   })
 
   it('tem link do GitHub do projeto', () => {
