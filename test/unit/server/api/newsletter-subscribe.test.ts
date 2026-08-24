@@ -89,6 +89,12 @@ describe('mapButtondownError', () => {
     expect(mapButtondownError({ data: { detail: 'email not valid' } })).toBe('invalid-email')
   })
 
+  it('maps "blocked" (firewall) detail to invalid-email', () => {
+    expect(
+      mapButtondownError({ data: { detail: 'This subscriber was blocked by your firewall.' } }),
+    ).toBe('invalid-email')
+  })
+
   it('maps "rate limit" detail to rate-limited', () => {
     expect(mapButtondownError({ data: { detail: 'rate limit exceeded' } })).toBe('rate-limited')
   })
