@@ -733,4 +733,13 @@ export default {
       mobile: 'Móvil',
     },
   },
+  donate: {
+    title: 'Apoya el proyecto',
+    subtitle:
+      'PIANO LouvorJA es gratuito. Tu donación ayuda a mantener el proyecto vivo y sin anúncios.',
+    button: 'Donar ahora',
+    pix: 'Pix',
+    boleto: 'Boleto',
+    card: 'Tarjeta',
+  },
 } as const
