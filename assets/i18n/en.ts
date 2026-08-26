@@ -731,4 +731,12 @@ export default {
       mobile: 'Mobile',
     },
   },
+  donate: {
+    title: 'Support the project',
+    subtitle: 'PIANO LouvorJA is free. Your donation helps keep the project alive and ad-free.',
+    button: 'Donate now',
+    pix: 'Pix',
+    boleto: 'Bank slip',
+    card: 'Card',
+  },
 } as const

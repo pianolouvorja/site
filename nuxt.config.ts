@@ -94,6 +94,10 @@ export default defineNuxtConfig({
     llmModel: process.env.LLM_MODEL || 'glm-4-flash',
 
     public: {
+      // Asaas payment link (created in Asaas dashboard — Pix/boleto/card)
+      // Env var: NUXT_PUBLIC_ASAAS_DONATE_URL
+      asaasDonateUrl: process.env.NUXT_PUBLIC_ASAAS_DONATE_URL || '',
+
       web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
 
       // GA4
