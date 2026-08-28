@@ -95,3 +95,24 @@ describe('alignToBuckets', () => {
     expect(alignToBuckets(buckets, data)).toEqual([6, 10])
   })
 })
+
+describe('alignToBuckets — branches de borda', () => {
+  it('retorna [] para buckets vazios', () => {
+    expect(alignToBuckets([], [{ key: '2026-08-26', value: 1 }])).toEqual([])
+  })
+
+  it('ignora pontos sem bucket correspondente (daily)', () => {
+    const buckets = ['2026-08-26']
+    expect(alignToBuckets(buckets, [{ key: '2026-09-01', value: 7 }])).toEqual([0])
+  })
+
+  it('ignora pontos sem bucket correspondente (monthly)', () => {
+    const buckets = ['2026-08']
+    expect(alignToBuckets(buckets, [{ key: '2026-09-15', value: 7 }])).toEqual([0])
+  })
+
+  it('usa fallback ?? 0 quando mapa não tem bucket (monthly sem zeros)', () => {
+    // buckets mensais com ponto em mês não listado — cobre sums.get(b) ?? 0
+    expect(alignToBuckets(['2026-08'], [{ key: '2026-08-01', value: 4 }])).toEqual([4])
+  })
+})

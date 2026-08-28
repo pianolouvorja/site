@@ -2,6 +2,7 @@
   import { ref, computed } from 'vue'
   import { updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
   import type { ActivityItem, GeoStats } from '~/types/dashboard'
+  import { useTimeseries } from '~/composables/useTimeseries'
 
   definePageMeta({
     layout: 'admin',
@@ -150,7 +151,6 @@
   type DetailView = 'downloads' | 'newsletter' | 'visits' | null
   const activeView = ref<DetailView>(null)
   const chartFilter = ref<'7d' | '30d' | '12m'>('12m')
-
   const statCards = computed(() => {
     const s = stats.value
     return [
@@ -181,7 +181,6 @@
     ]
   })
 
-  // --- Chart data: mock in dev, empty in prod ---
   interface ChartData {
     type: 'area' | 'bar' | 'line'
     series: Array<{ name: string; data: number[] }>
@@ -194,36 +193,7 @@
     newsletter: { type: 'bar', name: 'Assinantes', color: '#a78bfa' },
     visits: { type: 'line', name: 'Visitas', color: '#4ade80' },
   }
-
-  // DEV-ONLY mock data (tree-shaken in production builds)
-  const mockByPeriod: Record<string, Record<'7d' | '30d' | '12m', number[]>> = import.meta.dev
-    ? {
-        downloads: {
-          '7d': [8, 12, 6, 15, 10, 22, 18],
-          '30d': [
-            3, 5, 2, 8, 6, 12, 9, 4, 7, 15, 11, 8, 14, 6, 10, 12, 9, 7, 16, 11, 8, 13, 5, 9, 14, 10,
-            7, 12, 15, 18,
-          ],
-          '12m': [12, 19, 15, 27, 22, 35, 44, 38, 52, 61, 55, 73],
-        },
-        newsletter: {
-          '7d': [2, 1, 3, 0, 2, 4, 3],
-          '30d': [
-            1, 0, 2, 1, 3, 2, 1, 0, 4, 2, 1, 3, 2, 1, 0, 3, 2, 4, 1, 2, 0, 3, 1, 2, 4, 3, 1, 2, 3,
-            5,
-          ],
-          '12m': [8, 12, 15, 18, 22, 28, 35, 42, 48, 55, 62, 78],
-        },
-        visits: {
-          '7d': [45, 52, 38, 61, 48, 75, 82],
-          '30d': [
-            12, 18, 15, 22, 19, 28, 25, 31, 20, 26, 15, 33, 29, 24, 18, 35, 27, 22, 30, 19, 38, 25,
-            31, 16, 28, 34, 21, 26, 40, 45,
-          ],
-          '12m': [120, 145, 180, 210, 195, 250, 310, 285, 340, 420, 380, 510],
-        },
-      }
-    : {}
+  const timeseries = useTimeseries(chartFilter.value)
 
   const dayLabels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
   const monthLabels = [
@@ -247,27 +217,14 @@
     if (!meta) return { type: 'line', series: [], categories: monthLabels, colors: [] }
     const period = chartFilter.value
 
-    if (import.meta.dev && mockByPeriod[key]) {
-      const data = mockByPeriod[key][period]
-      const categories =
-        period === '12m'
-          ? monthLabels
-          : period === '7d'
-            ? dayLabels
-            : Array.from({ length: 30 }, (_, i) => `${i + 1}`)
-      return {
-        type: meta.type,
-        series: [{ name: meta.name, data }],
-        categories,
-        colors: [meta.color],
-      }
-    }
-
-    // Prod: no historical data from API yet
+    const source = timeseries.data.value?.[key === 'newsletter' ? 'subscribers' : key]
+    const categories =
+      timeseries.data.value?.buckets ??
+      (period === '12m' ? monthLabels : period === '7d' ? dayLabels : [])
     return {
       type: meta.type,
-      series: [{ name: meta.name, data: [] }],
-      categories: monthLabels,
+      series: [{ name: meta.name, data: source?.map((point) => point.value) ?? [] }],
+      categories,
       colors: [meta.color],
     }
   }
@@ -418,7 +375,7 @@
                 :key="f"
                 class="chart-filter"
                 :class="{ 'chart-filter--active': chartFilter === f }"
-                @click="chartFilter = f"
+                @click="timeseries.setPeriod(f as '7d' | '30d' | '12m')"
               >
                 {{ f }}
               </button>

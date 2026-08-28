@@ -7,11 +7,13 @@ export interface Subscriber {
 }
 
 interface ButtondownSubscriber {
-  email: string
+  email?: string
+  email_address?: string
   creation_date?: string
   created_at?: string
   tags?: string[]
   secondary_type?: string
+  type?: string
   metadata?: Record<string, string>
 }
 
@@ -23,10 +25,12 @@ interface ButtondownResponse {
 
 export function parseSubscriber(raw: ButtondownSubscriber): Subscriber {
   return {
-    email: raw.email,
+    email: raw.email ?? raw.email_address ?? '',
     createdAt: raw.creation_date ?? raw.created_at ?? '',
     tags: raw.tags ?? [],
-    active: !raw.secondary_type || raw.secondary_type === 'regular',
+    active: raw.type
+      ? raw.type === 'regular'
+      : !raw.secondary_type || raw.secondary_type === 'regular',
     locale: raw.metadata?.locale ?? 'pt-BR',
   }
 }

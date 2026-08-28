@@ -8,7 +8,7 @@ export function alignToBuckets<T extends { key: string; value: number }>(
     return []
   }
 
-  const monthly = (buckets[0] ?? '').length === 7
+  const monthly = buckets[0]!.length === 7
   const sums = new Map<string, number>()
   for (const bucket of buckets) {
     sums.set(bucket, 0)
@@ -18,9 +18,9 @@ export function alignToBuckets<T extends { key: string; value: number }>(
     const key = extract(point)
     const matchKey = monthly ? key.slice(0, 7) : key.slice(0, 10)
     if (sums.has(matchKey)) {
-      sums.set(matchKey, (sums.get(matchKey) ?? 0) + pick(point))
+      sums.set(matchKey, sums.get(matchKey)! + pick(point))
     }
   }
 
-  return buckets.map((b) => sums.get(b) ?? 0)
+  return buckets.map((b) => sums.get(b)!)
 }
