@@ -1011,6 +1011,19 @@
       "button": "Empezar a contribuir"
     }
   },
+  "community": {
+    "eyebrow": "Comunidad",
+    "title": "Quién usa, prueba y contribuye",
+    "subtitle": "Testers, entusiastas y sugeridores que ayudan a PIANO LouvorJA a crecer. ¿Quieres participar?",
+    "roles": {
+      "tester": "Tester",
+      "enthusiast": "Entusiasta",
+      "suggester": "Sugeridor"
+    },
+    "since": "Desde {since}",
+    "link": "Ver perfil",
+    "cta": "Únete a la comunidad"
+  },
   "donate": {
     "title": "Apoya el proyecto",
     "subtitle": "PIANO LouvorJA es gratuito. Tu donación ayuda a mantener el proyecto vivo y sin anuncios.",
