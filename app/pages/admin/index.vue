@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue'
   import { updatePassword, signInWithEmailAndPassword } from 'firebase/auth'
-  import type { ActivityItem } from '~/types/dashboard'
+  import type { ActivityItem, GeoStats } from '~/types/dashboard'
 
   definePageMeta({
     layout: 'admin',
@@ -86,6 +86,31 @@
     } finally {
       changingPassword.value = false
     }
+  }
+
+  // --- Audiencia por pais (geo) ---
+  const geoStats = ref<GeoStats | null>(null)
+  const geoLoading = ref(true)
+
+  async function fetchGeo() {
+    geoLoading.value = true
+    try {
+      const token = await getToken()
+      geoStats.value = await $fetch<GeoStats>('/api/admin/geo', {
+        params: { days: 30 },
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+    } catch {
+      geoStats.value = null
+    } finally {
+      geoLoading.value = false
+    }
+  }
+
+  const topCountries = computed(() => geoStats.value?.countries.slice(0, 10) ?? [])
+
+  function maxCountryVisits(countries: Array<{ visits: number }>): number {
+    return countries.reduce((max, c) => Math.max(max, c.visits), 0)
   }
 
   // --- Helpers de formatacao ---
@@ -260,10 +285,11 @@
   onMounted(() => {
     checkTempPassword()
     fetchActivity()
+    fetchGeo()
   })
 
   async function handleRefresh() {
-    await Promise.all([refresh(), fetchActivity()])
+    await Promise.all([refresh(), fetchActivity(), fetchGeo()])
   }
 </script>
 
@@ -366,7 +392,9 @@
             <span class="breakdown-card__label">{{ app.label }}</span>
             <span v-if="app.latestTag" class="breakdown-card__tag">{{ app.latestTag }}</span>
           </div>
-          <div class="breakdown-card__total">{{ formatValue(app.totalDownloads) }}</div>
+          <div class="breakdown-card__total">
+            {{ formatValue(app.totalDownloads) }}
+          </div>
           <ul v-if="app.platforms.length" class="breakdown-platforms">
             <li v-for="p in app.platforms" :key="p.platform" class="breakdown-platform">
               <span class="breakdown-platform__name">{{ p.platform }}</span>
@@ -412,6 +440,25 @@
     </transition>
 
     <section class="content-area">
+      <div class="panel">
+        <h2>Audiência por País (30d)</h2>
+        <div v-if="geoLoading" class="placeholder">Carregando...</div>
+        <div v-else-if="topCountries.length === 0" class="placeholder">Dados indisponíveis.</div>
+        <ul v-else class="geo-list">
+          <li v-for="item in topCountries" :key="item.country" class="geo-item">
+            <span class="geo-country">{{ item.country }}</span>
+            <span class="geo-bar-track">
+              <span
+                class="geo-bar"
+                :style="{
+                  width: `${(item.visits / Math.max(maxCountryVisits(topCountries), 1)) * 100}%`,
+                }"
+              />
+            </span>
+            <span class="geo-visits">{{ formatValue(item.visits) }}</span>
+          </li>
+        </ul>
+      </div>
       <div class="panel">
         <h2>Atividade Recente</h2>
         <div v-if="activityLoading" class="placeholder">Carregando...</div>
@@ -812,6 +859,49 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1.5rem;
+  }
+
+  .geo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .geo-item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr 3.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .geo-country {
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .geo-bar-track {
+    height: 8px;
+    border-radius: 4px;
+    background: #1e293b;
+    overflow: hidden;
+  }
+
+  .geo-bar {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #22d3ee, #4ade80);
+    transition: width 0.4s ease;
+  }
+
+  .geo-visits {
+    text-align: right;
+    color: #94a3b8;
+    font-variant-numeric: tabular-nums;
   }
 
   @media (max-width: 768px) {

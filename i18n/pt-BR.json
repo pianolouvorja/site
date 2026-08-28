@@ -783,7 +783,8 @@
         "autoUpdate": "Atualizações automáticas"
       },
       "buildFromSource": "Preferir compilar do código-fonte?",
-      "buildFromSourceLink": "Ver instruções no GitHub"
+      "buildFromSourceLink": "Ver instruções no GitHub",
+      "detectedArchitecture": "Arquitetura detectada: {architecture}"
     },
     "web": {
       "badge": "Instantâneo",
@@ -979,6 +980,10 @@
       "educharquero": {
         "role": "Linux, Web App e PWA",
         "bio": "Formação em Redes de Computadores com pós-graduação em Docência. Usuário de Linux desde o Kurumin, atua em infraestrutura há décadas e é responsável pela conectux.com.br."
+      },
+      "elomarxa": {
+        "role": "Design digital, UI e UX",
+        "bio": "Designer digital, com experiência em produção de artes e desenvolvendo habilidade com UI e UX."
       }
     },
     "work": {

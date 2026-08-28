@@ -38,7 +38,7 @@ export async function fetchSubscribers(): Promise<Subscriber[]> {
   if (!config.buttondownApiKey) return []
 
   const subscribers: Subscriber[] = []
-  let url: string | null = 'https://api.buttondown.com/api/v1/subscribers'
+  let url: string | null = 'https://api.buttondown.com/v1/subscribers'
 
   while (url) {
     const response = await fetch(url, {
@@ -59,7 +59,7 @@ export async function getSubscriberCount(): Promise<number> {
   if (!config.buttondownApiKey) return 0
 
   try {
-    const response = await fetch('https://api.buttondown.com/api/v1/subscribers', {
+    const response = await fetch('https://api.buttondown.com/v1/subscribers', {
       headers: { Authorization: `Token ${config.buttondownApiKey}` },
     })
     if (!response.ok) return 0
@@ -77,7 +77,7 @@ export async function removeSubscriber(email: string): Promise<boolean> {
 
   try {
     const response = await fetch(
-      `https://api.buttondown.com/api/v1/subscribers/${encodeURIComponent(email)}`,
+      `https://api.buttondown.com/v1/subscribers/${encodeURIComponent(email)}`,
       {
         method: 'DELETE',
         headers: { Authorization: `Token ${config.buttondownApiKey}` },

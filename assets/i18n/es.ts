@@ -441,6 +441,11 @@ export default {
           'No usamos cookies de rastreo, análisis, publicidad o perfilación.',
           '1.3 Datos de la aplicación',
           'La aplicación PIANO LouvorJA (himnos, liturgia, configuraciones, listas de reproducción) almacena todos los datos localmente en su navegador (LocalStorage/IndexedDB). Estos datos nunca se envían a nuestros servidores.',
+          '1.4 Datos técnicos de audiencia (recopilación automática)',
+          'Cuando navegas por el sitio, recopilamos de forma agregada:',
+          'País de origen de la visita (derivado del encabezado HTTP del proveedor de CDN, p. ej. Cloudflare/Vercel) — no utilizamos geolocalización por GPS.',
+          'Dirección IP procesada exclusivamente como hash (SHA-256 con salt secreto). La dirección IP NUNCA se almacena en texto claro y no puede revertirse para identificarte.',
+          'Contador de visitas por país por día. No hay perfil individual, historial de navegación ni vinculación con tu identidad.',
         ],
       },
       purpose: {
@@ -516,7 +521,10 @@ export default {
       },
       cookies: {
         title: '8. Cookies',
-        body: ['No usamos cookies de terceros, análisis o publicidad.'],
+        body: [
+          'No usamos cookies de terceros, análisis o publicidad.',
+          'La telemetría de audiencia por país es agregada y anónima (país + IP con hash en contadores diarios); no utiliza cookies de rastreo ni identifica a personas.',
+        ],
         table: {
           header: {
             cookie: 'Cookie',
@@ -655,6 +663,8 @@ export default {
         title: '8. Privacidad y Datos',
         body: [
           'El tratamiento de datos personales se rige por nuestra {link}, que forma parte de estos Términos.',
+          'Los datos técnicos de audiencia (país de origen y dirección IP con hash, agregados en contadores diarios) se recopilan automáticamente con fines estadísticos.',
+          'La dirección IP nunca se almacena en texto claro y no permite identificar a usuarios individuales.',
         ],
         link: {
           url: '/privacy',

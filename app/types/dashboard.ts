@@ -39,3 +39,9 @@ export interface ActivityItem {
   createdAt: string
   url: string
 }
+
+export interface GeoStats {
+  totalVisits: number
+  days: number
+  countries: Array<{ country: string; visits: number }>
+}

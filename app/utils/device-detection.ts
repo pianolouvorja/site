@@ -19,6 +19,7 @@ export type DevicePlatform =
   | 'unknown'
 
 export type DeviceCategory = 'tv' | 'mobile' | 'desktop' | 'unknown'
+export type DeviceArchitecture = 'arm64' | 'x64' | 'unknown'
 
 export interface DeviceInfo {
   platform: DevicePlatform
@@ -71,6 +72,17 @@ const CATEGORY_BY_PLATFORM: Record<DevicePlatform, DeviceCategory> = {
  * "Android" or "Linux", which would otherwise misclassify them as
  * mobile/desktop). Falls back to mobile, then desktop, then unknown.
  */
+/**
+ * Detects the CPU architecture exposed by browser Client Hints or User-Agent.
+ * Browser privacy controls may omit this value; callers must preserve manual choice.
+ */
+export function detectArchitecture(userAgent: string, architecture?: string): DeviceArchitecture {
+  const value = `${architecture ?? ''} ${userAgent}`.toLowerCase()
+  if (/arm64|aarch64|\barm\b/.test(value)) return 'arm64'
+  if (/x86_64|amd64|win64|\bx64\b|\bx86\b/.test(value)) return 'x64'
+  return 'unknown'
+}
+
 export function detectDevice(userAgent: string): DeviceInfo {
   const ua = userAgent.trim()
   if (!ua) return { platform: 'unknown', category: 'unknown' }

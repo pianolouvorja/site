@@ -47,6 +47,12 @@ export const teamMembers: TeamMember[] = [
     avatar: 'https://github.com/educharquero.png?size=96',
     profileUrl: 'https://github.com/educharquero',
   },
+  {
+    login: 'elomarxa',
+    name: 'Elomar',
+    avatar: 'https://github.com/elomarXa.png?size=96',
+    profileUrl: 'https://github.com/elomarXa',
+  },
 ]
 
 /**

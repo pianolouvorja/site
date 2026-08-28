@@ -99,7 +99,7 @@ describe('fetchSubscribers', () => {
             { email: 'a@test.com', creation_date: '2026-01-01', metadata: { locale: 'en' } },
             { email: 'b@test.com', created_at: '2026-02-01' },
           ],
-          next: 'https://api.buttondown.com/api/v1/subscribers?page=2',
+          next: 'https://api.buttondown.com/v1/subscribers?page=2',
         }),
       })
       .mockResolvedValueOnce({
