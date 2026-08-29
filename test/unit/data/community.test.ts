@@ -6,8 +6,8 @@ describe('data/community', () => {
     expect(communityRoles).toEqual(['tester', 'enthusiast', 'suggester'])
   })
 
-  it('todos os membros tem nome, papel valido e data desde', () => {
-    expect(communityMembers.length).toBeGreaterThanOrEqual(2)
+  it('possui ao menos um membro com nome, papel valido e desde', () => {
+    expect(communityMembers.length).toBeGreaterThanOrEqual(1)
     for (const member of communityMembers) {
       expect(member.name.length).toBeGreaterThan(3)
       expect(communityRoles).toContain(member.role)

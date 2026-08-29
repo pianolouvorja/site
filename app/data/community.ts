@@ -17,8 +17,6 @@ export interface CommunityMember {
  */
 export const communityMembers: CommunityMember[] = [
   { name: 'Caique', role: 'tester', since: '2026-08' },
-  // Sonoplasta que pediu para participar da equipe de testes (nome a confirmar)
-  { name: 'Colaborador Sonoplastia', role: 'tester', since: '2026-08' },
 ]
 
 /** Canal público para entrar na comunidade. */

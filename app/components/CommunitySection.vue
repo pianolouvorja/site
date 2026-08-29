@@ -54,6 +54,11 @@
         </li>
       </ul>
 
+      <a :href="communityJoinUrl" class="community__spot" target="_blank" rel="noopener noreferrer">
+        <span class="community__spot-plus" aria-hidden="true">+</span>
+        <span class="community__spot-text">{{ $t('community.spot') }}</span>
+      </a>
+
       <a :href="communityJoinUrl" class="community__cta" target="_blank" rel="noopener noreferrer">
         {{ $t('community.cta') }}
         <i class="ti ti-arrow-right" aria-hidden="true" />
@@ -171,6 +176,44 @@
     &__link {
       margin-top: 0.5rem;
       font-size: 0.875rem;
+    }
+
+    &__spot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.75rem 1rem;
+      border: 1px dashed rgba(128, 128, 128, 0.5);
+      border-radius: 12px;
+      text-decoration: none;
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+      &:hover {
+        border-color: currentColor;
+        transform: translateY(-2px);
+      }
+    }
+
+    &__spot-plus {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      border: 1px dashed rgba(128, 128, 128, 0.5);
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    &__spot-text {
+      font-size: 0.875rem;
+      font-weight: 500;
     }
 
     &__cta {

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
+import { communityJoinUrl } from '~/data/community'
 
 const stubs = { i: true }
 
@@ -20,7 +21,7 @@ describe('CommunitySection', () => {
   it('renderiza um card por membro com avatar de iniciais, nome, papel e desde', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const cards = wrapper.findAll('.community__card')
-    expect(cards.length).toBeGreaterThanOrEqual(2)
+    expect(cards.length).toBeGreaterThanOrEqual(1)
     cards.forEach((card) => {
       const avatar = card.find('.community__avatar')
       expect(avatar.exists()).toBe(true)
@@ -34,7 +35,7 @@ describe('CommunitySection', () => {
   it('avatar recebe classe de cor por papel', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const avatars = wrapper.findAll('.community__avatar')
-    expect(avatars.length).toBeGreaterThanOrEqual(2)
+    expect(avatars.length).toBeGreaterThanOrEqual(1)
     avatars.forEach((avatar) => {
       expect(avatar.classes().some((c) => c.startsWith('community__avatar--'))).toBe(true)
     })
@@ -67,5 +68,17 @@ describe('CommunitySection', () => {
     expect(cta.exists()).toBe(true)
     expect(cta.attributes('href')).toMatch(/^https?:\/\//)
     expect(cta.text().length).toBeGreaterThan(5)
+  })
+
+  it('renderiza card de vaga aberta apos os membros', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const spot = wrapper.find('a.community__spot')
+    expect(spot.exists()).toBe(true)
+    expect(spot.attributes('href')).toBe(communityJoinUrl)
+    expect(spot.attributes('target')).toBe('_blank')
+    expect(spot.attributes('rel')).toBe('noopener noreferrer')
+    const cards = wrapper.findAll('.community__card, .community__spot')
+    const spotIndex = cards.findIndex((c) => c.classes().includes('community__spot'))
+    expect(spotIndex).toBe(cards.length - 1)
   })
 })
