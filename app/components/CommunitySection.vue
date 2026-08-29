@@ -1,5 +1,19 @@
 <script setup lang="ts">
   import { communityJoinUrl, communityMembers } from '~/data/community'
+
+  const roleIcon: Record<string, string> = {
+    tester: 'ti ti-bug',
+    enthusiast: 'ti ti-sparkles',
+    suggester: 'ti ti-lightbulb',
+  }
+
+  function initials(name: string): string {
+    return name
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('')
+  }
 </script>
 
 <template>
@@ -17,9 +31,14 @@
 
       <ul class="community__grid">
         <li v-for="member in communityMembers" :key="member.name" class="community__card">
-          <i class="ti ti-heart-handshake" aria-hidden="true" />
+          <span class="community__avatar" :class="`community__avatar--${member.role}`">
+            {{ initials(member.name) }}
+          </span>
           <span class="community__name">{{ member.name }}</span>
-          <span class="community__role">{{ $t(`community.roles.${member.role}`) }}</span>
+          <span class="community__role">
+            <i :class="roleIcon[member.role]" aria-hidden="true" />
+            {{ $t(`community.roles.${member.role}`) }}
+          </span>
           <span class="community__since">
             {{ $t('community.since', { since: member.since }) }}
           </span>
@@ -90,23 +109,63 @@
       align-items: center;
       gap: 0.25rem;
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 1.75rem 1rem;
       border: 1px solid rgba(128, 128, 128, 0.25);
       border-radius: 12px;
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+      &:hover {
+        border-color: rgba(128, 128, 128, 0.5);
+        transform: translateY(-2px);
+      }
+    }
+
+    &__avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: #fff;
+      background: #444;
+      margin-bottom: 0.5rem;
+
+      &--tester {
+        background: #4a6da7;
+      }
+
+      &--enthusiast {
+        background: #7a5ba6;
+      }
+
+      &--suggester {
+        background: #5a8a5a;
+      }
     }
 
     &__name {
       font-weight: 600;
-      margin-top: 0.5rem;
     }
 
     &__role {
-      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(128, 128, 128, 0.12);
     }
 
     &__since {
       font-size: 0.8125rem;
       opacity: 0.75;
+      margin-top: 0.25rem;
     }
 
     &__link {
@@ -121,7 +180,6 @@
       justify-content: center;
       width: 100%;
       max-width: 360px;
-      display: flex;
       margin: 0 auto;
       padding: 0.875rem 1.5rem;
       border-radius: 999px;

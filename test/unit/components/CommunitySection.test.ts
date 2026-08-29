@@ -17,15 +17,33 @@ describe('CommunitySection', () => {
     expect(wrapper.find('.community__subtitle').text().length).toBeGreaterThan(10)
   })
 
-  it('renderiza um card por membro com nome, papel e desde', () => {
+  it('renderiza um card por membro com avatar de iniciais, nome, papel e desde', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const cards = wrapper.findAll('.community__card')
     expect(cards.length).toBeGreaterThanOrEqual(2)
     cards.forEach((card) => {
+      const avatar = card.find('.community__avatar')
+      expect(avatar.exists()).toBe(true)
+      expect(avatar.text().length).toBeGreaterThan(0)
       expect(card.find('.community__name').text().length).toBeGreaterThan(3)
       expect(card.find('.community__role').text().length).toBeGreaterThan(3)
       expect(card.find('.community__since').text().length).toBeGreaterThan(3)
     })
+  })
+
+  it('avatar recebe classe de cor por papel', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const avatars = wrapper.findAll('.community__avatar')
+    expect(avatars.length).toBeGreaterThanOrEqual(2)
+    avatars.forEach((avatar) => {
+      expect(avatar.classes().some((c) => c.startsWith('community__avatar--'))).toBe(true)
+    })
+  })
+
+  it('iniciais do avatar usam no maximo as duas primeiras palavras do nome', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const first = wrapper.find('.community__avatar')
+    expect(first.text()).toBe('C')
   })
 
   it('papel do membro vem do i18n por chave de role', () => {
