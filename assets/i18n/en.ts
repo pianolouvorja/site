@@ -307,6 +307,14 @@ export default {
             action: 'Quick search',
             shortcut: 'Ctrl+K',
           },
+          {
+            action: 'Close projection',
+            shortcut: 'ESC',
+          },
+          {
+            action: 'Toggle operator ↔ projection (desktop app)',
+            shortcut: 'Ctrl+Alt+P',
+          },
         ],
       },
       modules: {
