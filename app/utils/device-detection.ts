@@ -86,3 +86,49 @@ export function detectDevice(userAgent: string): DeviceInfo {
   }
   return { platform: 'unknown', category: 'unknown' }
 }
+
+/**
+ * CPU architecture for desktop download selection (arm64 vs x64).
+ *
+ * O User-Agent de Macs NAO expoe a arquitetura real (Chrome/Safari reportam
+ * 'Intel' ate em Apple Silicon por retrocompatibilidade). Deteccao confiavel:
+ *
+ * 1. navigator.userAgentData.getHighEntropyValue('architecture') - Chrome/Edge
+ *    retorna 'arm' em Apple Silicon. Async, so existe em Chromium moderno.
+ * 2. Default 'x64' (Intel) - maior base instalada; o site SEMPRE mostra o link
+ *    da outra arquitetura junto, entao erro de deteccao tem correcao a 1 clique.
+ */
+export type DesktopArch = 'arm64' | 'x64'
+
+interface NavigatorUAData {
+  getHighEntropyValue?: (hints: string[]) => Promise<{ architecture?: string }>
+}
+
+export function parseArch(architecture: string | undefined): DesktopArch | null {
+  if (!architecture) return null
+  const a = architecture.toLowerCase()
+  if (a === 'arm' || a === 'arm64' || a === 'aarch64') return 'arm64'
+  if (a === 'x86' || a === 'x86_64' || a === 'amd64' || a === 'ia32') return 'x64'
+  return null
+}
+
+/** Sincrono (fallback imediato): sem decisao de arch confiavel sem userAgentData. */
+export function detectArchSync(): DesktopArch {
+  return 'x64'
+}
+
+/** Async: decisao real via userAgentData quando disponivel (client-only). */
+export async function detectArch(): Promise<DesktopArch> {
+  try {
+    const uaData = (navigator as Navigator & { userAgentData?: NavigatorUAData })
+      .userAgentData
+    if (uaData?.getHighEntropyValue) {
+      const { architecture } = await uaData.getHighEntropyValue(['architecture'])
+      const parsed = parseArch(architecture)
+      if (parsed) return parsed
+    }
+  } catch {
+    // userAgentData indisponivel (Safari/Firefox) - fallback abaixo
+  }
+  return detectArchSync()
+}

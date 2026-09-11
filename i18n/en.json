@@ -304,7 +304,11 @@
         ]
       },
       "modules": {
-        "media": ["Player with 3 modes", "Hymnals and albums", "Sing-along mode"],
+        "media": [
+          "Player with 3 modes",
+          "Hymnals and albums",
+          "Sing-along mode"
+        ],
         "hymnal": [
           "Quick search by number or title",
           "Sequential playback",
@@ -315,16 +319,36 @@
           "Drag and drop to playlist",
           "Sing-along mode with lyrics"
         ],
-        "liturgy": ["13 item types", "Drag and drop", "Per-item countdown"],
-        "bible": ["Multiple versions", "Quick search", "Direct projection"],
-        "projection": ["Independent output", "Multi-screen", "Full control"],
+        "liturgy": [
+          "13 item types",
+          "Drag and drop",
+          "Per-item countdown"
+        ],
+        "bible": [
+          "Multiple versions",
+          "Quick search",
+          "Direct projection"
+        ],
+        "projection": [
+          "Independent output",
+          "Multi-screen",
+          "Full control"
+        ],
         "streaming": [
           "Custom CSS for lyrics display",
           "OBS and vMix integration",
           "Output to YouTube and Facebook"
         ],
-        "tools": ["Clock and stopwatch", "Countdown timer", "Raffle"],
-        "settings": ["Appearance", "Projection", "Multi-screen"]
+        "tools": [
+          "Clock and stopwatch",
+          "Countdown timer",
+          "Raffle"
+        ],
+        "settings": [
+          "Appearance",
+          "Projection",
+          "Multi-screen"
+        ]
       }
     },
     "faq": {
@@ -501,7 +525,9 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": ["We do not use third-party, analytics, or advertising cookies."],
+        "body": [
+          "We do not use third-party, analytics, or advertising cookies."
+        ],
         "table": {
           "header": {
             "cookie": "Cookie",
@@ -783,7 +809,8 @@
         "autoUpdate": "Automatic updates"
       },
       "buildFromSource": "Prefer to build from source?",
-      "buildFromSourceLink": "See instructions on GitHub"
+      "buildFromSourceLink": "See instructions on GitHub",
+      "otherArch": "Download for {arch}"
     },
     "web": {
       "badge": "Instant",

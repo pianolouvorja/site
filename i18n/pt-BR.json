@@ -304,7 +304,11 @@
         ]
       },
       "modules": {
-        "media": ["Player com 3 modos", "Hinários e álbuns", "Modo acompanhamento"],
+        "media": [
+          "Player com 3 modos",
+          "Hinários e álbuns",
+          "Modo acompanhamento"
+        ],
         "hymnal": [
           "Busca rápida por número ou título",
           "Reprodução em sequência",
@@ -315,16 +319,36 @@
           "Arrastar e soltar na playlist",
           "Modo acompanhamento com letra"
         ],
-        "liturgy": ["13 tipos de itens", "Arrastar e soltar", "Cronômetro por item"],
-        "bible": ["Múltiplas versões", "Busca rápida", "Projeção direta"],
-        "projection": ["Saída independente", "Multi-tela", "Controle total"],
+        "liturgy": [
+          "13 tipos de itens",
+          "Arrastar e soltar",
+          "Cronômetro por item"
+        ],
+        "bible": [
+          "Múltiplas versões",
+          "Busca rápida",
+          "Projeção direta"
+        ],
+        "projection": [
+          "Saída independente",
+          "Multi-tela",
+          "Controle total"
+        ],
         "streaming": [
           "CSS personalizado para letra",
           "Integração com OBS e vMix",
           "Saída para YouTube e Facebook"
         ],
-        "tools": ["Relógio e cronômetro", "Timer regressivo", "Sorteio"],
-        "settings": ["Aparência", "Projeção", "Multi-tela"]
+        "tools": [
+          "Relógio e cronômetro",
+          "Timer regressivo",
+          "Sorteio"
+        ],
+        "settings": [
+          "Aparência",
+          "Projeção",
+          "Multi-tela"
+        ]
       }
     },
     "faq": {
@@ -501,7 +525,9 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": ["Não utilizamos cookies de terceiros, analytics ou publicidade."],
+        "body": [
+          "Não utilizamos cookies de terceiros, analytics ou publicidade."
+        ],
         "table": {
           "header": {
             "cookie": "Cookie",
@@ -783,7 +809,8 @@
         "autoUpdate": "Atualizações automáticas"
       },
       "buildFromSource": "Preferir compilar do código-fonte?",
-      "buildFromSourceLink": "Ver instruções no GitHub"
+      "buildFromSourceLink": "Ver instruções no GitHub",
+      "otherArch": "Baixar para {arch}"
     },
     "web": {
       "badge": "Instantâneo",

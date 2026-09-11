@@ -63,8 +63,12 @@ describe('DownloadPage', () => {
 
     const downloadControls = wrapper.findAll('.download-cards .download-card__btn')
 
-    expect(downloadControls[0]?.attributes('href')).toContain('/releases/download/v1.17.5/')
-    expect(downloadControls[1]?.attributes('href')).toContain('/releases/download/v1.17.5/')
+    const hrefs = downloadControls
+      .map((c) => c.attributes('href'))
+      .filter((h) => typeof h === 'string' && h.includes('/releases/download/v1.17.5/'))
+    expect(hrefs.length).toBeGreaterThanOrEqual(2)
+    expect(hrefs[0]).toContain('.AppImage')
+    expect(hrefs[1]).toContain('.exe')
   })
 
   it('não redireciona para o repositório quando não há asset para uma plataforma', async () => {

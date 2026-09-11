@@ -305,7 +305,11 @@
         ]
       },
       "modules": {
-        "media": ["Reproductor con 3 modos", "Himnarios y álbumes", "Modo acompañamiento"],
+        "media": [
+          "Reproductor con 3 modos",
+          "Himnarios y álbumes",
+          "Modo acompañamiento"
+        ],
         "hymnal": [
           "Búsqueda rápida por número o título",
           "Reproducción en secuencia",
@@ -316,16 +320,36 @@
           "Arrastrar y soltar a la lista",
           "Modo acompañamiento con letra"
         ],
-        "liturgy": ["13 tipos de elementos", "Arrastrar y soltar", "Cronómetro por elemento"],
-        "bible": ["Múltiples versiones", "Búsqueda rápida", "Proyección directa"],
-        "projection": ["Salida independiente", "Multi-pantalla", "Control total"],
+        "liturgy": [
+          "13 tipos de elementos",
+          "Arrastrar y soltar",
+          "Cronómetro por elemento"
+        ],
+        "bible": [
+          "Múltiples versiones",
+          "Búsqueda rápida",
+          "Proyección directa"
+        ],
+        "projection": [
+          "Salida independiente",
+          "Multi-pantalla",
+          "Control total"
+        ],
         "streaming": [
           "CSS personalizado para letra",
           "Integración con OBS y vMix",
           "Salida para YouTube y Facebook"
         ],
-        "tools": ["Reloj y cronómetro", "Temporizador", "Sorteo"],
-        "settings": ["Apariencia", "Proyección", "Multi-pantalla"]
+        "tools": [
+          "Reloj y cronómetro",
+          "Temporizador",
+          "Sorteo"
+        ],
+        "settings": [
+          "Apariencia",
+          "Proyección",
+          "Multi-pantalla"
+        ]
       }
     },
     "faq": {
@@ -501,7 +525,9 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": ["No usamos cookies de terceros, análisis o publicidad."],
+        "body": [
+          "No usamos cookies de terceros, análisis o publicidad."
+        ],
         "table": {
           "header": {
             "cookie": "Cookie",
@@ -783,7 +809,8 @@
         "autoUpdate": "Actualizaciones automáticas"
       },
       "buildFromSource": "¿Prefieres compilar desde el código fuente?",
-      "buildFromSourceLink": "Ver instrucciones en GitHub"
+      "buildFromSourceLink": "Ver instrucciones en GitHub",
+      "otherArch": "Descargar para {arch}"
     },
     "web": {
       "badge": "Instantáneo",
