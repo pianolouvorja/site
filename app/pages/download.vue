@@ -269,13 +269,6 @@
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
             </a>
             <a
-              v-if="altArchDownload && (card.os.startsWith('macos') || card.os.startsWith('linux'))"
-              :href="altArchDownload.url"
-              class="download-card__arch-alt"
-            >
-              {{ $t('download.desktop.otherArch', { arch: altArchDownload.arch }) }}
-            </a>
-            <a
               v-else-if="!card.available"
               class="download-card__btn download-card__btn--disabled"
               aria-disabled="true"
@@ -293,6 +286,13 @@
               <i class="ti ti-download" aria-hidden="true" />
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
             </button>
+            <a
+              v-if="altArchDownload && (card.os.startsWith('macos') || card.os.startsWith('linux'))"
+              :href="altArchDownload.url"
+              class="download-card__arch-alt"
+            >
+              {{ $t('download.desktop.otherArch', { arch: altArchDownload.arch }) }}
+            </a>
             <p class="download-card__hint">
               {{ $t(`${card.i18nPrefix}.hint`) }}
             </p>
