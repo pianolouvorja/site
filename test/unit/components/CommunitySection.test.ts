@@ -1,7 +1,23 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
 import { communityJoinUrl } from '~/data/community'
+
+vi.mock('~/data/community', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('~/data/community')>()
+  return {
+    ...actual,
+    communityMembers: [
+      { name: 'Caique', role: 'tester' as const, since: '2026-08' },
+      {
+        name: 'Ana Teste',
+        role: 'enthusiast' as const,
+        since: '2026-01',
+        url: 'https://example.com/ana',
+      },
+    ],
+  }
+})
 
 const stubs = { i: true }
 
@@ -56,10 +72,17 @@ describe('CommunitySection', () => {
   it('card tem link opcional com rel noopener e target blank', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const links = wrapper.findAll('a.community__link')
-    if (links.length > 0) {
-      expect(links[0]!.attributes('target')).toBe('_blank')
-      expect(links[0]!.attributes('rel')).toBe('noopener noreferrer')
-    }
+    expect(links.length).toBe(1)
+    expect(links[0]!.attributes('href')).toBe('https://example.com/ana')
+    expect(links[0]!.attributes('target')).toBe('_blank')
+    expect(links[0]!.attributes('rel')).toBe('noopener noreferrer')
+  })
+
+  it('nao renderiza link quando membro nao tem url', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const caique = wrapper.findAll('.community__card')[0]!
+    expect(caique.find('.community__name').text()).toBe('Caique')
+    expect(caique.find('a.community__link').exists()).toBe(false)
   })
 
   it('renderiza CTA para entrar na comunidade', () => {

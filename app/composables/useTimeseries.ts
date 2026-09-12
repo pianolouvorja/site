@@ -50,14 +50,22 @@ export function useTimeseries(initialPeriod: TimeseriesPeriod = '30d') {
     void refresh()
   }
 
-  onMounted(() => {
+  function startPolling() {
     void refresh()
-    poll = setInterval(() => void refresh(), POLL_INTERVAL_MS)
-  })
-  onUnmounted(() => {
-    if (poll) clearInterval(poll)
-  })
-  return { period, data, loading, error, refresh, setPeriod }
+    poll = setInterval(refresh, POLL_INTERVAL_MS)
+  }
+
+  function stopPolling() {
+    if (poll) {
+      clearInterval(poll)
+      poll = null
+    }
+  }
+
+  onMounted(startPolling)
+  onUnmounted(stopPolling)
+
+  return { period, data, loading, error, refresh, setPeriod, startPolling, stopPolling }
 }
 
 export default useTimeseries

@@ -65,6 +65,26 @@ describe('parseSub', () => {
     const sub = parseSub(raw)
     expect(sub.active).toBe(false)
   })
+
+  it('usa email_address quando email esta ausente', () => {
+    const sub = parseSub({ email_address: 'alt@test.com' })
+    expect(sub.email).toBe('alt@test.com')
+  })
+
+  it('email vazio quando email e email_address estao ausentes', () => {
+    const sub = parseSub({})
+    expect(sub.email).toBe('')
+  })
+
+  it('active true quando type=regular', () => {
+    const sub = parseSub({ email: 'a@test.com', type: 'regular' })
+    expect(sub.active).toBe(true)
+  })
+
+  it('active false quando type nao e regular', () => {
+    const sub = parseSub({ email: 'a@test.com', type: 'removed' })
+    expect(sub.active).toBe(false)
+  })
 })
 
 describe('Subscriber interface', () => {
