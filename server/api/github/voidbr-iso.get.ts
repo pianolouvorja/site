@@ -59,6 +59,7 @@ export default defineEventHandler(async (): Promise<VoidBrIsoResponse> => {
     if (unique.length === 0) return unavailable
 
     const fileName = unique[0]
+    if (!fileName) return unavailable
     const url = `${ISO_DIR}${fileName}`
     const { size, builtAt } = await headSize(url)
 
