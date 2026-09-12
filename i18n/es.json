@@ -784,6 +784,7 @@
       },
       "buildFromSource": "¿Prefieres compilar desde el código fuente?",
       "buildFromSourceLink": "Ver instrucciones en GitHub",
+      "otherArch": "Descargar para {arch}",
       "detectedArchitecture": "Arquitectura detectada: {architecture}"
     },
     "web": {

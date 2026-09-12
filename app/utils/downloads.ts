@@ -39,12 +39,27 @@ export const REPO_CONFIGS: RepoConfig[] = [
     name: 'app',
     category: 'desktop',
     assetMatchers: [
-      { platform: 'linux', test: (n) => /\.appimage$/i.test(n) },
+      {
+        platform: 'linux-arm64',
+        test: (n) => /arm64\.appimage$/i.test(n),
+      },
+      {
+        platform: 'linux-x64',
+        test: (n) => /\.appimage$/i.test(n) && !/arm64/i.test(n),
+      },
       {
         platform: 'windows',
         test: (n) => /\.exe$/i.test(n) && !/\.yml$/i.test(n) && !/\.blockmap$/i.test(n),
       },
-      { platform: 'macos', test: (n) => /\.dmg$/i.test(n) },
+      {
+        platform: 'macos-arm64',
+        test: (n) => /arm64\.dmg$/i.test(n),
+      },
+      {
+        // dmg sem sufixo de arch = build legado único (Intel-era) → x64
+        platform: 'macos-x64',
+        test: (n) => /\.dmg$/i.test(n) && !/arm64/i.test(n),
+      },
     ],
   },
   {

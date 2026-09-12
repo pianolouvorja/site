@@ -792,6 +792,7 @@
       },
       "buildFromSource": "Prefer to build from source?",
       "buildFromSourceLink": "See instructions on GitHub",
+      "otherArch": "Download for {arch}",
       "detectedArchitecture": "Detected architecture: {architecture}"
     },
     "web": {

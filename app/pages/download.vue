@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { siteConfig } from '~/data/site'
   import type { AllDownloadsResponse, CategoryResult } from '~/utils/downloads'
-  import { detectArchitecture, detectDevice } from '~/utils/device-detection'
+  import { detectArch, detectDevice } from '~/utils/device-detection'
 
   const { t } = useI18n()
 
@@ -39,22 +39,11 @@
   // Uses the shared device-detection util so Android phones (whose UA
   // contains "Linux") are NOT misclassified as desktop Linux.
   const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
+  const detectedArch = ref<'arm64' | 'x64'>('x64')
   const detectedMobilePlatform = ref<'android' | 'ios' | null>(null)
-  const detectedArchitecture = ref<'arm64' | 'x64' | 'unknown'>('unknown')
 
   onMounted(async () => {
     const device = detectDevice(navigator.userAgent)
-    const userAgentData = (
-      navigator as {
-        userAgentData?: {
-          getHighEntropyValues: (hints: string[]) => Promise<{ architecture?: string }>
-        }
-      }
-    ).userAgentData
-    const hints = userAgentData
-      ? await userAgentData.getHighEntropyValues(['architecture']).catch(() => null)
-      : null
-    detectedArchitecture.value = detectArchitecture(navigator.userAgent, hints?.architecture)
     if (device.category === 'desktop') {
       detectedOs.value =
         device.platform === 'macos'
@@ -69,6 +58,11 @@
         device.platform === 'android' ? 'android' : device.platform === 'ios' ? 'ios' : null
     }
 
+    // Arquitetura da CPU (arm64 vs x64) — client-only, async via userAgentData.
+    // Mac UA não expõe arch real; userAgentData sim (Chromium). Safari/Firefox
+    // caem no default x64 com link alternativo sempre visível.
+    detectedArch.value = await detectArch()
+
     // Fetch latest release via server proxy (token-backed, no rate limit)
     try {
       const res = await fetch('/api/github/latest-app-release')
@@ -79,11 +73,19 @@
       for (const asset of data.assets) {
         const name = asset.name.toLowerCase()
         if (name.endsWith('.appimage')) {
-          downloadUrls.value.linux = asset.browser_download_url
+          if (name.includes('arm64')) {
+            downloadUrls.value['linux-arm64'] = asset.browser_download_url
+          } else {
+            downloadUrls.value['linux-x64'] = asset.browser_download_url
+          }
         } else if (name.endsWith('.exe')) {
           downloadUrls.value.windows = asset.browser_download_url
         } else if (name.endsWith('.dmg')) {
-          downloadUrls.value.macos = asset.browser_download_url
+          if (name.includes('arm64')) {
+            downloadUrls.value['macos-arm64'] = asset.browser_download_url
+          } else {
+            downloadUrls.value['macos-x64'] = asset.browser_download_url
+          }
         }
       }
     } catch {
@@ -104,14 +106,47 @@
       })
   })
 
+  /**
+   * Link alternativo de arquitetura: usuário em Mac arm64 vê o x64 (e vice-versa).
+   * Sempre visível quando existe — correção a 1 clique se a detecção errar.
+   */
+  const altArchDownload = computed(() => {
+    if (detectedOs.value === 'macos') {
+      const primary = detectedArch.value === 'arm64' ? 'macos-arm64' : 'macos-x64'
+      const alt = detectedArch.value === 'arm64' ? 'macos-x64' : 'macos-arm64'
+      return downloadUrls.value[primary] && downloadUrls.value[alt]
+        ? {
+            url: downloadUrls.value[alt] as string,
+            arch: detectedArch.value === 'arm64' ? 'x64' : 'arm64',
+          }
+        : null
+    }
+    if (detectedOs.value === 'linux') {
+      const primary = detectedArch.value === 'arm64' ? 'linux-arm64' : 'linux-x64'
+      const alt = detectedArch.value === 'arm64' ? 'linux-x64' : 'linux-arm64'
+      return downloadUrls.value[primary] && downloadUrls.value[alt]
+        ? {
+            url: downloadUrls.value[alt] as string,
+            arch: detectedArch.value === 'arm64' ? 'x64' : 'arm64',
+          }
+        : null
+    }
+    return null
+  })
+
   const desktopCards = computed(() => [
     {
-      os: 'linux' as const,
+      os:
+        detectedOs.value === 'linux'
+          ? detectedArch.value === 'arm64'
+            ? ('linux-arm64' as const)
+            : ('linux-x64' as const)
+          : ('linux-x64' as const),
       icon: '',
       i18nPrefix: 'download.desktop.linux',
       recommended: detectedOs.value === 'linux',
       requiresDiskSpace: true,
-      available: !!downloadUrls.value.linux,
+      available: !!downloadUrls.value['linux-x64'] || !!downloadUrls.value['linux-arm64'],
     },
     {
       os: 'windows' as const,
@@ -122,12 +157,17 @@
       available: !!downloadUrls.value.windows,
     },
     {
-      os: 'macos' as const,
+      os:
+        detectedOs.value === 'macos'
+          ? detectedArch.value === 'arm64'
+            ? ('macos-arm64' as const)
+            : ('macos-x64' as const)
+          : ('macos-x64' as const),
       icon: 'ti-brand-apple',
       i18nPrefix: 'download.desktop.macos',
       recommended: detectedOs.value === 'macos',
       requiresDiskSpace: true,
-      available: !!downloadUrls.value.macos,
+      available: !!downloadUrls.value['macos-x64'] || !!downloadUrls.value['macos-arm64'],
     },
   ])
 </script>
@@ -197,7 +237,7 @@
             <div class="download-card__header">
               <!-- Tux (Linux) via SVG inline - ti-brand-tux nao existe no Tabler -->
               <svg
-                v-if="card.os === 'linux'"
+                v-if="card.os.startsWith('linux')"
                 class="download-card__icon download-card__icon--svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
@@ -220,14 +260,6 @@
             </div>
             <p class="download-card__arch">
               {{ $t(`${card.i18nPrefix}.arch`) }}
-            </p>
-            <p
-              v-if="card.recommended && detectedArchitecture !== 'unknown'"
-              class="download-card__arch"
-            >
-              {{
-                $t('download.desktop.detectedArchitecture', { architecture: detectedArchitecture })
-              }}
             </p>
             <p v-if="latestTag" class="download-card__version">
               {{ latestTag }}
@@ -259,6 +291,13 @@
               <i class="ti ti-download" aria-hidden="true" />
               {{ $t(`${card.i18nPrefix}.downloadLabel`) }}
             </button>
+            <a
+              v-if="altArchDownload && (card.os.startsWith('macos') || card.os.startsWith('linux'))"
+              :href="altArchDownload.url"
+              class="download-card__arch-alt"
+            >
+              {{ $t('download.desktop.otherArch', { arch: altArchDownload.arch }) }}
+            </a>
             <p class="download-card__hint">
               {{ $t(`${card.i18nPrefix}.hint`) }}
             </p>
@@ -374,6 +413,19 @@
   .download-page {
     --download-radius: var(--piano-radius-md);
     --download-radius-sm: var(--piano-radius-sm);
+  }
+
+  .download-card__arch-alt {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--piano-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: var(--piano-cyan-light);
+    }
   }
 
   /* Hero */
