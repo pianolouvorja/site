@@ -305,11 +305,7 @@
         ]
       },
       "modules": {
-        "media": [
-          "Reproductor con 3 modos",
-          "Himnarios y álbumes",
-          "Modo acompañamiento"
-        ],
+        "media": ["Reproductor con 3 modos", "Himnarios y álbumes", "Modo acompañamiento"],
         "hymnal": [
           "Búsqueda rápida por número o título",
           "Reproducción en secuencia",
@@ -320,36 +316,16 @@
           "Arrastrar y soltar a la lista",
           "Modo acompañamiento con letra"
         ],
-        "liturgy": [
-          "13 tipos de elementos",
-          "Arrastrar y soltar",
-          "Cronómetro por elemento"
-        ],
-        "bible": [
-          "Múltiples versiones",
-          "Búsqueda rápida",
-          "Proyección directa"
-        ],
-        "projection": [
-          "Salida independiente",
-          "Multi-pantalla",
-          "Control total"
-        ],
+        "liturgy": ["13 tipos de elementos", "Arrastrar y soltar", "Cronómetro por elemento"],
+        "bible": ["Múltiples versiones", "Búsqueda rápida", "Proyección directa"],
+        "projection": ["Salida independiente", "Multi-pantalla", "Control total"],
         "streaming": [
           "CSS personalizado para letra",
           "Integración con OBS y vMix",
           "Salida para YouTube y Facebook"
         ],
-        "tools": [
-          "Reloj y cronómetro",
-          "Temporizador",
-          "Sorteo"
-        ],
-        "settings": [
-          "Apariencia",
-          "Proyección",
-          "Multi-pantalla"
-        ]
+        "tools": ["Reloj y cronómetro", "Temporizador", "Sorteo"],
+        "settings": ["Apariencia", "Proyección", "Multi-pantalla"]
       }
     },
     "faq": {
@@ -525,9 +501,7 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": [
-          "No usamos cookies de terceros, análisis o publicidad."
-        ],
+        "body": ["No usamos cookies de terceros, análisis o publicidad."],
         "table": {
           "header": {
             "cookie": "Cookie",
@@ -810,7 +784,8 @@
       },
       "buildFromSource": "¿Prefieres compilar desde el código fuente?",
       "buildFromSourceLink": "Ver instrucciones en GitHub",
-      "otherArch": "Descargar para {arch}"
+      "otherArch": "Descargar para {arch}",
+      "detectedArchitecture": "Arquitectura detectada: {architecture}"
     },
     "web": {
       "badge": "Instantáneo",
@@ -1031,6 +1006,10 @@
       "vcatafesta": {
         "role": "Distro VoidBR · ISO LouvorJA Piano",
         "bio": "Fundador de la comunidad VoidBR (Void Linux Brasil) y del proyecto Chililinux (GNU/Linux basado en LFS). Desarrollador de Linux de bajo nivel — kernel personalizado, automatización y empaquetado — mantiene la ISO VoidBR LouvorJA Piano, que trae PIANO preinstalado y actualizado, facilitando la adopción legal del software en las iglesias."
+      },
+      "elomarxa": {
+        "role": "Diseño digital, UI y UX",
+        "bio": "Diseñador digital, con experiencia en producción de piezas visuales y desarrollando habilidades de UI y UX."
       }
     },
     "work": {
@@ -1052,6 +1031,20 @@
       },
       "button": "Empezar a contribuir"
     }
+  },
+  "community": {
+    "spot": "Este lugar es tuyo — ven a probar",
+    "eyebrow": "Comunidad",
+    "title": "Quién usa, prueba y contribuye",
+    "subtitle": "Testers, entusiastas y sugeridores que ayudan a PIANO LouvorJA a crecer. ¿Quieres participar?",
+    "roles": {
+      "tester": "Tester",
+      "enthusiast": "Entusiasta",
+      "suggester": "Sugeridor"
+    },
+    "since": "Desde {since}",
+    "link": "Ver perfil",
+    "cta": "Únete a la comunidad"
   },
   "donate": {
     "title": "Apoya el proyecto",

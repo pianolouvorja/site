@@ -221,12 +221,36 @@ describe('REPO_CONFIGS', () => {
 
 describe('matchAssets arquitetura (arm64 vs x64)', () => {
   const realReleaseAssets: RawReleaseAsset[] = [
-    { name: 'LouvorJA-PIANO-1.26.0-arm64.dmg', browser_download_url: 'https://x.com/arm64.dmg', size: 1 },
-    { name: 'LouvorJA-PIANO-1.26.0-x64.dmg', browser_download_url: 'https://x.com/x64.dmg', size: 2 },
-    { name: 'LouvorJA-PIANO-1.26.0-arm64.AppImage', browser_download_url: 'https://x.com/arm64.AppImage', size: 3 },
-    { name: 'LouvorJA-PIANO-1.26.0-x86_64.AppImage', browser_download_url: 'https://x.com/x64.AppImage', size: 4 },
-    { name: 'LouvorJA-PIANO-1.26.0-x64.exe', browser_download_url: 'https://x.com/x64.exe', size: 5 },
-    { name: 'LouvorJA-PIANO-1.26.0-arm64.dmg.blockmap', browser_download_url: 'https://x.com/b1', size: 6 },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-arm64.dmg',
+      browser_download_url: 'https://x.com/arm64.dmg',
+      size: 1,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-x64.dmg',
+      browser_download_url: 'https://x.com/x64.dmg',
+      size: 2,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-arm64.AppImage',
+      browser_download_url: 'https://x.com/arm64.AppImage',
+      size: 3,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-x86_64.AppImage',
+      browser_download_url: 'https://x.com/x64.AppImage',
+      size: 4,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-x64.exe',
+      browser_download_url: 'https://x.com/x64.exe',
+      size: 5,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-arm64.dmg.blockmap',
+      browser_download_url: 'https://x.com/b1',
+      size: 6,
+    },
     { name: 'latest-mac.yml', browser_download_url: 'https://x.com/yml', size: 7 },
   ]
 

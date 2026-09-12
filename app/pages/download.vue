@@ -131,19 +131,23 @@
    */
   const altArchDownload = computed(() => {
     if (detectedOs.value === 'macos') {
-      const primary =
-        detectedArch.value === 'arm64' ? 'macos-arm64' : 'macos-x64'
+      const primary = detectedArch.value === 'arm64' ? 'macos-arm64' : 'macos-x64'
       const alt = detectedArch.value === 'arm64' ? 'macos-x64' : 'macos-arm64'
       return downloadUrls.value[primary] && downloadUrls.value[alt]
-        ? { url: downloadUrls.value[alt] as string, arch: detectedArch.value === 'arm64' ? 'x64' : 'arm64' }
+        ? {
+            url: downloadUrls.value[alt] as string,
+            arch: detectedArch.value === 'arm64' ? 'x64' : 'arm64',
+          }
         : null
     }
     if (detectedOs.value === 'linux') {
-      const primary =
-        detectedArch.value === 'arm64' ? 'linux-arm64' : 'linux-x64'
+      const primary = detectedArch.value === 'arm64' ? 'linux-arm64' : 'linux-x64'
       const alt = detectedArch.value === 'arm64' ? 'linux-x64' : 'linux-arm64'
       return downloadUrls.value[primary] && downloadUrls.value[alt]
-        ? { url: downloadUrls.value[alt] as string, arch: detectedArch.value === 'arm64' ? 'x64' : 'arm64' }
+        ? {
+            url: downloadUrls.value[alt] as string,
+            arch: detectedArch.value === 'arm64' ? 'x64' : 'arm64',
+          }
         : null
     }
     return null
@@ -151,11 +155,12 @@
 
   const desktopCards = computed(() => [
     {
-      os: detectedOs.value === 'linux'
-        ? detectedArch.value === 'arm64'
-          ? ('linux-arm64' as const)
-          : ('linux-x64' as const)
-        : ('linux-x64' as const),
+      os:
+        detectedOs.value === 'linux'
+          ? detectedArch.value === 'arm64'
+            ? ('linux-arm64' as const)
+            : ('linux-x64' as const)
+          : ('linux-x64' as const),
       icon: '',
       i18nPrefix: 'download.desktop.linux',
       recommended: detectedOs.value === 'linux',

@@ -45,8 +45,7 @@ export const REPO_CONFIGS: RepoConfig[] = [
       },
       {
         platform: 'linux-x64',
-        test: (n) =>
-          /\.appimage$/i.test(n) && !/arm64/i.test(n),
+        test: (n) => /\.appimage$/i.test(n) && !/arm64/i.test(n),
       },
       {
         platform: 'windows',

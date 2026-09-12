@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { parseArch, detectArchSync } from '~/utils/device-detection'
 
 describe('parseArch', () => {
@@ -67,6 +67,16 @@ describe('detectArch (async, userAgentData)', () => {
         getHighEntropyValue: async () => {
           throw new Error('denied')
         },
+      },
+    })
+    const { detectArch } = await import('~/utils/device-detection')
+    expect(await detectArch()).toBe('x64')
+  })
+
+  it('architecture desconhecida do userAgentData → x64 fallback', async () => {
+    vi.stubGlobal('navigator', {
+      userAgentData: {
+        getHighEntropyValue: async () => ({ architecture: 'wasm32' }),
       },
     })
     const { detectArch } = await import('~/utils/device-detection')

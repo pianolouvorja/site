@@ -307,6 +307,14 @@ export default {
             action: 'Quick search',
             shortcut: 'Ctrl+K',
           },
+          {
+            action: 'Close projection',
+            shortcut: 'ESC',
+          },
+          {
+            action: 'Toggle operator ↔ projection (desktop app)',
+            shortcut: 'Ctrl+Alt+P',
+          },
         ],
       },
       modules: {
@@ -439,6 +447,11 @@ export default {
           'We do not use tracking, analytics, advertising, or profiling cookies.',
           '1.3 App data',
           'The PIANO LouvorJA app (hymns, liturgy, settings, playlists) stores all data locally in your browser (LocalStorage/IndexedDB). This data is never sent to our servers.',
+          '1.4 Technical audience data (automatic collection)',
+          'When you browse the site, we collect on an aggregated basis:',
+          'Country of origin of the visit (derived from the HTTP header of the CDN provider, e.g. Cloudflare/Vercel) — we do not use GPS-based geolocation.',
+          'IP address processed exclusively as a hash (SHA-256 with a secret salt). The IP address is NEVER stored in plain text and cannot be reversed to identify you.',
+          'Visits counter per country per day. There is no individual profile, browsing history, or link to your identity.',
         ],
       },
       purpose: {
@@ -514,7 +527,10 @@ export default {
       },
       cookies: {
         title: '8. Cookies',
-        body: ['We do not use third-party, analytics, or advertising cookies.'],
+        body: [
+          'We do not use third-party, analytics, or advertising cookies.',
+          'Country-level audience telemetry is aggregated and anonymous (country + hashed IP in daily counters); it uses no tracking cookies and does not identify individuals.',
+        ],
         table: {
           header: {
             cookie: 'Cookie',
@@ -653,6 +669,8 @@ export default {
         title: '8. Privacy and Data',
         body: [
           'The processing of personal data is governed by our {link}, which is part of these Terms.',
+          'Technical audience data (country of origin and hashed IP address, aggregated into daily counters) is collected automatically for statistical purposes.',
+          'The IP address is never stored in plain text and does not allow identifying individual users.',
         ],
         link: {
           url: '/privacy',

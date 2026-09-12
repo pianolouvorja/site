@@ -300,15 +300,19 @@
           {
             "action": "Busca rápida",
             "shortcut": "Ctrl+K"
+          },
+          {
+            "action": "Encerrar projeção",
+            "shortcut": "ESC"
+          },
+          {
+            "action": "Alternar operador ↔ projeção (app desktop)",
+            "shortcut": "Ctrl+Alt+P"
           }
         ]
       },
       "modules": {
-        "media": [
-          "Player com 3 modos",
-          "Hinários e álbuns",
-          "Modo acompanhamento"
-        ],
+        "media": ["Player com 3 modos", "Hinários e álbuns", "Modo acompanhamento"],
         "hymnal": [
           "Busca rápida por número ou título",
           "Reprodução em sequência",
@@ -319,36 +323,16 @@
           "Arrastar e soltar na playlist",
           "Modo acompanhamento com letra"
         ],
-        "liturgy": [
-          "13 tipos de itens",
-          "Arrastar e soltar",
-          "Cronômetro por item"
-        ],
-        "bible": [
-          "Múltiplas versões",
-          "Busca rápida",
-          "Projeção direta"
-        ],
-        "projection": [
-          "Saída independente",
-          "Multi-tela",
-          "Controle total"
-        ],
+        "liturgy": ["13 tipos de itens", "Arrastar e soltar", "Cronômetro por item"],
+        "bible": ["Múltiplas versões", "Busca rápida", "Projeção direta"],
+        "projection": ["Saída independente", "Multi-tela", "Controle total"],
         "streaming": [
           "CSS personalizado para letra",
           "Integração com OBS e vMix",
           "Saída para YouTube e Facebook"
         ],
-        "tools": [
-          "Relógio e cronômetro",
-          "Timer regressivo",
-          "Sorteio"
-        ],
-        "settings": [
-          "Aparência",
-          "Projeção",
-          "Multi-tela"
-        ]
+        "tools": ["Relógio e cronômetro", "Timer regressivo", "Sorteio"],
+        "settings": ["Aparência", "Projeção", "Multi-tela"]
       }
     },
     "faq": {
@@ -525,9 +509,7 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": [
-          "Não utilizamos cookies de terceiros, analytics ou publicidade."
-        ],
+        "body": ["Não utilizamos cookies de terceiros, analytics ou publicidade."],
         "table": {
           "header": {
             "cookie": "Cookie",
@@ -810,7 +792,8 @@
       },
       "buildFromSource": "Preferir compilar do código-fonte?",
       "buildFromSourceLink": "Ver instruções no GitHub",
-      "otherArch": "Baixar para {arch}"
+      "otherArch": "Baixar para {arch}",
+      "detectedArchitecture": "Arquitetura detectada: {architecture}"
     },
     "web": {
       "badge": "Instantâneo",
@@ -1026,6 +1009,10 @@
       "vcatafesta": {
         "role": "Distro VoidBR · ISO LouvorJA Piano",
         "bio": "Fundador da comunidade VoidBR (Void Linux Brasil) e do projeto Chililinux (GNU/Linux baseado em LFS). Desenvolvedor de Linux de baixo nível — kernel customizado, automação e empacotamento — mantém a ISO VoidBR LouvorJA Piano, que traz o PIANO pré-instalado e atualizado, facilitando a adoção legal do software nas igrejas."
+      },
+      "elomarxa": {
+        "role": "Design digital, UI e UX",
+        "bio": "Designer digital, com experiência em produção de artes e desenvolvendo habilidade com UI e UX."
       }
     },
     "work": {
@@ -1047,6 +1034,20 @@
       },
       "button": "Começar a contribuir"
     }
+  },
+  "community": {
+    "spot": "Esta vaga é sua — venha testar",
+    "eyebrow": "Comunidade",
+    "title": "Quem usa, testa e contribui",
+    "subtitle": "Testadores, entusiastas e sugestores que ajudam o PIANO LouvorJA a crescer. Quer participar?",
+    "roles": {
+      "tester": "Testador",
+      "enthusiast": "Entusiasta",
+      "suggester": "Sugestor"
+    },
+    "since": "Desde {since}",
+    "link": "Ver perfil",
+    "cta": "Faça parte da comunidade"
   },
   "donate": {
     "title": "Apoie o projeto",

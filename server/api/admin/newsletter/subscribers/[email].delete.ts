@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  await requireAuth(event)
   const email = getRouterParam(event, 'email')
 
   if (!email) {
@@ -9,5 +10,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const success = await removeSubscriber(decodeURIComponent(email))
+  if (!success) {
+    throw createError({
+      statusCode: 502,
+      statusMessage: 'Subscriber removal failed',
+    })
+  }
   return { success }
 })
