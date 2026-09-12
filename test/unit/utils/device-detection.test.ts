@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { detectDevice } from '~/utils/device-detection'
+import { detectArchitecture, detectDevice } from '~/utils/device-detection'
 
 describe('detectDevice', () => {
   describe('TV platforms', () => {
@@ -85,5 +85,21 @@ describe('detectDevice', () => {
       const device = detectDevice('Mozilla/5.0 (Linux; Android 12; Android TV) Chrome/120')
       expect(device.category).toBe('tv')
     })
+  })
+})
+
+describe('detectArchitecture', () => {
+  it.each([
+    ['Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'x64'],
+    ['Mozilla/5.0 (X11; Linux x86_64)', 'x64'],
+    ['Mozilla/5.0 (X11; Linux aarch64)', 'arm64'],
+    ['Mozilla/5.0 (Macintosh; ARM Mac OS X 14_0)', 'arm64'],
+    ['curl/8.0', 'unknown'],
+  ] as const)('%s → %s', (userAgent, architecture) => {
+    expect(detectArchitecture(userAgent)).toBe(architecture)
+  })
+
+  it('prioriza Client Hints sobre User-Agent', () => {
+    expect(detectArchitecture('Mozilla/5.0 (X11; Linux x86_64)', 'arm')).toBe('arm64')
   })
 })

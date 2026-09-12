@@ -17,9 +17,9 @@ describe('matchAssets', () => {
       },
     ]
     const result = matchAssets(assets, REPO_CONFIGS[0].assetMatchers)
-    expect(result).toHaveProperty('linux')
-    expect(result.linux.url).toBe('https://example.com/a.AppImage')
-    expect(result.linux.size).toBe(168000000)
+    expect(result).toHaveProperty('linux-x64')
+    expect(result['linux-x64'].url).toBe('https://example.com/a.AppImage')
+    expect(result['linux-x64'].size).toBe(168000000)
   })
 
   it('matches .exe as windows but not .exe.yml or .exe.blockmap', () => {
@@ -51,7 +51,7 @@ describe('matchAssets', () => {
       },
     ]
     const result = matchAssets(assets, REPO_CONFIGS[0].assetMatchers)
-    expect(result).toHaveProperty('macos')
+    expect(result).toHaveProperty('macos-x64')
   })
 
   it('matches AndroidTV .apk as androidtv for TV category', () => {
@@ -118,7 +118,7 @@ describe('matchAssets', () => {
       { name: 'Piano-1.0.0.dmg', browser_download_url: 'https://x.com/m.dmg', size: 300 },
     ]
     const result = matchAssets(assets, REPO_CONFIGS[0].assetMatchers)
-    expect(Object.keys(result)).toEqual(['linux', 'windows', 'macos'])
+    expect(Object.keys(result)).toEqual(['linux-x64', 'windows', 'macos-x64'])
   })
 
   it('last matching asset wins for same platform', () => {
@@ -193,7 +193,13 @@ describe('REPO_CONFIGS', () => {
   it('desktop has linux, windows, macos matchers', () => {
     const desktop = REPO_CONFIGS[0]
     expect(desktop.category).toBe('desktop')
-    expect(desktop.assetMatchers.map((m) => m.platform)).toEqual(['linux', 'windows', 'macos'])
+    expect(desktop.assetMatchers.map((m) => m.platform)).toEqual([
+      'linux-arm64',
+      'linux-x64',
+      'windows',
+      'macos-arm64',
+      'macos-x64',
+    ])
   })
 
   it('tv has androidtv, webos, tizen matchers', () => {
@@ -210,5 +216,76 @@ describe('REPO_CONFIGS', () => {
     const mobile = REPO_CONFIGS[2]
     expect(mobile.category).toBe('mobile')
     expect(mobile.assetMatchers.map((m) => m.platform)).toEqual(['android', 'ios'])
+  })
+})
+
+describe('matchAssets arquitetura (arm64 vs x64)', () => {
+  const realReleaseAssets: RawReleaseAsset[] = [
+    {
+      name: 'LouvorJA-PIANO-1.26.0-arm64.dmg',
+      browser_download_url: 'https://x.com/arm64.dmg',
+      size: 1,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-x64.dmg',
+      browser_download_url: 'https://x.com/x64.dmg',
+      size: 2,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-arm64.AppImage',
+      browser_download_url: 'https://x.com/arm64.AppImage',
+      size: 3,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-x86_64.AppImage',
+      browser_download_url: 'https://x.com/x64.AppImage',
+      size: 4,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-x64.exe',
+      browser_download_url: 'https://x.com/x64.exe',
+      size: 5,
+    },
+    {
+      name: 'LouvorJA-PIANO-1.26.0-arm64.dmg.blockmap',
+      browser_download_url: 'https://x.com/b1',
+      size: 6,
+    },
+    { name: 'latest-mac.yml', browser_download_url: 'https://x.com/yml', size: 7 },
+  ]
+
+  const matchers = REPO_CONFIGS.find((c) => c.name === 'app')!.assetMatchers
+
+  it('macos-arm64 pega o dmg arm64 (Apple Silicon)', () => {
+    const result = matchAssets(realReleaseAssets, matchers)
+    expect(result['macos-arm64']?.url).toBe('https://x.com/arm64.dmg')
+  })
+
+  it('macos-x64 pega o dmg x64 (Intel) — não o arm64', () => {
+    const result = matchAssets(realReleaseAssets, matchers)
+    expect(result['macos-x64']?.url).toBe('https://x.com/x64.dmg')
+  })
+
+  it('linux-arm64 pega o AppImage arm64', () => {
+    const result = matchAssets(realReleaseAssets, matchers)
+    expect(result['linux-arm64']?.url).toBe('https://x.com/arm64.AppImage')
+  })
+
+  it('linux-x64 pega o AppImage x86_64', () => {
+    const result = matchAssets(realReleaseAssets, matchers)
+    expect(result['linux-x64']?.url).toBe('https://x.com/x64.AppImage')
+  })
+
+  it('blockmap nunca vira asset de download', () => {
+    const result = matchAssets(realReleaseAssets, matchers)
+    expect(Object.values(result).some((a) => a.name.includes('blockmap'))).toBe(false)
+  })
+
+  it('release antigo sem sufixo de arch (dmg único) mapeia macos-x64 como fallback', () => {
+    const legacy: RawReleaseAsset[] = [
+      { name: 'PIANO-1.17.5.dmg', browser_download_url: 'https://x.com/legacy.dmg', size: 8 },
+    ]
+    const result = matchAssets(legacy, matchers)
+    expect(result['macos-x64']?.url).toBe('https://x.com/legacy.dmg')
   })
 })
