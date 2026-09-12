@@ -81,6 +81,9 @@ export default defineNuxtConfig({
     // Server-only secrets
     firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
 
+    // Geo telemetry salt (LGPD: IP hasheado, nunca em texto claro)
+    geoSalt: process.env.GEO_SALT || '',
+
     // SMTP (Hostinger) — Newsletter manager
     smtpHost: process.env.SMTP_HOST || '',
     smtpPort: parseInt(process.env.SMTP_PORT || '465'),

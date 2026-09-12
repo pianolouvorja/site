@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest'
+import { getGeoStats } from './geo-visit'
 
 // Types mirroring app/types/dashboard.ts to avoid cross-boundary import.
 // Keep in sync with app/types/dashboard.ts.
@@ -221,18 +222,16 @@ export async function fetchNewsletterStats(): Promise<{
 }
 
 /**
- * Visit Stats: visitas dos ultimos 30 dias via GA4 Data API.
- * Retorna null se GOOGLE_ANALYTICS_ID nao estiver configurado.
+ * Visit Stats: visitas dos ultimos 30 dias, agregadas do geoStats
+ * (telemetria propria, middleware geo-telemetry.ts -> Firestore).
+ * Nao depende de GA4: usa os mesmos contadores do /api/admin/geo.
  */
 export async function fetchVisitStats(): Promise<{
   visits: number | null
 }> {
   try {
-    const config = useRuntimeConfig()
-    const propertyId = config.public?.googleAnalyticsId
-    if (!propertyId) return { visits: null }
-
-    return { visits: null }
+    const stats = await getGeoStats(30)
+    return { visits: stats.totalVisits }
   } catch {
     return { visits: null }
   }

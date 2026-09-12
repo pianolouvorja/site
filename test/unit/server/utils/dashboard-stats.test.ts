@@ -5,6 +5,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 const mockFetch = vi.fn()
 vi.stubGlobal('$fetch', mockFetch)
 
+const mockGetGeoStats = vi.fn()
+vi.mock('../../../../server/utils/geo-visit', () => ({
+  getGeoStats: (...args: unknown[]) => mockGetGeoStats(...args),
+}))
+
 vi.stubGlobal('useRuntimeConfig', () => ({
   public: {
     buttondownApiKey: '',
@@ -236,10 +241,17 @@ describe('dashboard-stats', () => {
     })
   })
 
-  // --- Visit Stats (GA4) ---
+  // --- Visit Stats (geoStats/Firestore) ---
 
   describe('fetchVisitStats', () => {
-    it('returns null when GOOGLE_ANALYTICS_ID is empty', async () => {
+    it('returns total visits from geo stats', async () => {
+      mockGetGeoStats.mockResolvedValueOnce({ totalVisits: 42 })
+      const result = await fetchVisitStats()
+      expect(result.visits).toBe(42)
+    })
+
+    it('returns null when geo stats fail', async () => {
+      mockGetGeoStats.mockRejectedValueOnce(new Error('firestore down'))
       const result = await fetchVisitStats()
       expect(result.visits).toBeNull()
     })

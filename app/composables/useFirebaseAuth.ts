@@ -80,6 +80,7 @@ export function useFirebaseAuth() {
     if (!auth) return
     await signOut(auth)
     user.value = null
+    await navigateTo('/admin/login')
   }
 
   async function getToken(): Promise<string | null> {

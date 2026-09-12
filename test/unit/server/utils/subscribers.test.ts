@@ -65,6 +65,26 @@ describe('parseSub', () => {
     const sub = parseSub(raw)
     expect(sub.active).toBe(false)
   })
+
+  it('usa email_address quando email esta ausente', () => {
+    const sub = parseSub({ email_address: 'alt@test.com' })
+    expect(sub.email).toBe('alt@test.com')
+  })
+
+  it('email vazio quando email e email_address estao ausentes', () => {
+    const sub = parseSub({})
+    expect(sub.email).toBe('')
+  })
+
+  it('active true quando type=regular', () => {
+    const sub = parseSub({ email: 'a@test.com', type: 'regular' })
+    expect(sub.active).toBe(true)
+  })
+
+  it('active false quando type nao e regular', () => {
+    const sub = parseSub({ email: 'a@test.com', type: 'removed' })
+    expect(sub.active).toBe(false)
+  })
 })
 
 describe('Subscriber interface', () => {
@@ -99,7 +119,7 @@ describe('fetchSubscribers', () => {
             { email: 'a@test.com', creation_date: '2026-01-01', metadata: { locale: 'en' } },
             { email: 'b@test.com', created_at: '2026-02-01' },
           ],
-          next: 'https://api.buttondown.com/api/v1/subscribers?page=2',
+          next: 'https://api.buttondown.com/v1/subscribers?page=2',
         }),
       })
       .mockResolvedValueOnce({
