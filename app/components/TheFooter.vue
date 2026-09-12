@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { communityChannels } from '~/data/community'
   import { siteConfig, navLinks, secondaryNavLinks } from '~/data/site'
 
   const route = useRoute()
@@ -36,6 +37,11 @@
       href: 'https://www.youtube.com/@pianolouvorja',
       label: 'YouTube',
     },
+    ...communityChannels.map((channel) => ({
+      icon: channel.icon.split(' ')[1],
+      href: channel.url,
+      label: channel.id === 'whatsapp-support' ? 'WhatsApp' : 'Telegram',
+    })),
   ]
 </script>
 
