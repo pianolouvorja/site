@@ -16,8 +16,6 @@
 
   const props = defineProps<{ iso: VoidBrIso | null }>()
 
-  const { t } = useI18n()
-
   const sizeLabel = computed(() => {
     const bytes = props.iso?.sizeBytes
     if (!bytes) return null
@@ -30,8 +28,12 @@
   <section class="voidbr-iso">
     <div class="voidbr-iso__container">
       <span class="voidbr-iso__eyebrow">{{ $t('download.voidbr.eyebrow') }}</span>
-      <h2 class="voidbr-iso__title">{{ $t('download.voidbr.title') }}</h2>
-      <p class="voidbr-iso__subtitle">{{ $t('download.voidbr.subtitle') }}</p>
+      <h2 class="voidbr-iso__title">
+        {{ $t('download.voidbr.title') }}
+      </h2>
+      <p class="voidbr-iso__subtitle">
+        {{ $t('download.voidbr.subtitle') }}
+      </p>
 
       <div class="voidbr-iso__card">
         <div class="voidbr-iso__icon">
@@ -39,7 +41,9 @@
         </div>
         <div class="voidbr-iso__info">
           <h3 class="voidbr-iso__name">VoidBR LouvorJA Piano</h3>
-          <p class="voidbr-iso__desc">{{ $t('download.voidbr.description') }}</p>
+          <p class="voidbr-iso__desc">
+            {{ $t('download.voidbr.description') }}
+          </p>
           <ul class="voidbr-iso__features">
             <li>
               <i class="ti ti-check" aria-hidden="true" />
@@ -73,11 +77,7 @@
           <span v-else class="voidbr-iso__btn voidbr-iso__btn--disabled">
             {{ $t('download.voidbr.unavailable') }}
           </span>
-          <a
-            href="https://voidbr.org"
-            class="voidbr-iso__link"
-            rel="noopener"
-          >
+          <a href="https://voidbr.org" class="voidbr-iso__link" rel="noopener">
             {{ $t('download.voidbr.communityLink') }}
             <i class="ti ti-external-link" aria-hidden="true" />
           </a>
