@@ -62,6 +62,22 @@ describe('TheFooter', () => {
     expect(youtube.attributes('href')).toBe('https://www.youtube.com/@pianolouvorja')
   })
 
+  it('tem link do grupo de suporte do WhatsApp', () => {
+    const wrapper = createWrapper()
+    const whatsapp = wrapper.find('[aria-label="WhatsApp"]')
+    expect(whatsapp.exists()).toBe(true)
+    expect(whatsapp.attributes('href')).toBe(
+      'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+    )
+  })
+
+  it('tem link do grupo de desenvolvedores no Telegram', () => {
+    const wrapper = createWrapper()
+    const telegram = wrapper.find('[aria-label="Telegram"]')
+    expect(telegram.exists()).toBe(true)
+    expect(telegram.attributes('href')).toBe('https://t.me/c/4390408870/6')
+  })
+
   it('tem ano atual no copyright', () => {
     const wrapper = createWrapper()
     const year = new Date().getFullYear()
