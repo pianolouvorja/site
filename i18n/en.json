@@ -872,6 +872,18 @@
         "format": ".tpk package",
         "hint": "Install via USB or Tizen Studio Device Manager."
       }
+    },
+    "voidbr": {
+      "eyebrow": "Partner Linux distro",
+      "title": "VoidBR LouvorJA Piano",
+      "subtitle": "A complete Linux distribution with PIANO LouvorJA pre-installed — built by the VoidBR community to make legal software adoption easy for churches.",
+      "description": "Bootable live system: boot from USB, use and install with PIANO and the hymnal already configured.",
+      "feature1": "PIANO LouvorJA pre-installed and updated",
+      "feature2": "100% legal and free — zero piracy",
+      "feature3": "Void Linux base, lightweight and stable",
+      "downloadLabel": "Download ISO (x86_64)",
+      "unavailable": "ISO temporarily unavailable",
+      "communityLink": "VoidBR community"
     }
   },
   "contributors": {
@@ -971,6 +983,10 @@
       "quality": {
         "title": "Quality & CI",
         "description": "Pipeline automation, testing and code review to ensure stability on every release."
+      },
+      "distro": {
+        "title": "VoidBR Linux Distro",
+        "description": "Maintains the VoidBR LouvorJA Piano live ISO: a complete bootable system with PIANO and the hymnal pre-installed — legal, simple, offline installation for churches."
       }
     },
     "people": {
@@ -994,6 +1010,10 @@
       "educharquero": {
         "role": "Linux, Web App & PWA",
         "bio": "Degree in Computer Networks with a postgraduate qualification in Teaching. Linux user since Kurumin, decades in infrastructure and owner of conectux.com.br."
+      },
+      "vcatafesta": {
+        "role": "VoidBR Distro · LouvorJA Piano ISO",
+        "bio": "Founder of the VoidBR community (Void Linux Brazil) and the Chililinux project (LFS-based GNU/Linux). Low-level Linux developer — custom kernels, automation and packaging — maintains the VoidBR LouvorJA Piano ISO, which ships PIANO pre-installed and updated, making legal software adoption easy for churches."
       },
       "elomarxa": {
         "role": "Digital design, UI and UX",

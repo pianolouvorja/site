@@ -41,6 +41,15 @@
   const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
   const detectedArch = ref<'arm64' | 'x64'>('x64')
   const detectedMobilePlatform = ref<'android' | 'ios' | null>(null)
+  const voidbrIso = ref<VoidbrIsoData | null>(null)
+
+  interface VoidbrIsoData {
+    available: boolean
+    fileName: string | null
+    url: string | null
+    sizeBytes: number | null
+    builtAt: string | null
+  }
 
   onMounted(async () => {
     const device = detectDevice(navigator.userAgent)
@@ -91,6 +100,16 @@
     } catch {
       fetchError.value = true
     }
+
+    // ISO VoidBR (não-bloqueante, independente)
+    fetch('/api/github/voidbr-iso')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        voidbrIso.value = d
+      })
+      .catch(() => {
+        voidbrIso.value = null
+      })
 
     // Fetch TV + Mobile downloads (non-blocking, independent)
     fetch('/api/github/all-downloads')
@@ -383,6 +402,7 @@
     </section>
 
     <!-- TV e Palco Digital -->
+    <VoidbrIsoCard :iso="voidbrIso" />
     <TvDownloadCards :tv-data="tvData" />
 
     <!-- Mobile -->

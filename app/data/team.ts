@@ -48,6 +48,16 @@ export const teamMembers: TeamMember[] = [
     profileUrl: 'https://github.com/educharquero',
   },
   {
+    login: 'vcatafesta',
+    name: 'Vilmar Catafesta',
+    avatar: '/team/vilmar-catafesta.jpg',
+    profileUrl: 'https://github.com/vcatafesta',
+    links: [
+      { label: 'VoidBR', url: 'https://voidbr.org' },
+      { label: 'Chililinux', url: 'https://chililinux.com' },
+    ],
+  },
+  {
     login: 'elomarxa',
     name: 'Elomar',
     avatar: 'https://github.com/elomarXa.png?size=96',
@@ -89,5 +99,10 @@ export const teamAreas: TeamArea[] = [
     id: 'quality',
     icon: 'ti ti-shield-check',
     stack: ['GitHub Actions', 'Vitest', 'Code Review'],
+  },
+  {
+    id: 'distro',
+    icon: 'ti ti-disc',
+    stack: ['Void Linux', 'ISO live', 'Empacotamento'],
   },
 ]

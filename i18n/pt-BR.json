@@ -868,6 +868,18 @@
         "format": "Pacote .tpk",
         "hint": "Instale via USB ou Tizen Studio Device Manager."
       }
+    },
+    "voidbr": {
+      "eyebrow": "Distro Linux parceira",
+      "title": "VoidBR LouvorJA Piano",
+      "subtitle": "Distribuição Linux completa com o PIANO LouvorJA pré-instalado — criada pela comunidade VoidBR para facilitar a adoção legal do software nas igrejas.",
+      "description": "Sistema live bootável: dá boot no pendrive, usa e instala com o PIANO e o acervo já configurados.",
+      "feature1": "PIANO LouvorJA pré-instalado e atualizado",
+      "feature2": "100% legal e gratuito — zero pirataria",
+      "feature3": "Base Void Linux, leve e estável",
+      "downloadLabel": "Baixar ISO (x86_64)",
+      "unavailable": "ISO temporariamente indisponível",
+      "communityLink": "Comunidade VoidBR"
     }
   },
   "contributors": {
@@ -966,6 +978,10 @@
       "quality": {
         "title": "Qualidade e CI",
         "description": "Automação de pipelines, testes e revisão de código para garantir estabilidade em cada release."
+      },
+      "distro": {
+        "title": "Distro Linux VoidBR",
+        "description": "Mantém a ISO live VoidBR LouvorJA Piano: sistema completo bootável com o PIANO e o acervo já instalados — instalação legal, simples e offline para as igrejas."
       }
     },
     "people": {
@@ -989,6 +1005,10 @@
       "educharquero": {
         "role": "Linux, Web App e PWA",
         "bio": "Formação em Redes de Computadores com pós-graduação em Docência. Usuário de Linux desde o Kurumin, atua em infraestrutura há décadas e é responsável pela conectux.com.br."
+      },
+      "vcatafesta": {
+        "role": "Distro VoidBR · ISO LouvorJA Piano",
+        "bio": "Fundador da comunidade VoidBR (Void Linux Brasil) e do projeto Chililinux (GNU/Linux baseado em LFS). Desenvolvedor de Linux de baixo nível — kernel customizado, automação e empacotamento — mantém a ISO VoidBR LouvorJA Piano, que traz o PIANO pré-instalado e atualizado, facilitando a adoção legal do software nas igrejas."
       },
       "elomarxa": {
         "role": "Design digital, UI e UX",
