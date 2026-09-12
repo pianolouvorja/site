@@ -308,6 +308,14 @@ export default {
             action: 'Busca rápida',
             shortcut: 'Ctrl+K',
           },
+          {
+            action: 'Encerrar projeção',
+            shortcut: 'ESC',
+          },
+          {
+            action: 'Alternar operador ↔ projeção (app desktop)',
+            shortcut: 'Ctrl+Alt+P',
+          },
         ],
       },
       modules: {
