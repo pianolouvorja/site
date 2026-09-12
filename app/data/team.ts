@@ -47,6 +47,16 @@ export const teamMembers: TeamMember[] = [
     avatar: 'https://github.com/educharquero.png?size=96',
     profileUrl: 'https://github.com/educharquero',
   },
+  {
+    login: 'vcatafesta',
+    name: 'Vilmar Catafesta',
+    avatar: '/team/vilmar-catafesta.jpg',
+    profileUrl: 'https://github.com/vcatafesta',
+    links: [
+      { label: 'VoidBR', url: 'https://voidbr.org' },
+      { label: 'Chililinux', url: 'https://chililinux.com' },
+    ],
+  },
 ]
 
 /**
