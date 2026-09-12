@@ -105,3 +105,23 @@ describe('CommunitySection', () => {
     expect(spotIndex).toBe(cards.length - 1)
   })
 })
+
+describe('CommunitySection — canais de comunidade', () => {
+  it('renderiza link do grupo de suporte WhatsApp com url personalizada', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const wa = wrapper.find('a.community__channel[href*="chat.whatsapp.com"]')
+    expect(wa.exists()).toBe(true)
+    expect(wa.attributes('target')).toBe('_blank')
+    expect(wa.attributes('rel')).toContain('noopener')
+    expect(wa.text().length).toBeGreaterThan(3)
+  })
+
+  it('renderiza link do grupo de devs Telegram com url personalizada', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const tg = wrapper.find('a.community__channel[href*="t.me/"]')
+    expect(tg.exists()).toBe(true)
+    expect(tg.attributes('target')).toBe('_blank')
+    expect(tg.attributes('rel')).toContain('noopener')
+    expect(tg.text().length).toBeGreaterThan(3)
+  })
+})

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { communityJoinUrl, communityMembers } from '~/data/community'
+  import { communityChannels, communityJoinUrl, communityMembers } from '~/data/community'
 
   const roleIcon: Record<string, string> = {
     tester: 'ti ti-bug',
@@ -58,6 +58,20 @@
         <span class="community__spot-plus" aria-hidden="true">+</span>
         <span class="community__spot-text">{{ $t('community.spot') }}</span>
       </a>
+
+      <ul class="community__channels">
+        <li v-for="channel in communityChannels" :key="channel.id">
+          <a
+            :href="channel.url"
+            class="community__channel"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i :class="channel.icon" aria-hidden="true" />
+            {{ $t(`community.channels.${channel.id}`) }}
+          </a>
+        </li>
+      </ul>
 
       <a :href="communityJoinUrl" class="community__cta" target="_blank" rel="noopener noreferrer">
         {{ $t('community.cta') }}
@@ -214,6 +228,33 @@
     &__spot-text {
       font-size: 0.875rem;
       font-weight: 500;
+    }
+
+    &__channels {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+    }
+
+    &__channel {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.125rem;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      text-decoration: none;
+      opacity: 0.85;
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     &__cta {
