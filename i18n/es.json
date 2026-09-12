@@ -783,7 +783,8 @@
         "autoUpdate": "Actualizaciones automáticas"
       },
       "buildFromSource": "¿Prefieres compilar desde el código fuente?",
-      "buildFromSourceLink": "Ver instrucciones en GitHub"
+      "buildFromSourceLink": "Ver instrucciones en GitHub",
+      "detectedArchitecture": "Arquitectura detectada: {architecture}"
     },
     "web": {
       "badge": "Instantáneo",
@@ -984,6 +985,10 @@
       "educharquero": {
         "role": "Linux, App Web y PWA",
         "bio": "Formación en Redes de Computadoras con posgrado en Docencia. Usuario de Linux desde Kurumin, décadas en infraestructura y responsable de conectux.com.br."
+      },
+      "elomarxa": {
+        "role": "Diseño digital, UI y UX",
+        "bio": "Diseñador digital, con experiencia en producción de piezas visuales y desarrollando habilidades de UI y UX."
       }
     },
     "work": {
@@ -1005,6 +1010,20 @@
       },
       "button": "Empezar a contribuir"
     }
+  },
+  "community": {
+    "spot": "Este lugar es tuyo — ven a probar",
+    "eyebrow": "Comunidad",
+    "title": "Quién usa, prueba y contribuye",
+    "subtitle": "Testers, entusiastas y sugeridores que ayudan a PIANO LouvorJA a crecer. ¿Quieres participar?",
+    "roles": {
+      "tester": "Tester",
+      "enthusiast": "Entusiasta",
+      "suggester": "Sugeridor"
+    },
+    "since": "Desde {since}",
+    "link": "Ver perfil",
+    "cta": "Únete a la comunidad"
   },
   "donate": {
     "title": "Apoya el proyecto",

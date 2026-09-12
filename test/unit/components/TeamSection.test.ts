@@ -32,7 +32,7 @@ describe('TeamSection', () => {
   it('expoe a camada de pessoas com dados publicos do GitHub', () => {
     const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
     const people = wrapper.findAll('.team__person')
-    expect(people).toHaveLength(4)
+    expect(people).toHaveLength(5)
 
     const names = people.map((p) => p.find('.team__person-name').text())
     expect(names).toEqual(
@@ -55,7 +55,7 @@ describe('TeamSection', () => {
 
       const avatar = person.find('img.team__avatar')
       expect(avatar.exists()).toBe(true)
-      expect(avatar.attributes('src')).toMatch(/^https:\/\/github\.com\/[a-z]+\.png/)
+      expect(avatar.attributes('src')).toMatch(/^https:\/\/github\.com\/[A-Za-z]+\.png/)
       expect(avatar.attributes('alt')?.length).toBeGreaterThan(3)
       expect(avatar.attributes('loading')).toBe('lazy')
 
@@ -94,7 +94,7 @@ describe('TeamSection', () => {
   it('cada pessoa tem botao saiba mais que abre o modal', async () => {
     const wrapper = mount(TeamSection, { global: { stubs: ['i'] } })
     const buttons = wrapper.findAll('button.team__person-more')
-    expect(buttons).toHaveLength(4)
+    expect(buttons).toHaveLength(5)
 
     expect(wrapper.find('.team-modal').exists()).toBe(false)
     await buttons[0].trigger('click')

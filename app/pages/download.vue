@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { siteConfig } from '~/data/site'
   import type { AllDownloadsResponse, CategoryResult } from '~/utils/downloads'
-  import { detectDevice } from '~/utils/device-detection'
+  import { detectArchitecture, detectDevice } from '~/utils/device-detection'
 
   const { t } = useI18n()
 
@@ -40,9 +40,21 @@
   // contains "Linux") are NOT misclassified as desktop Linux.
   const detectedOs = ref<'linux' | 'windows' | 'macos' | null>(null)
   const detectedMobilePlatform = ref<'android' | 'ios' | null>(null)
+  const detectedArchitecture = ref<'arm64' | 'x64' | 'unknown'>('unknown')
 
   onMounted(async () => {
     const device = detectDevice(navigator.userAgent)
+    const userAgentData = (
+      navigator as {
+        userAgentData?: {
+          getHighEntropyValues: (hints: string[]) => Promise<{ architecture?: string }>
+        }
+      }
+    ).userAgentData
+    const hints = userAgentData
+      ? await userAgentData.getHighEntropyValues(['architecture']).catch(() => null)
+      : null
+    detectedArchitecture.value = detectArchitecture(navigator.userAgent, hints?.architecture)
     if (device.category === 'desktop') {
       detectedOs.value =
         device.platform === 'macos'
@@ -208,6 +220,14 @@
             </div>
             <p class="download-card__arch">
               {{ $t(`${card.i18nPrefix}.arch`) }}
+            </p>
+            <p
+              v-if="card.recommended && detectedArchitecture !== 'unknown'"
+              class="download-card__arch"
+            >
+              {{
+                $t('download.desktop.detectedArchitecture', { architecture: detectedArchitecture })
+              }}
             </p>
             <p v-if="latestTag" class="download-card__version">
               {{ latestTag }}
