@@ -83,6 +83,7 @@
     createdAt: string
     tags: string[]
     active: boolean
+    locale?: string
   }
   const subscribers = ref<Sub[]>([])
   const subSearch = ref('')
@@ -120,9 +121,11 @@
   async function removeSub(email: string) {
     if (!window.confirm(`Remover ${email}?`)) return
     try {
-      await $fetch(`/api/admin/newsletter/subscribers/${encodeURIComponent(email)}`, {
-        method: 'DELETE',
-      })
+      const result = await $fetch<{ success: boolean }>(
+        `/api/admin/newsletter/subscribers/${encodeURIComponent(email)}`,
+        { method: 'DELETE' },
+      )
+      if (!result.success) return
       subscribers.value = subscribers.value.filter((s) => s.email !== email)
     } catch {
       // ignore

@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  await requireAuth(event)
   const query = getQuery(event)
   const search = (query.search as string | undefined)?.toLowerCase() || ''
 

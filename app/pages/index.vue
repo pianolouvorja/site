@@ -8,6 +8,7 @@
     <AboutSection />
     <HowItWorksSection />
     <TeamSection />
+    <CommunitySection />
     <NewsletterForm variant="section" />
     <DonateButton />
     <CtaSection />
