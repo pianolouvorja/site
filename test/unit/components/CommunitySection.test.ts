@@ -1,4 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
 import { communityJoinUrl } from '~/data/community'
@@ -123,5 +125,11 @@ describe('CommunitySection — canais de comunidade', () => {
     expect(tg.attributes('target')).toBe('_blank')
     expect(tg.attributes('rel')).toContain('noopener')
     expect(tg.text().length).toBeGreaterThan(3)
+  })
+
+  it('aplica espacamento entre card de vaga aberta e canais (margin-bottom no spot)', () => {
+    const sfc = readFileSync(resolve(process.cwd(), 'app/components/CommunitySection.vue'), 'utf8')
+    const spotBlock = sfc.split('&__spot {')[1]?.split('&__spot-')[0] ?? ''
+    expect(spotBlock).toContain('margin-bottom')
   })
 })

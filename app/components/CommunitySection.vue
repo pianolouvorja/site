@@ -199,6 +199,7 @@
       justify-content: center;
       gap: 0.5rem;
       padding: 1.75rem 1rem;
+      margin-bottom: 1.25rem;
       border: 1px dashed rgba(128, 128, 128, 0.5);
       border-radius: 12px;
       text-decoration: none;
