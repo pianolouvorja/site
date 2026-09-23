@@ -1052,7 +1052,11 @@
     },
     "since": "Since {since}",
     "link": "View profile",
-    "cta": "Join the community"
+    "cta": "Join the community",
+    "channels": {
+      "whatsapp-support": "Support group (WhatsApp)",
+      "telegram-devs": "Dev group (Telegram)"
+    }
   },
   "donate": {
     "title": "Support the project",

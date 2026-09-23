@@ -61,6 +61,13 @@ export function useAppHead(options: AppHeadOptions = {}) {
     },
     inLanguage: locale.value,
     isAccessibleForFree: true,
+    // Entity linking: conecta a entidade aos perfis oficiais (melhora rankeamento)
+    sameAs: [
+      'https://github.com/pianolouvorja',
+      'https://www.youtube.com/@pianolouvorja',
+      'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+      'https://t.me/c/4390408870/6',
+    ],
   }))
 
   // Build hreflang alternate links for all configured locales (e.g. Google crawlers)
