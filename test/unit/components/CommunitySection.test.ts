@@ -1,4 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
 import { communityJoinUrl } from '~/data/community'
@@ -103,5 +105,31 @@ describe('CommunitySection', () => {
     const cards = wrapper.findAll('.community__card, .community__spot')
     const spotIndex = cards.findIndex((c) => c.classes().includes('community__spot'))
     expect(spotIndex).toBe(cards.length - 1)
+  })
+})
+
+describe('CommunitySection — canais de comunidade', () => {
+  it('renderiza link do grupo de suporte WhatsApp com url personalizada', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const wa = wrapper.find('a.community__channel[href*="chat.whatsapp.com"]')
+    expect(wa.exists()).toBe(true)
+    expect(wa.attributes('target')).toBe('_blank')
+    expect(wa.attributes('rel')).toContain('noopener')
+    expect(wa.text().length).toBeGreaterThan(3)
+  })
+
+  it('renderiza link do grupo de devs Telegram com url personalizada', () => {
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const tg = wrapper.find('a.community__channel[href*="t.me/"]')
+    expect(tg.exists()).toBe(true)
+    expect(tg.attributes('target')).toBe('_blank')
+    expect(tg.attributes('rel')).toContain('noopener')
+    expect(tg.text().length).toBeGreaterThan(3)
+  })
+
+  it('aplica espacamento entre card de vaga aberta e canais (margin-bottom no spot)', () => {
+    const sfc = readFileSync(resolve(process.cwd(), 'app/components/CommunitySection.vue'), 'utf8')
+    const spotBlock = sfc.split('&__spot {')[1]?.split('&__spot-')[0] ?? ''
+    expect(spotBlock).toContain('margin-bottom')
   })
 })
