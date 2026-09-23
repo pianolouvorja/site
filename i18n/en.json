@@ -13,7 +13,8 @@
     "openApp": "Open App",
     "language": "Language",
     "download": "Download",
-    "releases": "Releases"
+    "releases": "Releases",
+    "testers": "Testers"
   },
   "hero": {
     "badge": "New: Web Version Available",
@@ -1056,6 +1057,34 @@
     "channels": {
       "whatsapp-support": "Support group (WhatsApp)",
       "telegram-devs": "Dev group (Telegram)"
+    }
+  },
+  "testers": {
+    "eyebrow": "Testing community",
+    "title": "Testers",
+    "subtitle": "People who test PIANO LouvorJA in real worship conditions and report everything they find — that is how the app stays stable for your church.",
+    "gallery": {
+      "avatarAlt": "Avatar of {name}",
+      "more": "Learn more"
+    },
+    "modal": {
+      "close": "Close"
+    },
+    "focus": {
+      "vm": "Virtual machine",
+      "install": "Installation"
+    },
+    "members": {
+      "natan": {
+        "bio": "Tests PIANO on Void Linux and validates installation from scratch."
+      }
+    },
+    "reports": {
+      "title": "Recent test reports",
+      "loading": "Loading reports…",
+      "empty": "No reports yet.",
+      "comingSoon": "Coming soon: reports straight from the testing form.",
+      "anonymous": "Anonymous"
     }
   },
   "donate": {
