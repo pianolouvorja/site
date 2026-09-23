@@ -53,9 +53,7 @@
   const filteredCollections = computed(() => {
     const q = collectionQuery.value.trim().toLowerCase()
     if (!q) return collections.value
-    return collections.value.filter((c) =>
-      c.name.toLowerCase().includes(q),
-    )
+    return collections.value.filter((c) => c.name.toLowerCase().includes(q))
   })
 
   async function loadCollections() {
@@ -81,8 +79,7 @@
     collectionForm.value = {
       name: c.name,
       description: c.description ?? '',
-      visibility:
-        c.visibility === 'private' ? 'private' : 'public',
+      visibility: c.visibility === 'private' ? 'private' : 'public',
     }
   }
 
@@ -256,7 +253,10 @@
       <nav class="admin-content__nav">
         <button
           :class="{ active: section === 'collections' }"
-          @click="section = 'collections'; if (collections.length === 0) loadCollections()"
+          @click="
+            section = 'collections'
+            if (collections.length === 0) loadCollections()
+          "
         >
           Coletâneas
         </button>
@@ -283,12 +283,10 @@
     <!-- LOGIN NA API CUSTOM -->
     <section v-if="!api.isAuthenticated" class="admin-content__login">
       <h2>Conectar à API do PIANO</h2>
-      <p class="hint">
-        Use a conta de administrador de conteúdo da API (mesmo login do app).
-      </p>
+      <p class="hint">Use a conta de administrador de conteúdo da API (mesmo login do app).</p>
       <form @submit.prevent="loginApi">
-        <input v-model="apiEmail" type="email" placeholder="E-mail" required>
-        <input v-model="apiPassword" type="password" placeholder="Senha" required>
+        <input v-model="apiEmail" type="email" placeholder="E-mail" required />
+        <input v-model="apiPassword" type="password" placeholder="Senha" required />
         <button type="submit" :disabled="apiLoggingIn">
           {{ apiLoggingIn ? 'Entrando…' : 'Entrar' }}
         </button>
@@ -299,11 +297,7 @@
     <!-- COLETÂNEAS -->
     <section v-else-if="section === 'collections'" class="admin-content__body">
       <div class="toolbar">
-        <input
-          v-model="collectionQuery"
-          type="search"
-          placeholder="Buscar coletânea…"
-        >
+        <input v-model="collectionQuery" type="search" placeholder="Buscar coletânea…" />
         <button @click="startNewCollection">+ Nova coletânea</button>
         <button @click="loadCollections">Recarregar</button>
       </div>
@@ -314,14 +308,20 @@
         @submit.prevent="saveCollection"
       >
         <h3>{{ editingCollection ? `Editando: ${editingCollection.name}` : 'Nova coletânea' }}</h3>
-        <input v-model="collectionForm.name" placeholder="Nome" required>
-        <input v-model="collectionForm.description" placeholder="Descrição">
+        <input v-model="collectionForm.name" placeholder="Nome" required />
+        <input v-model="collectionForm.description" placeholder="Descrição" />
         <select v-model="collectionForm.visibility">
           <option value="public">Público</option>
           <option value="private">Privado</option>
         </select>
         <button type="submit" :disabled="loading">Salvar</button>
-        <button type="button" @click="editingCollection = null; collectionForm.name = ''">
+        <button
+          type="button"
+          @click="
+            editingCollection = null
+            collectionForm.name = ''
+          "
+        >
           Cancelar
         </button>
       </form>
@@ -329,7 +329,12 @@
       <table class="admin-table">
         <thead>
           <tr>
-            <th>ID</th><th>Nome</th><th>Visibilidade</th><th>Músicas</th><th>Dono</th><th>Ações</th>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Visibilidade</th>
+            <th>Músicas</th>
+            <th>Dono</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -345,7 +350,15 @@
             <td class="actions">
               <button @click="openCollection(c)">Abrir</button>
               <button @click="startEditCollection(c)">Editar</button>
-              <button class="danger" @click="deletingCollection = c; confirmDelete = true">Excluir</button>
+              <button
+                class="danger"
+                @click="
+                  deletingCollection = c
+                  confirmDelete = true
+                "
+              >
+                Excluir
+              </button>
             </td>
           </tr>
           <tr v-if="filteredCollections.length === 0 && !loading">
@@ -357,10 +370,16 @@
       <!-- Confirmação de exclusão -->
       <div v-if="confirmDelete && deletingCollection" class="confirm">
         <p>
-          Excluir a coletânea <strong>{{ deletingCollection.name }}</strong> e
-          TODAS as suas músicas?
+          Excluir a coletânea <strong>{{ deletingCollection.name }}</strong> e TODAS as suas
+          músicas?
         </p>
-        <button class="danger" @click="doDeleteCollection; confirmDelete = false">
+        <button
+          class="danger"
+          @click="
+            doDeleteCollection
+            confirmDelete = false
+          "
+        >
           Sim, excluir
         </button>
         <button @click="confirmDelete = false">Cancelar</button>
@@ -374,7 +393,13 @@
       </p>
       <table class="admin-table">
         <thead>
-          <tr><th>ID</th><th>Nome</th><th>Áudio</th><th>Hino oficial</th><th>Ações</th></tr>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Áudio</th>
+            <th>Hino oficial</th>
+            <th>Ações</th>
+          </tr>
         </thead>
         <tbody>
           <tr v-for="m in musics" :key="m.id">
@@ -401,8 +426,8 @@
       <h2>{{ musicName }}</h2>
 
       <form class="inline-form" @submit.prevent="addLyric">
-        <input v-model="newLyric" placeholder="Nova estrofe (letra)" required>
-        <input v-model="newLyricTime" placeholder="Tempo (mm:ss)">
+        <input v-model="newLyric" placeholder="Nova estrofe (letra)" required />
+        <input v-model="newLyricTime" placeholder="Tempo (mm:ss)" />
         <button type="submit" :disabled="loading">Adicionar</button>
       </form>
 
@@ -410,149 +435,226 @@
         <div v-for="(l, i) in lyrics" :key="l.id" class="lyric-row">
           <span class="order">{{ i + 1 }}</span>
           <textarea v-model="l.lyric" rows="3" />
-          <input v-model="l.time" class="time" placeholder="mm:ss">
+          <input v-model="l.time" class="time" placeholder="mm:ss" />
           <div class="actions">
             <button :disabled="loading" @click="saveLyric(l)">Salvar</button>
             <button class="danger" :disabled="loading" @click="removeLyric(l.id)">Remover</button>
           </div>
         </div>
-        <p v-if="lyrics.length === 0 && !loading" class="empty">
-          Nenhuma estrofe
-        </p>
+        <p v-if="lyrics.length === 0 && !loading" class="empty">Nenhuma estrofe</p>
       </div>
     </section>
   </div>
 </template>
 
 <style scoped>
-.admin-content {
-  max-width: 60rem;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
+  .admin-content {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
 
-.admin-content__header h1 { margin: 0 0 0.75rem; font-size: 1.5rem; }
+  .admin-content__header h1 {
+    margin: 0 0 0.75rem;
+    font-size: 1.5rem;
+  }
 
-.admin-content__nav {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
+  .admin-content__nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
 
-.admin-content__nav button {
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-}
+  .admin-content__nav button {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+  }
 
-.admin-content__nav button.active {
-  background: var(--primary, #2196f3);
-  color: #fff;
-  border-color: var(--primary, #2196f3);
-}
+  .admin-content__nav button.active {
+    background: var(--primary, #2196f3);
+    color: #fff;
+    border-color: var(--primary, #2196f3);
+  }
 
-.admin-content__nav button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .admin-content__nav button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-.admin-content__msg {
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  background: #fdecea;
-  color: #b71c1c;
-  margin-top: 0.5rem;
-}
+  .admin-content__msg {
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    background: #fdecea;
+    color: #b71c1c;
+    margin-top: 0.5rem;
+  }
 
-.admin-content__msg.ok { background: #e8f5e9; color: #1b5e20; }
+  .admin-content__msg.ok {
+    background: #e8f5e9;
+    color: #1b5e20;
+  }
 
-.admin-content__login {
-  border: 1px solid var(--border, #ddd);
-  border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 24rem;
-}
+  .admin-content__login {
+    border: 1px solid var(--border, #ddd);
+    border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 24rem;
+  }
 
-.admin-content__login h2 { margin-top: 0; font-size: 1.1rem; }
-.admin-content__login form { display: flex; flex-direction: column; gap: 0.5rem; }
-.hint { font-size: 0.85rem; opacity: 0.7; }
-.error { color: #b71c1c; font-size: 0.85rem; }
+  .admin-content__login h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+  }
+  .admin-content__login form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .hint {
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+  .error {
+    color: #b71c1c;
+    font-size: 0.85rem;
+  }
 
-.toolbar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.toolbar input[type='search'] { flex: 1; min-width: 12rem; }
+  .toolbar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .toolbar input[type='search'] {
+    flex: 1;
+    min-width: 12rem;
+  }
 
-.inline-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.75rem;
-  border: 1px dashed var(--border, #ccc);
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
+  .inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px dashed var(--border, #ccc);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
 
-.inline-form h3 { width: 100%; margin: 0 0 0.25rem; font-size: 1rem; }
-.inline-form input, .inline-form select { flex: 1; min-width: 8rem; }
+  .inline-form h3 {
+    width: 100%;
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+  }
+  .inline-form input,
+  .inline-form select {
+    flex: 1;
+    min-width: 8rem;
+  }
 
-.admin-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.admin-table th, .admin-table td {
-  text-align: left;
-  padding: 0.5rem 0.6rem;
-  border-bottom: 1px solid var(--border, #eee);
-}
-.admin-table .actions { display: flex; gap: 0.35rem; }
-.admin-table .actions button {
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-.admin-table .actions button.danger { color: #b71c1c; border-color: #b71c1c; }
-.empty { text-align: center; opacity: 0.6; padding: 1.5rem 0; }
-.badge { font-size: 0.75rem; opacity: 0.75; }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .admin-table th,
+  .admin-table td {
+    text-align: left;
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid var(--border, #eee);
+  }
+  .admin-table .actions {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .admin-table .actions button {
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .admin-table .actions button.danger {
+    color: #b71c1c;
+    border-color: #b71c1c;
+  }
+  .empty {
+    text-align: center;
+    opacity: 0.6;
+    padding: 1.5rem 0;
+  }
+  .badge {
+    font-size: 0.75rem;
+    opacity: 0.75;
+  }
 
-.breadcrumb { font-size: 0.85rem; }
-.breadcrumb a { color: var(--primary, #2196f3); }
+  .breadcrumb {
+    font-size: 0.85rem;
+  }
+  .breadcrumb a {
+    color: var(--primary, #2196f3);
+  }
 
-.lyrics-list { display: flex; flex-direction: column; gap: 0.75rem; }
-.lyric-row {
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-start;
-  padding: 0.75rem;
-  border: 1px solid var(--border, #eee);
-  border-radius: 8px;
-}
-.lyric-row .order { font-weight: 600; min-width: 1.5rem; }
-.lyric-row textarea { flex: 1; font: inherit; }
-.lyric-row .time { width: 5rem; }
-.lyric-row .actions { display: flex; flex-direction: column; gap: 0.35rem; }
-.lyric-row .actions button {
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-.lyric-row .actions button.danger { color: #b71c1c; border-color: #b71c1c; }
+  .lyrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .lyric-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    padding: 0.75rem;
+    border: 1px solid var(--border, #eee);
+    border-radius: 8px;
+  }
+  .lyric-row .order {
+    font-weight: 600;
+    min-width: 1.5rem;
+  }
+  .lyric-row textarea {
+    flex: 1;
+    font: inherit;
+  }
+  .lyric-row .time {
+    width: 5rem;
+  }
+  .lyric-row .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .lyric-row .actions button {
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .lyric-row .actions button.danger {
+    color: #b71c1c;
+    border-color: #b71c1c;
+  }
 
-.confirm {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-}
-.confirm p {
-  background: #fff;
-  padding: 1.25rem 1.5rem;
-  border-radius: 8px;
-  max-width: 26rem;
-}
+  .confirm {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .confirm p {
+    background: #fff;
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    max-width: 26rem;
+  }
 </style>

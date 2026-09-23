@@ -88,9 +88,7 @@ describe('usePianoApi', () => {
       }),
     )
     const [, opts] = fetchMock.mock.calls[0]!
-    expect((opts as RequestInit).body).toBe(
-      JSON.stringify({ name: 'Nova', visibility: 'private' }),
-    )
+    expect((opts as RequestInit).body).toBe(JSON.stringify({ name: 'Nova', visibility: 'private' }))
   })
 
   it('updateCollection usa PUT com id', async () => {
