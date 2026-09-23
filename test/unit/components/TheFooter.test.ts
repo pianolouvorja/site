@@ -66,9 +66,7 @@ describe('TheFooter', () => {
     const wrapper = createWrapper()
     const whatsapp = wrapper.find('[aria-label="WhatsApp"]')
     expect(whatsapp.exists()).toBe(true)
-    expect(whatsapp.attributes('href')).toBe(
-      'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
-    )
+    expect(whatsapp.attributes('href')).toBe('https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc')
   })
 
   it('tem link do grupo de desenvolvedores no Telegram', () => {
