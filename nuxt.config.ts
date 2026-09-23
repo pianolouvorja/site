@@ -101,6 +101,10 @@ export default defineNuxtConfig({
       // Env var: NUXT_PUBLIC_ASAAS_DONATE_URL
       asaasDonateUrl: process.env.NUXT_PUBLIC_ASAAS_DONATE_URL || '',
 
+      // Testers sheet (Google Forms → Sheets gviz CSV público)
+      // Env var: NUXT_PUBLIC_TESTERS_SHEET_URL
+      testersSheetUrl: process.env.NUXT_PUBLIC_TESTERS_SHEET_URL || '',
+
       web3formsKey: process.env.WEB3FORMS_ACCESS_KEY || '',
 
       // GA4
