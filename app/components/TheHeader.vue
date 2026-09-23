@@ -4,6 +4,8 @@
 
   const { locale, locales, setLocale } = useI18n()
   const route = useRoute()
+  const config = useRuntimeConfig()
+  const donateUrl = config.public.asaasDonateUrl as string
   const mobileMenuOpen = ref(false)
   const langMenuOpen = ref(false)
   const isScrolled = ref(false)
@@ -144,6 +146,19 @@
           </Transition>
         </div>
 
+        <!-- Donate — destaque extra no header -->
+        <a
+          v-if="donateUrl"
+          data-testid="header-donate"
+          :href="donateUrl"
+          class="header__donate"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="ti ti-heart" />
+          <span>{{ $t('donate.button') }}</span>
+        </a>
+
         <a
           data-testid="header-cta"
           :href="siteConfig.appUrl"
@@ -203,6 +218,18 @@
             {{ l.name }}
           </button>
         </div>
+
+        <a
+          v-if="donateUrl"
+          :href="donateUrl"
+          class="header__nav-mobile-cta header__nav-mobile-cta--donate"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="closeMobileMenu"
+        >
+          <i class="ti ti-heart" />
+          {{ $t('donate.button') }}
+        </a>
 
         <a
           :href="siteConfig.appUrl"
@@ -426,6 +453,41 @@
       }
     }
 
+    /* Donate — outline discreto ao lado do CTA */
+    &__donate {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.5rem 1.125rem;
+      border-radius: var(--piano-radius-full);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition:
+        background 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-1px);
+
+        i {
+          color: #ff6b81;
+        }
+      }
+
+      i {
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.85);
+        transition: color 0.2s;
+      }
+    }
+
     &__cta {
       display: flex;
       align-items: center;
@@ -535,6 +597,12 @@
 
       i {
         font-size: 1.1rem;
+      }
+
+      &--donate {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        margin-top: 0;
       }
     }
 

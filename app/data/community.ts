@@ -14,13 +14,19 @@ export interface CommunityMember {
 /**
  * Membros da comunidade: testadores, entusiastas e sugestores.
  * Apenas dados públicos consentidos — nada de e-mail/telefone (LGPD).
+ *
+ * Roster 100% dinâmico (aba 'testadores' da sheet via useTestersRoster) —
+ * sem fallback hardcoded: só aparece quem se cadastrou.
  */
-export const communityMembers: CommunityMember[] = [
-  { name: 'Caique', role: 'tester', since: '2026-08' },
-]
+export const communityMembers: CommunityMember[] = []
 
-/** Canal público para entrar na comunidade. */
-export const communityJoinUrl = 'https://github.com/pianolouvorja'
+/** Form de cadastro de testador (Google Forms) — usado no spot da home. */
+export const communityJoinUrl =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdQuprx1kijND4RBdrsFPh4dKDNtCxoaX7LwW7W2BkN-jHthw/viewform'
+
+/** Form de cadastro de desenvolvedor (Google Forms) — link fixado no grupo WhatsApp. */
+export const communityDevFormUrl =
+  'https://docs.google.com/forms/d/e/1FAIpQLScQeQr_eVdvZfELugBiIcsKN11jMoekEy0cW_-ueictBrv-DA/viewform'
 
 /**
  * Canais oficiais da comunidade PIANO LouvorJA.
@@ -38,5 +44,11 @@ export const communityChannels = [
     /** Grupo de desenvolvedores (Telegram). */
     url: 'https://t.me/c/4390408870/6',
     icon: 'ti ti-brand-telegram',
+  },
+  {
+    id: 'dev-form',
+    /** Form de cadastro de desenvolvedor. */
+    url: communityDevFormUrl,
+    icon: 'ti ti-code',
   },
 ] as const

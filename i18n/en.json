@@ -1056,7 +1056,8 @@
     "cta": "Join the community",
     "channels": {
       "whatsapp-support": "Support group (WhatsApp)",
-      "telegram-devs": "Dev group (Telegram)"
+      "telegram-devs": "Dev group (Telegram)",
+      "dev-form": "Become a developer"
     }
   },
   "testers": {
@@ -1072,7 +1073,12 @@
     },
     "focus": {
       "vm": "Virtual machine",
-      "install": "Installation"
+      "install": "Installation",
+      "web": "Web",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tv": "TV / Stage",
+      "community": "Community"
     },
     "members": {
       "natan": {
@@ -1085,6 +1091,11 @@
       "empty": "No reports yet.",
       "comingSoon": "Coming soon: reports straight from the testing form.",
       "anonymous": "Anonymous"
+    },
+    "cta": {
+      "title": "Want to test PIANO?",
+      "button": "Become a tester",
+      "bug": "Report a bug"
     }
   },
   "donate": {

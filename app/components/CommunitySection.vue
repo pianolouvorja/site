@@ -1,5 +1,22 @@
 <script setup lang="ts">
-  import { communityChannels, communityJoinUrl, communityMembers } from '~/data/community'
+  import { communityChannels, communityJoinUrl } from '~/data/community'
+  import { useTestersRoster } from '~/composables/useTesters'
+
+  /**
+   * Roster dinâmico: testadores cadastrados (aba 'testadores' da sheet).
+   * Sem fallback hardcoded — só aparece quem se cadastrou.
+   */
+  const { testers, sinceById } = useTestersRoster()
+
+  const members = computed(() =>
+    testers.value.map((t) => ({
+      name: t.name,
+      role: 'tester' as const,
+      since: sinceById.value[t.id] ?? '',
+      url: t.links?.[0]?.url,
+      avatar: t.avatar,
+    })),
+  )
 
   const roleIcon: Record<string, string> = {
     tester: 'ti ti-bug',
@@ -29,9 +46,18 @@
         </p>
       </div>
 
-      <ul class="community__grid">
-        <li v-for="member in communityMembers" :key="member.name" class="community__card">
-          <span class="community__avatar" :class="`community__avatar--${member.role}`">
+      <ul v-if="members.length > 0" class="community__grid">
+        <li v-for="member in members" :key="member.name" class="community__card">
+          <img
+            v-if="member.avatar"
+            :src="member.avatar"
+            :alt="member.name"
+            class="community__avatar-img"
+            width="56"
+            height="56"
+            loading="lazy"
+          />
+          <span v-else class="community__avatar" :class="`community__avatar--${member.role}`">
             {{ initials(member.name) }}
           </span>
           <span class="community__name">{{ member.name }}</span>
@@ -39,7 +65,7 @@
             <i :class="roleIcon[member.role]" aria-hidden="true" />
             {{ $t(`community.roles.${member.role}`) }}
           </span>
-          <span class="community__since">
+          <span v-if="member.since" class="community__since">
             {{ $t('community.since', { since: member.since }) }}
           </span>
           <a
@@ -72,11 +98,6 @@
           </a>
         </li>
       </ul>
-
-      <a :href="communityJoinUrl" class="community__cta" target="_blank" rel="noopener noreferrer">
-        {{ $t('community.cta') }}
-        <i class="ti ti-arrow-right" aria-hidden="true" />
-      </a>
     </div>
   </section>
 </template>

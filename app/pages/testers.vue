@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { testerProfiles, type TesterProfile } from '~/data/testers'
-  import { useTestersReports } from '~/composables/useTesters'
+  import { type TesterProfile } from '~/data/testers'
+  import { useTestersRoster, useTestersReports } from '~/composables/useTesters'
   import type { TesterReport } from '~/utils/testers-sheet'
 
   const { t } = useI18n()
@@ -11,22 +11,27 @@
   })
 
   const activeTester = ref<TesterProfile | null>(null)
+  const activeSheetBio = ref('')
 
-  function openTester(tester: TesterProfile): void {
+  function openTester(tester: TesterProfile, bio = ''): void {
     activeTester.value = tester
+    activeSheetBio.value = bio
   }
 
   function closeTester(): void {
     activeTester.value = null
+    activeSheetBio.value = ''
   }
 
   function onModalKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape') closeTester()
   }
 
-  const { reports, pending, hasReports, enabled } = useTestersReports()
+  const { testers, sheetBios } = useTestersRoster()
 
-  const recentReports = computed<TesterReport[]>(() => (reports.value ?? []).slice(0, 12))
+  const { positiveReports, enabled } = useTestersReports()
+
+  const recentReports = computed<TesterReport[]>(() => (positiveReports.value ?? []).slice(0, 12))
 
   function statusIcon(status: TesterReport['status']): string {
     switch (status) {
@@ -56,7 +61,7 @@
       </div>
 
       <div class="testers__grid">
-        <article v-for="tester in testerProfiles" :key="tester.id" class="testers__card">
+        <article v-for="tester in testers" :key="tester.id" class="testers__card">
           <img
             :src="tester.avatar"
             :alt="$t('testers.gallery.avatarAlt', { name: tester.name })"
@@ -77,7 +82,7 @@
             type="button"
             class="testers__more"
             :aria-label="$t('testers.gallery.more')"
-            @click="openTester(tester)"
+            @click="openTester(tester, sheetBios[tester.id])"
           >
             {{ $t('testers.gallery.more') }}
             <i class="ti ti-arrow-right" aria-hidden="true" />
@@ -113,7 +118,10 @@
           <h2 class="testers-modal__name">
             {{ activeTester.name }}
           </h2>
-          <p class="testers-modal__bio">
+          <p v-if="activeSheetBio" class="testers-modal__bio">
+            {{ activeSheetBio }}
+          </p>
+          <p v-else class="testers-modal__bio">
             {{ $t(`testers.members.${activeTester.id}.bio`) }}
           </p>
           <div class="testers-modal__links">
@@ -128,6 +136,26 @@
               {{ link.label }}
             </a>
           </div>
+        </div>
+      </div>
+
+      <div class="testers__cta">
+        <div class="testers__cta-card">
+          <i class="ti ti-user-plus" aria-hidden="true" />
+          <div class="testers__cta-text">
+            <strong>{{ $t('testers.cta.title') }}</strong>
+            <p>{{ $t('testers.subtitle') }}</p>
+          </div>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdQuprx1kijND4RBdrsFPh4dKDNtCxoaX7LwW7W2BkN-jHthw/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="testers__cta-button"
+            data-testid="testers-join-btn"
+          >
+            {{ $t('testers.cta.button') }}
+            <i class="ti ti-external-link" aria-hidden="true" />
+          </a>
         </div>
       </div>
 
@@ -208,7 +236,69 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.25rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2.5rem;
+    }
+
+    // ── CTA cadastro ─────────────────────────
+    &__cta {
+      margin-bottom: 3.5rem;
+    }
+
+    &__cta-card {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.5rem 1.75rem;
+      background: var(--piano-accent-soft);
+      border: 1px solid var(--piano-accent);
+      border-radius: 16px;
+
+      i {
+        font-size: 2.25rem;
+        color: var(--piano-accent);
+        flex-shrink: 0;
+      }
+    }
+
+    &__cta-text {
+      flex: 1;
+      min-width: 0;
+
+      strong {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--piano-text-primary);
+        margin-bottom: 0.25rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: var(--piano-text-secondary);
+        line-height: 1.5;
+      }
+    }
+
+    &__cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--piano-text-on-dark);
+      background: var(--piano-accent);
+      border-radius: 999px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition:
+        background 0.2s,
+        transform 0.1s;
+
+      &:hover {
+        background: var(--piano-accent-hover);
+        transform: translateY(-1px);
+      }
     }
 
     &__card {
