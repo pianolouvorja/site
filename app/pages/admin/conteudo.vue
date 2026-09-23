@@ -241,6 +241,22 @@
     }
   }
 
+  function goCollections() {
+    section.value = 'collections'
+    if (collections.value.length === 0) void loadCollections()
+  }
+  function cancelCollectionForm() {
+    editingCollection.value = null
+    collectionForm.value.name = ''
+  }
+  function askDeleteCollection(c: Collection) {
+    deletingCollection.value = c
+    confirmDelete.value = true
+  }
+  async function confirmDeleteCollection() {
+    await doDeleteCollection()
+    confirmDelete.value = false
+  }
   onMounted(() => {
     if (api.isAuthenticated.value) void loadCollections()
   })
@@ -251,13 +267,7 @@
     <header class="admin-content__header">
       <h1>Conteúdo</h1>
       <nav class="admin-content__nav">
-        <button
-          :class="{ active: section === 'collections' }"
-          @click="
-            section = 'collections'
-            if (collections.length === 0) loadCollections()
-          "
-        >
+        <button :class="{ active: section === 'collections' }" @click="goCollections">
           Coletâneas
         </button>
         <button
@@ -315,15 +325,7 @@
           <option value="private">Privado</option>
         </select>
         <button type="submit" :disabled="loading">Salvar</button>
-        <button
-          type="button"
-          @click="
-            editingCollection = null
-            collectionForm.name = ''
-          "
-        >
-          Cancelar
-        </button>
+        <button type="button" @click="cancelCollectionForm">Cancelar</button>
       </form>
 
       <table class="admin-table">
@@ -350,15 +352,7 @@
             <td class="actions">
               <button @click="openCollection(c)">Abrir</button>
               <button @click="startEditCollection(c)">Editar</button>
-              <button
-                class="danger"
-                @click="
-                  deletingCollection = c
-                  confirmDelete = true
-                "
-              >
-                Excluir
-              </button>
+              <button class="danger" @click="askDeleteCollection(c)">Excluir</button>
             </td>
           </tr>
           <tr v-if="filteredCollections.length === 0 && !loading">
@@ -373,15 +367,7 @@
           Excluir a coletânea <strong>{{ deletingCollection.name }}</strong> e TODAS as suas
           músicas?
         </p>
-        <button
-          class="danger"
-          @click="
-            doDeleteCollection
-            confirmDelete = false
-          "
-        >
-          Sim, excluir
-        </button>
+        <button class="danger" @click="confirmDeleteCollection">Sim, excluir</button>
         <button @click="confirmDelete = false">Cancelar</button>
       </div>
     </section>
