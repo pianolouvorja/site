@@ -21,3 +21,22 @@ export const communityMembers: CommunityMember[] = [
 
 /** Canal público para entrar na comunidade. */
 export const communityJoinUrl = 'https://github.com/pianolouvorja'
+
+/**
+ * Canais oficiais da comunidade PIANO LouvorJA.
+ * Links de convite públicos — sem dados pessoais (LGPD).
+ */
+export const communityChannels = [
+  {
+    id: 'whatsapp-support',
+    /** Grupo de suporte a usuários (WhatsApp). */
+    url: 'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+    icon: 'ti ti-brand-whatsapp',
+  },
+  {
+    id: 'telegram-devs',
+    /** Grupo de desenvolvedores (Telegram). */
+    url: 'https://t.me/c/4390408870/6',
+    icon: 'ti ti-brand-telegram',
+  },
+] as const

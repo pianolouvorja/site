@@ -1047,7 +1047,11 @@
     },
     "since": "Desde {since}",
     "link": "Ver perfil",
-    "cta": "Faça parte da comunidade"
+    "cta": "Faça parte da comunidade",
+    "channels": {
+      "whatsapp-support": "Grupo de suporte (WhatsApp)",
+      "telegram-devs": "Grupo de devs (Telegram)"
+    }
   },
   "donate": {
     "title": "Apoie o projeto",

@@ -16,6 +16,9 @@ interface VoidBrIsoResponse {
 }
 
 const ISO_DIR = 'https://voidbr.org/iso/current/'
+// URL canônica estável: o voidbr.org publica um symlink "current" que sempre aponta
+// pra ISO mais recente — o download nunca quebra quando eles publicam build novo.
+const ISO_CURRENT_URL = 'https://www.voidbr.org/iso/voidbr-live-louvorja-piano-current.iso'
 const ISO_PATTERN = /voidbr-live-louvorja-piano-x86_64-[0-9._-]+\.iso/gi
 const CACHE_TTL_MS = 60 * 60 * 1000
 
@@ -60,7 +63,7 @@ export default defineEventHandler(async (): Promise<VoidBrIsoResponse> => {
 
     const fileName = unique[0]
     if (!fileName) return unavailable
-    const url = `${ISO_DIR}${fileName}`
+    const url = ISO_CURRENT_URL
     const { size, builtAt } = await headSize(url)
 
     const data: VoidBrIsoResponse = {
