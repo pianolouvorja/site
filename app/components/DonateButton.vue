@@ -128,8 +128,11 @@
       font-size: 0.85rem;
       color: var(--piano-text-on-dark-muted);
 
-      i {
+      i,
+      svg.icon-pix {
         font-size: 1rem;
+        width: 1em;
+        height: 1em;
         color: var(--piano-cyan);
       }
     }
