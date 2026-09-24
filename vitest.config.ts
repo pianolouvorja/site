@@ -75,6 +75,8 @@ export default defineConfig({
           exclude: ['test/integration/**'],
           name: 'unit',
           css: false,
+          // node 24 + tinypool: workers concorrentes derrubam IPC (ERR_IPC_CHANNEL_CLOSED)
+          maxWorkers: 2,
         },
         resolve: { alias },
       },
