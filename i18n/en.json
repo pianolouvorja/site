@@ -195,7 +195,63 @@
       "submit": "Send Message",
       "sending": "Sending...",
       "success": "Message sent successfully! We'll get back to you soon.",
-      "error": "Error sending. Try again or email directly to app{'@'}pianolouvorja.com.br"
+      "error": "Error sending. Try again or email directly to app{'@'}pianolouvorja.com.br",
+      "typeLabel": "Subject",
+      "type": {
+        "general": "General question / contact",
+        "tester": "I want to be a tester",
+        "developer": "I want to be a developer",
+        "bug": "Report a bug or suggest an improvement"
+      },
+      "focusLabel": "Where do you use PIANO?",
+      "focus": {
+        "app-desktop": "Desktop App (Electron)",
+        "web-pwa": "Web / PWA",
+        "api": "API",
+        "mobile-flutter": "Mobile (Flutter)",
+        "tv-receiver": "TVs / Receiver",
+        "docs": "Documentation",
+        "qa": "Testing / QA",
+        "design": "Design / UI-UX"
+      },
+      "bio": "Short bio",
+      "bioPlaceholder": "1-2 sentences about you...",
+      "links": "Links (profile, social media)",
+      "linksPlaceholder": "One link per line (optional)",
+      "avatar": "Avatar (optional)",
+      "avatarPlaceholder": "Upload image (JPG/PNG)",
+      "avatarPreview": "Avatar preview",
+      "removeAvatar": "Remove avatar",
+      "github": "GitHub",
+      "githubPlaceholder": "username or GitHub URL",
+      "portfolio": "LinkedIn or portfolio",
+      "portfolioPlaceholder": "URL (optional)",
+      "areas": "Areas of interest",
+      "availability": "Availability",
+      "availabilityPlaceholder": "e.g. evenings and weekends, ~5h/week...",
+      "stack": "Stack and experience",
+      "stackPlaceholder": "Technologies you master, past experience...",
+      "motivation": "Why do you want to contribute?",
+      "motivationPlaceholder": "Tell us a bit about your motivation (min. 20 characters)...",
+      "testerEmail": "Tester e-mail (if already registered)",
+      "testerEmailPlaceholder": "Optional — links the report to your registration",
+      "reportTypeLabel": "Report type",
+      "reportType": {
+        "bug": "Bug (something doesn't work)",
+        "feature": "Improvement suggestion",
+        "other": "Other"
+      },
+      "version": "App version",
+      "versionPlaceholder": "e.g. 1.4.2 (web/desktop/mobile)",
+      "module": "Affected module",
+      "modulePlaceholder": "e.g. Hymnal, Liturgy, Projection...",
+      "description": "Description",
+      "descriptionPlaceholder": "What happened? What did you expect? (min. 20 characters)",
+      "steps": "Steps to reproduce",
+      "stepsPlaceholder": "1. Open... 2. Click on... (optional)",
+      "attachment": "Attachment (screenshot/log)",
+      "attachmentPlaceholder": "Image, PDF, TXT or JSON",
+      "removeAttachment": "Remove attachment"
     },
     "direct": "Or send an email directly to",
     "responseTime": "Average response time: 24-48h"
@@ -313,7 +369,11 @@
         ]
       },
       "modules": {
-        "media": ["Player with 3 modes", "Hymnals and albums", "Sing-along mode"],
+        "media": [
+          "Player with 3 modes",
+          "Hymnals and albums",
+          "Sing-along mode"
+        ],
         "hymnal": [
           "Quick search by number or title",
           "Sequential playback",
@@ -324,16 +384,36 @@
           "Drag and drop to playlist",
           "Sing-along mode with lyrics"
         ],
-        "liturgy": ["13 item types", "Drag and drop", "Per-item countdown"],
-        "bible": ["Multiple versions", "Quick search", "Direct projection"],
-        "projection": ["Independent output", "Multi-screen", "Full control"],
+        "liturgy": [
+          "13 item types",
+          "Drag and drop",
+          "Per-item countdown"
+        ],
+        "bible": [
+          "Multiple versions",
+          "Quick search",
+          "Direct projection"
+        ],
+        "projection": [
+          "Independent output",
+          "Multi-screen",
+          "Full control"
+        ],
         "streaming": [
           "Custom CSS for lyrics display",
           "OBS and vMix integration",
           "Output to YouTube and Facebook"
         ],
-        "tools": ["Clock and stopwatch", "Countdown timer", "Raffle"],
-        "settings": ["Appearance", "Projection", "Multi-screen"]
+        "tools": [
+          "Clock and stopwatch",
+          "Countdown timer",
+          "Raffle"
+        ],
+        "settings": [
+          "Appearance",
+          "Projection",
+          "Multi-screen"
+        ]
       }
     },
     "faq": {
@@ -510,7 +590,9 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": ["We do not use third-party, analytics, or advertising cookies."],
+        "body": [
+          "We do not use third-party, analytics, or advertising cookies."
+        ],
         "table": {
           "header": {
             "cookie": "Cookie",

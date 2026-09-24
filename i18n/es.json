@@ -195,7 +195,63 @@
       "submit": "Enviar Mensaje",
       "sending": "Enviando...",
       "success": "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
-      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com.br."
+      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com.br.",
+      "typeLabel": "Asunto",
+      "type": {
+        "general": "Duda / Contacto general",
+        "tester": "Quiero ser probador",
+        "developer": "Quiero ser desarrollador",
+        "bug": "Reportar un error o sugerir una mejora"
+      },
+      "focusLabel": "¿Dónde usas PIANO?",
+      "focus": {
+        "app-desktop": "App de escritorio (Electron)",
+        "web-pwa": "Web / PWA",
+        "api": "API",
+        "mobile-flutter": "Móvil (Flutter)",
+        "tv-receiver": "TVs / Receiver",
+        "docs": "Documentación",
+        "qa": "Pruebas / QA",
+        "design": "Diseño / UI-UX"
+      },
+      "bio": "Bio corta",
+      "bioPlaceholder": "1-2 frases sobre ti...",
+      "links": "Enlaces (perfil, redes sociales)",
+      "linksPlaceholder": "Un enlace por línea (opcional)",
+      "avatar": "Avatar (opcional)",
+      "avatarPlaceholder": "Subir imagen (JPG/PNG)",
+      "avatarPreview": "Vista previa del avatar",
+      "removeAvatar": "Quitar avatar",
+      "github": "GitHub",
+      "githubPlaceholder": "usuario o URL de GitHub",
+      "portfolio": "LinkedIn o portafolio",
+      "portfolioPlaceholder": "URL (opcional)",
+      "areas": "Áreas de interés",
+      "availability": "Disponibilidad",
+      "availabilityPlaceholder": "Ej: noches y fines de semana, ~5h/semana...",
+      "stack": "Stack y experiencia",
+      "stackPlaceholder": "Tecnologías que dominas, experiencia previa...",
+      "motivation": "¿Por qué quieres contribuir?",
+      "motivationPlaceholder": "Cuéntanos un poco sobre tu motivación (mín. 20 caracteres)...",
+      "testerEmail": "Correo de probador (si ya estás registrado)",
+      "testerEmailPlaceholder": "Opcional — vincula el reporte a tu registro",
+      "reportTypeLabel": "Tipo de reporte",
+      "reportType": {
+        "bug": "Error (algo no funciona)",
+        "feature": "Sugerencia de mejora",
+        "other": "Otro"
+      },
+      "version": "Versión de la app",
+      "versionPlaceholder": "Ej: 1.4.2 (web/escritorio/móvil)",
+      "module": "Módulo afectado",
+      "modulePlaceholder": "Ej: Himnario, Liturgia, Proyección...",
+      "description": "Descripción",
+      "descriptionPlaceholder": "¿Qué pasó? ¿Qué esperabas? (mín. 20 caracteres)",
+      "steps": "Pasos para reproducir",
+      "stepsPlaceholder": "1. Abre... 2. Haz clic en... (opcional)",
+      "attachment": "Adjunto (captura/log)",
+      "attachmentPlaceholder": "Imagen, PDF, TXT o JSON",
+      "removeAttachment": "Quitar adjunto"
     },
     "direct": "O envíe un correo directamente a",
     "responseTime": "Tiempo medio de respuesta: 24-48h"
@@ -306,7 +362,11 @@
         ]
       },
       "modules": {
-        "media": ["Reproductor con 3 modos", "Himnarios y álbumes", "Modo acompañamiento"],
+        "media": [
+          "Reproductor con 3 modos",
+          "Himnarios y álbumes",
+          "Modo acompañamiento"
+        ],
         "hymnal": [
           "Búsqueda rápida por número o título",
           "Reproducción en secuencia",
@@ -317,16 +377,36 @@
           "Arrastrar y soltar a la lista",
           "Modo acompañamiento con letra"
         ],
-        "liturgy": ["13 tipos de elementos", "Arrastrar y soltar", "Cronómetro por elemento"],
-        "bible": ["Múltiples versiones", "Búsqueda rápida", "Proyección directa"],
-        "projection": ["Salida independiente", "Multi-pantalla", "Control total"],
+        "liturgy": [
+          "13 tipos de elementos",
+          "Arrastrar y soltar",
+          "Cronómetro por elemento"
+        ],
+        "bible": [
+          "Múltiples versiones",
+          "Búsqueda rápida",
+          "Proyección directa"
+        ],
+        "projection": [
+          "Salida independiente",
+          "Multi-pantalla",
+          "Control total"
+        ],
         "streaming": [
           "CSS personalizado para letra",
           "Integración con OBS y vMix",
           "Salida para YouTube y Facebook"
         ],
-        "tools": ["Reloj y cronómetro", "Temporizador", "Sorteo"],
-        "settings": ["Apariencia", "Proyección", "Multi-pantalla"]
+        "tools": [
+          "Reloj y cronómetro",
+          "Temporizador",
+          "Sorteo"
+        ],
+        "settings": [
+          "Apariencia",
+          "Proyección",
+          "Multi-pantalla"
+        ]
       }
     },
     "faq": {
@@ -502,7 +582,9 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": ["No usamos cookies de terceros, análisis o publicidad."],
+        "body": [
+          "No usamos cookies de terceros, análisis o publicidad."
+        ],
         "table": {
           "header": {
             "cookie": "Cookie",
