@@ -252,47 +252,51 @@
 <template>
   <div class="admin-content">
     <header class="admin-content__header">
-      <h1>Conteúdo</h1>
+      <h1><i class="ti ti-database" /> Conteúdo</h1>
       <nav class="admin-content__nav">
         <button
           :class="{ active: section === 'collections' }"
           @click="section = 'collections'; if (collections.length === 0) loadCollections()"
         >
-          Coletâneas
+          <i class="ti ti-books" /> Coletâneas
         </button>
         <button
           :disabled="!selectedCollection"
           :class="{ active: section === 'musics' }"
           @click="section = 'musics'"
         >
-          Músicas{{ selectedCollection ? ` · ${selectedCollection.name}` : '' }}
+          <i class="ti ti-music" /> Músicas<span v-if="selectedCollection" class="crumb">· {{ selectedCollection.name }}</span>
         </button>
         <button
           :disabled="!selectedMusic"
           :class="{ active: section === 'lyrics' }"
           @click="section = 'lyrics'"
         >
-          Estrofes{{ selectedMusic ? ` · ${musicName}` : '' }}
+          <i class="ti ti-microphone-2" /> Estrofes<span v-if="selectedMusic" class="crumb">· {{ musicName }}</span>
         </button>
       </nav>
       <div v-if="message" :class="['admin-content__msg', { ok: message.ok }]">
+        <i :class="message.ok ? 'ti ti-check' : 'ti ti-alert-circle'" />
         {{ message.text }}
       </div>
     </header>
 
     <!-- LOGIN NA API CUSTOM -->
     <section v-if="!api.isAuthenticated" class="admin-content__login">
-      <h2>Conectar à API do PIANO</h2>
+      <h2><i class="ti ti-plug-connected" /> Conectar à API do PIANO</h2>
       <p class="hint">
         Use a conta de administrador de conteúdo da API (mesmo login do app).
       </p>
       <form @submit.prevent="loginApi">
         <input v-model="apiEmail" type="email" placeholder="E-mail" required>
         <input v-model="apiPassword" type="password" placeholder="Senha" required>
-        <button type="submit" :disabled="apiLoggingIn">
+        <button type="submit" class="btn btn-primary" :disabled="apiLoggingIn">
+          <i class="ti ti-login-2" />
           {{ apiLoggingIn ? 'Entrando…' : 'Entrar' }}
         </button>
-        <span v-if="apiLoginError" class="error">{{ apiLoginError }}</span>
+        <span v-if="apiLoginError" class="error">
+          <i class="ti ti-alert-circle" /> {{ apiLoginError }}
+        </span>
       </form>
     </section>
 
@@ -304,8 +308,12 @@
           type="search"
           placeholder="Buscar coletânea…"
         >
-        <button @click="startNewCollection">+ Nova coletânea</button>
-        <button @click="loadCollections">Recarregar</button>
+        <button class="btn btn-primary" @click="startNewCollection">
+          <i class="ti ti-plus" /> Nova coletânea
+        </button>
+        <button class="btn" :disabled="loading" @click="loadCollections">
+          <i class="ti ti-refresh" /> Recarregar
+        </button>
       </div>
 
       <form
@@ -313,97 +321,141 @@
         class="inline-form"
         @submit.prevent="saveCollection"
       >
-        <h3>{{ editingCollection ? `Editando: ${editingCollection.name}` : 'Nova coletânea' }}</h3>
+        <h3>
+          <i class="ti ti-pencil" />
+          {{ editingCollection ? `Editando: ${editingCollection.name}` : 'Nova coletânea' }}
+        </h3>
         <input v-model="collectionForm.name" placeholder="Nome" required>
         <input v-model="collectionForm.description" placeholder="Descrição">
         <select v-model="collectionForm.visibility">
           <option value="public">Público</option>
           <option value="private">Privado</option>
         </select>
-        <button type="submit" :disabled="loading">Salvar</button>
-        <button type="button" @click="editingCollection = null; collectionForm.name = ''">
+        <button type="submit" class="btn btn-primary" :disabled="loading">
+          <i class="ti ti-device-floppy" /> Salvar
+        </button>
+        <button type="button" class="btn btn-ghost" @click="editingCollection = null; collectionForm.name = ''">
           Cancelar
         </button>
       </form>
 
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>ID</th><th>Nome</th><th>Visibilidade</th><th>Músicas</th><th>Dono</th><th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="c in filteredCollections" :key="c.id">
-            <td>{{ c.id }}</td>
-            <td>
-              {{ c.name }}
-              <span v-if="c.visibility === 'private'" class="badge">🔒 privada</span>
-            </td>
-            <td>{{ c.visibility === 'private' ? 'Privada' : 'Pública' }}</td>
-            <td>{{ c.musicsCount }}</td>
-            <td>{{ c.authorName ?? '—' }}</td>
-            <td class="actions">
-              <button @click="openCollection(c)">Abrir</button>
-              <button @click="startEditCollection(c)">Editar</button>
-              <button class="danger" @click="deletingCollection = c; confirmDelete = true">Excluir</button>
-            </td>
-          </tr>
-          <tr v-if="filteredCollections.length === 0 && !loading">
-            <td colspan="6" class="empty">Nenhuma coletânea</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-card">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Nome</th><th>Visibilidade</th><th>Músicas</th><th>Dono</th><th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="c in filteredCollections" :key="c.id">
+              <td class="cell-id">{{ c.id }}</td>
+              <td class="cell-name">
+                {{ c.name }}
+                <span v-if="c.visibility === 'private'" class="badge badge-private">
+                  <i class="ti ti-lock" /> privada
+                </span>
+              </td>
+              <td>
+                <span :class="['badge', c.visibility === 'private' ? 'badge-private' : 'badge-public']">
+                  <i :class="c.visibility === 'private' ? 'ti ti-lock' : 'ti ti-world'" />
+                  {{ c.visibility === 'private' ? 'Privada' : 'Pública' }}
+                </span>
+              </td>
+              <td class="cell-muted">{{ c.musicsCount }}</td>
+              <td class="cell-muted">{{ c.authorName ?? '—' }}</td>
+              <td class="actions">
+                <button @click="openCollection(c)"><i class="ti ti-folder-open" /> Abrir</button>
+                <button @click="startEditCollection(c)"><i class="ti ti-pencil" /> Editar</button>
+                <button class="danger" @click="deletingCollection = c; confirmDelete = true">
+                  <i class="ti ti-trash" /> Excluir
+                </button>
+              </td>
+            </tr>
+            <tr v-if="loading">
+              <td colspan="6" class="loading-row"><i class="ti ti-loader-2 spinning" /></td>
+            </tr>
+            <tr v-else-if="filteredCollections.length === 0">
+              <td colspan="6" class="empty">
+                <i class="ti ti-books" />
+                Nenhuma coletânea encontrada
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <!-- Confirmação de exclusão -->
-      <div v-if="confirmDelete && deletingCollection" class="confirm">
-        <p>
-          Excluir a coletânea <strong>{{ deletingCollection.name }}</strong> e
-          TODAS as suas músicas?
-        </p>
-        <button class="danger" @click="doDeleteCollection; confirmDelete = false">
-          Sim, excluir
-        </button>
-        <button @click="confirmDelete = false">Cancelar</button>
+      <div v-if="confirmDelete && deletingCollection" class="confirm" @click.self="confirmDelete = false">
+        <div class="confirm__card">
+          <i class="ti ti-alert-triangle" />
+          <p>
+            Excluir a coletânea <strong>{{ deletingCollection.name }}</strong> e<br>
+            TODAS as suas músicas?
+          </p>
+          <div class="confirm__actions">
+            <button class="btn btn-danger" @click="doDeleteCollection; confirmDelete = false">
+              <i class="ti ti-trash" /> Sim, excluir
+            </button>
+            <button class="btn" @click="confirmDelete = false">Cancelar</button>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- MÚSICAS -->
     <section v-else-if="section === 'musics' && selectedCollection" class="admin-content__body">
       <p class="breadcrumb">
-        <a href="#" @click.prevent="section = 'collections'">← {{ selectedCollection.name }}</a>
+        <a href="#" @click.prevent="section = 'collections'">
+          <i class="ti ti-arrow-left" /> {{ selectedCollection.name }}
+        </a>
       </p>
-      <table class="admin-table">
-        <thead>
-          <tr><th>ID</th><th>Nome</th><th>Áudio</th><th>Hino oficial</th><th>Ações</th></tr>
-        </thead>
-        <tbody>
-          <tr v-for="m in musics" :key="m.id">
-            <td>{{ m.id }}</td>
-            <td>{{ m.name }}</td>
-            <td>{{ m.hasAudio ? '🎵' : '—' }}</td>
-            <td>{{ m.officialMusicId ?? '—' }}</td>
-            <td class="actions">
-              <button @click="openMusic(m)">Estrofes</button>
-            </td>
-          </tr>
-          <tr v-if="musics.length === 0 && !loading">
-            <td colspan="5" class="empty">Nenhuma música nesta coletânea</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-card">
+        <table class="admin-table">
+          <thead>
+            <tr><th>ID</th><th>Nome</th><th>Áudio</th><th>Hino oficial</th><th>Ações</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="m in musics" :key="m.id">
+              <td class="cell-id">{{ m.id }}</td>
+              <td class="cell-name">{{ m.name }}</td>
+              <td>
+                <i :class="['audio-icon', m.hasAudio ? 'ti ti-music' : 'ti ti-music-off none']" />
+              </td>
+              <td class="cell-muted">{{ m.officialMusicId ?? '—' }}</td>
+              <td class="actions">
+                <button @click="openMusic(m)"><i class="ti ti-microphone-2" /> Estrofes</button>
+              </td>
+            </tr>
+            <tr v-if="loading">
+              <td colspan="5" class="loading-row"><i class="ti ti-loader-2 spinning" /></td>
+            </tr>
+            <tr v-else-if="musics.length === 0">
+              <td colspan="5" class="empty">
+                <i class="ti ti-music-off" />
+                Nenhuma música nesta coletânea
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- ESTROFES -->
     <section v-else-if="section === 'lyrics' && selectedMusic" class="admin-content__body">
       <p class="breadcrumb">
-        <a href="#" @click.prevent="section = 'musics'">← {{ selectedCollection?.name }}</a>
+        <a href="#" @click.prevent="section = 'musics'">
+          <i class="ti ti-arrow-left" /> {{ selectedCollection?.name }}
+        </a>
       </p>
-      <h2>{{ musicName }}</h2>
+      <h2 class="lyric-title"><i class="ti ti-microphone-2" /> {{ musicName }}</h2>
 
       <form class="inline-form" @submit.prevent="addLyric">
-        <input v-model="newLyric" placeholder="Nova estrofe (letra)" required>
+        <h3><i class="ti ti-plus" /> Nova estrofe</h3>
+        <input v-model="newLyric" placeholder="Letra da estrofe" required>
         <input v-model="newLyricTime" placeholder="Tempo (mm:ss)">
-        <button type="submit" :disabled="loading">Adicionar</button>
+        <button type="submit" class="btn btn-primary" :disabled="loading">
+          <i class="ti ti-plus" /> Adicionar
+        </button>
       </form>
 
       <div class="lyrics-list">
@@ -412,13 +464,17 @@
           <textarea v-model="l.lyric" rows="3" />
           <input v-model="l.time" class="time" placeholder="mm:ss">
           <div class="actions">
-            <button :disabled="loading" @click="saveLyric(l)">Salvar</button>
-            <button class="danger" :disabled="loading" @click="removeLyric(l.id)">Remover</button>
+            <button :disabled="loading" @click="saveLyric(l)">
+              <i class="ti ti-device-floppy" /> Salvar
+            </button>
+            <button class="danger" :disabled="loading" @click="removeLyric(l.id)">
+              <i class="ti ti-trash" /> Remover
+            </button>
           </div>
         </div>
-        <p v-if="lyrics.length === 0 && !loading" class="empty">
-          Nenhuma estrofe
-        </p>
+        <div v-if="lyrics.length === 0 && !loading" class="table-card">
+          <p class="empty"><i class="ti ti-microphone-2" /> Nenhuma estrofe</p>
+        </div>
       </div>
     </section>
   </div>
@@ -429,130 +485,533 @@
   max-width: 60rem;
   margin: 0 auto;
   padding: 1.5rem;
+  color: var(--piano-text-on-dark, #fff);
 }
 
-.admin-content__header h1 { margin: 0 0 0.75rem; font-size: 1.5rem; }
+/* ---------- header ---------- */
+.admin-content__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-content__header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-content__header h1 i {
+  color: var(--piano-cyan);
+}
 
 .admin-content__nav {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-left: auto;
+  flex-wrap: wrap;
 }
 
 .admin-content__nav button {
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 6px;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  background: #111827;
+  color: var(--piano-text-on-dark-secondary, rgba(255, 255, 255, 0.85));
   cursor: pointer;
+  font-size: 0.85rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.admin-content__nav button:hover:not(:disabled):not(.active) {
+  border-color: var(--piano-cyan);
 }
 
 .admin-content__nav button.active {
-  background: var(--primary, #2196f3);
-  color: #fff;
-  border-color: var(--primary, #2196f3);
+  background: var(--piano-cyan);
+  color: #0a1733;
+  border-color: var(--piano-cyan);
+  font-weight: 600;
 }
 
-.admin-content__nav button:disabled { opacity: 0.5; cursor: not-allowed; }
+.admin-content__nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.admin-content__nav .crumb {
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .admin-content__msg {
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  background: #fdecea;
-  color: #b71c1c;
-  margin-top: 0.5rem;
-}
-
-.admin-content__msg.ok { background: #e8f5e9; color: #1b5e20; }
-
-.admin-content__login {
-  border: 1px solid var(--border, #ddd);
+  width: 100%;
+  padding: 0.55rem 0.85rem;
   border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 24rem;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  font-size: 0.85rem;
 }
 
-.admin-content__login h2 { margin-top: 0; font-size: 1.1rem; }
-.admin-content__login form { display: flex; flex-direction: column; gap: 0.5rem; }
-.hint { font-size: 0.85rem; opacity: 0.7; }
-.error { color: #b71c1c; font-size: 0.85rem; }
+.admin-content__msg.ok {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
 
-.toolbar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.toolbar input[type='search'] { flex: 1; min-width: 12rem; }
+/* ---------- login ---------- */
+.admin-content__login {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 26rem;
+  margin: 3rem auto;
+}
 
+.admin-content__login h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-content__login h2 i {
+  color: var(--piano-cyan);
+}
+
+.admin-content__login .hint {
+  font-size: 0.85rem;
+  color: var(--piano-text-on-dark-muted, rgba(255, 255, 255, 0.7));
+  margin: 0 0 1rem;
+}
+
+.admin-content__login form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.admin-content__login .error {
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+/* ---------- inputs ---------- */
+input,
+select,
+textarea {
+  background: #0a0e1a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  color: var(--piano-text-on-dark, #fff);
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  font-size: 0.9rem;
+  transition: border-color 0.15s;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--piano-cyan);
+}
+
+/* ---------- botões ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #1e293b;
+  background: #111827;
+  color: var(--piano-text-on-dark, #fff);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: border-color 0.15s, background 0.15s, opacity 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--piano-cyan);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--piano-cyan);
+  border-color: var(--piano-cyan);
+  color: #0a1733;
+  font-weight: 600;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--piano-cyan-light);
+  border-color: var(--piano-cyan-light);
+}
+
+.btn-danger {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.btn-danger:hover:not(:disabled) {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.btn-ghost {
+  background: transparent;
+}
+
+/* ---------- toolbar ---------- */
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.toolbar input[type='search'] {
+  flex: 1;
+  min-width: 12rem;
+}
+
+/* ---------- formulário inline ---------- */
 .inline-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.6rem;
   align-items: center;
-  padding: 0.75rem;
-  border: 1px dashed var(--border, #ccc);
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
 }
 
-.inline-form h3 { width: 100%; margin: 0 0 0.25rem; font-size: 1rem; }
-.inline-form input, .inline-form select { flex: 1; min-width: 8rem; }
+.inline-form h3 {
+  width: 100%;
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--piano-cyan);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
 
-.admin-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.admin-table th, .admin-table td {
+.inline-form input,
+.inline-form select {
+  flex: 1;
+  min-width: 8rem;
+}
+
+/* ---------- tabela ---------- */
+.table-card {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.admin-table th {
   text-align: left;
-  padding: 0.5rem 0.6rem;
-  border-bottom: 1px solid var(--border, #eee);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--piano-text-on-dark-muted, rgba(255, 255, 255, 0.7));
+  border-bottom: 1px solid #1e293b;
+  background: rgba(255, 255, 255, 0.02);
 }
-.admin-table .actions { display: flex; gap: 0.35rem; }
-.admin-table .actions button {
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
+
+.admin-table td {
+  text-align: left;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr {
+  transition: background 0.12s;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(0, 193, 230, 0.05);
+}
+
+.admin-table .cell-name {
+  font-weight: 500;
+}
+
+.admin-table .cell-muted {
+  color: var(--piano-text-on-dark-muted, rgba(255, 255, 255, 0.7));
+}
+
+.admin-table .cell-id {
+  color: rgba(255, 255, 255, 0.4);
   font-size: 0.8rem;
 }
-.admin-table .actions button.danger { color: #b71c1c; border-color: #b71c1c; }
-.empty { text-align: center; opacity: 0.6; padding: 1.5rem 0; }
-.badge { font-size: 0.75rem; opacity: 0.75; }
 
-.breadcrumb { font-size: 0.85rem; }
-.breadcrumb a { color: var(--primary, #2196f3); }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
 
-.lyrics-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.badge-public {
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.badge-private {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fcd34d;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+}
+
+.admin-table .actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.admin-table .actions button,
+.lyric-row .actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--piano-text-on-dark-secondary, rgba(255, 255, 255, 0.85));
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.admin-table .actions button:hover:not(:disabled),
+.lyric-row .actions button:hover:not(:disabled) {
+  border-color: var(--piano-cyan);
+  background: rgba(0, 193, 230, 0.08);
+}
+
+.admin-table .actions button.danger,
+.lyric-row .actions button.danger {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.admin-table .actions button.danger:hover:not(:disabled),
+.lyric-row .actions button.danger:hover:not(:disabled) {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.audio-icon {
+  color: var(--piano-cyan);
+}
+
+.audio-icon.none {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- empty / loading ---------- */
+.empty {
+  text-align: center;
+  padding: 2.5rem 1rem !important;
+  color: var(--piano-text-on-dark-muted, rgba(255, 255, 255, 0.7));
+}
+
+.empty i {
+  display: block;
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.loading-row {
+  text-align: center;
+  padding: 2rem !important;
+  color: var(--piano-cyan);
+  font-size: 1.25rem;
+}
+
+/* ---------- breadcrumb ---------- */
+.breadcrumb {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+}
+
+.breadcrumb a {
+  color: var(--piano-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- estrofes ---------- */
+.lyric-title {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
+.lyrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .lyric-row {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   align-items: flex-start;
-  padding: 0.75rem;
-  border: 1px solid var(--border, #eee);
-  border-radius: 8px;
+  padding: 0.85rem;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
 }
-.lyric-row .order { font-weight: 600; min-width: 1.5rem; }
-.lyric-row textarea { flex: 1; font: inherit; }
-.lyric-row .time { width: 5rem; }
-.lyric-row .actions { display: flex; flex-direction: column; gap: 0.35rem; }
-.lyric-row .actions button {
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
+
+.lyric-row .order {
+  min-width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 193, 230, 0.12);
+  color: var(--piano-cyan);
+  border-radius: 6px;
+  font-weight: 700;
   font-size: 0.8rem;
 }
-.lyric-row .actions button.danger { color: #b71c1c; border-color: #b71c1c; }
 
+.lyric-row textarea {
+  flex: 1;
+  resize: vertical;
+  min-height: 3.5rem;
+}
+
+.lyric-row .time {
+  width: 5.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.lyric-row .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* ---------- modal de confirmação ---------- */
 .confirm {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  z-index: 100;
 }
-.confirm p {
-  background: #fff;
-  padding: 1.25rem 1.5rem;
-  border-radius: 8px;
+
+.confirm__card {
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 1.5rem;
   max-width: 26rem;
+  width: calc(100% - 2rem);
+  text-align: center;
+}
+
+.confirm__card i {
+  font-size: 2rem;
+  color: #ef4444;
+}
+
+.confirm__card p {
+  margin: 0.75rem 0 1.25rem;
+  line-height: 1.5;
+}
+
+.confirm__card p strong {
+  color: var(--piano-cyan);
+}
+
+.confirm__actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+/* ---------- responsivo ---------- */
+@media (max-width: 640px) {
+  .admin-content__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-content__nav {
+    margin-left: 0;
+  }
+
+  .lyric-row {
+    flex-wrap: wrap;
+  }
+
+  .lyric-row .actions {
+    flex-direction: row;
+    width: 100%;
+  }
+}
+
+.spinning {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 </style>
