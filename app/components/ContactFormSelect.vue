@@ -339,6 +339,7 @@
             type="text"
             class="contact-form-select__input"
             :placeholder="$t('contact.form.namePlaceholder')"
+            data-testid="contact-name-input"
             required
           />
         </div>
@@ -353,6 +354,7 @@
             type="email"
             class="contact-form-select__input"
             :placeholder="$t('contact.form.emailPlaceholder')"
+            data-testid="contact-email-input"
             required
           />
         </div>
@@ -367,6 +369,7 @@
             type="text"
             class="contact-form-select__input"
             :placeholder="$t('contact.form.subjectPlaceholder')"
+            data-testid="contact-subject-input"
             required
           />
         </div>
@@ -381,6 +384,7 @@
             class="contact-form-select__textarea"
             :placeholder="$t('contact.form.messagePlaceholder')"
             rows="5"
+            data-testid="contact-message-input"
             required
           />
         </div>
