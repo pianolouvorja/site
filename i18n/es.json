@@ -396,7 +396,13 @@
     "moreNavLabel": "Más enlaces",
     "moreNavTitle": "Saber más",
     "privacy": "Política de Privacidad",
-    "terms": "Términos de Uso"
+    "terms": "Términos de Uso",
+    "social": {
+      "github": "GitHub",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram"
+    }
   },
   "common": {
     "loading": "Cargando...",
@@ -1033,18 +1039,20 @@
     }
   },
   "community": {
-    "spot": "Este lugar es tuyo — ven a probar",
+    "spot": "¿Quieres unirte?",
     "eyebrow": "Comunidad",
-    "title": "Quién usa, prueba y contribuye",
-    "subtitle": "Testers, entusiastas y sugeridores que ayudan a PIANO LouvorJA a crecer. ¿Quieres participar?",
+    "title": "Únete a nuestra comunidad",
+    "subtitle": "Desarrolladores, probadores y entusiastas colaborando para mejorar PIANO LouvorJA cada día.",
     "roles": {
-      "tester": "Tester",
+      "tester": "Probador",
       "enthusiast": "Entusiasta",
-      "suggester": "Sugeridor"
+      "suggester": "Sugerente"
     },
     "since": "Desde {since}",
     "link": "Ver perfil",
-    "cta": "Únete a la comunidad"
+    "cta": "Unirse al grupo",
+    "whatsapp": "Soporte en WhatsApp",
+    "telegram": "Devs en Telegram"
   },
   "donate": {
     "title": "Apoya el proyecto",

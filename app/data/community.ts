@@ -19,5 +19,15 @@ export const communityMembers: CommunityMember[] = [
   { name: 'Caique', role: 'tester', since: '2026-08' },
 ]
 
-/** Canal público para entrar na comunidade. */
-export const communityJoinUrl = 'https://github.com/pianolouvorja'
+/**
+ * Links de comunidade/suporte.
+ * WhatsApp: grupo de suporte a usuários (público)
+ * Telegram: grupo de desenvolvedores (precisa do link público t.me/<nome> ou t.me/+hash)
+ */
+export const communityLinks = {
+  whatsapp: 'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+  telegram: 'https://t.me/pianolouvorja_devs', // TODO: substituir pelo link público real do grupo de devs
+}
+
+/** @deprecated use communityLinks.whatsapp */
+export const communityJoinUrl = communityLinks.whatsapp

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
-import { communityJoinUrl } from '~/data/community'
+import { communityLinks } from '~/data/community'
 
 vi.mock('~/data/community', async (importOriginal) => {
   const actual = await importOriginal<typeof import('~/data/community')>()
@@ -16,6 +16,10 @@ vi.mock('~/data/community', async (importOriginal) => {
         url: 'https://example.com/ana',
       },
     ],
+    communityLinks: {
+      whatsapp: 'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+      telegram: 'https://t.me/pianolouvorja_devs',
+    },
   }
 })
 
@@ -85,23 +89,29 @@ describe('CommunitySection', () => {
     expect(caique.find('a.community__link').exists()).toBe(false)
   })
 
-  it('renderiza CTA para entrar na comunidade', () => {
+  it('renderiza links para WhatsApp e Telegram', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
-    const cta = wrapper.find('a.community__cta')
-    expect(cta.exists()).toBe(true)
-    expect(cta.attributes('href')).toMatch(/^https?:\/\//)
-    expect(cta.text().length).toBeGreaterThan(5)
+    const whatsappLink = wrapper.find('a.community__cta--whatsapp')
+    const telegramLink = wrapper.find('a.community__cta--telegram')
+
+    expect(whatsappLink.exists()).toBe(true)
+    expect(whatsappLink.attributes('href')).toBe(communityLinks.whatsapp)
+    expect(whatsappLink.attributes('target')).toBe('_blank')
+    expect(whatsappLink.attributes('rel')).toBe('noopener noreferrer')
+    expect(whatsappLink.find('i.ti-brand-whatsapp').exists()).toBe(true)
+    expect(whatsappLink.text()).toContain('Suporte no WhatsApp')
+
+    expect(telegramLink.exists()).toBe(true)
+    expect(telegramLink.attributes('href')).toBe(communityLinks.telegram)
+    expect(telegramLink.attributes('target')).toBe('_blank')
+    expect(telegramLink.attributes('rel')).toBe('noopener noreferrer')
+    expect(telegramLink.find('i.ti-brand-telegram').exists()).toBe(true)
+    expect(telegramLink.text()).toContain('Devs no Telegram')
   })
 
-  it('renderiza card de vaga aberta apos os membros', () => {
+  it('nao renderiza mais community__spot nem o CTA unico antigos', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
-    const spot = wrapper.find('a.community__spot')
-    expect(spot.exists()).toBe(true)
-    expect(spot.attributes('href')).toBe(communityJoinUrl)
-    expect(spot.attributes('target')).toBe('_blank')
-    expect(spot.attributes('rel')).toBe('noopener noreferrer')
-    const cards = wrapper.findAll('.community__card, .community__spot')
-    const spotIndex = cards.findIndex((c) => c.classes().includes('community__spot'))
-    expect(spotIndex).toBe(cards.length - 1)
+    expect(wrapper.find('a.community__spot').exists()).toBe(false)
+    expect(wrapper.findAll('a.community__cta').length).toBe(2)
   })
 })

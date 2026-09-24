@@ -36,6 +36,16 @@
       href: 'https://www.youtube.com/@pianolouvorja',
       label: 'YouTube',
     },
+    {
+      icon: 'ti-brand-whatsapp',
+      href: 'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+      label: 'WhatsApp',
+    },
+    {
+      icon: 'ti-brand-telegram',
+      href: 'https://t.me/pianolouvorja_devs', // TODO: substituir pelo link público real
+      label: 'Telegram',
+    },
   ]
 </script>
 
@@ -71,7 +81,7 @@
               v-for="social in socialLinks"
               :key="social.label"
               :href="social.href"
-              :aria-label="social.label"
+              :aria-label="$t('footer.social.' + social.label.toLowerCase())"
               class="footer__social-link"
               target="_blank"
               rel="noopener noreferrer"

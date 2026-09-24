@@ -404,7 +404,13 @@
     "moreNavLabel": "Mais links",
     "moreNavTitle": "Saiba mais",
     "privacy": "Política de Privacidade",
-    "terms": "Termos de Uso"
+    "terms": "Termos de Uso",
+    "social": {
+      "github": "GitHub",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram"
+    }
   },
   "common": {
     "loading": "Carregando...",
@@ -1036,10 +1042,10 @@
     }
   },
   "community": {
-    "spot": "Esta vaga é sua — venha testar",
+    "spot": "Quer participar?",
     "eyebrow": "Comunidade",
-    "title": "Quem usa, testa e contribui",
-    "subtitle": "Testadores, entusiastas e sugestores que ajudam o PIANO LouvorJA a crescer. Quer participar?",
+    "title": "Faça parte da nossa comunidade",
+    "subtitle": "Desenvolvedores, testadores e entusiastas colaborando para melhorar o PIANO LouvorJA todos os dias.",
     "roles": {
       "tester": "Testador",
       "enthusiast": "Entusiasta",
@@ -1047,7 +1053,9 @@
     },
     "since": "Desde {since}",
     "link": "Ver perfil",
-    "cta": "Faça parte da comunidade"
+    "cta": "Entrar no grupo",
+    "whatsapp": "Suporte no WhatsApp",
+    "telegram": "Devs no Telegram"
   },
   "donate": {
     "title": "Apoie o projeto",
