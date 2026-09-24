@@ -29,4 +29,3 @@ docs/
 
 # Firebase service account (nunca commitar)
 service-account.json
-.env.server
