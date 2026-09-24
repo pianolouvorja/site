@@ -303,14 +303,6 @@
         </p>
       </div>
       <div class="header-actions">
-        <NuxtLink to="/admin/comunidade" class="refresh-btn">
-          <i class="ti ti-users-group" />
-          <span>Comunidade</span>
-        </NuxtLink>
-        <NuxtLink to="/admin/newsletter" class="refresh-btn">
-          <i class="ti ti-mail" />
-          <span>Newsletter</span>
-        </NuxtLink>
         <button class="refresh-btn" :disabled="loading" @click="handleRefresh">
           <i class="ti ti-refresh" :class="{ spinning: loading }" />
           <span>{{ loading ? 'Carregando...' : 'Atualizar' }}</span>
