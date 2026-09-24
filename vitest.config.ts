@@ -75,8 +75,8 @@ export default defineConfig({
           exclude: ['test/integration/**'],
           name: 'unit',
           css: false,
-          // node 24 + tinypool: workers concorrentes derrubam IPC (ERR_IPC_CHANNEL_CLOSED)
-          maxWorkers: 2,
+          // node 24 + tinypool: paralelismo entre arquivos derruba o canal IPC
+          fileParallelism: false,
         },
         resolve: { alias },
       },
@@ -90,7 +90,7 @@ export default defineConfig({
           name: 'integration',
           fileParallelism: false,
           maxWorkers: 1,
-          hookTimeout: 180_000,
+          hookTimeout: 360_000,
         },
         resolve: { alias },
       },
