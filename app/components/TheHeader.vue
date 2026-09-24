@@ -109,6 +109,19 @@
         </NuxtLink>
       </nav>
 
+      <!-- Donate — destaque extra entre nav e CTA -->
+      <a
+        v-if="donateUrl"
+        data-testid="header-donate"
+        :href="donateUrl"
+        class="header__donate"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i class="ti ti-heart" />
+        <span>{{ $t('donate.button') }}</span>
+      </a>
+
       <!-- Direita: codename PIANO + lang switcher + CTA -->
       <div class="header__header-end">
         <img src="/brand/codename-piano.svg" alt="" class="header__codename" />
@@ -145,19 +158,6 @@
             </ul>
           </Transition>
         </div>
-
-        <!-- Donate — destaque extra no header -->
-        <a
-          v-if="donateUrl"
-          data-testid="header-donate"
-          :href="donateUrl"
-          class="header__donate"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="ti ti-heart" />
-          <span>{{ $t('donate.button') }}</span>
-        </a>
 
         <a
           data-testid="header-cta"
@@ -267,7 +267,7 @@
     }
 
     &__container {
-      max-width: 976px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -608,6 +608,19 @@
 
     @media (max-width: 1280px) {
       &__codename {
+        display: none;
+      }
+    }
+
+    /* Doar visível consome espaço extra — esconde codename antes */
+    @media (max-width: 1440px) {
+      .header__container:has(.header__donate) .header__codename {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .header__container:has(.header__donate) .header__donate {
         display: none;
       }
     }

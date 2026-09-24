@@ -11,27 +11,32 @@
  * Obs: pra manter compatibilidade com formulários externos, o client continua
  * enviando pra Web3Forms no tipo 'general' (o server so encaminha a intenção).
  */
+import { renderModeracao } from '../../../utils/email-moderacao'
+import { sendMail } from '../../../utils/mail'
+
 export default defineEventHandler(async (event) => {
   // --------------------------------------------------------------
   // 1) Config (env direto — nomes do .env)
   // --------------------------------------------------------------
-  const SHEET_ID = process.env.TESTERS_SHEET_ID;
-  const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
-  const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-  const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+  const SHEET_ID = process.env.TESTERS_SHEET_ID
+  const REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN
+  const CLIENT_ID = process.env.GOOGLE_CLIENT_ID
+  const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
 
-  if (!SHEET_ID) throw createError({ statusCode: 500, message: 'TESTERS_SHEET_ID não configurado' });
-  if (!REFRESH_TOKEN) throw createError({ statusCode: 500, message: 'GOOGLE_REFRESH_TOKEN não configurado' });
+  if (!SHEET_ID) throw createError({ statusCode: 500, message: 'TESTERS_SHEET_ID não configurado' })
+  if (!REFRESH_TOKEN)
+    throw createError({ statusCode: 500, message: 'GOOGLE_REFRESH_TOKEN não configurado' })
 
   // --------------------------------------------------------------
   // 2) Recebe payload JSON
   // --------------------------------------------------------------
-  const body = await readBody(event);
-  if (!body || typeof body !== 'object') throw createError({ statusCode: 400, message: 'Payload JSON inválido' });
+  const body = await readBody(event)
+  if (!body || typeof body !== 'object')
+    throw createError({ statusCode: 400, message: 'Payload JSON inválido' })
 
-  const { type } = body;
+  const { type } = body
   if (!['general', 'tester', 'developer', 'bug'].includes(type)) {
-    throw createError({ statusCode: 400, message: `Tipo inválido: ${type}` });
+    throw createError({ statusCode: 400, message: `Tipo inválido: ${type}` })
   }
 
   // --------------------------------------------------------------
@@ -47,8 +52,8 @@ export default defineEventHandler(async (event) => {
         refresh_token: REFRESH_TOKEN!,
         grant_type: 'refresh_token',
       }).toString(),
-    });
-    return tokenResp.access_token;
+    })
+    return tokenResp.access_token
   }
 
   // --------------------------------------------------------------
@@ -57,28 +62,22 @@ export default defineEventHandler(async (event) => {
   if (type === 'general') {
     // Mantido pra compatibilidade: o client encaminha direto ao Web3Forms
     // (server apenas confirma recebimento)
-    return { ok: true, forwardedTo: 'Web3Forms' };
+    return { ok: true, forwardedTo: 'Web3Forms' }
   }
 
   const sheetMap = {
     tester: 'testadores',
     developer: 'desenvolvedores',
     bug: 'relatos',
-  };
-  const sheetName = sheetMap[type];
+  }
+  const sheetName = sheetMap[type]
 
   // Monta linha conforme aba
-  const timestamp = new Date().toISOString();
-  let row: any[] = [timestamp]; // coluna A: timestamp
+  const timestamp = new Date().toISOString()
+  let row: any[] = [timestamp] // coluna A: timestamp
 
   if (type === 'tester') {
-    const {
-      name,
-      email,
-      bio,
-      focus,
-      links,
-    } = body;
+    const { name, email, bio, focus, links } = body
     row = [
       name || '',
       email || '',
@@ -92,21 +91,11 @@ export default defineEventHandler(async (event) => {
       'false', // ativo — só vira true na aprovação (moderação)
       '', // desde — preenchido na aprovação
       'pendente',
-    ];
+    ]
   }
 
   if (type === 'developer') {
-    const {
-      name,
-      email,
-      bio,
-      github,
-      portfolio,
-      areas,
-      availability,
-      stack,
-      motivation,
-    } = body;
+    const { name, email, bio, github, portfolio, areas, availability, stack, motivation } = body
     row = [
       timestamp,
       name || '',
@@ -119,20 +108,11 @@ export default defineEventHandler(async (event) => {
       stack || '',
       motivation || '',
       'pendente', // status
-    ];
+    ]
   }
 
   if (type === 'bug') {
-    const {
-      name,
-      testerEmail,
-      email,
-      reportType,
-      version,
-      module,
-      description,
-      steps,
-    } = body;
+    const { name, testerEmail, email, reportType, version, module, description, steps } = body
     row = [
       timestamp,
       testerEmail || name || '',
@@ -143,7 +123,7 @@ export default defineEventHandler(async (event) => {
       description || '',
       steps || '',
       'novo', // status
-    ];
+    ]
   }
 
   // --------------------------------------------------------------
@@ -151,14 +131,52 @@ export default defineEventHandler(async (event) => {
   // --------------------------------------------------------------
   const headers: Record<string, string[]> = {
     // testadores: schema existente, consumido por useTesters.ts (ativo=true → aparece no site)
-    testadores: ['nome', 'email', 'avatar_url', 'bio', 'foco', 'linkedin', 'github', 'instagram', 'outros', 'ativo', 'desde', 'status'],
-    desenvolvedores: ['timestamp', 'nome', 'email', 'bio', 'github', 'portfolio', 'areas', 'disponibilidade', 'stack', 'motivacao', 'status'],
-    relatos: ['timestamp', 'testador', 'email', 'tipo', 'versao', 'modulo', 'descricao', 'passos', 'status'],
-  };
+    testadores: [
+      'nome',
+      'email',
+      'avatar_url',
+      'bio',
+      'foco',
+      'linkedin',
+      'github',
+      'instagram',
+      'outros',
+      'ativo',
+      'desde',
+      'status',
+    ],
+    desenvolvedores: [
+      'timestamp',
+      'nome',
+      'email',
+      'bio',
+      'github',
+      'portfolio',
+      'areas',
+      'disponibilidade',
+      'stack',
+      'motivacao',
+      'status',
+    ],
+    relatos: [
+      'timestamp',
+      'testador',
+      'email',
+      'tipo',
+      'versao',
+      'modulo',
+      'descricao',
+      'passos',
+      'status',
+    ],
+  }
 
   try {
-    const accessToken = await getAccessToken();
-    const authHeaders = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+    const accessToken = await getAccessToken()
+    const authHeaders = {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    }
 
     // cria aba + header se não existir (ignora erro de duplicada)
     let abaExiste = true
@@ -166,33 +184,49 @@ export default defineEventHandler(async (event) => {
       method: 'POST',
       headers: authHeaders,
       body: { requests: [{ addSheet: { properties: { title: sheetName } } }] },
-    }).then(() => { abaExiste = false }).catch(() => {});
+    })
+      .then(() => {
+        abaExiste = false
+      })
+      .catch(() => {})
 
     // header só quando a aba foi criada agora — via append (nunca sobrescreve;
     // aba vazia → cai na linha 1). PUT A1 dá 400 em aba recém-criada.
     if (!abaExiste) {
-      await $fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`, {
-        method: 'POST',
-        headers: authHeaders,
-        body: { values: [headers[sheetName]] },
-      })
+      await $fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+        {
+          method: 'POST',
+          headers: authHeaders,
+          body: { values: [headers[sheetName]] },
+        },
+      )
     }
 
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheetName}!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`
     const resp = await $fetch(url, {
       method: 'POST',
       headers: authHeaders,
       body: { values: [row] },
-    });
+    })
 
     // resposta típica: { spreadsheetId, tableRange, updates }
-    return { ok: true, sheet: sheetName, updates: resp.updates };
+
+    // relato de bug: email de confirmação de recebimento (resposta padrão)
+    if (type === 'bug' && (body as { email?: string }).email) {
+      const { subject, html } = renderModeracao('bug_recebido', {
+        nome: (body as { name?: string }).name,
+      })
+      await sendMail({ to: (body as { email: string }).email, subject, html }).catch(() => {})
+    }
+
+    return { ok: true, sheet: sheetName, updates: resp.updates }
   } catch (err: any) {
-    console.error('[community/register] Erro ao gravar na sheet:', err);
+    console.error('[community/register] Erro ao gravar na sheet:', err)
     throw createError({
       statusCode: 502,
       message: 'Falha ao gravar na planilha',
       data: err?.message || err,
-    });
+    })
   }
-});
+})
