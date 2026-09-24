@@ -147,6 +147,9 @@ importers:
       sass:
         specifier: ^1.102.0
         version: 1.102.0
+      sass-embedded-linux-x64:
+        specifier: 1.100.0
+        version: 1.100.0
       semantic-release:
         specifier: ^25.0.8
         version: 25.0.8(supports-color@10.2.2)(typescript@5.9.3)
@@ -7230,6 +7233,12 @@ packages:
     cpu: [riscv64]
     os: [linux]
     libc: glibc
+
+  sass-embedded-linux-x64@1.100.0:
+    resolution: {integrity: sha512-0vUSN8j0WGtCJIOPh//EmUvYGHW0QOe5iul8qyhPk50MAcw49MA0r34AhftjDdx94ILPF6vApFs0gwHPQRlpVA==}
+    engines: {node: '>=14.0.0'}
+    cpu: [x64]
+    os: [linux]
 
   sass-embedded-unknown-all@1.100.0:
     resolution: {integrity: sha512-c+naBgWId4MIpToXcI0DgqetjdAkwTTAxFAuOaBz7HUXLdyG1oZRrEvSsbe41nEdQOKH0vgofVFCeSQgoXOG9A==}
@@ -17043,6 +17052,8 @@ snapshots:
 
   sass-embedded-linux-riscv64@1.100.0:
     optional: true
+
+  sass-embedded-linux-x64@1.100.0: {}
 
   sass-embedded-unknown-all@1.100.0:
     dependencies:
