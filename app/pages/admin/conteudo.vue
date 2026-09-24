@@ -271,10 +271,7 @@
     <header class="admin-content__header">
       <h1><i class="ti ti-database" /> Conteúdo</h1>
       <nav class="admin-content__nav">
-        <button
-          :class="{ active: section === 'collections' }"
-          @click="goCollections"
-        >
+        <button :class="{ active: section === 'collections' }" @click="goCollections">
           <i class="ti ti-books" /> Coletâneas
         </button>
         <button
@@ -349,13 +346,7 @@
         <button type="submit" class="btn btn-primary" :disabled="loading">
           <i class="ti ti-device-floppy" /> Salvar
         </button>
-        <button
-          type="button"
-          class="btn btn-ghost"
-          @click="cancelCollectionForm"
-        >
-          Cancelar
-        </button>
+        <button type="button" class="btn btn-ghost" @click="cancelCollectionForm">Cancelar</button>
       </form>
 
       <div class="table-card">
@@ -372,7 +363,9 @@
           </thead>
           <tbody>
             <tr v-for="c in filteredCollections" :key="c.id">
-              <td class="cell-id">{{ c.id }}</td>
+              <td class="cell-id">
+                {{ c.id }}
+              </td>
               <td class="cell-name">
                 {{ c.name }}
                 <span v-if="c.visibility === 'private'" class="badge badge-private">
@@ -387,21 +380,24 @@
                   {{ c.visibility === 'private' ? 'Privada' : 'Pública' }}
                 </span>
               </td>
-              <td class="cell-muted">{{ c.musicsCount }}</td>
-              <td class="cell-muted">{{ c.authorName ?? '—' }}</td>
+              <td class="cell-muted">
+                {{ c.musicsCount }}
+              </td>
+              <td class="cell-muted">
+                {{ c.authorName ?? '—' }}
+              </td>
               <td class="actions">
                 <button @click="openCollection(c)"><i class="ti ti-folder-open" /> Abrir</button>
                 <button @click="startEditCollection(c)"><i class="ti ti-pencil" /> Editar</button>
-                <button
-                  class="danger"
-                  @click="askDeleteCollection(c)"
-                >
+                <button class="danger" @click="askDeleteCollection(c)">
                   <i class="ti ti-trash" /> Excluir
                 </button>
               </td>
             </tr>
             <tr v-if="loading">
-              <td colspan="6" class="loading-row"><i class="ti ti-loader-2 spinning" /></td>
+              <td colspan="6" class="loading-row">
+                <i class="ti ti-loader-2 spinning" />
+              </td>
             </tr>
             <tr v-else-if="filteredCollections.length === 0">
               <td colspan="6" class="empty">
@@ -426,10 +422,7 @@
             TODAS as suas músicas?
           </p>
           <div class="confirm__actions">
-            <button
-              class="btn btn-danger"
-              @click="confirmDeleteCollection"
-            >
+            <button class="btn btn-danger" @click="confirmDeleteCollection">
               <i class="ti ti-trash" /> Sim, excluir
             </button>
             <button class="btn" @click="confirmDelete = false">Cancelar</button>
@@ -458,18 +451,26 @@
           </thead>
           <tbody>
             <tr v-for="m in musics" :key="m.id">
-              <td class="cell-id">{{ m.id }}</td>
-              <td class="cell-name">{{ m.name }}</td>
+              <td class="cell-id">
+                {{ m.id }}
+              </td>
+              <td class="cell-name">
+                {{ m.name }}
+              </td>
               <td>
                 <i :class="['audio-icon', m.hasAudio ? 'ti ti-music' : 'ti ti-music-off none']" />
               </td>
-              <td class="cell-muted">{{ m.officialMusicId ?? '—' }}</td>
+              <td class="cell-muted">
+                {{ m.officialMusicId ?? '—' }}
+              </td>
               <td class="actions">
                 <button @click="openMusic(m)"><i class="ti ti-microphone-2" /> Estrofes</button>
               </td>
             </tr>
             <tr v-if="loading">
-              <td colspan="5" class="loading-row"><i class="ti ti-loader-2 spinning" /></td>
+              <td colspan="5" class="loading-row">
+                <i class="ti ti-loader-2 spinning" />
+              </td>
             </tr>
             <tr v-else-if="musics.length === 0">
               <td colspan="5" class="empty">

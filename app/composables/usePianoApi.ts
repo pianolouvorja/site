@@ -104,9 +104,10 @@ export function usePianoApi() {
         body,
       })
     } catch (error) {
-      const status = (error as { status?: number; statusCode?: number })
-        .status ??
-        (error as { statusCode?: number }).statusCode ?? 0
+      const status =
+        (error as { status?: number; statusCode?: number }).status ??
+        (error as { statusCode?: number }).statusCode ??
+        0
       if (status === 401) logout()
       throw error
     }
@@ -123,9 +124,7 @@ export function usePianoApi() {
 
   // ---- Coletâneas ----
   async function listCollections(): Promise<Collection[]> {
-    const res = await request<{ data?: Collection[] }>(
-      '/v1/custom/collections',
-    )
+    const res = await request<{ data?: Collection[] }>('/v1/custom/collections')
     return res.data ?? []
   }
 
@@ -135,13 +134,11 @@ export function usePianoApi() {
     visibility?: 'public' | 'private'
   }): Promise<{ id: number } | null> {
     try {
-      const r = await request<{ id_collection: number } | null>(
-        '/v1/custom/collections',
-        { method: 'POST', body: input },
-      )
-      return r
-        ? { id: (r as unknown as { id_collection: number }).id_collection }
-        : null
+      const r = await request<{ id_collection: number } | null>('/v1/custom/collections', {
+        method: 'POST',
+        body: input,
+      })
+      return r ? { id: (r as unknown as { id_collection: number }).id_collection } : null
     } catch {
       return null
     }
@@ -177,9 +174,7 @@ export function usePianoApi() {
 
   // ---- Músicas ----
   async function listMusics(collectionId: number): Promise<Music[]> {
-    const res = await request<{ data?: Music[] }>(
-      `/v1/custom/collections/${collectionId}/musics`,
-    )
+    const res = await request<{ data?: Music[] }>(`/v1/custom/collections/${collectionId}/musics`)
     return res.data ?? []
   }
 
@@ -211,9 +206,7 @@ export function usePianoApi() {
         `/v1/custom/collections/${collectionId}/musics`,
         { method: 'POST', body: input },
       )
-      return r
-        ? { id: (r as unknown as { id_music: number }).id_music }
-        : null
+      return r ? { id: (r as unknown as { id_music: number }).id_music } : null
     } catch {
       return null
     }
@@ -251,13 +244,11 @@ export function usePianoApi() {
     input: { lyric: string; time?: string; order?: number },
   ): Promise<{ id: number } | null> {
     try {
-      const r = await request<{ id_lyric: number } | null>(
-        `/v1/custom/musics/${musicId}/lyrics`,
-        { method: 'POST', body: input },
-      )
-      return r
-        ? { id: (r as unknown as { id_lyric: number }).id_lyric }
-        : null
+      const r = await request<{ id_lyric: number } | null>(`/v1/custom/musics/${musicId}/lyrics`, {
+        method: 'POST',
+        body: input,
+      })
+      return r ? { id: (r as unknown as { id_lyric: number }).id_lyric } : null
     } catch {
       return null
     }
@@ -291,17 +282,13 @@ export function usePianoApi() {
     kind: 'audio' | 'imagens',
   ): Promise<{ idFile: number; url: string } | null> {
     const form = new FormData()
-    form.append(
-      'file',
-      new Blob([bytes as BlobPart]),
-      filename,
-    )
+    form.append('file', new Blob([bytes as BlobPart]), filename)
     form.append('kind', kind)
     try {
-      const r = await request<{ id_file: number; url: string }>(
-        '/v1/custom/files',
-        { method: 'POST', body: form },
-      )
+      const r = await request<{ id_file: number; url: string }>('/v1/custom/files', {
+        method: 'POST',
+        body: form,
+      })
       return { idFile: r.id_file, url: r.url }
     } catch {
       return null
