@@ -26,6 +26,7 @@ export interface AuditRow {
 }
 
 export function useCommunityAdmin() {
+  console.log('[useCommunityAdmin] SSR:', import.meta.server)
   const members = ref<CommunityMember[]>([])
   const nextCursor = ref<string | null>(null)
   const loading = ref(false)

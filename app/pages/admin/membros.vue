@@ -12,6 +12,7 @@
     middleware: 'auth',
   })
 
+  console.log('[membros-page] setup SSR:', import.meta.server)
   const { members, nextCursor, loading, hasMembers, loadMembers, mutate } = useCommunityAdmin()
 
   const busca = ref('')

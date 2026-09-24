@@ -9,8 +9,8 @@
     { to: '/admin', label: 'Dashboard', icon: 'ti-layout-dashboard' },
     { to: '/admin/conteudo', label: 'Conteúdo', icon: 'ti-music' },
     { to: '/admin/comunidade', label: 'Comunidade', icon: 'ti-users-group' },
-    { to: '/admin/membros', label: 'Membros', icon: 'ti-user-cog' },
     { to: '/admin/newsletter', label: 'Newsletter', icon: 'ti-mail' },
+    { to: '/admin/membros', label: 'Membros', icon: 'ti-user-cog' },
   ] as const
 </script>
 
