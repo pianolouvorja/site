@@ -14,7 +14,11 @@
 
 <template>
   <div class="admin-layout">
-    <nav v-if="!route.path.startsWith('/admin/login')" class="admin-nav" aria-label="Navegação do admin">
+    <nav
+      v-if="!route.path.startsWith('/admin/login')"
+      class="admin-nav"
+      aria-label="Navegação do admin"
+    >
       <NuxtLink to="/admin" class="admin-nav__brand" aria-label="Início do admin">
         <i class="ti ti-piano" aria-hidden="true" />
         <span>PIANO Admin</span>
@@ -83,7 +87,9 @@
       color: #8b98ab;
       text-decoration: none;
       font-size: 0.875rem;
-      transition: background 0.15s, color 0.15s;
+      transition:
+        background 0.15s,
+        color 0.15s;
 
       &:hover {
         color: #e8eef5;
