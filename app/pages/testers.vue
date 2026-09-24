@@ -29,7 +29,7 @@
 
   const { testers, sheetBios } = useTestersRoster()
 
-  const { positiveReports, enabled } = useTestersReports()
+  const { positiveReports, enabled, pending, hasReports } = useTestersReports()
 
   const recentReports = computed<TesterReport[]>(() => (positiveReports.value ?? []).slice(0, 12))
 

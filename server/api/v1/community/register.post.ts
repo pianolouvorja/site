@@ -53,7 +53,7 @@ export default defineEventHandler(async (event) => {
         grant_type: 'refresh_token',
       }).toString(),
     })
-    return tokenResp.access_token
+    return (tokenResp as { access_token: string }).access_token
   }
 
   // --------------------------------------------------------------
@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
     developer: 'desenvolvedores',
     bug: 'relatos',
   }
-  const sheetName = sheetMap[type]
+  const sheetName = sheetMap[type as keyof typeof sheetMap]
 
   // Monta linha conforme aba
   const timestamp = new Date().toISOString()
@@ -220,7 +220,7 @@ export default defineEventHandler(async (event) => {
       await sendMail({ to: (body as { email: string }).email, subject, html }).catch(() => {})
     }
 
-    return { ok: true, sheet: sheetName, updates: resp.updates }
+    return { ok: true, sheet: sheetName, updates: (resp as { updates: unknown }).updates }
   } catch (err: any) {
     console.error('[community/register] Erro ao gravar na sheet:', err)
     throw createError({

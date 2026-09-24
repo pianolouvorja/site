@@ -78,44 +78,52 @@
     const file = input.files?.[0]
     if (!file) return
 
-    const form = forms[type.value]
+    const f = forms[type.value] as typeof forms.tester & {
+      attachment?: File | null
+      attachmentPreview?: string
+      avatar?: File | null
+      avatarPreview?: string
+    }
     if (field === 'avatar') {
-      form.avatar = file
-      form.avatarPreview = URL.createObjectURL(file)
+      f.avatar = file
+      f.avatarPreview = URL.createObjectURL(file)
     } else {
-      form.attachment = file
-      form.attachmentPreview = URL.createObjectURL(file)
+      f.attachment = file
+      f.attachmentPreview = URL.createObjectURL(file)
     }
   }
 
   function removeFile(field: 'avatar' | 'attachment'): void {
-    const form = forms[type.value]
+    const f = forms[type.value] as typeof forms.tester & {
+      attachment?: File | null
+      attachmentPreview?: string
+    }
     if (field === 'avatar') {
-      form.avatar = null
-      form.avatarPreview = ''
+      f.avatar = null
+      f.avatarPreview = ''
     } else {
-      form.attachment = null
-      form.attachmentPreview = ''
+      f.attachment = null
+      f.attachmentPreview = ''
     }
   }
 
   function resetCurrentForm(): void {
-    const keys = Object.keys(forms[type.value])
-    for (const key of keys) {
+    const form = forms[type.value] as Record<string, unknown>
+    for (const key of Object.keys(form)) {
       if (key.endsWith('Preview')) continue
-      const val = forms[type.value][key as keyof typeof forms.general]
+      const val = form[key]
       if (val instanceof File || (typeof val === 'string' && val.startsWith('blob:'))) continue
       if (Array.isArray(val)) {
-        ;(forms[type.value] as any)[key] = []
-      } else {
-        ;(forms[type.value] as any)[key] = ''
+        form[key] = []
+      } else if (typeof val === 'string') {
+        form[key] = ''
       }
     }
-    forms[type.value].avatar = null
-    forms[type.value].avatarPreview = ''
-    if ('attachment' in forms[type.value]) {
-      ;(forms[type.value] as any).attachment = null
-      ;(forms[type.value] as any).attachmentPreview = ''
+    form.avatar = null
+    form.avatarPreview = ''
+    if ('attachment' in form) {
+      form.attachment = null
+      form.attachmentPreview = ''
     }
   }
 
@@ -185,7 +193,7 @@
     status.value = 'sending'
 
     try {
-      const f = forms[type.value]
+      const f = forms[type.value] as Record<string, any> & typeof forms.general
 
       // Payload JSON — a rota /api/v1/community/register é JSON-only
       const payload: Record<string, unknown> = {
