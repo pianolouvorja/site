@@ -1,21 +1,27 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { ref, computed } from 'vue'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
 import { communityJoinUrl } from '~/data/community'
+const roster = vi.hoisted(() => ({
+  testers: [
+    { id: 'caique', name: 'Caique', links: [] as { url: string }[], avatar: '' },
+    {
+      id: 'ana',
+      name: 'Ana Teste',
+      links: [{ label: 'web', url: 'https://example.com/ana' }],
+      avatar: '',
+    },
+  ],
+  since: { caique: '2026-08', ana: '2026-01' } as Record<string, string>,
+}))
+
 vi.mock('~/composables/useTesters', () => ({
   useTestersRoster: () => ({
-    testers: ref([
-      { id: 'caique', name: 'Caique', links: [] },
-      {
-        id: 'ana',
-        name: 'Ana Teste',
-        links: [{ label: 'web', url: 'https://example.com/ana' }],
-      },
-    ]),
-    sinceById: ref({ caique: '2026-08', ana: '2026-01' }),
+    testers: ref(roster.testers),
+    sinceById: ref(roster.since),
     pending: ref(false),
   }),
   useTestersReports: () => ({
@@ -27,7 +33,23 @@ vi.mock('~/composables/useTesters', () => ({
   }),
 }))
 const stubs = { i: true }
+
+const baseTesters = [
+  { id: 'caique', name: 'Caique', links: [] as { url: string }[], avatar: '' },
+  {
+    id: 'ana',
+    name: 'Ana Teste',
+    links: [{ label: 'web', url: 'https://example.com/ana' }],
+    avatar: '',
+  },
+]
+
 describe('CommunitySection', () => {
+  beforeEach(() => {
+    roster.testers = baseTesters.map((t) => ({ ...t, links: [...t.links] }))
+    roster.since = { caique: '2026-08', ana: '2026-01' }
+  })
+
   it('renderiza a secao com id community', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     expect(wrapper.find('#community').exists()).toBe(true)
@@ -98,6 +120,30 @@ describe('CommunitySection', () => {
     expect(spot.attributes('target')).toBe('_blank')
     expect(spot.attributes('rel')).toBe('noopener noreferrer')
   })
+  it('usa avatar da sheet e omite desde quando nao ha data', () => {
+    roster.testers = [
+      {
+        id: 'foto',
+        name: 'Foto',
+        avatar: 'https://example.com/a.png',
+        links: [],
+      },
+    ]
+    roster.since = {}
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    const img = wrapper.find('img.community__avatar-img')
+    expect(img.exists()).toBe(true)
+    expect(img.attributes('src')).toBe('https://example.com/a.png')
+    expect(wrapper.find('.community__since').exists()).toBe(false)
+  })
+
+  it('nao renderiza grid quando o roster esta vazio', () => {
+    roster.testers = []
+    const wrapper = mount(CommunitySection, { global: { stubs } })
+    expect(wrapper.find('.community__grid').exists()).toBe(false)
+    expect(wrapper.find('a.community__spot').exists()).toBe(true)
+  })
+
   it('nao importa CSS global (apenas scoped)', () => {
     const src = readFileSync(resolve('app/components/CommunitySection.vue'), 'utf8')
     expect(src).toMatch(/<style\s+scoped/)

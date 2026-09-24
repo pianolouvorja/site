@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { parseGvizCsv, normalizeTesterRow } from '~/utils/testers-sheet'
+import {
+  parseGvizCsv,
+  normalizeTesterRow,
+  normalizeTesterProfileRow,
+  parseTesterProfiles,
+  parseTesterReports,
+} from '~/utils/testers-sheet'
 
 describe('parseGvizCsv', () => {
   it('parses a gviz csv with header and rows', () => {
@@ -37,6 +43,7 @@ describe('parseGvizCsv', () => {
 
   it('returns empty array for empty or header-only csv', () => {
     expect(parseGvizCsv('')).toEqual([])
+    expect(parseGvizCsv('""')).toEqual([])
     expect(parseGvizCsv('Timestamp,Nome\n')).toEqual([])
   })
 
@@ -90,6 +97,69 @@ describe('normalizeTesterRow', () => {
 
   it('produces empty tester when row has no name', () => {
     expect(normalizeTesterRow({ Timestamp: 't' }).tester).toBe('')
+  })
+
+  it('normaliza perfil da aba testadores', () => {
+    const profile = normalizeTesterProfileRow(
+      {
+        nome: 'Ána Silva',
+        bio: 'testa o app',
+        desde: '2026-08',
+        ativo: 'sim',
+        foco: 'Web; Electron; APK; Palco; desconhecido',
+        linkedin: 'linkedin.com/in/ana',
+        github: '',
+        instagram: 'https://instagram.com/ana',
+        outros: '  ',
+      },
+      0,
+    )
+    expect(profile.id).toBe('ana-silva')
+    expect(profile.avatar).toMatch(/^https:\/\/cdn\.jsdelivr\.net\//)
+    expect(profile.focus).toEqual(['web', 'desktop', 'mobile', 'tv'])
+    expect(profile.links).toEqual([
+      { label: 'LinkedIn', url: 'https://linkedin.com/in/ana' },
+      { label: 'Instagram', url: 'https://instagram.com/ana' },
+    ])
+    expect(profile.inactive).toBe(false)
+  })
+
+  it('marca inativo, usa avatar informado e slug fallback', () => {
+    const inactive = normalizeTesterProfileRow(
+      { nome: '***', ativo: 'inativo', avatar_url: 'https://img/a.png', foco: '' },
+      2,
+    )
+    expect(inactive.id).toBe('tester-3')
+    expect(inactive.inactive).toBe(true)
+    expect(inactive.avatar).toBe('https://img/a.png')
+    expect(inactive.focus).toEqual([])
+  })
+
+  it('parseTesterProfiles descarta nome curto e inativo', () => {
+    const csv = [
+      'nome,ativo,bio',
+      '"A","sim","x"',
+      '"Bruno","false","y"',
+      '"Carla","sim","z"',
+    ].join('\n')
+    const parsed = parseTesterProfiles(csv)
+    expect(parsed.map((t) => t.name)).toEqual(['Carla'])
+  })
+
+  it('parseTesterReports maps csv rows', () => {
+    expect(parseTesterReports('Nome,Relato\n"Ana","ok"')).toEqual([
+      { date: '', tester: 'Ana', version: '', module: '', status: 'other', report: 'ok' },
+    ])
+  })
+
+  it('fills missing cells and maps status aliases', () => {
+    const rows = parseGvizCsv(
+      'Nome,Status,Relato\n"Ana","funcionou"\n"Bob","erro","x"\n"Caio","sugestão","y"',
+    )
+    expect(rows[0].Relato).toBe('')
+    expect(normalizeTesterRow(rows[0]).status).toBe('ok')
+    expect(normalizeTesterRow(rows[1]).status).toBe('bug')
+    expect(normalizeTesterRow(rows[2]).status).toBe('feature')
   })
 
   it('parses timestamp to iso when valid', () => {

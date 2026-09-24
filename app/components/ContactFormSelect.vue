@@ -294,7 +294,7 @@
 
     <!-- Success state -->
     <div
-      v-if="status === 'success'"
+      v-show="status === 'success'"
       class="contact-form-select__alert contact-form-select__alert--success"
       role="status"
       aria-live="polite"
@@ -308,7 +308,7 @@
 
     <!-- Error state -->
     <div
-      v-else-if="status === 'error'"
+      v-show="status === 'error'"
       class="contact-form-select__alert contact-form-select__alert--error"
       role="alert"
       aria-live="assertive"
@@ -318,7 +318,12 @@
     </div>
 
     <!-- Forms dinâmicos -->
-    <form v-else class="contact-form-select__fields" novalidate @submit.prevent="submitForm">
+    <form
+      v-show="status === 'idle' || status === 'sending'"
+      class="contact-form-select__fields"
+      novalidate
+      @submit.prevent="submitForm"
+    >
       <!-- GERAL -->
       <fieldset
         v-if="type === 'general'"

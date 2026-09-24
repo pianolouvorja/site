@@ -20,7 +20,7 @@ type RawRow = Record<string, string>
  */
 export function parseGvizCsv(csv: string): RawRow[] {
   const text = csv.replace(/\r\n/g, '\n').replace(/\r/g, '\n')
-  if (!text.trim()) return []
+  if (!text) return []
 
   const rows: string[][] = []
   let field = ''
@@ -61,7 +61,7 @@ export function parseGvizCsv(csv: string): RawRow[] {
   }
 
   if (rows.length === 0) return []
-  const header = rows[0] ?? []
+  const header = rows[0]!
   return rows.slice(1).map((cells) => {
     const obj: RawRow = {}
     header.forEach((h, idx) => {
@@ -88,7 +88,7 @@ const STATUS_ALIASES: Record<TesterReport['status'], string[]> = {
 
 function pick(row: RawRow, aliases: string[]): string {
   for (const key of Object.keys(row)) {
-    if (aliases.includes(key.trim().toLowerCase())) return row[key] ?? ''
+    if (aliases.includes(key.trim().toLowerCase())) return row[key] || ''
   }
   return ''
 }
