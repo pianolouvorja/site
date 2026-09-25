@@ -95,7 +95,7 @@ describe('SSR rendering das páginas', async () => {
 
     it('renderiza o formulário com todos os campos', async () => {
       const html = await $fetch('/contact')
-      expect(html).toContain('data-testid="contact-name-input"')
+      expect(html).toContain('data-testid="contact-type-select"')
       expect(html).toContain('data-testid="contact-email-input"')
       expect(html).toContain('data-testid="contact-subject-input"')
       expect(html).toContain('data-testid="contact-message-input"')

@@ -50,16 +50,16 @@ describe('TheFooter', () => {
 
   it('tem link do GitHub do projeto', () => {
     const wrapper = createWrapper()
-    const github = wrapper.find('[aria-label="GitHub"]')
+    const github = wrapper.find('a[href="https://github.com/pianolouvorja"]')
     expect(github.exists()).toBe(true)
-    expect(github.attributes('href')).toBe('https://github.com/pianolouvorja')
+    expect(github.classes()).toContain('footer__social-link')
   })
 
   it('tem link do YouTube do projeto', () => {
     const wrapper = createWrapper()
-    const youtube = wrapper.find('[aria-label="YouTube"]')
+    const youtube = wrapper.find('a[href="https://www.youtube.com/@pianolouvorja"]')
     expect(youtube.exists()).toBe(true)
-    expect(youtube.attributes('href')).toBe('https://www.youtube.com/@pianolouvorja')
+    expect(youtube.classes()).toContain('footer__social-link')
   })
 
   it('tem link do grupo de suporte do WhatsApp', () => {

@@ -5,6 +5,7 @@ allowBuilds:
   # O chmod em scripts/postinstall-host.mjs restaura +x antes do build.
   esbuild: false
   protobufjs: true
+  re2: true
   ttf2woff2: false
 overrides:
   rollup: 4.62.4

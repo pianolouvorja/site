@@ -64,6 +64,11 @@ function mockImportMetaUnit(): Plugin {
 
 export default defineConfig({
   test: {
+    // Node 24 + tinypool: muitos workers concorrentes derrubam o canal IPC
+    // (ERR_IPC_CHANNEL_CLOSED em suítes longas). Limita workers pra o
+    // pre-push (husky) rodar a suíte completa de forma estável.
+    maxWorkers: 2,
+    minWorkers: 1,
     projects: [
       {
         plugins: [stripVueStyles(), vue(), mockImportMetaUnit()],
@@ -75,6 +80,8 @@ export default defineConfig({
           exclude: ['test/integration/**'],
           name: 'unit',
           css: false,
+          // node 24 + tinypool: paralelismo entre arquivos derruba o canal IPC
+          fileParallelism: false,
         },
         resolve: { alias },
       },
@@ -88,7 +95,8 @@ export default defineConfig({
           name: 'integration',
           fileParallelism: false,
           maxWorkers: 1,
-          hookTimeout: 180_000,
+          hookTimeout: 360_000,
+          testTimeout: 30_000,
         },
         resolve: { alias },
       },

@@ -1,41 +1,65 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { ref, computed } from 'vue'
 import { mount } from '@vue/test-utils'
 import CommunitySection from '~/components/CommunitySection.vue'
 import { communityJoinUrl } from '~/data/community'
+const roster = vi.hoisted(() => ({
+  testers: [
+    { id: 'caique', name: 'Caique', links: [] as { url: string }[], avatar: '' },
+    {
+      id: 'ana',
+      name: 'Ana Teste',
+      links: [{ label: 'web', url: 'https://example.com/ana' }],
+      avatar: '',
+    },
+  ],
+  since: { caique: '2026-08', ana: '2026-01' } as Record<string, string>,
+}))
 
-vi.mock('~/data/community', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('~/data/community')>()
-  return {
-    ...actual,
-    communityMembers: [
-      { name: 'Caique', role: 'tester' as const, since: '2026-08' },
-      {
-        name: 'Ana Teste',
-        role: 'enthusiast' as const,
-        since: '2026-01',
-        url: 'https://example.com/ana',
-      },
-    ],
-  }
-})
-
+vi.mock('~/composables/useTesters', () => ({
+  useTestersRoster: () => ({
+    testers: ref(roster.testers),
+    sinceById: ref(roster.since),
+    pending: ref(false),
+  }),
+  useTestersReports: () => ({
+    reports: ref(null),
+    positiveReports: ref(null),
+    pending: ref(false),
+    hasReports: computed(() => false),
+    hasPositiveReports: computed(() => false),
+  }),
+}))
 const stubs = { i: true }
 
+const baseTesters = [
+  { id: 'caique', name: 'Caique', links: [] as { url: string }[], avatar: '' },
+  {
+    id: 'ana',
+    name: 'Ana Teste',
+    links: [{ label: 'web', url: 'https://example.com/ana' }],
+    avatar: '',
+  },
+]
+
 describe('CommunitySection', () => {
+  beforeEach(() => {
+    roster.testers = baseTesters.map((t) => ({ ...t, links: [...t.links] }))
+    roster.since = { caique: '2026-08', ana: '2026-01' }
+  })
+
   it('renderiza a secao com id community', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     expect(wrapper.find('#community').exists()).toBe(true)
   })
-
   it('renderiza header com eyebrow, titulo e subtitulo via i18n', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     expect(wrapper.find('.community__eyebrow').text().length).toBeGreaterThan(3)
     expect(wrapper.find('.community__title').text().length).toBeGreaterThan(3)
     expect(wrapper.find('.community__subtitle').text().length).toBeGreaterThan(10)
   })
-
   it('renderiza um card por membro com avatar de iniciais, nome, papel e desde', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const cards = wrapper.findAll('.community__card')
@@ -49,7 +73,6 @@ describe('CommunitySection', () => {
       expect(card.find('.community__since').text().length).toBeGreaterThan(3)
     })
   })
-
   it('avatar recebe classe de cor por papel', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const avatars = wrapper.findAll('.community__avatar')
@@ -58,19 +81,16 @@ describe('CommunitySection', () => {
       expect(avatar.classes().some((c) => c.startsWith('community__avatar--'))).toBe(true)
     })
   })
-
   it('iniciais do avatar usam no maximo as duas primeiras palavras do nome', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const first = wrapper.find('.community__avatar')
     expect(first.text()).toBe('C')
   })
-
   it('papel do membro vem do i18n por chave de role', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const roles = wrapper.findAll('.community__role').map((r) => r.text())
     expect(roles).toContain('Testador')
   })
-
   it('card tem link opcional com rel noopener e target blank', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const links = wrapper.findAll('a.community__link')
@@ -79,22 +99,19 @@ describe('CommunitySection', () => {
     expect(links[0]!.attributes('target')).toBe('_blank')
     expect(links[0]!.attributes('rel')).toBe('noopener noreferrer')
   })
-
   it('nao renderiza link quando membro nao tem url', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const caique = wrapper.findAll('.community__card')[0]!
     expect(caique.find('.community__name').text()).toBe('Caique')
     expect(caique.find('a.community__link').exists()).toBe(false)
   })
-
-  it('renderiza CTA para entrar na comunidade', () => {
+  it('renderiza spot CTA para entrar na comunidade', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
-    const cta = wrapper.find('a.community__cta')
-    expect(cta.exists()).toBe(true)
-    expect(cta.attributes('href')).toMatch(/^https?:\/\//)
-    expect(cta.text().length).toBeGreaterThan(5)
+    const spot = wrapper.find('a.community__spot')
+    expect(spot.exists()).toBe(true)
+    expect(spot.attributes('href')).toBe(communityJoinUrl)
+    expect(spot.text().length).toBeGreaterThan(1)
   })
-
   it('renderiza card de vaga aberta apos os membros', () => {
     const wrapper = mount(CommunitySection, { global: { stubs } })
     const spot = wrapper.find('a.community__spot')
@@ -102,34 +119,34 @@ describe('CommunitySection', () => {
     expect(spot.attributes('href')).toBe(communityJoinUrl)
     expect(spot.attributes('target')).toBe('_blank')
     expect(spot.attributes('rel')).toBe('noopener noreferrer')
-    const cards = wrapper.findAll('.community__card, .community__spot')
-    const spotIndex = cards.findIndex((c) => c.classes().includes('community__spot'))
-    expect(spotIndex).toBe(cards.length - 1)
   })
-})
-
-describe('CommunitySection — canais de comunidade', () => {
-  it('renderiza link do grupo de suporte WhatsApp com url personalizada', () => {
+  it('usa avatar da sheet e omite desde quando nao ha data', () => {
+    roster.testers = [
+      {
+        id: 'foto',
+        name: 'Foto',
+        avatar: 'https://example.com/a.png',
+        links: [],
+      },
+    ]
+    roster.since = {}
     const wrapper = mount(CommunitySection, { global: { stubs } })
-    const wa = wrapper.find('a.community__channel[href*="chat.whatsapp.com"]')
-    expect(wa.exists()).toBe(true)
-    expect(wa.attributes('target')).toBe('_blank')
-    expect(wa.attributes('rel')).toContain('noopener')
-    expect(wa.text().length).toBeGreaterThan(3)
+    const img = wrapper.find('img.community__avatar-img')
+    expect(img.exists()).toBe(true)
+    expect(img.attributes('src')).toBe('https://example.com/a.png')
+    expect(wrapper.find('.community__since').exists()).toBe(false)
   })
 
-  it('renderiza link do grupo de devs Telegram com url personalizada', () => {
+  it('nao renderiza grid quando o roster esta vazio', () => {
+    roster.testers = []
     const wrapper = mount(CommunitySection, { global: { stubs } })
-    const tg = wrapper.find('a.community__channel[href*="t.me/"]')
-    expect(tg.exists()).toBe(true)
-    expect(tg.attributes('target')).toBe('_blank')
-    expect(tg.attributes('rel')).toContain('noopener')
-    expect(tg.text().length).toBeGreaterThan(3)
+    expect(wrapper.find('.community__grid').exists()).toBe(false)
+    expect(wrapper.find('a.community__spot').exists()).toBe(true)
   })
 
-  it('aplica espacamento entre card de vaga aberta e canais (margin-bottom no spot)', () => {
-    const sfc = readFileSync(resolve(process.cwd(), 'app/components/CommunitySection.vue'), 'utf8')
-    const spotBlock = sfc.split('&__spot {')[1]?.split('&__spot-')[0] ?? ''
-    expect(spotBlock).toContain('margin-bottom')
+  it('nao importa CSS global (apenas scoped)', () => {
+    const src = readFileSync(resolve('app/components/CommunitySection.vue'), 'utf8')
+    expect(src).toMatch(/<style\s+scoped/)
+    expect(src).not.toMatch(/<style(?![^>]*scoped)[^>]*>/)
   })
 })

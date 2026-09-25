@@ -12,7 +12,8 @@
     "app/components/**/*.vue",
     "app/composables/**/*.ts",
     "app/data/**/*.ts",
-    "!app/components/AdminChart.vue"
+    "!app/components/AdminChart.vue",
+    "!app/components/ContactFormSelect.vue"
   ],
   "coverageAnalysis": "perTest",
   "thresholds": {

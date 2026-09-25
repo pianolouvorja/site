@@ -45,20 +45,35 @@ export function useAppHead(options: AppHeadOptions = {}) {
   // Canonical URL é a URL do locale atual
   const canonicalUrl = computed(() => getUrlForLocale(locale.value))
 
-  // JSON-LD structured data for a WebApplication
-  const jsonLd = computed(() => ({
+  // JSON-LD structured data for Organization
+  const jsonLdOrganization = computed(() => ({
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
+    '@type': 'Organization',
     name: SITE_NAME,
-    description: pageDescription.value,
     url: SITE_URL,
+    logo: `${SITE_URL}/brand/logo-louvor-ja.svg`,
+    sameAs: [
+      'https://github.com/pianolouvorja',
+      'https://www.youtube.com/@pianolouvorja',
+      'https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc',
+    ],
+  }))
+
+  // JSON-LD structured data for a WebApplication
+  const jsonLdWebApplication = computed(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: SITE_NAME,
     applicationCategory: 'UtilitiesApplication',
-    operatingSystem: 'Web, Linux, macOS, Windows',
+    operatingSystem: ['Windows', 'macOS', 'Linux', 'Android', 'iOS'],
     offers: {
       '@type': 'Offer',
       price: '0',
-      priceCurrency: 'USD',
+      priceCurrency: 'BRL',
+      availability: 'https://schema.org/InStock',
     },
+    description: pageDescription.value,
+    url: SITE_URL,
     inLanguage: locale.value,
     isAccessibleForFree: true,
     // Entity linking: conecta a entidade aos perfis oficiais (melhora rankeamento)
@@ -79,6 +94,16 @@ export function useAppHead(options: AppHeadOptions = {}) {
     })),
   )
 
+  // og:locale:alternate for each non-default locale
+  const ogLocaleAlternates = computed(() =>
+    (locales.value as Array<{ code: string }>)
+      .filter((l) => l.code !== defaultLocale)
+      .map((l) => ({
+        property: 'og:locale:alternate' as const,
+        content: l.code.replace('-', '_'),
+      })),
+  )
+
   useHead({
     htmlAttrs: {
       lang: locale,
@@ -94,11 +119,14 @@ export function useAppHead(options: AppHeadOptions = {}) {
       { property: 'og:url', content: canonicalUrl },
       { property: 'og:locale', content: ogLocale },
       { property: 'og:image', content: `${SITE_URL}/og-image.png` },
+      // og:locale:alternate for each non-default locale
+      ...ogLocaleAlternates.value,
       // Twitter Card
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: pageTitle },
       { name: 'twitter:description', content: pageDescription },
       { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
+      { name: 'twitter:site', content: '@pianolouvorja' },
       // Theme color for browser chrome
       { name: 'theme-color', content: '#0d1b2a' },
       // Google Search Console verification (valor default; sobrescrever via NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION)
@@ -112,12 +140,17 @@ export function useAppHead(options: AppHeadOptions = {}) {
         title: 'PIANO LouvorJA — Releases',
         href: `${SITE_URL}/rss.xml`,
       },
+      { rel: 'manifest', href: '/manifest.json' },
       ...alternateLinks.value,
     ],
     script: [
       {
         type: 'application/ld+json',
-        innerHTML: JSON.stringify(jsonLd.value),
+        innerHTML: JSON.stringify(jsonLdOrganization.value),
+      },
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify(jsonLdWebApplication.value),
       },
     ],
   })

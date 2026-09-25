@@ -384,7 +384,13 @@
     "legalNavLabel": "Legal links",
     "legalNavTitle": "Legal",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Use"
+    "terms": "Terms of Use",
+    "social": {
+      "github": "GitHub",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram"
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -717,5 +723,21 @@
       "desktop": "Desktop",
       "mobile": "Mobile"
     }
+  },
+  "community": {
+    "eyebrow": "Community",
+    "title": "Join our community",
+    "subtitle": "Developers, testers, and enthusiasts collaborating to improve PIANO LouvorJA every day.",
+    "roles": {
+      "tester": "Tester",
+      "enthusiast": "Enthusiast",
+      "suggester": "Suggester"
+    },
+    "since": "Since {since}",
+    "link": "View profile",
+    "spot": "Want to join?",
+    "cta": "Join group",
+    "whatsapp": "WhatsApp Support",
+    "telegram": "Devs on Telegram"
   }
 }
