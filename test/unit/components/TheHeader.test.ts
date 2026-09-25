@@ -14,6 +14,9 @@ const mockLocales = ref([
 beforeEach(() => {
   mockSetLocale.mockClear()
   mockLocale.value = 'pt-BR'
+  vi.stubGlobal('useRuntimeConfig', () => ({
+    public: { asaasDonateUrl: '' },
+  }))
   vi.stubGlobal('useI18n', () => ({
     locale: mockLocale,
     locales: mockLocales,
@@ -57,6 +60,21 @@ const createWrapper = () => {
 }
 
 describe('TheHeader', () => {
+  it('mostra o link de doacao no desktop e no menu mobile', async () => {
+    vi.stubGlobal('useRuntimeConfig', () => ({
+      public: { asaasDonateUrl: 'https://asaas.example/pay' },
+    }))
+    const wrapper = createWrapper()
+    const donate = wrapper.find('[data-testid="header-donate"]')
+    expect(donate.exists()).toBe(true)
+    expect(donate.attributes('href')).toBe('https://asaas.example/pay')
+    await wrapper.find('[data-testid="header-menu-toggle"]').trigger('click')
+    const mobile = wrapper.find('.header__nav-mobile-cta--donate')
+    expect(mobile.exists()).toBe(true)
+    await mobile.trigger('click')
+    expect(wrapper.find('[data-testid="header-nav-mobile"]').exists()).toBe(false)
+  })
+
   it('renderiza o logo/nome do site', () => {
     const wrapper = createWrapper()
     expect(wrapper.text()).toContain('Louvor')

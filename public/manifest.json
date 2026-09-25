@@ -1,0 +1,23 @@
+{
+  "name": "PIANO LouvorJA",
+  "short_name": "PIANO",
+  "description": "Gerenciador de culto web gratuito e open-source",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1733",
+  "theme_color": "#10438c",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

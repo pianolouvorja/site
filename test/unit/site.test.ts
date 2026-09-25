@@ -74,8 +74,8 @@ describe('navLinks', () => {
 })
 
 describe('secondaryNavLinks', () => {
-  it('has exactly 4 links', () => {
-    expect(secondaryNavLinks.length).toBe(4)
+  it('has exactly 5 links', () => {
+    expect(secondaryNavLinks.length).toBe(5)
   })
 
   it('every link has i18nKey starting with nav.', () => {
@@ -96,7 +96,13 @@ describe('secondaryNavLinks', () => {
   })
 
   it('last link points to /contact', () => {
-    expect(secondaryNavLinks[3].href).toBe('/contact')
+    expect(secondaryNavLinks[secondaryNavLinks.length - 1].href).toBe('/contact')
+  })
+
+  it('has /testers before /contact', () => {
+    const hrefs = secondaryNavLinks.map((l) => l.href)
+    expect(hrefs).toContain('/testers')
+    expect(hrefs.indexOf('/testers')).toBeLessThan(hrefs.indexOf('/contact'))
   })
 })
 
