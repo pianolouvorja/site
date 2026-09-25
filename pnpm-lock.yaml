@@ -21,8 +21,8 @@ importers:
         specifier: ^22.0.1
         version: 22.0.1
       '@tabler/icons-webfont':
-        specifier: ^3.46.0
-        version: 3.46.0(supports-color@10.2.2)
+        specifier: ^3.48.0
+        version: 3.48.0(supports-color@10.2.2)
       apexcharts:
         specifier: ^3.54.1
         version: 3.54.1
@@ -2732,11 +2732,11 @@ packages:
       '@stryker-mutator/core': 9.6.1
       vitest: '>=2.0.0'
 
-  '@tabler/icons-webfont@3.46.0':
-    resolution: {integrity: sha512-aQouIxJQb+F5cRsHo/FW5qSILDuU7pd7d86JjmSUCMgpJhBeRuyovnfJlQeyuug2gHz0jFaosl4GNYo3SLnjrQ==}
+  '@tabler/icons-webfont@3.48.0':
+    resolution: {integrity: sha512-Cwqm0qkn6qqBeoBwDt9nFeMSFnRbwoC3e6y4u+weSroj4lecaFhTUfe2T24/ByQA6Rjn9tq76VhT5PL+5czhAw==}
 
-  '@tabler/icons@3.46.0':
-    resolution: {integrity: sha512-f2RYFl3fzPwj5WO82x6en0dmkjefxEfOm16D1ByM6cj/McNiwOkL4VaPUoP9VVIrXAD9WnTSVFr70px703b//A==}
+  '@tabler/icons@3.48.0':
+    resolution: {integrity: sha512-lQk06gVHNVBnJp0UOgtth54mcZBJM7rdYKsAxKOProj1bbSAx+/xiuOWfHlyvgdL3M+Y+I0HINrjHa3ygp8eXQ==}
 
   '@testing-library/dom@10.4.0':
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
@@ -2772,10 +2772,6 @@ packages:
     peerDependenciesMeta:
       '@vue/compiler-sfc':
         optional: true
-
-  '@thednp/dommatrix@3.0.4':
-    resolution: {integrity: sha512-xpKtQZqFOuAPfQDbePIh9f48YKfmULV7z9C+anPBSHiOG4P+T3ct7Cx2AZOoUeXbxiDkz7SONANy1bB7p2uysg==}
-    engines: {node: '>=20', pnpm: '>=8.6.0'}
 
   '@tootallnate/once@2.0.1':
     resolution: {integrity: sha512-HqmEUIGRJ5fSXchkVgR5F7qn48bDBzv0kWj/Kfu5e6uci4UlEeng4331LnBkWffb++Ei3FOVLxo8JJWMFBDMeQ==}
@@ -4416,6 +4412,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -7646,10 +7643,6 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svg-path-commander@2.2.1:
-    resolution: {integrity: sha512-hZ9GOFBT/J31fTu3UCj+dZs1w4ZqiGCG/nQpFm1CEQ/EPFj9x3pHXPi6EjYuZmPlua7K8CdFc2+HxndiZ/Q3+g==}
-    engines: {node: '>=16', pnpm: '>=8.6.0'}
-
   svg-pathdata@7.2.0:
     resolution: {integrity: sha512-qd+AxqMpfRrRQaWb2SrNFvn69cvl6piqY8TxhYl2Li1g4/LO5F9NJb5wI4vNwRryqgSgD43gYKLm/w3ag1bKvQ==}
     engines: {node: '>=20.11.1'}
@@ -7780,8 +7773,8 @@ packages:
   third-party-web@0.26.7:
     resolution: {integrity: sha512-buUzX4sXC4efFX6xg2bw6/eZsCUh8qQwSavC4D9HpONMFlRbcHhD8Je5qwYdCpViR6q0qla2wPP+t91a2vgolg==}
 
-  third-party-web@0.29.2:
-    resolution: {integrity: sha512-fegtha91tq2DHphyoiBXVHjVi2YG9zFaRnboT9C28tO1en9Y3wJsfspuy40F+u5wl3hHVbw7cnd1b67kEGHb8g==}
+  third-party-web@0.30.0:
+    resolution: {integrity: sha512-p+PfyL5U0ediGzvwPzMSdD9MnC8rHW6nWJJVLIQvqN7RsSqfaZ+7n4c9GILqH36EYR0eXB9CzAeCRnKFr/9uJg==}
 
   through2@2.0.5:
     resolution: {integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==}
@@ -8479,8 +8472,8 @@ packages:
   vue-component-type-helpers@2.2.12:
     resolution: {integrity: sha512-YbGqHZ5/eW4SnkPNR44mKVc6ZKQoRs/Rux1sxC6rdwXb4qpbOSYfDr9DsTHolOTGmIKgM9j141mZbBeg05R1pw==}
 
-  vue-component-type-helpers@3.3.10:
-    resolution: {integrity: sha512-t7IQivQ3oD4D01b7s7a9AWzHAcr3DGBIa/1jZREsFQJcFgSL92gqUkqNiHTYgzTt7QDuJa0I9wCeDwEtZICoBQ==}
+  vue-component-type-helpers@3.3.11:
+    resolution: {integrity: sha512-LwcxzeliO9fkQcpJG0PoX8X5kmAhKmH9wkpDLxNabwzkQ9Zeib2YVHwFV4pcWmMLfXVfjr/dSV+DaJ3cIPgSNA==}
 
   vue-component-type-helpers@3.3.8:
     resolution: {integrity: sha512-troqCMmQodQDqUqn63NQaFi+CDSclSe7sc8VEBFqf5GFLqmGR2Ph3P2WEC7qwpRVyEWsTi/aAr4vyOe/B1hU3g==}
@@ -11091,7 +11084,7 @@ snapshots:
   '@paulirish/trace_engine@0.0.53':
     dependencies:
       legacy-javascript: 0.0.1
-      third-party-web: 0.29.2
+      third-party-web: 0.30.0
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -11721,7 +11714,7 @@ snapshots:
       ts-dedent: 2.3.0
       type-fest: 2.19.0
       vue: 3.5.40(typescript@5.9.3)
-      vue-component-type-helpers: 3.3.10
+      vue-component-type-helpers: 3.3.11
 
   '@stryker-mutator/api@9.6.1':
     dependencies:
@@ -11790,17 +11783,16 @@ snapshots:
       tslib: 2.8.1
       vitest: 3.2.7(@types/node@20.19.43)(happy-dom@18.0.1)(jiti@2.7.0)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(supports-color@10.2.2)(terser@5.49.0)(yaml@2.9.0)
 
-  '@tabler/icons-webfont@3.46.0(supports-color@10.2.2)':
+  '@tabler/icons-webfont@3.48.0(supports-color@10.2.2)':
     dependencies:
-      '@tabler/icons': 3.46.0
-      svg-path-commander: 2.2.1
+      '@tabler/icons': 3.48.0
       svgtofont: 6.5.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - '@types/svg2ttf'
       - chokidar
       - supports-color
 
-  '@tabler/icons@3.46.0': {}
+  '@tabler/icons@3.48.0': {}
 
   '@testing-library/dom@10.4.0':
     dependencies:
@@ -11859,8 +11851,6 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/compiler-dom'
       - '@vue/server-renderer'
-
-  '@thednp/dommatrix@3.0.4': {}
 
   '@tootallnate/once@2.0.1':
     optional: true
@@ -17564,10 +17554,6 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svg-path-commander@2.2.1:
-    dependencies:
-      '@thednp/dommatrix': 3.0.4
-
   svg-pathdata@7.2.0: {}
 
   svg.draggable.js@2.2.2:
@@ -17772,7 +17758,7 @@ snapshots:
 
   third-party-web@0.26.7: {}
 
-  third-party-web@0.29.2: {}
+  third-party-web@0.30.0: {}
 
   through2@2.0.5:
     dependencies:
@@ -18418,7 +18404,7 @@ snapshots:
 
   vue-component-type-helpers@2.2.12: {}
 
-  vue-component-type-helpers@3.3.10: {}
+  vue-component-type-helpers@3.3.11: {}
 
   vue-component-type-helpers@3.3.8: {}
 

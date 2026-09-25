@@ -90,17 +90,26 @@ describe('useAppHead', () => {
     expect(hreflangs).toContain('es')
   })
 
-  it('inclui JSON-LD structured data do tipo WebApplication', () => {
+  const getJsonLds = (): any[] => {
     useHeadMock.mockClear()
     useAppHead()
     const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    expect(script).toBeDefined()
-    const jsonLd = script.innerHTML
-    const parsed = JSON.parse(jsonLd)
-    expect(parsed['@type']).toBe('WebApplication')
-    expect(parsed.name).toBe('PIANO LouvorJA')
-    expect(parsed.applicationCategory).toBe('UtilitiesApplication')
+    return arg.script
+      .filter((s: any) => s.type === 'application/ld+json')
+      .map((s: any) => JSON.parse(s.innerHTML))
+  }
+  const getWebApp = () => getJsonLds().find((j) => j['@type'] === 'SoftwareApplication')
+  const getOrg = () => getJsonLds().find((j) => j['@type'] === 'Organization')
+
+  it('inclui JSON-LD structured data Organization e SoftwareApplication', () => {
+    const webapp = getWebApp()
+    expect(webapp).toBeDefined()
+    expect(webapp.name).toBe('PIANO LouvorJA')
+    expect(webapp.applicationCategory).toBe('UtilitiesApplication')
+    const org = getOrg()
+    expect(org).toBeDefined()
+    expect(org.url).toBe('https://pianolouvorja.com.br')
+    expect(org.sameAs).toContain('https://github.com/pianolouvorja')
   })
 
   it('define htmlAttrs.lang com o locale atual', () => {
@@ -200,59 +209,33 @@ describe('useAppHead', () => {
   })
 
   it('JSON-LD contem @context schema.org', () => {
-    useHeadMock.mockClear()
-    useAppHead()
-    const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(script.innerHTML)
-    expect(parsed['@context']).toBe('https://schema.org')
+    for (const j of getJsonLds()) {
+      expect(j['@context']).toBe('https://schema.org')
+    }
   })
 
   it('JSON-LD contem operatingSystem completo', () => {
-    useHeadMock.mockClear()
-    useAppHead()
-    const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(script.innerHTML)
-    expect(parsed.operatingSystem).toBe('Web, Linux, macOS, Windows')
+    expect(getWebApp().operatingSystem).toEqual(['Windows', 'macOS', 'Linux', 'Android', 'iOS'])
   })
 
-  it('JSON-LD contem offer com price 0 e currency USD', () => {
-    useHeadMock.mockClear()
-    useAppHead()
-    const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(script.innerHTML)
-    expect(parsed.offers['@type']).toBe('Offer')
-    expect(parsed.offers.price).toBe('0')
-    expect(parsed.offers.priceCurrency).toBe('USD')
+  it('JSON-LD contem offer com price 0 e currency BRL', () => {
+    const offers = getWebApp().offers
+    expect(offers['@type']).toBe('Offer')
+    expect(offers.price).toBe('0')
+    expect(offers.priceCurrency).toBe('BRL')
+    expect(offers.availability).toBe('https://schema.org/InStock')
   })
 
   it('JSON-LD contem isAccessibleForFree true', () => {
-    useHeadMock.mockClear()
-    useAppHead()
-    const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(script.innerHTML)
-    expect(parsed.isAccessibleForFree).toBe(true)
+    expect(getWebApp().isAccessibleForFree).toBe(true)
   })
 
   it('JSON-LD contem url do site', () => {
-    useHeadMock.mockClear()
-    useAppHead()
-    const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(script.innerHTML)
-    expect(parsed.url).toBe('https://pianolouvorja.com.br')
+    expect(getWebApp().url).toBe('https://pianolouvorja.com.br')
   })
 
   it('JSON-LD contem inLanguage com locale atual', () => {
-    useHeadMock.mockClear()
-    useAppHead()
-    const arg = useHeadMock.mock.calls[0][0]
-    const script = arg.script.find((s: any) => s.type === 'application/ld+json')
-    const parsed = JSON.parse(script.innerHTML)
-    expect(parsed.inLanguage).toBe('pt-BR')
+    expect(getWebApp().inLanguage).toBe('pt-BR')
   })
 
   it('nao inclui prefixo de locale na URL quando defaultLocale', () => {
