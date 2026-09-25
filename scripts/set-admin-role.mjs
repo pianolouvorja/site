@@ -29,9 +29,12 @@ try {
   await auth.setCustomUserClaims(user.uid, { role })
   console.log(`✓ ${email} (uid: ${user.uid}) → role: ${role}`)
 } catch (e) {
-  console.error('Erro:', e.code === 'auth/user-not-found'
-    ? `Usuário ${email} não existe no Firebase Auth (precisa criar primeiro: scripts/create-admin-user.mjs)`
-    : e.message)
+  console.error(
+    'Erro:',
+    e.code === 'auth/user-not-found'
+      ? `Usuário ${email} não existe no Firebase Auth (precisa criar primeiro: scripts/create-admin-user.mjs)`
+      : e.message,
+  )
   process.exit(1)
 }
 process.exit(0)
