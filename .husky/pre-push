@@ -1,1 +1,1 @@
-pnpm lint && pnpm format:check && pnpm typecheck && pnpm test
+pnpm lint && pnpm format:check && pnpm typecheck && pnpm exec vitest run test/unit && for f in test/integration/*.spec.ts; do pnpm exec vitest run "$f" || exit 1; done
