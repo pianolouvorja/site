@@ -50,16 +50,28 @@ describe('TheFooter', () => {
 
   it('tem link do GitHub do projeto', () => {
     const wrapper = createWrapper()
-    const github = wrapper.find('[aria-label="GitHub"]')
+    const github = wrapper.find('a[href="https://github.com/pianolouvorja"]')
     expect(github.exists()).toBe(true)
-    expect(github.attributes('href')).toBe('https://github.com/pianolouvorja')
+    expect(github.classes()).toContain('footer__social-link')
   })
 
   it('tem link do YouTube do projeto', () => {
     const wrapper = createWrapper()
-    const youtube = wrapper.find('[aria-label="YouTube"]')
+    const youtube = wrapper.find('a[href="https://www.youtube.com/@pianolouvorja"]')
     expect(youtube.exists()).toBe(true)
-    expect(youtube.attributes('href')).toBe('https://www.youtube.com/@pianolouvorja')
+    expect(youtube.classes()).toContain('footer__social-link')
+  })
+
+  it('tem links de WhatsApp e Telegram com i18n no aria-label', () => {
+    const wrapper = createWrapper()
+    const whatsapp = wrapper.find('a[href="https://chat.whatsapp.com/LBcTv5rQDZw3OU56QmUahc"]')
+    const telegram = wrapper.find('a[href="https://t.me/pianolouvorja_devs"]')
+    expect(whatsapp.exists()).toBe(true)
+    expect(whatsapp.attributes('aria-label')).toBe('footer.social.whatsapp')
+    expect(whatsapp.find('i.ti-brand-whatsapp').exists()).toBe(true)
+    expect(telegram.exists()).toBe(true)
+    expect(telegram.attributes('aria-label')).toBe('footer.social.telegram')
+    expect(telegram.attributes('target')).toBe('_blank')
   })
 
   it('tem link do grupo de suporte do WhatsApp', () => {
