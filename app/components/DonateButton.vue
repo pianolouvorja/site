@@ -10,7 +10,7 @@
   const donateUrl = config.public.asaasDonateUrl as string
 
   const paymentMethods = [
-    { id: 'pix', icon: 'ti-brand-pix', label: computed(() => t('donate.pix')) },
+    { id: 'pix', icon: 'pix', label: computed(() => t('donate.pix')) },
     { id: 'boleto', icon: 'ti-barcode', label: computed(() => t('donate.boleto')) },
     { id: 'card', icon: 'ti-credit-card', label: computed(() => t('donate.card')) },
   ]
@@ -46,7 +46,8 @@
           :data-testid="`donate-method-${method.id}`"
           class="donate__method"
         >
-          <i :class="`ti ${method.icon}`" />
+          <IconPix v-if="method.icon === 'pix'" />
+          <i v-else :class="`ti ${method.icon}`" />
           {{ method.label }}
         </span>
       </div>
@@ -127,8 +128,11 @@
       font-size: 0.85rem;
       color: var(--piano-text-on-dark-muted);
 
-      i {
+      i,
+      svg.icon-pix {
         font-size: 1rem;
+        width: 1em;
+        height: 1em;
         color: var(--piano-cyan);
       }
     }

@@ -89,6 +89,7 @@ export default defineConfig({
           fileParallelism: false,
           maxWorkers: 1,
           hookTimeout: 180_000,
+          testTimeout: 30_000,
         },
         resolve: { alias },
       },

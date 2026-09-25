@@ -13,7 +13,8 @@
     "openApp": "Abrir App",
     "language": "Idioma",
     "download": "Descargar",
-    "releases": "Versiones"
+    "releases": "Versiones",
+    "testers": "Probadores"
   },
   "hero": {
     "badge": "Nuevo: Versión Web Disponible",
@@ -194,7 +195,63 @@
       "submit": "Enviar Mensaje",
       "sending": "Enviando...",
       "success": "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
-      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com.br."
+      "error": "Error al enviar. Intente nuevamente o escriba directamente a app{'@'}pianolouvorja.com.br.",
+      "typeLabel": "Asunto",
+      "type": {
+        "general": "Duda / Contacto general",
+        "tester": "Quiero ser probador",
+        "developer": "Quiero ser desarrollador",
+        "bug": "Reportar un error o sugerir una mejora"
+      },
+      "focusLabel": "¿Dónde usas PIANO?",
+      "focus": {
+        "app-desktop": "App de escritorio (Electron)",
+        "web-pwa": "Web / PWA",
+        "api": "API",
+        "mobile-flutter": "Móvil (Flutter)",
+        "tv-receiver": "TVs / Receiver",
+        "docs": "Documentación",
+        "qa": "Pruebas / QA",
+        "design": "Diseño / UI-UX"
+      },
+      "bio": "Bio corta",
+      "bioPlaceholder": "1-2 frases sobre ti...",
+      "links": "Enlaces (perfil, redes sociales)",
+      "linksPlaceholder": "Un enlace por línea (opcional)",
+      "avatar": "Avatar (opcional)",
+      "avatarPlaceholder": "Subir imagen (JPG/PNG)",
+      "avatarPreview": "Vista previa del avatar",
+      "removeAvatar": "Quitar avatar",
+      "github": "GitHub",
+      "githubPlaceholder": "usuario o URL de GitHub",
+      "portfolio": "LinkedIn o portafolio",
+      "portfolioPlaceholder": "URL (opcional)",
+      "areas": "Áreas de interés",
+      "availability": "Disponibilidad",
+      "availabilityPlaceholder": "Ej: noches y fines de semana, ~5h/semana...",
+      "stack": "Stack y experiencia",
+      "stackPlaceholder": "Tecnologías que dominas, experiencia previa...",
+      "motivation": "¿Por qué quieres contribuir?",
+      "motivationPlaceholder": "Cuéntanos un poco sobre tu motivación (mín. 20 caracteres)...",
+      "testerEmail": "Correo de probador (si ya estás registrado)",
+      "testerEmailPlaceholder": "Opcional — vincula el reporte a tu registro",
+      "reportTypeLabel": "Tipo de reporte",
+      "reportType": {
+        "bug": "Error (algo no funciona)",
+        "feature": "Sugerencia de mejora",
+        "other": "Otro"
+      },
+      "version": "Versión de la app",
+      "versionPlaceholder": "Ej: 1.4.2 (web/escritorio/móvil)",
+      "module": "Módulo afectado",
+      "modulePlaceholder": "Ej: Himnario, Liturgia, Proyección...",
+      "description": "Descripción",
+      "descriptionPlaceholder": "¿Qué pasó? ¿Qué esperabas? (mín. 20 caracteres)",
+      "steps": "Pasos para reproducir",
+      "stepsPlaceholder": "1. Abre... 2. Haz clic en... (opcional)",
+      "attachment": "Adjunto (captura/log)",
+      "attachmentPlaceholder": "Imagen, PDF, TXT o JSON",
+      "removeAttachment": "Quitar adjunto"
     },
     "direct": "O envíe un correo directamente a",
     "responseTime": "Tiempo medio de respuesta: 24-48h"
@@ -1047,7 +1104,46 @@
     "cta": "Únete a la comunidad",
     "channels": {
       "whatsapp-support": "Grupo de soporte (WhatsApp)",
-      "telegram-devs": "Grupo de devs (Telegram)"
+      "telegram-devs": "Grupo de devs (Telegram)",
+      "dev-form": "Quiero ser desarrollador"
+    }
+  },
+  "testers": {
+    "eyebrow": "Comunidad de pruebas",
+    "title": "Probadores",
+    "subtitle": "Personas que prueban PIANO LouvorJA en condiciones reales de culto y reportan todo lo que encuentran — así la app se mantiene estable para tu iglesia.",
+    "gallery": {
+      "avatarAlt": "Avatar de {name}",
+      "more": "Saber más"
+    },
+    "modal": {
+      "close": "Cerrar"
+    },
+    "focus": {
+      "vm": "Máquina virtual",
+      "install": "Instalación",
+      "web": "Web",
+      "desktop": "Escritorio",
+      "mobile": "Móvil",
+      "tv": "TV / Escenario",
+      "community": "Comunidad"
+    },
+    "members": {
+      "natan": {
+        "bio": "Prueba PIANO en Void Linux y valida la instalación desde cero."
+      }
+    },
+    "reports": {
+      "title": "Reportes recientes de pruebas",
+      "loading": "Cargando reportes…",
+      "empty": "Aún no hay reportes.",
+      "comingSoon": "Pronto: reportes directos del formulario de pruebas.",
+      "anonymous": "Anónimo"
+    },
+    "cta": {
+      "title": "¿Quieres probar PIANO?",
+      "button": "Quiero ser tester",
+      "bug": "Reportar error"
     }
   },
   "donate": {
