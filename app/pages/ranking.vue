@@ -29,9 +29,7 @@
       const doFetch = globalThis.$fetch as unknown as (
         url: string,
       ) => Promise<{ data?: typeof entries.value }>
-      const res = await doFetch<{ data?: typeof entries.value }>(
-        `/api/piano/proxy/v1/custom/ranking?window=${window.value}`,
-      )
+      const res = await doFetch(`/api/piano/proxy/v1/custom/ranking?window=${window.value}`)
       entries.value = res.data ?? []
     } catch {
       failed.value = true
