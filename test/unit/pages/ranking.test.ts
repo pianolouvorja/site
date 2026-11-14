@@ -24,14 +24,7 @@ const sample = {
 }
 
 // $fetch (Nuxt) devolve o payload direto (não é Response com .json()).
-const okFetch = () => vi.fn(async () => sample)
-
-const globalFor = (locale: string, messages: Record<string, unknown>) => ({
-  plugins: [
-    createI18n({ legacy: false, locale, messages: { [locale]: messages } }),
-  ],
-  mocks: { $t: (k: string) => k },
-})
+const okFetch = () => vi.fn(async (_url?: string) => sample)
 
 function mountPage() {
   const i18n = createI18n({ legacy: false, locale: 'pt', messages: { pt } })
@@ -47,7 +40,7 @@ describe('Ranking público (site)', () => {
   })
 
   it('busca window=all por default e renderiza pódio + lista', async () => {
-    const fetchMock = vi.fn(async (url: string) => sample)
+    const fetchMock = vi.fn(async (_url: string) => sample)
     vi.stubGlobal('$fetch', fetchMock)
     const wrapper = mountPage()
     await flushPromises()

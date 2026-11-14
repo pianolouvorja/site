@@ -6,11 +6,15 @@
    * display name + pontos. API fora → estado de erro com retry (site não quebra).
    */
   const { t } = useI18n()
-  const localePath = useLocalePath()
 
   const window = ref<'all' | 'week'>('all')
   const entries = ref<
-    Array<{ position: number; user_id: number; display_name: string | null; total: number }>
+    Array<{
+      position: number
+      user_id: number
+      display_name: string | null
+      total: number
+    }>
   >([])
   const loading = ref(true)
   const failed = ref(false)
@@ -22,9 +26,9 @@
     loading.value = true
     failed.value = false
     try {
-      const doFetch = globalThis.$fetch as unknown as <
-        R,
-      >(url: string) => Promise<{ data?: typeof entries.value }>
+      const doFetch = globalThis.$fetch as unknown as (
+        url: string,
+      ) => Promise<{ data?: typeof entries.value }>
       const res = await doFetch<{ data?: typeof entries.value }>(
         `/api/piano/proxy/v1/custom/ranking?window=${window.value}`,
       )
