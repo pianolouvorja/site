@@ -127,6 +127,11 @@
                 {{ $t('footer.conduct') }}
               </NuxtLink>
             </li>
+            <li>
+              <NuxtLink :to="localePath('/ranking')">
+                {{ $t('footer.ranking') }}
+              </NuxtLink>
+            </li>
           </ul>
         </nav>
       </div>

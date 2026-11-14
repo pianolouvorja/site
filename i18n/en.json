@@ -464,7 +464,8 @@
     "moreNavTitle": "More",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
-    "conduct": "Code of Conduct"
+    "conduct": "Code of Conduct",
+    "ranking": "Ranking"
   },
   "common": {
     "loading": "Loading...",
@@ -1229,5 +1230,17 @@
         "quote": "“Sing to the LORD a new song; sing to the LORD, all the earth.” — Psalm 96:1"
       }
     }
+  },
+  "ranking": {
+    "title": "Community Ranking",
+    "metaDescription": "Public, transparent ranking of PIANO LouvorJA community contributors — publications, uses and synced collections.",
+    "subtitle": "Community contributions — public and transparent",
+    "tabsLabel": "Ranking period",
+    "tabAll": "All time",
+    "tabWeek": "Weekly",
+    "errorText": "Could not load the ranking right now.",
+    "retry": "Try again",
+    "empty": "No scores recorded yet.",
+    "footerLink": "Ranking"
   }
 }

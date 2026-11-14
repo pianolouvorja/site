@@ -456,7 +456,8 @@
     "moreNavTitle": "Saber más",
     "privacy": "Política de Privacidad",
     "terms": "Términos de Uso",
-    "conduct": "Código de Conducta"
+    "conduct": "Código de Conducta",
+    "ranking": "Ranking"
   },
   "common": {
     "loading": "Cargando...",
@@ -1221,5 +1222,17 @@
         "quote": "“Cantad al SEÑOR cántico nuevo; cantad al SEÑOR toda la tierra.” — Salmo 96:1"
       }
     }
+  },
+  "ranking": {
+    "title": "Ranking de la Comunidad",
+    "metaDescription": "Ranking público y transparente de los contribuidores de la comunidad PIANO LouvorJA — publicaciones, usos y colecciones sincronizadas.",
+    "subtitle": "Contribuciones de la comunidad — público y transparente",
+    "tabsLabel": "Período del ranking",
+    "tabAll": "General",
+    "tabWeek": "Semana",
+    "errorText": "No se pudo cargar el ranking ahora.",
+    "retry": "Intentar de nuevo",
+    "empty": "Todavía no hay puntajes registrados.",
+    "footerLink": "Ranking"
   }
 }
