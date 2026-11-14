@@ -76,11 +76,7 @@
         </p>
       </header>
 
-      <div
-        class="ranking-page__tabs"
-        role="tablist"
-        :aria-label="$t('ranking.tabsLabel')"
-      >
+      <div class="ranking-page__tabs" role="tablist" :aria-label="$t('ranking.tabsLabel')">
         <button
           type="button"
           role="tab"
@@ -105,36 +101,19 @@
         </button>
       </div>
 
-      <div
-        v-if="loading"
-        class="ranking-page__loading"
-        role="status"
-      >
+      <div v-if="loading" class="ranking-page__loading" role="status">
         {{ $t('common.loading') }}
       </div>
 
-      <div
-        v-else-if="failed"
-        class="ranking-page__error"
-        data-testid="ranking-error"
-        role="alert"
-      >
+      <div v-else-if="failed" class="ranking-page__error" data-testid="ranking-error" role="alert">
         <p>{{ $t('ranking.errorText') }}</p>
-        <button
-          type="button"
-          class="ranking-page__retry"
-          data-testid="ranking-retry"
-          @click="load"
-        >
+        <button type="button" class="ranking-page__retry" data-testid="ranking-retry" @click="load">
           <i class="ti ti-refresh" aria-hidden="true" />
           {{ $t('ranking.retry') }}
         </button>
       </div>
 
-      <div
-        v-else-if="entries.length === 0"
-        class="ranking-page__empty"
-      >
+      <div v-else-if="entries.length === 0" class="ranking-page__empty">
         {{ $t('ranking.empty') }}
       </div>
 
@@ -148,9 +127,7 @@
             data-testid="ranking-podium-item"
           >
             <span class="ranking-page__podium-pos">{{ i + 1 }}</span>
-            <span class="ranking-page__podium-name">{{
-              displayName(entry.display_name, i)
-            }}</span>
+            <span class="ranking-page__podium-name">{{ displayName(entry.display_name, i) }}</span>
             <span class="ranking-page__podium-total">{{ entry.total }}</span>
           </div>
         </div>
@@ -163,9 +140,7 @@
             data-testid="ranking-row"
           >
             <span class="ranking-page__row-pos">{{ entry.position }}</span>
-            <span class="ranking-page__row-name">{{
-              displayName(entry.display_name, i + 3)
-            }}</span>
+            <span class="ranking-page__row-name">{{ displayName(entry.display_name, i + 3) }}</span>
             <span class="ranking-page__row-total">{{ entry.total }}</span>
           </li>
         </ol>

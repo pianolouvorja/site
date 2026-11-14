@@ -94,9 +94,7 @@ describe('Ranking público (site)', () => {
     vi.stubGlobal('useHead', headSpy)
     mountPage()
     await flushPromises()
-    const headCall = headSpy.mock.calls.at(-1)?.[0] as
-      | { title?: () => string }
-      | undefined
+    const headCall = headSpy.mock.calls.at(-1)?.[0] as { title?: () => string } | undefined
     const title =
       typeof headCall?.title === 'function' ? headCall.title() : String(headCall?.title ?? '')
     expect(title.toLowerCase()).toContain('ranking')
