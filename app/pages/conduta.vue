@@ -73,3 +73,139 @@
     </div>
   </div>
 </template>
+<style scoped lang="scss">
+  .legal-page {
+    background: var(--piano-bg-primary);
+    color: var(--piano-text-primary);
+    min-height: 100vh;
+    padding: 0 1.5rem 4rem;
+
+    &__container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    &__header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--piano-text-primary);
+      margin: 0 0 0.5rem;
+    }
+
+    &__updated {
+      font-size: 0.9rem;
+      color: var(--piano-text-muted);
+      margin: 0;
+    }
+
+    &__intro {
+      background: var(--piano-accent-soft);
+      border-radius: var(--piano-radius-md);
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      border-left: 4px solid var(--piano-accent);
+    }
+
+    &__toc {
+      background: var(--piano-bg-secondary);
+      border-radius: var(--piano-radius-md);
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 0.5rem;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--piano-text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        border-radius: var(--piano-radius-sm);
+        transition: all 0.2s;
+
+        &:hover {
+          background: var(--piano-accent-soft);
+          color: var(--piano-accent);
+        }
+
+        i {
+          font-size: 1rem;
+          color: var(--piano-accent);
+        }
+      }
+    }
+
+    &__section {
+      margin-bottom: 3rem;
+
+      &:target {
+        scroll-margin-top: 2rem;
+      }
+    }
+
+    &__section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--piano-text-primary);
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--piano-border-subtle);
+    }
+
+    &__section-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--piano-text-secondary);
+
+      p {
+        margin: 0 0 0.75rem;
+      }
+
+      a {
+        color: var(--piano-accent);
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      padding: 0 1rem 2rem;
+
+      &__title {
+        font-size: 1.75rem;
+      }
+
+      &__toc ul {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    &__quote {
+      font-style: italic;
+      color: var(--piano-text-secondary);
+      border-left: 3px solid var(--piano-accent);
+      padding: 0.75rem 1rem;
+      margin: 1rem 0 0;
+      background: var(--piano-bg-secondary);
+      border-radius: var(--piano-radius-sm);
+    }
+  }
+</style>
+

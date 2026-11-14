@@ -371,7 +371,11 @@
         ]
       },
       "modules": {
-        "media": ["Player com 3 modos", "Hinários e álbuns", "Modo acompanhamento"],
+        "media": [
+          "Player com 3 modos",
+          "Hinários e álbuns",
+          "Modo acompanhamento"
+        ],
         "hymnal": [
           "Busca rápida por número ou título",
           "Reprodução em sequência",
@@ -382,16 +386,36 @@
           "Arrastar e soltar na playlist",
           "Modo acompanhamento com letra"
         ],
-        "liturgy": ["13 tipos de itens", "Arrastar e soltar", "Cronômetro por item"],
-        "bible": ["Múltiplas versões", "Busca rápida", "Projeção direta"],
-        "projection": ["Saída independente", "Multi-tela", "Controle total"],
+        "liturgy": [
+          "13 tipos de itens",
+          "Arrastar e soltar",
+          "Cronômetro por item"
+        ],
+        "bible": [
+          "Múltiplas versões",
+          "Busca rápida",
+          "Projeção direta"
+        ],
+        "projection": [
+          "Saída independente",
+          "Multi-tela",
+          "Controle total"
+        ],
         "streaming": [
           "CSS personalizado para letra",
           "Integração com OBS e vMix",
           "Saída para YouTube e Facebook"
         ],
-        "tools": ["Relógio e cronômetro", "Timer regressivo", "Sorteio"],
-        "settings": ["Aparência", "Projeção", "Multi-tela"]
+        "tools": [
+          "Relógio e cronômetro",
+          "Timer regressivo",
+          "Sorteio"
+        ],
+        "settings": [
+          "Aparência",
+          "Projeção",
+          "Multi-tela"
+        ]
       }
     },
     "faq": {
@@ -464,7 +488,8 @@
     "moreNavTitle": "Saiba mais",
     "privacy": "Política de Privacidade",
     "terms": "Termos de Uso",
-    "conduct": "Código de Conduta"
+    "conduct": "Código de Conduta",
+    "ranking": "Ranking"
   },
   "common": {
     "loading": "Carregando...",
@@ -569,7 +594,9 @@
       },
       "cookies": {
         "title": "8. Cookies",
-        "body": ["Não utilizamos cookies de terceiros, analytics ou publicidade."],
+        "body": [
+          "Não utilizamos cookies de terceiros, analytics ou publicidade."
+        ],
         "table": {
           "header": {
             "cookie": "Cookie",
@@ -1229,5 +1256,17 @@
         "quote": "“Cantai ao Senhor um cântico novo; cantai ao Senhor, todas as terras.” — Salmo 96:1"
       }
     }
+  },
+  "ranking": {
+    "title": "Ranking da Comunidade",
+    "metaDescription": "Ranking público e transparente dos contribuidores da comunidade PIANO LouvorJA — publicações, usos e sincronizações de coletâneas.",
+    "subtitle": "Contribuições da comunidade — público e transparente",
+    "tabsLabel": "Período do ranking",
+    "tabAll": "Geral",
+    "tabWeek": "Semana",
+    "errorText": "Não foi possível carregar o ranking agora.",
+    "retry": "Tentar novamente",
+    "empty": "Ainda não há pontuações registradas.",
+    "footerLink": "Ranking"
   }
 }
